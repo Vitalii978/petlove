@@ -1,0 +1,53 @@
+/* UserNav.module.css - ИСПРАВЛЕННЫЙ */
+.userNav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.userNavItem {
+  display: flex;
+}
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #262626;
+  padding: 8px 16px;
+  background-color: #FFF4DF;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.profileLink:hover {
+  background-color: #F6B83D;
+  color: #fff;
+}
+
+.userAvatar {
+  font-size: 20px;
+}
+
+.userName {
+  font-weight: 500;
+}
+
+.logoutBtn {
+  background-color: #262626;
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logoutBtn:hover {
+  background-color: #F6B83D;
+}

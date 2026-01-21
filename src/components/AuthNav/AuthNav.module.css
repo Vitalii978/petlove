@@ -1,0 +1,44 @@
+/* AuthNav.module.css - ИСПРАВЛЕННЫЙ */
+.authNav {
+  display: flex;
+  gap: 20px;
+  list-style: none; /* Убираем точки */
+  margin: 0;
+  padding: 0;
+}
+
+.authNavItem {
+  display: flex; /* Чтобы ссылка занимала всё пространство */
+}
+
+.registerBtn,
+.loginBtn {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 32px;
+  border-radius: 30px;
+  transition: all 0.3s;
+  display: inline-block; /* Для правильного отображения */
+}
+
+.registerBtn {
+  background-color: #FFF4DF;
+  color: #262626;
+  border: 1px solid #F6B83D;
+}
+
+.registerBtn:hover {
+  background-color: #F6B83D;
+  color: #fff;
+}
+
+.loginBtn {
+  background-color: #F6B83D;
+  color: #fff;
+  border: 1px solid #F6B83D;
+}
+
+.loginBtn:hover {
+  background-color: #FFDC82;
+}

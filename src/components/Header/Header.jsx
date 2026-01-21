@@ -1,23 +1,55 @@
-// src/components/Header.jsx
-import { Link } from "react-router-dom";
-import "./Header.css";
+// Header.jsx - главный компонент, собирает все части
+import { useState } from 'react';
+import Logo from '../../components/Logo/Logo';
+import Nav from '../../components/Nav/Nav';
+import AuthNav from '../../components/AuthNav/AuthNav';
+import UserNav from '../../components/UserNav/UserNav';
+import styles from '../../components/Header/Header.module.css';
 
-// Шаг 1: Создаем компонент Header
-const Header = () => {
-    return (
-    <header className="header">
-      <div className="logo">
-        <Link to="/">Petlove 🐾</Link> {/* ← Link вместо обычной ссылки */}
+function Header() {
+  // Состояние для бургер-меню
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Функции для управления меню
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+  
+  // Пока заглушка - позже заменим на Redux
+  const isLoggedIn = false;
+
+  return (
+    <header className={styles.header}>
+      <div className={styles.container}>
+        {/* 1. Logo компонент */}
+        <Logo closeBurgerMenu={closeMenu} />
+        
+        {/* 2. Бургер-кнопка для мобильных */}
+        <button
+          type="button"
+          className={`${styles.burgerBtn} ${isMenuOpen ? styles.active : ''}`}
+          onClick={toggleMenu}
+          aria-label="burger menu"
+        >
+          <span className={styles.burgerLine}></span>
+        </button>
+        
+        {/* 3. Основная навигация (десктоп) */}
+        <div className={styles.navWrapper}>
+          {/* Nav - всегда показываем (по ТЗ) */}
+          <Nav closeBurgerMenu={closeMenu} />
+          
+          {/* Условный рендеринг по авторизации */}
+          {isLoggedIn ? (
+            <UserNav closeBurgerMenu={closeMenu} />
+          ) : (
+            <AuthNav closeBurgerMenu={closeMenu} />
+          )}
+        </div>
       </div>
-      <nav className="nav">
-        {/* Заменяем все <a> на <Link> */}
-        <Link to="/news">News</Link>
-        <Link to="/notices">Notices</Link>
-        <Link to="/friends">Friends</Link>
-      </nav>
+      
+      {/* 4. Бургер-меню для мобильных (сделаем позже) */}
     </header>
   );
-};
+}
 
-// Шаг 3: Даем возможность использовать этот компонент в других файлах
 export default Header;

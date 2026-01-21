@@ -1,0 +1,96 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 20px;
+}
+
+.navWrapper {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+/* Бургер-кнопка */
+.burgerBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+
+.burgerLine {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #262626;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  transition: opacity 0.3s;
+}
+
+.burgerBtn::before,
+.burgerBtn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #262626;
+  transition: transform 0.3s;
+}
+
+.burgerBtn::before {
+  top: 8px;
+}
+
+.burgerBtn::after {
+  bottom: 8px;
+}
+
+.burgerBtn.active .burgerLine {
+  opacity: 0;
+}
+
+.burgerBtn.active::before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burgerBtn.active::after {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Адаптив */
+@media screen and (max-width: 1279px) {
+  .navWrapper {
+    gap: 60px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .burgerBtn {
+    display: block;
+  }
+  
+  .navWrapper {
+    display: none; /* Скрываем на мобильных */
+  }
+  
+  /* Бургер-меню добавим позже */
+}

@@ -1,0 +1,17 @@
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoIcon {
+  font-size: 32px;
+}
+
+.logoText {
+  font-size: 24px;
+  font-weight: 700;
+  color: #262626;
+}

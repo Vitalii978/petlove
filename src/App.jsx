@@ -1,26 +1,26 @@
 import './App.css';
 import Header from './components/Header/Header'; // Импортируем Header
-import './components/Header/Header.css';  // Импортируем стили Header
+// import './components/Header/Header.css';  // Импортируем стили Header
 import HomePage from './pages/HomePage/HomePage.jsx';  // Добавили импорт HomePage
-import './pages/HomePage/HomePage.css';
+// import './pages/HomePage/HomePage.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';  // 1. Импортируем инструменты
 import NewsPage from './pages/NewsPage/NewsPage.jsx';  // Добавили импорт NewsPage
-import './pages/NewsPage/NewsPage.css';
+// import './pages/NewsPage/NewsPage.css';
 import NoticesPage from './pages/NoticesPage/NoticesPage.jsx';
-import './pages/NoticesPage/NoticesPage.css';
+// import './pages/NoticesPage/NoticesPage.css';
 import FriendsPage from './pages/FriendsPage/FriendsPage.jsx';  // Добавили импорт FriendsPage
-import './pages/FriendsPage/FriendsPage.css'; 
+// import './pages/FriendsPage/FriendsPage.css'; 
 import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
-import './pages/RegisterPage/RegisterPage.css'; 
+// import './pages/RegisterPage/RegisterPage.css'; 
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
-import './pages/LoginPage/LoginPage.css';
+// import './pages/LoginPage/LoginPage.css';
 
 
 function App() {
   return (
     // 2. Оборачиваем всё в BrowserRouter (коробка для страниц)
     <BrowserRouter>
-    <div className="App">
+    {/* <div className="App"> */}
         {/* Вставляем наш Header компонент */}
       <Header />
       {/* 3. Routes - оглавление нашего сайта */}
@@ -42,7 +42,7 @@ function App() {
           */}
 
       </Routes>
-    </div>
+    {/* </div> */}
     </BrowserRouter>
   );
 }
