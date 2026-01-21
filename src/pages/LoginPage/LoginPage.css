@@ -1,0 +1,86 @@
+/* src/pages/LoginPage.css */
+.login-page {
+  padding: 40px 20px;       /* Отступы внутри страницы */
+  max-width: 500px;         /* Максимальная ширина */
+  margin: 0 auto;           /* Центрируем по горизонтали */
+}
+
+.login-page h1 {
+  color: #333;              /* Цвет заголовка */
+  margin-bottom: 10px;      /* Отступ снизу */
+  text-align: center;       /* Выравнивание по центру */
+}
+
+.login-page p {
+  color: #666;              /* Цвет текста */
+  text-align: center;       /* Выравнивание по центру */
+  margin-bottom: 30px;      /* Отступ снизу */
+}
+
+.login-form {
+  display: flex;            /* Делаем форму flex-контейнером */
+  flex-direction: column;   /* Располагаем элементы в столбик */
+  gap: 20px;                /* Расстояние между элементами */
+  margin: 30px 0;           /* Отступы сверху и снизу */
+}
+
+.login-form label {
+  display: flex;            /* Делаем label flex-контейнером */
+  flex-direction: column;   /* Располагаем текст и input в столбик */
+  font-weight: bold;        /* Жирный шрифт */
+  color: #333;              /* Цвет текста */
+}
+
+.login-form input {
+  padding: 10px;            /* Отступы внутри input */
+  margin-top: 5px;          /* Отступ сверху (от label) */
+  border: 2px solid #ccc;   /* Рамка */
+  border-radius: 5px;       /* Закругленные углы */
+  font-size: 16px;          /* Размер шрифта */
+}
+
+.login-form input:focus {
+  border-color: #3498db;    /* Цвет рамки при фокусе */
+  outline: none;            /* Убираем стандартный outline */
+}
+
+.login-form button {
+  background-color: #3498db; /* Цвет фона кнопки */
+  color: white;              /* Цвет текста */
+  border: none;              /* Без рамки */
+  padding: 12px;             /* Отступы внутри кнопки */
+  border-radius: 5px;        /* Закругленные углы */
+  font-size: 18px;           /* Размер шрифта */
+  cursor: pointer;           /* Курсор-указатель при наведении */
+  margin-top: 10px;          /* Отступ сверху */
+}
+
+.login-form button:hover {
+  background-color: #2980b9; /* Цвет кнопки при наведении */
+}
+
+.register-link {
+  text-align: center;       /* Выравнивание по центру */
+  margin-top: 20px;         /* Отступ сверху */
+  color: #666;              /* Цвет текста */
+}
+
+.pet-block {
+  margin-top: 40px;         /* Отступ сверху */
+  padding: 30px;            /* Отступы внутри */
+  background-color: #f8f9fa;/* Цвет фона */
+  border-radius: 10px;      /* Закругленные углы */
+  text-align: center;       /* Выравнивание по центру */
+}
+
+.pet-image-placeholder {
+  width: 150px;             /* Ширина */
+  height: 150px;            /* Высота */
+  background-color: #e9ecef;/* Цвет фона */
+  margin: 0 auto 15px;      /* Центрируем и отступ снизу */
+  border-radius: 10px;      /* Закругленные углы */
+  display: flex;            /* Используем flexbox */
+  align-items: center;      /* Выравнивание по вертикали */
+  justify-content: center;  /* Выравнивание по горизонтали */
+  color: #adb5bd;           /* Цвет текста */
+}
