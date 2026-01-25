@@ -1,30 +1,21 @@
-// UserNav.jsx - ИСПРАВЛЕННАЯ ВЕРСИЯ
-import { Link } from 'react-router-dom';
+// Временный компонент для авторизованных пользователей
+// Позже мы заменим его на полноценный с UserBar и LogOutBtn
 import styles from './UserNav.module.css';
 
-function UserNav({ closeBurgerMenu }) {
-  const userName = "John Doe";
-  const userAvatar = "👤";
-
+const UserNav = () => {
   return (
-    <ul className={styles.userNav}>
-      <li className={styles.userNavItem}>
-        <Link 
-          to="/profile" 
-          className={styles.profileLink}
-          onClick={closeBurgerMenu}
-        >
-          <span className={styles.userAvatar}>{userAvatar}</span>
-          <span className={styles.userName}>{userName}</span>
-        </Link>
-      </li>
-      <li className={styles.userNavItem}>
-        <button className={styles.logoutBtn}>
-          Logout
-        </button>
-      </li>
-    </ul>
+    <div className={styles.userNav}>
+      {/* Временное сообщение - позже заменим на реальный UserBar */}
+      <div className={styles.tempMessage}>
+        UserNav: Пользователь авторизован
+      </div>
+      
+      {/* Временная кнопка выхода - позже заменим на LogOutBtn */}
+      <button className={styles.tempButton}>
+        Log Out
+      </button>
+    </div>
   );
-}
+};
 
 export default UserNav;

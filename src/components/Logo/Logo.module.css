@@ -1,17 +1,56 @@
-.logoLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* Стили для логотипа */
+.logo {
+  /* Убираем стандартное подчеркивание ссылки */
   text-decoration: none;
-  color: inherit;
+  
+  /* Цвет текста - черный как на скриншоте */
+  color: #000000;
+  
+  /* Шрифт - пока базовый, позже подключим нужный из Figma */
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 24px; /* Размер по дизайну */
+  
+  /* Убираем стандартные стили ссылки */
+  display: inline-block;
+  
+  /* Для плавного hover-эффекта */
+  transition: color 0.3s ease, transform 0.3s ease;
+  
+  /* Отключаем выделение текста при клике */
+  user-select: none;
 }
 
-.logoIcon {
-  font-size: 32px;
-}
-
+/* Стили для текста логотипа */
 .logoText {
-  font-size: 24px;
-  font-weight: 700;
-  color: #262626;
+  /* Если нужны особые стили для текста */
+  letter-spacing: 0.5px; /* Межбуквенный интервал */
+}
+
+/* Эффект при наведении на логотип */
+.logo:hover {
+  /* Немного меняем цвет при наведении */
+  color: #FF6B6B; /* Можно выбрать другой цвет по дизайну */
+  
+  /* Легкое увеличение при наведении */
+  transform: scale(1.05);
+}
+
+/* Эффект при нажатии (активном состоянии) */
+.logo:active {
+  transform: scale(0.98); /* Легкое "нажатие" */
+}
+
+/* Медиа-запрос для планшетов */
+@media screen and (min-width: 768px) {
+  .logo {
+    font-size: 28px; /* Немного увеличиваем на планшетах */
+  }
+}
+
+/* Медиа-запрос для десктопов */
+@media screen and (min-width: 1280px) {
+  .logo {
+    font-size: 32px; /* Еще больше на десктопе */
+  }
 }

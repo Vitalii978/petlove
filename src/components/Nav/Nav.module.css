@@ -1,39 +1,90 @@
-.navigation {
-  display: block;
+/* Стили для навигационного блока */
+.nav {
+  /* Навигация занимает доступное пространство */
+  display: flex;
 }
 
+/* Стили для списка навигации */
 .navList {
-  display: flex;
-  gap: 40px;
+  /* Убираем стандартные отступы и маркеры списка */
   list-style: none;
   margin: 0;
   padding: 0;
+  
+  /* Располагаем элементы в строку */
+  display: flex;
+  gap: 20px; /* Расстояние между пунктами меню */
 }
 
+/* Стили для каждого пункта меню */
+.navItem {
+  /* Убираем стандартные стили li */
+}
+
+/* Стили для ссылок в меню */
 .navLink {
-  color: #262626;
+  /* Убираем подчеркивание */
   text-decoration: none;
+  
+  /* Цвет текста - черный как на скриншоте */
+  color: #000000;
+  
+  /* Шрифт */
+  font-family: 'Arial', sans-serif;
   font-size: 16px;
   font-weight: 500;
+  
+  /* Внутренние отступы для удобства клика */
   padding: 8px 0;
+  
+  /* Плавный переход для hover-эффекта */
+  transition: color 0.3s ease;
+  
+  /* Позиционирование для подчеркивания */
   position: relative;
-  transition: color 0.3s;
+  display: inline-block;
 }
 
+/* Эффект при наведении на ссылку */
 .navLink:hover {
-  color: #F6B83D;
+  color: #FF6B6B; /* Цвет при наведении */
 }
 
+/* Стили для активной ссылки (текущей страницы) */
 .navLink.active {
-  color: #F6B83D;
+  color: #FF6B6B; /* Цвет активной ссылки */
+  font-weight: bold;
 }
 
+/* Подчеркивание для активной ссылки */
 .navLink.active::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 2px;
-  background-color: #F6B83D;
+  background-color: #FF6B6B;
+}
+
+/* Медиа-запрос для планшетов */
+@media screen and (min-width: 768px) {
+  .navList {
+    gap: 30px; /* Увеличиваем расстояние на планшетах */
+  }
+  
+  .navLink {
+    font-size: 18px; /* Увеличиваем шрифт */
+  }
+}
+
+/* Медиа-запрос для десктопов */
+@media screen and (min-width: 1280px) {
+  .navList {
+    gap: 40px; /* Еще больше расстояния на десктопе */
+  }
+  
+  .navLink {
+    font-size: 20px; /* Большой шрифт на десктопе */
+  }
 }

@@ -1,55 +1,136 @@
-// Header.jsx - главный компонент, собирает все части
-import { useState } from 'react';
-import Logo from '../../components/Logo/Logo';
-import Nav from '../../components/Nav/Nav';
-import AuthNav from '../../components/AuthNav/AuthNav';
-import UserNav from '../../components/UserNav/UserNav';
-import styles from '../../components/Header/Header.module.css';
 
-function Header() {
-  // Состояние для бургер-меню
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // Функции для управления меню
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-  
-  // Пока заглушка - позже заменим на Redux
-  const isLoggedIn = false;
+// Импортируем необходимые компоненты и хуки
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { usePageType } from '../../hooks/usePageType';
+import styles from './Header.module.css';
+
+// Импортируем SVG спрайт
+import sprite from '../../assets/icon/icon-sprite.svg';
+
+const Header = () => {
+  const { isHomePage } = usePageType();
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+
+  const toggleBurgerMenu = () => {
+    setIsBurgerOpen(!isBurgerOpen);
+  };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        {/* 1. Logo компонент */}
-        <Logo closeBurgerMenu={closeMenu} />
+    
+    <header className={`${styles.header} `}>
+      
+      {/* Контейнер должен быть такой же ширины как HomePage */}
+      <div className={`${styles.container} ${isHomePage ? styles.containerHome : styles.containerOther}`}>
         
-        {/* 2. Бургер-кнопка для мобильных */}
-        <button
-          type="button"
-          className={`${styles.burgerBtn} ${isMenuOpen ? styles.active : ''}`}
-          onClick={toggleMenu}
-          aria-label="burger menu"
+        {/* Логотип */}
+        <NavLink
+          to="/"
+          className={`${styles.logo} ${isHomePage ? styles.linkLogoWhite : styles.linkLogoBlack}`}
         >
-          <span className={styles.burgerLine}></span>
+          <span className={styles.logoText}>petl</span>
+          <svg className={`${styles.logoIcon} ${isHomePage ? styles.logoIconWhite : styles.logoIconYellow}`}>
+            <use href={`${sprite}#icon-heart-circle`} />
+          </svg>
+          <span className={styles.logoText}>ve</span>
+        </NavLink>
+
+        
+        
+        {/* Навигация для десктопа */}
+        <nav className={styles.desktopNav} aria-label="Main navigation">
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/news" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                News
+              </NavLink>
+            </li>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/notices" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                Find pet
+              </NavLink>
+            </li>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/friends" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                Our friends
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        
+        {/* Авторизация для десктопа */}
+        <nav className={styles.desktopAuth} aria-label="Authentication navigation">
+          <ul className={styles.authList}>
+            <li className={styles.authItem}>
+              <NavLink 
+                to="/login" 
+                className={`${styles.authLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
+              >
+                LOG IN
+              </NavLink>
+            </li>
+            <li className={styles.authItem}>
+              <NavLink 
+                to="/register" 
+                className={`${styles.registerLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
+              >
+                REGISTRATION
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        
+        {/* Бургер-кнопка для мобильных */}
+        <button 
+          className={styles.burgerButton}
+          onClick={toggleBurgerMenu}
+          type="button"
+          aria-label={isBurgerOpen ? "Close menu" : "Open menu"}
+        >
+          {isBurgerOpen ? (
+            <svg className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`}>
+              <use href={`${sprite}#icon-close`} />
+            </svg>
+          ) : (
+            <svg className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`} >
+              <use href={`${sprite}#icon-menu`} />
+            </svg>
+          )}
         </button>
         
-        {/* 3. Основная навигация (десктоп) */}
-        <div className={styles.navWrapper}>
-          {/* Nav - всегда показываем (по ТЗ) */}
-          <Nav closeBurgerMenu={closeMenu} />
-          
-          {/* Условный рендеринг по авторизации */}
-          {isLoggedIn ? (
-            <UserNav closeBurgerMenu={closeMenu} />
-          ) : (
-            <AuthNav closeBurgerMenu={closeMenu} />
-          )}
-        </div>
+        {/* Бургер-меню */}
+        {isBurgerOpen && (
+          <div className={styles.burgerMenuOverlay} onClick={toggleBurgerMenu}>
+            <div className={styles.burgerMenuContent} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.burgerMenuHeader}>
+                <button className={styles.burgerCloseButton} onClick={toggleBurgerMenu}>
+                  <svg className={styles.iconMenuClose}>
+                    <use href={`${sprite}#icon-close`} />
+                  </svg>
+                </button>
+              </div>
+              <p className={styles.burgerMenuText}>Меню</p>
+            </div>
+          </div>
+        )}
       </div>
-      
-      {/* 4. Бургер-меню для мобильных (сделаем позже) */}
     </header>
   );
-}
+};
 
 export default Header;

@@ -1,53 +1,26 @@
-/* UserNav.module.css - ИСПРАВЛЕННЫЙ */
+/* Временные стили для UserNav */
 .userNav {
   display: flex;
   align-items: center;
   gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-.userNavItem {
-  display: flex;
+.tempMessage {
+  color: #333;
+  font-size: 14px;
+  font-style: italic;
 }
 
-.profileLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #262626;
+.tempButton {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   padding: 8px 16px;
-  background-color: #FFF4DF;
-  border-radius: 30px;
-  transition: all 0.3s;
-}
-
-.profileLink:hover {
-  background-color: #F6B83D;
-  color: #fff;
-}
-
-.userAvatar {
-  font-size: 20px;
-}
-
-.userName {
-  font-weight: 500;
-}
-
-.logoutBtn {
-  background-color: #262626;
-  color: #fff;
-  border: none;
-  padding: 12px 32px;
-  border-radius: 30px;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
-.logoutBtn:hover {
-  background-color: #F6B83D;
+.tempButton:hover {
+  background-color: #e0e0e0;
 }

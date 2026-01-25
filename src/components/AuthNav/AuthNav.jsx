@@ -1,31 +1,32 @@
-// AuthNav.jsx - ИСПРАВЛЕННАЯ ВЕРСИЯ
-import { NavLink } from 'react-router-dom';
+// Импортируем Link для навигации между страницами
+import { Link } from 'react-router-dom';
 import styles from './AuthNav.module.css';
 
-function AuthNav({ closeBurgerMenu }) {
+const AuthNav = () => {
   return (
-    // Изменяем div на ul с правильным классом
-    <ul className={styles.authNav}>
-      <li className={styles.authNavItem}>
-        <NavLink
-          to="/register"
-          className={styles.registerBtn}
-          onClick={closeBurgerMenu}
-        >
-          Register
-        </NavLink>
-      </li>
-      <li className={styles.authNavItem}>
-        <NavLink
-          to="/login"
-          className={styles.loginBtn}
-          onClick={closeBurgerMenu}
-        >
-          Login
-        </NavLink>
-      </li>
-    </ul>
+    // Блок навигации для неавторизованных пользователей
+    <div className={styles.authNav}>
+      
+      {/* Список ссылок для авторизации */}
+      <ul className={styles.authList}>
+        
+        {/* Ссылка на страницу входа (Login) */}
+        <li className={styles.authItem}>
+          <Link to="/login" className={styles.authLink}>
+            {/* По скриншоту: "LOG IN" или "LOGO IN" */}
+            LOG IN
+          </Link>
+        </li>
+        
+        {/* Ссылка на страницу регистрации (Register) */}
+        <li className={styles.authItem}>
+          <Link to="/register" className={styles.registerLink}>
+            REGISTRATION
+          </Link>
+        </li>
+      </ul>
+    </div>
   );
-}
+};
 
 export default AuthNav;

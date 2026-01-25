@@ -1,49 +1,45 @@
+// Базовые импорты
+import React, { lazy } from 'react'; // Импортируем React И lazy вместе
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
 import './App.css';
-import Header from './components/Header/Header'; // Импортируем Header
-// import './components/Header/Header.css';  // Импортируем стили Header
-import HomePage from './pages/HomePage/HomePage.jsx';  // Добавили импорт HomePage
-// import './pages/HomePage/HomePage.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';  // 1. Импортируем инструменты
-import NewsPage from './pages/NewsPage/NewsPage.jsx';  // Добавили импорт NewsPage
-// import './pages/NewsPage/NewsPage.css';
-import NoticesPage from './pages/NoticesPage/NoticesPage.jsx';
-// import './pages/NoticesPage/NoticesPage.css';
-import FriendsPage from './pages/FriendsPage/FriendsPage.jsx';  // Добавили импорт FriendsPage
-// import './pages/FriendsPage/FriendsPage.css'; 
-import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
-// import './pages/RegisterPage/RegisterPage.css'; 
-import LoginPage from './pages/LoginPage/LoginPage.jsx';
-// import './pages/LoginPage/LoginPage.css';
 
+// Ленивая загрузка страниц
+// lazy() позволяет загружать компоненты только когда они нужны
+// Это улучшает производительность - не загружаем все страницы сразу
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const NewsPage = lazy(() => import('./pages/NewsPage/NewsPage'));
+const NoticesPage = lazy(() => import('./pages/NoticesPage/NoticesPage'));
+const FriendsPage = lazy(() => import('./pages/FriendsPage/FriendsPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
+
+// Временные заглушки для страниц которые еще не созданы
+const TempPage = ({ title }) => (
+  <div style={{ padding: '50px', textAlign: 'center' }}>
+    <h1>{title}</h1>
+    <p>Эта страница будет создана позже</p>
+  </div>
+);
 
 function App() {
   return (
-    // 2. Оборачиваем всё в BrowserRouter (коробка для страниц)
-    <BrowserRouter>
-    {/* <div className="App"> */}
-        {/* Вставляем наш Header компонент */}
-      <Header />
-      {/* 3. Routes - оглавление нашего сайта */}
-      <Routes>
-                  {/* 4. Route - одна страница
-              path="/" - адрес страницы
-              element={<HomePage />} - что показывать на этой странице */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/news" element={<NewsPage />} />
-        <Route path="/notices" element={<NoticesPage />} />
-        <Route path="/friends" element={<FriendsPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-
-          {/* 5. Остальные страницы добавим позже
+    // Router должен оборачивать ВСЕ, что использует маршрутизацию
+    <Router>
+      {/* Layout будет отображаться на всех страницах */}
+      <Layout>
+        {/* Routes содержит все маршруты нашего приложения */}
+        <Routes>
+          {/* Каждый Route связывает путь (path) с компонентом (element) */}
+          <Route path="/" element={<HomePage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/notices" element={<NoticesPage />} />
-          */}
-
-      </Routes>
-    {/* </div> */}
-    </BrowserRouter>
+          <Route path="/friends" element={<FriendsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 

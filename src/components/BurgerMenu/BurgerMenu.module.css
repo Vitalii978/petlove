@@ -1,0 +1,156 @@
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Меню */
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px; /* Фиксированная ширина как на скриншоте */
+  background-color: #ffffff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease;
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Кнопка закрытия */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.closeIcon {
+  font-size: 30px;
+  color: #333333;
+  line-height: 1;
+}
+
+/* Контент меню */
+.menuContent {
+  padding: 80px 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Логотип в меню */
+.menuLogo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logoText {
+  font-family: 'Arial', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Секции меню */
+.menuSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menuTitle {
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* Стили для Nav внутри меню */
+.menuSection .navList {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menuSection .navItem {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.menuSection .navLink {
+  font-size: 18px;
+  padding: 10px 0;
+  display: block;
+  width: 100%;
+}
+
+/* Стили для AuthNav внутри меню */
+.menuSection .authList {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menuSection .authLink,
+.menuSection .registerLink {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* Стили для UserNav внутри меню */
+.menuSection .userNav {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menuSection .tempMessage {
+  text-align: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.menuSection .tempButton {
+  width: 100%;
+  padding: 12px;
+}
+
+/* На десктопе скрываем */
+@media screen and (min-width: 1280px) {
+  .overlay,
+  .menu {
+    display: none;
+  }
+}

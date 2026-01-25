@@ -1,44 +1,117 @@
-/* AuthNav.module.css - ИСПРАВЛЕННЫЙ */
+/* Стили для блока авторизации */
 .authNav {
+  /* Располагаем элементы внутри */
   display: flex;
-  gap: 20px;
-  list-style: none; /* Убираем точки */
+}
+
+/* Стили для списка ссылок авторизации */
+.authList {
+  /* Убираем стандартные стили списка */
+  list-style: none;
   margin: 0;
   padding: 0;
+  
+  /* Располагаем ссылки в строку */
+  display: flex;
+  gap: 15px; /* Расстояние между кнопками */
+  
+  /* Выравниваем по центру по вертикали */
+  align-items: center;
 }
 
-.authNavItem {
-  display: flex; /* Чтобы ссылка занимала всё пространство */
+/* Стили для каждого элемента списка */
+.authItem {
+  /* Убираем стандартные отступы li */
 }
 
-.registerBtn,
-.loginBtn {
+/* ОБЩИЕ стили для обеих ссылок (LOG IN и REGISTRATION) */
+.authLink,
+.registerLink {
+  /* Убираем подчеркивание */
   text-decoration: none;
-  font-size: 16px;
+  
+  /* Шрифт */
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
   font-weight: 500;
-  padding: 12px 32px;
-  border-radius: 30px;
-  transition: all 0.3s;
-  display: inline-block; /* Для правильного отображения */
+  
+  /* Внутренние отступы для удобства клика */
+  padding: 8px 16px;
+  
+  /* Плавный переход для hover-эффекта */
+  transition: all 0.3s ease;
+  
+  /* Скругление углов */
+  border-radius: 4px;
+  
+  /* Убираем стандартные стили кнопки/ссылки */
+  display: inline-block;
+  text-align: center;
 }
 
-.registerBtn {
-  background-color: #FFF4DF;
-  color: #262626;
-  border: 1px solid #F6B83D;
+/* СТИЛИ ДЛЯ КНОПКИ "LOG IN" (только текст, без фона) */
+.authLink {
+  /* Только текст, без фона и рамки */
+  color: #000000; /* Черный текст */
+  background-color: transparent; /* Прозрачный фон */
+  border: none; /* Без рамки */
 }
 
-.registerBtn:hover {
-  background-color: #F6B83D;
-  color: #fff;
+/* Hover-эффект для "LOG IN" */
+.authLink:hover {
+  color: #FF6B6B; /* Меняем цвет текста при наведении */
+  text-decoration: underline; /* Добавляем подчеркивание */
 }
 
-.loginBtn {
-  background-color: #F6B83D;
-  color: #fff;
-  border: 1px solid #F6B83D;
+/* СТИЛИ ДЛЯ КНОПКИ "REGISTRATION" (с фоном) */
+.registerLink {
+  /* Цвета по дизайну (предположительно) */
+  color: #FFFFFF; /* Белый текст */
+  background-color: #FF6B6B; /* Красный/розовый фон */
+  border: 2px solid #FF6B6B; /* Рамка того же цвета */
 }
 
-.loginBtn:hover {
-  background-color: #FFDC82;
+/* Hover-эффект для "REGISTRATION" */
+.registerLink:hover {
+  /* Немного затемняем фон при наведении */
+  background-color: #E55A5A;
+  border-color: #E55A5A;
+  
+  /* Легкая тень при наведении */
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+  
+  /* Легкое поднятие кнопки */
+  transform: translateY(-2px);
+}
+
+/* Активное состояние (при нажатии) */
+.registerLink:active {
+  transform: translateY(0); /* Возвращаем на место */
+  box-shadow: none; /* Убираем тень */
+}
+
+/* Медиа-запрос для планшетов */
+@media screen and (min-width: 768px) {
+  .authList {
+    gap: 20px; /* Увеличиваем расстояние между кнопками */
+  }
+  
+  .authLink,
+  .registerLink {
+    font-size: 16px; /* Увеличиваем шрифт */
+    padding: 10px 20px; /* Увеличиваем отступы */
+  }
+}
+
+/* Медиа-запрос для десктопов */
+@media screen and (min-width: 1280px) {
+  .authList {
+    gap: 25px; /* Еще больше расстояния на десктопе */
+  }
+  
+  .authLink,
+  .registerLink {
+    font-size: 18px; /* Большой шрифт на десктопе */
+    padding: 12px 24px; /* Большие кнопки */
+  }
 }
