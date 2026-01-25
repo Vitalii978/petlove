@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './BurgerMenu.module.css';
+import UserNav from '../UserNav/UserNav';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
-const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage }) => {
+const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
   // Закрытие по Escape
   useEffect(() => {
     const handleEscape = (event) => {
@@ -83,36 +84,18 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage }) => {
             </ul>
           </nav>
 
-          {/* 🎯 ИСПРАВЛЕННАЯ СЕКЦИЯ: burgerAuth с условием */}
-          <nav className={styles.burgerAuth}>
-            {isLoggedIn ? (
-              // 🎯 ЕСЛИ АВТОРИЗОВАН - показываем UserNav (пока заглушка)
-              <div style={{
-                textAlign: 'center',
-                color: isHomePage ? 'white' : 'black',
-                padding: '20px',
-                fontFamily: 'Manrope, sans-serif',
-                fontSize: '16px'
-              }}>
-                UserNav в меню (заглушка)
-                <button 
-                  onClick={onClose}
-                  style={{
-                    display: 'block',
-                    margin: '10px auto',
-                    background: isHomePage ? 'white' : '#f6b83d',
-                    color: isHomePage ? '#f6b83d' : 'white',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '30px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Выйти
-                </button>
-              </div>
-            ) : (
-              // 🎯 ЕСЛИ НЕ АВТОРИЗОВАН - показываем AuthNav
+          {/* 🎯 AuthNav/UserNav в бургер-меню с условием */}
+          {isLoggedIn ? (
+            // Если авторизован - показываем UserNav
+            <div className={styles.burgerUserNav}>
+              <UserNav onLogout={() => {
+                onLogout();
+                onClose(); // Закрываем меню после выхода
+              }} />
+            </div>
+          ) : (
+            // Если не авторизован - показываем AuthNav
+            <nav className={styles.burgerAuth}>
               <ul className={styles.burgerAuthList}>
                 <li className={styles.burgerAuthItem}>
                   <NavLink 
@@ -133,8 +116,8 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage }) => {
                   </NavLink>
                 </li>
               </ul>
-            )}
-          </nav>
+            </nav>
+          )}
         </div>
       </div>
     </div>

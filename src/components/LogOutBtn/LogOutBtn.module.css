@@ -1,0 +1,50 @@
+/* 🎯 ОСНОВНЫЕ СТИЛИ КНОПКИ ВЫХОДА */
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+}
+
+.logoutBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.logoutBtn:active {
+  transform: translateY(0);
+}
+
+/* 🎯 ИКОНКА ВЫХОДА */
+.logoutIcon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+/* 🎯 ТЕКСТ КНОПКИ */
+.logoutText {
+  display: none; /* 🎯 На мобильных скрываем текст, только иконка */
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media screen and (min-width: 768px) {
+  .logoutBtn {
+    padding: 12px 25px;
+  }
+  
+  .logoutText {
+    display: inline; /* 🎯 На планшетах и больше показываем текст */
+  }
+}

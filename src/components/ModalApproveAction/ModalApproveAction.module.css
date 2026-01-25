@@ -1,0 +1,144 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 40px 20px;
+  max-width: 335px;
+  width: 100%;
+  margin: 0 20px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.closeIcon {
+  width: 16px;
+  height: 16px;
+  color: #262626;
+}
+
+.content {
+  text-align: center;
+}
+
+.title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.25;
+  color: #262626;
+  margin-bottom: 16px;
+}
+
+.message {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.29;
+  color: #262626;
+  margin-bottom: 24px;
+  opacity: 0.7;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.cancelButton,
+.confirmButton {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  padding: 15px 25px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.cancelButton {
+  background-color: #f6b83d;
+  color: #ffffff;
+}
+
+.cancelButton:hover {
+  background-color: #f9b020;
+}
+
+.confirmButton {
+  background-color: #fff4df;
+  color: #f6b83d;
+}
+
+.confirmButton:hover {
+  background-color: #fbe7c1;
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    max-width: 500px;
+    padding: 50px 40px;
+  }
+  
+  .title {
+    font-size: 32px;
+  }
+  
+  .message {
+    font-size: 16px;
+  }
+  
+  .cancelButton,
+  .confirmButton {
+    font-size: 16px;
+    padding: 18px 30px;
+    min-width: 140px;
+  }
+}

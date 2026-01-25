@@ -3,28 +3,32 @@ import { NavLink } from 'react-router-dom';
 import { usePageType } from '../../hooks/usePageType';
 import styles from './Header.module.css';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import UserNav from '../UserNav/UserNav';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
 const Header = () => {
   const { isHomePage } = usePageType();
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   
-  // 🎯 СОСТОЯНИЕ АВТОРИЗАЦИИ + КНОПКА ДЛЯ ТЕСТА
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 🎯 Состояние авторизации - сейчас false (неавторизован)
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   
   const toggleBurgerMenu = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
   
-  // 🎯 ФУНКЦИЯ ДЛЯ ПЕРЕКЛЮЧЕНИЯ АВТОРИЗАЦИИ (ТЕСТ)
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
+  // 🎯 Функция выхода
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    console.log('User logged out');
+    // Позже добавим: API запрос, очистку localStorage и redux store
   };
 
   return (
     <header className={`${styles.header} `}>
       <div className={`${styles.container} ${isHomePage ? styles.containerHome : styles.containerOther}`}>
         
+        {/* Логотип */}
         <NavLink
           to="/"
           className={`${styles.logo} ${isHomePage ? styles.linkLogoWhite : styles.linkLogoBlack}`}
@@ -36,38 +40,50 @@ const Header = () => {
           <span className={styles.logoText}>ve</span>
         </NavLink>
 
-        {/* 🎯 ТЕСТОВАЯ КНОПКА (удалить позже) */}
-        <button 
-          onClick={toggleLogin}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            background: '#f6b83d',
-            color: 'white',
-            border: 'none',
-            padding: '5px 10px',
-            borderRadius: '5px',
-            fontSize: '12px',
-            zIndex: 1000
-          }}
-        >
-          {isLoggedIn ? 'Выйти (тест)' : 'Войти (тест)'}
-        </button>
-
+        {/* Навигация для десктопа */}
         <nav className={styles.desktopNav} aria-label="Main navigation">
-          {/* ... ваш существующий код навигации ... */}
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/news" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                News
+              </NavLink>
+            </li>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/notices" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                Find pet
+              </NavLink>
+            </li>
+            <li className={styles.navItem}>
+              <NavLink 
+                to="/friends" 
+                className={({ isActive }) => 
+                  `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
+                }
+              >
+                Our friends
+              </NavLink>
+            </li>
+          </ul>
         </nav>
         
         <div className={styles.Authburg}>
+          {/* Авторизация для десктопа */}
           <nav className={styles.desktopAuth} aria-label="Authentication navigation">
             {isLoggedIn ? (
-              // 🎯 ЕСЛИ АВТОРИЗОВАН - пока заглушка
-              <div style={{color: isHomePage ? 'white' : 'black'}}>
-                UserNav (заглушка)
-              </div>
+              // 🎯 Если авторизован - показываем UserNav
+              <UserNav onLogout={handleLogout} />
             ) : (
-              // 🎯 ЕСЛИ НЕ АВТОРИЗОВАН - ваш текущий AuthNav
+              // 🎯 Если не авторизован - показываем AuthNav
               <ul className={styles.authList}>
                 <li className={styles.authItem}>
                   <NavLink 
@@ -89,6 +105,7 @@ const Header = () => {
             )}
           </nav>
           
+          {/* Бургер-кнопка для мобильных */}
           <button 
             className={styles.burgerButton}
             onClick={toggleBurgerMenu}
@@ -107,12 +124,14 @@ const Header = () => {
           </button>
         </div>
 
+        {/* Бургер-меню */}
         {isBurgerOpen && (
           <BurgerMenu 
             isOpen={isBurgerOpen}
             onClose={toggleBurgerMenu}
-            isLoggedIn={isLoggedIn} // 🎯 Теперь реальное состояние!
+            isLoggedIn={isLoggedIn}
             isHomePage={isHomePage}
+            onLogout={handleLogout}
           />
         )}
       </div>

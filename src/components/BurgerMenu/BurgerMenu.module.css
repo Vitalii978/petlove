@@ -259,3 +259,71 @@
 }
 
 }
+
+
+/* Добавьте в конец файла BurgerMenu.module.css: */
+
+.burgerUserNav {
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* Стили для UserNav внутри бургер-меню */
+.burgerUserNav .userNav {
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.burgerUserNav .userBarWrapper,
+.burgerUserNav .logoutWrapper {
+  width: 100%;
+}
+
+/* Стили для UserBar в бургер-меню */
+.burgerUserNav .userBar {
+  justify-content: flex-start;
+  background-color: transparent;
+  padding: 15px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.burgerUserNav .userBar:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Стили для LogOutBtn в бургер-меню */
+.burgerUserNav .logoutBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Для белого фона (HomePage) */
+.menuWhite .burgerUserNav .userBar {
+  border: 1px solid rgba(38, 38, 38, 0.15);
+  color: #000;
+}
+
+.menuWhite .burgerUserNav .userName {
+  color: #000;
+}
+
+.menuWhite .burgerUserNav .avatarDefault,
+.menuWhite .burgerUserNav .arrowIcon {
+  fill: #000;
+}
+
+/* Для желтого фона (другие страницы) */
+.menuYellow .burgerUserNav .userBar {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.menuYellow .burgerUserNav .userName {
+  color: #fff;
+}
+
+.menuYellow .burgerUserNav .avatarDefault,
+.menuYellow .burgerUserNav .arrowIcon {
+  fill: #fff;
+}

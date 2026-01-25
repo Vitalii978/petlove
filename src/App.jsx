@@ -13,6 +13,7 @@ const NoticesPage = lazy(() => import('./pages/NoticesPage/NoticesPage'));
 const FriendsPage = lazy(() => import('./pages/FriendsPage/FriendsPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
+// const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'));
 
 // Временные заглушки для страниц которые еще не созданы
 const TempPage = ({ title }) => (
@@ -37,6 +38,8 @@ function App() {
           <Route path="/friends" element={<FriendsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          {/* <Route path="/profile" element={<TempPage title="Profile Page" />} /> */}
+          
         </Routes>
       </Layout>
     </Router>

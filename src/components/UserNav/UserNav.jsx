@@ -1,19 +1,17 @@
-// Временный компонент для авторизованных пользователей
-// Позже мы заменим его на полноценный с UserBar и LogOutBtn
+import UserBar from '../UserBar/UserBar';
+import LogOutBtn from '../LogOutBtn/LogOutBtn';
 import styles from './UserNav.module.css';
 
-const UserNav = () => {
+const UserNav = ({ onLogout }) => {
   return (
     <div className={styles.userNav}>
-      {/* Временное сообщение - позже заменим на реальный UserBar */}
-      <div className={styles.tempMessage}>
-        UserNav: Пользователь авторизован
+      <div className={styles.userBarWrapper}>
+        <UserBar />
       </div>
       
-      {/* Временная кнопка выхода - позже заменим на LogOutBtn */}
-      <button className={styles.tempButton}>
-        Log Out
-      </button>
+      <div className={styles.logoutWrapper}>
+        <LogOutBtn onLogout={onLogout} />
+      </div>
     </div>
   );
 };
