@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './BurgerMenu.module.css';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
-const BurgerMenu = ({ isOpen, onClose, isHomePage }) => {
+const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage }) => {
   // Закрытие по Escape
   useEffect(() => {
     const handleEscape = (event) => {
@@ -83,28 +83,57 @@ const BurgerMenu = ({ isOpen, onClose, isHomePage }) => {
             </ul>
           </nav>
 
-          {/* AuthNav в бургер-меню - ВСЕГДА показываем */}
+          {/* 🎯 ИСПРАВЛЕННАЯ СЕКЦИЯ: burgerAuth с условием */}
           <nav className={styles.burgerAuth}>
-            <ul className={styles.burgerAuthList}>
-              <li className={styles.burgerAuthItem}>
-                <NavLink 
-                  to="/login" 
-                  className={`${styles.burgerAuthLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
+            {isLoggedIn ? (
+              // 🎯 ЕСЛИ АВТОРИЗОВАН - показываем UserNav (пока заглушка)
+              <div style={{
+                textAlign: 'center',
+                color: isHomePage ? 'white' : 'black',
+                padding: '20px',
+                fontFamily: 'Manrope, sans-serif',
+                fontSize: '16px'
+              }}>
+                UserNav в меню (заглушка)
+                <button 
                   onClick={onClose}
+                  style={{
+                    display: 'block',
+                    margin: '10px auto',
+                    background: isHomePage ? 'white' : '#f6b83d',
+                    color: isHomePage ? '#f6b83d' : 'white',
+                    border: 'none',
+                    padding: '10px 20px',
+                    borderRadius: '30px',
+                    cursor: 'pointer'
+                  }}
                 >
-                  LOG IN
-                </NavLink>
-              </li>
-              <li className={styles.burgerAuthItem}>
-                <NavLink 
-                  to="/register" 
-                  className={`${styles.burgerRegisterLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
-                  onClick={onClose}
-                >
-                  REGISTRATION
-                </NavLink>
-              </li>
-            </ul>
+                  Выйти
+                </button>
+              </div>
+            ) : (
+              // 🎯 ЕСЛИ НЕ АВТОРИЗОВАН - показываем AuthNav
+              <ul className={styles.burgerAuthList}>
+                <li className={styles.burgerAuthItem}>
+                  <NavLink 
+                    to="/login" 
+                    className={`${styles.burgerAuthLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
+                    onClick={onClose}
+                  >
+                    LOG IN
+                  </NavLink>
+                </li>
+                <li className={styles.burgerAuthItem}>
+                  <NavLink 
+                    to="/register" 
+                    className={`${styles.burgerRegisterLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
+                    onClick={onClose}
+                  >
+                    REGISTRATION
+                  </NavLink>
+                </li>
+              </ul>
+            )}
           </nav>
         </div>
       </div>
