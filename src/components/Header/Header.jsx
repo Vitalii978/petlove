@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { usePageType } from '../../hooks/usePageType';
 import styles from './Header.module.css';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 // Импортируем SVG спрайт
 import sprite from '../../assets/icon/icon-sprite.svg';
@@ -73,6 +74,7 @@ const Header = () => {
           </ul>
         </nav>
         
+        <div className={styles.Authburg}>
         {/* Авторизация для десктопа */}
         <nav className={styles.desktopAuth} aria-label="Authentication navigation">
           <ul className={styles.authList}>
@@ -112,9 +114,11 @@ const Header = () => {
             </svg>
           )}
         </button>
-        
+        </div>
+
+
         {/* Бургер-меню */}
-        {isBurgerOpen && (
+        {/* {isBurgerOpen && (
           <div className={styles.burgerMenuOverlay} onClick={toggleBurgerMenu}>
             <div className={styles.burgerMenuContent} onClick={(e) => e.stopPropagation()}>
               <div className={styles.burgerMenuHeader}>
@@ -127,7 +131,15 @@ const Header = () => {
               <p className={styles.burgerMenuText}>Меню</p>
             </div>
           </div>
-        )}
+        )} */}
+        {isBurgerOpen && (
+  <BurgerMenu 
+    isOpen={isBurgerOpen}
+    onClose={toggleBurgerMenu}
+    isLoggedIn={false} // Пока false, так как нет авторизации
+    isHomePage={isHomePage} // Передаем информацию о странице
+  />
+)}
       </div>
     </header>
   );

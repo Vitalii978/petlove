@@ -5,8 +5,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
   animation: fadeIn 0.3s ease;
 }
 
@@ -21,11 +21,11 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 300px; /* Фиксированная ширина как на скриншоте */
-  background-color: #ffffff;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 218px; 
   animation: slideIn 0.3s ease;
   overflow-y: auto;
+  padding-top: 236px; 
 }
 
 @keyframes slideIn {
@@ -33,118 +33,192 @@
   to { transform: translateX(0); }
 }
 
+/* Цвет фона */
+.menuWhite {
+  background-color: #ffffff;
+}
+
+.menuYellow {
+  background-color: #f6b83d;
+}
+
 /* Кнопка закрытия */
 .closeButton {
   position: absolute;
-  top: 20px;
+  top: 28px;
   right: 20px;
-  z-index: 1;
   background: none;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-.closeButton:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  
 }
 
 .closeIcon {
-  font-size: 30px;
-  color: #333333;
-  line-height: 1;
+  width: 16px;
+  height: 16px;  
+  color: #000;
+  stroke: currentColor;
+}
+
+.menuWhite .closeIcon {
+  color: #262626;
+}
+
+.menuYellow .closeIcon {
+  color: #ffffff;
+  
 }
 
 /* Контент меню */
 .menuContent {
-  padding: 80px 30px 40px;
+  /* padding: 0 49px; */
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 280px; /* Расстояние между блоками как на фото */
 }
 
-/* Логотип в меню */
-.menuLogo {
-  text-align: center;
-  margin-bottom: 20px;
+/* Навигация в бургер-меню */
+.burgerNav {
+  width: 100%;
 }
 
-.logoText {
-  font-family: 'Arial', sans-serif;
-  font-size: 28px;
-  font-weight: bold;
-  color: #000;
-}
-
-/* Секции меню */
-.menuSection {
+.burgerNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px; /* Расстояние между ссылками */
+  padding: 0px 49px;
 }
 
-.menuTitle {
+.burgerNavItem {
+  width: 100%;
+}
+
+/* Ссылки в бургер-меню - ТАКИЕ ЖЕ КАК В HEADER */
+.burgerNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-family: 'Manrope', sans-serif;
   font-size: 14px;
-  color: #666;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+/* Цвета для белого фона (HomePage) */
+.menuWhite .burgerNavLink {
+  color: #000000;
+  border: 1px solid rgba(38, 38, 38, 0.15);
+}
+
+.menuWhite .burgerNavLink:hover,
+.menuWhite .burgerNavLink.active {
+  border: 1px solid #f6b83d;
+}
+
+/* Цвета для желтого фона (другие страницы) */
+.menuYellow .burgerNavLink {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menuYellow .burgerNavLink:hover,
+.menuYellow .burgerNavLink.active {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+
+
+/* AuthNav в бургер-меню */
+.burgerAuth {
+  width: 100%;
+}
+
+.burgerAuthList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Расстояние между кнопками */
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.burgerAuthItem {
+  width: 100%;
+}
+
+/* Кнопки в бургер-меню - ТАКИЕ ЖЕ КАК В HEADER */
+.burgerAuthLink,
+.burgerRegisterLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  border-radius: 30px;
+  padding: 15px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-/* Стили для Nav внутри меню */
-.menuSection .navList {
-  flex-direction: column;
-  gap: 15px;
-}
-
-.menuSection .navItem {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.menuSection .navLink {
-  font-size: 18px;
-  padding: 10px 0;
-  display: block;
-  width: 100%;
-}
-
-/* Стили для AuthNav внутри меню */
-.menuSection .authList {
-  flex-direction: column;
-  gap: 15px;
-}
-
-.menuSection .authLink,
-.menuSection .registerLink {
-  width: 100%;
   text-align: center;
-  padding: 12px;
-  border-radius: 6px;
-}
-
-/* Стили для UserNav внутри меню */
-.menuSection .userNav {
-  flex-direction: column;
-  gap: 15px;
-}
-
-.menuSection .tempMessage {
-  text-align: center;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 6px;
-}
-
-.menuSection .tempButton {
   width: 100%;
-  padding: 12px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+/* LOG IN кнопка */
+.burgerAuthLink {
+  line-height: 1.25;
+}
+
+/* Цвета для белого фона (HomePage) */
+.menuWhite .burgerAuthLink {
+  color: #fff;
+  background-color:  #f6b83d;
+  border: none;
+}
+
+.menuWhite .burgerAuthLink:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Цвета для желтого фона (другие страницы) */
+.menuYellow .burgerAuthLink {
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.menuYellow .burgerAuthLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* REGISTRATION кнопка */
+.burgerRegisterLink {
+  background-color: #fff4df;
+  color: #f6b83d;
+}
+
+.burgerRegisterLink:hover {
+  background-color: #fbe7c1;
 }
 
 /* На десктопе скрываем */
@@ -153,4 +227,35 @@
   .menu {
     display: none;
   }
+}
+
+/* Планшетная версия */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .menu {
+    max-width: 374px; 
+  }
+
+  .burgerNavList {
+  padding: 0px 127px;
+}
+
+.menuContent {
+  gap: 395px; /* Расстояние между блоками как на фото */
+}
+
+.burgerAuthList {
+
+  flex-direction: row;
+  gap: 8px; /* Расстояние между кнопками */
+  padding: 0px 49px;
+}
+
+.burgerAuthLink {
+  padding: 15px 35px;
+}
+
+.burgerRegisterLink {
+  padding: 15px 20px;
+}
+
 }

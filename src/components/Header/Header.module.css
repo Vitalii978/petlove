@@ -237,6 +237,12 @@
   background-color: #fbe7c1;
 }
 
+.Authburg {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .burgerButton {
   background: none;
   border: none;
@@ -312,11 +318,14 @@
 
 
 @media screen and (min-width: 768px) {
+.desktopAuth {
+    display: block;
+  }
+
   .header {
     width: 100%;
     max-width: 768px;
     padding: 16px 32px;
-
   }
   
   .container {
