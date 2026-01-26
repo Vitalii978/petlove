@@ -368,3 +368,50 @@
   }
 
 }
+
+
+/* Добавьте в конец файла: */
+
+/* 🎯 Иконка UserBar для мобильных */
+.mobileUserIcon {
+  display: none; /* По умолчанию скрыта */
+}
+
+/* На мобильных показываем только иконку */
+@media screen and (max-width: 767px) {
+  .mobileUserIcon {
+    display: block;
+  }
+  
+  /* Скрываем desktopAuth на мобильных для авторизованных */
+  .desktopAuth {
+    display: none;
+  }
+  
+  /* Показываем AuthNav для неавторизованных */
+  .desktopAuth ul.authList {
+    display: none; /* Скрываем на мобильных */
+  }
+}
+
+/* На планшетах и больше */
+@media screen and (min-width: 768px) {
+  .mobileUserIcon {
+    display: none; /* Скрываем на планшетах/десктопах */
+  }
+  
+  .desktopAuth {
+    display: block; /* Показываем UserNav/AuthNav */
+  }
+}
+
+/* На десктопе (1280px и больше) */
+@media screen and (min-width: 1280px) {
+  .desktopNav {
+    display: block;
+  }
+  
+  .burgerButton {
+    display: none;
+  }
+}

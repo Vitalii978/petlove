@@ -1,9 +1,11 @@
+// В начале файла Header.jsx ДОБАВЬТЕ импорт UserBar:
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { usePageType } from '../../hooks/usePageType';
 import styles from './Header.module.css';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import UserNav from '../UserNav/UserNav';
+import UserBar from '../UserBar/UserBar'; // ✅ ДОБАВЬТЕ ЭТУ СТРОКУ!
 import sprite from '../../assets/icon/icon-sprite.svg';
 
 const Header = () => {
@@ -21,7 +23,6 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     console.log('User logged out');
-    // Позже добавим: API запрос, очистку localStorage и redux store
   };
 
   return (
@@ -80,7 +81,7 @@ const Header = () => {
           {/* Авторизация для десктопа */}
           <nav className={styles.desktopAuth} aria-label="Authentication navigation">
             {isLoggedIn ? (
-              // 🎯 Если авторизован - показываем UserNav
+              // 🎯 Десктоп/Планшет: UserNav (UserBar + LogOutBtn)
               <UserNav onLogout={handleLogout} />
             ) : (
               // 🎯 Если не авторизован - показываем AuthNav
@@ -104,6 +105,13 @@ const Header = () => {
               </ul>
             )}
           </nav>
+          
+          {/* 🎯 UserBar для мобильных (только иконка, без текста) */}
+          {isLoggedIn && (
+            <div className={styles.mobileUserIcon}>
+              <UserBar isMobile={true} /> {/* ✅ Только иконка, без имени */}
+            </div>
+          )}
           
           {/* Бургер-кнопка для мобильных */}
           <button 

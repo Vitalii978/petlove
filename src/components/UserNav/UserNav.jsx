@@ -5,10 +5,12 @@ import styles from './UserNav.module.css';
 const UserNav = ({ onLogout }) => {
   return (
     <div className={styles.userNav}>
+      {/* 🎯 UserBar для десктопа/планшета (полная версия) */}
       <div className={styles.userBarWrapper}>
-        <UserBar />
+        <UserBar isMobile={false} />
       </div>
       
+      {/* 🎯 LogOutBtn для десктопа/планшета */}
       <div className={styles.logoutWrapper}>
         <LogOutBtn onLogout={onLogout} />
       </div>
