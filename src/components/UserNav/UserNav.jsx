@@ -4,19 +4,29 @@ import styles from './UserNav.module.css';
 
 const UserNav = ({ onLogout, isHomePage }) => {
   return (
-    <div className={styles.userNav}>
-      {/* 🎯 LogOutBtn для десктопа/планшета */}
-      <div className={styles.logoutWrapper}>
-        <LogOutBtn onLogout={onLogout} />
-      </div>
-
-      {/* 🎯 UserBar для десктопа/планшета (полная версия) */}
-      <div className={styles.userBarWrapper}>
-        <UserBar isMobile={false} isHomePage={isHomePage} />
-      </div>
+    // 🎯 МЕНЯЕМ <div> на <nav> для семантики навигации
+    <nav className={styles.userNav} aria-label="User navigation">
       
-
-    </div>
+      {/* 🎯 ДОБАВЛЯЕМ <ul> - список элементов навигации пользователя */}
+      <ul className={styles.userNavList}>
+        
+        {/* 🎯 ПЕРВЫЙ <li>: LogOutBtn (кнопка выхода) */}
+        <li className={styles.userNavItem}>
+          {/* Оборачиваем LogOutBtn в div с вашим классом logoutWrapper */}
+          <div className={styles.logoutWrapper}>
+            <LogOutBtn onLogout={onLogout} />
+          </div>
+        </li>
+        
+        {/* 🎯 ВТОРОЙ <li>: UserBar (информация о пользователе) */}
+        <li className={styles.userNavItem}>
+          {/* Оборачиваем UserBar в div с вашим классом userBarWrapper */}
+          <div className={styles.userBarWrapper}>
+            <UserBar isMobile={false} isHomePage={isHomePage} />
+          </div>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
