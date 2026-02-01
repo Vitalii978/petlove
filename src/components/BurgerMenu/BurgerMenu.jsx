@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './BurgerMenu.module.css';
-import sprite from '../../assets/icon/icon-sprite.svg';
-import UserBar from '../UserBar/UserBar';
 import LogOutBtn from '../LogOutBtn/LogOutBtn';
+import UserBar from '../UserBar/UserBar';
+import sprite from '../../assets/icon/icon-sprite.svg';
 
 const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
+  // Закрытие по Escape
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
@@ -15,15 +16,15 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      // НЕ блокируем прокрутку страницы
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
 
+  // Закрытие по клику на overlay
   const handleOverlayClick = (event) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -43,7 +44,6 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
           </button>
 
           <div className={styles.menuContent}>
-            {/* 🎯 Навигация - уже правильный <ul> */}
             <nav className={styles.burgerNav}>
               <ul className={styles.burgerNavList}>
                 <li className={styles.burgerNavItem}>
@@ -82,48 +82,43 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
               </ul>
             </nav>
 
-            {/* 🎯 Auth навигация - ТЕПЕРЬ ПРАВИЛЬНЫЙ <ul> */}
-            <nav className={styles.burgerAuth} aria-label="Authentication menu">
-              <ul className={styles.burgerAuthList}>
-                {isLoggedIn ? (
-                  // 🎯 АВТОРИЗОВАН: два <li> (UserBar + LogOutBtn)
-                  <>
-                    <li className={styles.burgerAuthItem}>
-                      <div className={styles.burgerUserBar}>
-                        <UserBar isMobile={true} isHomePage={isHomePage} />
-                      </div>
-                    </li>
-                    <li className={styles.burgerAuthItem}>
-                      <div className={styles.burgerLogout}>
-                        <LogOutBtn onLogout={onLogout} />
-                      </div>
-                    </li>
-                  </>
-                ) : (
-                  // 🎯 НЕАВТОРИЗОВАН: два <li> с ссылками
-                  <>
-                    <li className={styles.burgerAuthItem}>
-                      <NavLink 
-                        to="/login" 
-                        className={`${styles.burgerAuthLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
-                        onClick={onClose}
-                      >
-                        LOG IN
-                      </NavLink>
-                    </li>
-                    <li className={styles.burgerAuthItem}>
-                      <NavLink 
-                        to="/register" 
-                        className={`${styles.burgerRegisterLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
-                        onClick={onClose}
-                      >
-                        REGISTRATION
-                      </NavLink>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </nav>
+            {isLoggedIn ? (
+              <>
+                <div className={styles.burgerUserBar}>
+                  <UserBar isMobile={false} isHomePage={isHomePage} />
+                </div>
+                
+                <div className={styles.burgerLogout}>
+                  <LogOutBtn onLogout={() => {
+                    onLogout();
+                    onClose();
+                  }} />
+                </div>
+              </>
+            ) : (
+              <nav className={styles.burgerAuth}>
+                <ul className={styles.burgerAuthList}>
+                  <li className={styles.burgerAuthItem}>
+                    <NavLink 
+                      to="/login" 
+                      className={`${styles.burgerAuthLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
+                      onClick={onClose}
+                    >
+                      LOG IN
+                    </NavLink>
+                  </li>
+                  <li className={styles.burgerAuthItem}>
+                    <NavLink 
+                      to="/register" 
+                      className={`${styles.burgerRegisterLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
+                      onClick={onClose}
+                    >
+                      REGISTRATION
+                    </NavLink>
+                  </li>
+                </ul>
+              </nav>
+            )}
           </div>
         </div>
       </div>
