@@ -11,9 +11,10 @@
 }
 
 
-.logoutBtn:hover {
-  background-color: #fff4df;
-  border-color: #fff4df;
+.logoutBtn:hover,
+.logoutText:hover {
+  background-color:  #fff4df;
+  border-color:  #fff4df;
   color: #f6b83d;
 
 }
@@ -52,5 +53,12 @@
     width: 136px;
     height: 50px;
     background-color: #f6b83d;
+}
+
+.logoutBtn:hover {
+  background-color: #fff4df;
+  border-color: #fff4df;
+  color: #f6b83d;
+
 }
 }

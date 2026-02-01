@@ -13,7 +13,7 @@ const Header = () => {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   
   // 🎯 Состояние авторизации - сейчас false (неавторизован)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   
   const toggleBurgerMenu = () => {
     setIsBurgerOpen(!isBurgerOpen);
