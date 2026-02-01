@@ -3,47 +3,44 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 375px;
-  padding: 10px 20px;
+  padding: 10px 20px 0 20px;
   margin: 0 auto;
   background-color: inherit;
 }
 
 
 .container {
-  padding: 18px 20px; 
+   
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 100%;
   overflow: hidden;
-  border-top-right-radius: 30px;
-  border-top-left-radius: 30px;
+
 }
 
 .containerHome {
   background-color: #f6b83d;
+  padding: 18px 20px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
 }
 
 .containerOther {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
+  padding-top: 14px;
 }
 
-
-
-@media screen and (max-width: 374px) {
-  /* .container {
-    padding: 18px 20px;
-  } */
-}
 
 
 .logo {
   text-decoration: none;
-  font-family: 'Manrope', sans-serif;
   font-weight: bold;
   font-size: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  line-height: 1;
+  letter-spacing: -0.04em;
   gap: 0;
   transition: opacity 0.3s ease;
 }
@@ -240,10 +237,11 @@
 .Authburg {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .burgerButton {
+    padding: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -256,8 +254,8 @@
 }
 
 .iconMenu {
-  width: 32px;
-  height: 32px;
+  width: 27px;
+  height: 27px;
   transition: color 0.3s ease;
 }
 
@@ -317,23 +315,45 @@
 }
 
 
+@media screen and (max-width: 374px) {
+  .container {
+    /* padding: 18px 20px; */
+  } 
+}
+
 @media screen and (min-width: 768px) {
 .desktopAuth {
     display: block;
   }
 
+  .burgerButton {
+  width: 32px;
+  height: 32px;
+  }
+
+  .Authburg {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
   .header {
     width: 100%;
     max-width: 768px;
+    padding: 16px 32px 0 32px;
+  }
+  
+  .containerHome {
     padding: 16px 32px;
-  }
-  
-  .container {
-    padding: 23px 32px;
-    border-top-right-radius: 60px;
+    border-top-right-radius: 60px;  
     border-top-left-radius: 60px;
-  }
-  
+}
+
+  .containerOther {
+    background-color: #f9f9f9;
+    padding-top: 16px;
+}
+
   .logo {
     font-size: 28px;
     font-weight: 700;
@@ -351,12 +371,20 @@
   .header {
     width: 100%;
     max-width: 1280px;
-
+    padding: 16px 32px 0 32px;
   }
   
-  .container {
+  .containerHome {
     padding: 16px 64px;
-  }
+    border-top-right-radius: 60px;  
+    border-top-left-radius: 60px;
+}
+
+  .containerOther {
+    background-color: #f9f9f9;
+    /* padding-top: 16px; */
+    padding: 16px 32px;
+}
   
   .desktopNav,
   .desktopAuth {

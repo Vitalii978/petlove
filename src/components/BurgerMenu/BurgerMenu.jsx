@@ -85,7 +85,7 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
             {isLoggedIn ? (
               <>
                 <div className={styles.burgerUserBar}>
-                  <UserBar isMobile={false} />
+                  <UserBar isMobile={false} isHomePage={isHomePage} />
                 </div>
                 
                 <div className={styles.burgerLogout}>

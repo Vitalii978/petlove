@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './UserBar.module.css';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
-const UserBar = ({ isMobile = false }) => { // ✅ Добавляем пропс isMobile
+const UserBar = ({ isMobile = false, isHomePage = false  }) => { // ✅ Добавляем пропс isMobile
   const user = {
     name: 'Anna',
     avatar: null,
@@ -26,18 +26,14 @@ const UserBar = ({ isMobile = false }) => { // ✅ Добавляем пропс
           )}
         </div>
         
-        {/* 🎯 Показываем имя только если НЕ мобильная версия */}
         {!isMobile && (
-          <span className={styles.userName}>{user.name}</span>
+          // ✅ Добавляем класс в зависимости от isHomePage
+          <span className={`${styles.userName} ${isHomePage ? styles.userNameWhite : styles.userNameBlack}`}>
+            {user.name}
+          </span>
         )}
       </div>
 
-      {/* 🎯 Стрелку показываем только если НЕ мобильная версия */}
-      {!isMobile && (
-        <svg className={styles.arrowIcon}>
-          <use href={`${sprite}#icon-arrow-right`} />
-        </svg>
-      )}
     </NavLink>
   );
 };

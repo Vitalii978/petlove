@@ -4,7 +4,6 @@
   max-width: 375px; 
   padding: 0 20px; 
   margin: 0 auto;
-  margin-top: -19px;
 }
 
 
@@ -17,7 +16,7 @@
 
 .titleBox {
   background-color: #f6b83d;
-  padding: 50px 20px; 
+  padding: 42px 20px 50px 20px; 
   border-bottom-right-radius: 30px; 
   border-bottom-left-radius: 30px;
 }
@@ -92,7 +91,7 @@
   } */
 
   .titleBox {
-    padding: 101px 32px 44px 32px;
+    padding: 96px 32px 44px 32px;
     border-bottom-right-radius: 60px;
     border-bottom-left-radius: 60px;
   }
@@ -133,7 +132,7 @@
 
   .titleBox {
     /* background-color: #f6b83d; */
-    padding: 93px 64px 32px 64px;
+    padding: 96px 64px 32px 64px;
     display: flex;
     flex-direction: row;
     gap: 73px;

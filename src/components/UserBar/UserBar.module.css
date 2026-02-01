@@ -4,23 +4,19 @@
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.1);
+  /* padding: 10px 15px;
+  border-radius: 30px; */
+  /* background-color: rgba(255, 255, 255, 0.1); */
   transition: all 0.3s ease;
-  gap: 12px;
+  gap: 8px;
 }
 
-.userBar:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
 
 /* 🎯 ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ */
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 /* 🎯 АВАТАРКА */
@@ -29,7 +25,7 @@
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #fff4df;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,31 +40,31 @@
 .avatarDefault {
   width: 24px;
   height: 24px;
-  fill: white;
+  /* fill: white; */
 }
 
 /* 🎯 ИМЯ ПОЛЬЗОВАТЕЛЯ */
 .userName {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
-/* 🎯 ИКОНКА СТРЕЛКИ */
-.arrowIcon {
-  width: 16px;
-  height: 16px;
-  fill: white;
-  opacity: 0.7;
+/* ✅ ИМЯ НА ГЛАВНОЙ СТРАНИЦЕ - БЕЛЫЙ */
+.userNameWhite {
+  color: #ffffff; /* Белый цвет */
 }
+
+/* ✅ ИМЯ НА ДРУГИХ СТРАНИЦАХ - ЧЕРНЫЙ */
+.userNameBlack {
+  color: #262626; /* Черный цвет как в вашем коде */
+}
+
+
 
 /* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
-  .userBar {
-    padding: 12px 20px;
-  }
-  
   .avatarWrapper {
     width: 44px;
     height: 44px;
@@ -80,7 +76,8 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .userBar {
-    padding: 15px 25px;
+  .avatarWrapper {
+    width: 50px;
+    height: 50px;
   }
 }

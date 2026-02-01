@@ -13,7 +13,7 @@ const Header = () => {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   
   // 🎯 Состояние авторизации - сейчас false (неавторизован)
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const toggleBurgerMenu = () => {
     setIsBurgerOpen(!isBurgerOpen);
@@ -82,7 +82,7 @@ const Header = () => {
           <nav className={styles.desktopAuth} aria-label="Authentication navigation">
             {isLoggedIn ? (
               // 🎯 Десктоп/Планшет: UserNav (UserBar + LogOutBtn)
-              <UserNav onLogout={handleLogout} />
+              <UserNav onLogout={handleLogout} isHomePage={isHomePage} />
             ) : (
               // 🎯 Если не авторизован - показываем AuthNav
               <ul className={styles.authList}>
@@ -109,7 +109,7 @@ const Header = () => {
           {/* 🎯 UserBar для мобильных (только иконка, без текста) */}
           {isLoggedIn && (
             <div className={styles.mobileUserIcon}>
-              <UserBar isMobile={true} /> {/* ✅ Только иконка, без имени */}
+              <UserBar isMobile={true} isHomePage={isHomePage} /> {/* ✅ Только иконка, без имени */}
             </div>
           )}
           

@@ -39,6 +39,9 @@
   animation: slideIn 0.3s ease;
   overflow-y: auto;
   padding-top: 236px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideIn {
@@ -65,14 +68,15 @@
   cursor: pointer;
   width: 32px;
   height: 32px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .closeIcon {
-  width: 16px;
-  height: 16px;  
+  width: 32px;
+  height: 32px;  
   color: #000;
   stroke: currentColor;
 }
@@ -89,7 +93,8 @@
 .menuContent {
   display: flex;
   flex-direction: column;
-  gap: 280px; /* Расстояние между блоками */
+  /* gap: 280px;  */
+  flex: 1;
 }
 
 /* Навигация в бургер-меню */
@@ -154,6 +159,9 @@
 /* AuthNav в бургер-меню */
 .burgerAuth {
   width: 100%;
+  
+  margin-top: auto;
+  padding-bottom: 40px;
 }
 
 .burgerAuthList {
@@ -232,7 +240,9 @@
 /* 🎯 LogOutBtn в бургер-меню */
 .burgerLogout {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 41px 40px 41px;
+  margin-top: auto;
+ 
 }
 
 .burgerLogout .logoutBtn {
@@ -280,6 +290,13 @@
   .burgerRegisterLink {
     padding: 15px 20px;
   }
+
+  .burgerLogout {
+  width: 100%;
+  padding: 0 119px 40px 119px;
+  margin-top: auto;
+  padding-bottom: 40px;
+}
 }
 
 /* На десктопе скрываем */

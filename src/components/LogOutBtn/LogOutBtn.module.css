@@ -1,50 +1,56 @@
 /* 🎯 ОСНОВНЫЕ СТИЛИ КНОПКИ ВЫХОДА */
 .logoutBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 30px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: white;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 30px;
+    padding: 15px 35px;
+    width: 136px;
+    height: 50px;
+    background-color: #f6b83d;
 }
+
 
 .logoutBtn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+  background-color: #fff4df;
+  border-color: #fff4df;
+  color: #f6b83d;
+
 }
 
-.logoutBtn:active {
+/* .logoutBtn:active {
   transform: translateY(0);
-}
+} */
 
 /* 🎯 ИКОНКА ВЫХОДА */
-.logoutIcon {
+/* .logoutIcon {
   width: 20px;
   height: 20px;
   fill: white;
-}
+} */
 
 /* 🎯 ТЕКСТ КНОПКИ */
 .logoutText {
-  display: none; /* 🎯 На мобильных скрываем текст, только иконка */
+    font-family: Manrope, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
 }
 
 /* 🎯 АДАПТИВНОСТЬ */
-@media screen and (min-width: 768px) {
-  .logoutBtn {
-    padding: 12px 25px;
-  }
-  
-  .logoutText {
-    display: inline; /* 🎯 На планшетах и больше показываем текст */
-  }
+@media screen and (max-width: 768px) {
+.logoutBtn {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 30px;
+    padding: 15px 35px;
+    width: 136px;
+    height: 50px;
+    background-color: #f6b83d;
+}
 }

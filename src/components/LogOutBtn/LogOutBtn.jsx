@@ -1,7 +1,7 @@
 import { useState } from 'react'; // ✅ ТЕПЕРЬ НУЖЕН ХУК!
 import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
 import styles from './LogOutBtn.module.css';
-import sprite from '../../assets/icon/icon-sprite.svg';
+// import sprite from '../../assets/icon/icon-sprite.svg';
 
 const LogOutBtn = ({ onLogout }) => {
   // 🎯 СОСТОЯНИЕ для модального окна - ✅ ХУК НУЖЕН!
@@ -25,9 +25,9 @@ const LogOutBtn = ({ onLogout }) => {
         type="button"
         aria-label="Log out"
       >
-        <svg className={styles.logoutIcon}>
+        {/* <svg className={styles.logoutIcon}>
           <use href={`${sprite}#icon-logout`} />
-        </svg>
+        </svg> */}
         
         <span className={styles.logoutText}>Log Out</span>
       </button>
