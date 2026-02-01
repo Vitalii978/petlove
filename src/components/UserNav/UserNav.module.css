@@ -6,9 +6,18 @@
   gap: 8px;
 }
 
-/* 🎯 ОБЕРТКИ ДЛЯ КОМПОНЕНТОВ */
-.userBarWrapper,
-.logoutWrapper {
+/* 🎯 СПИСОК UserNav */
+.userNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 🎯 ЭЛЕМЕНТЫ СПИСКА UserNav */
+.userNavItem {
   display: flex;
   align-items: center;
 }
@@ -16,24 +25,28 @@
 /* 🎯 АДАПТИВНОСТЬ */
 @media screen and (max-width: 767px) {
   .userNav {
-    flex-direction: column; /* 🎯 На мобильных в колонку */
+    flex-direction: column;
     gap: 8px;
     width: 100%;
   }
   
-  .userBarWrapper,
-  .logoutWrapper {
+  .userNavList {
+    flex-direction: column;
     width: 100%;
   }
   
-  .logoutWrapper {
-    /* margin-top: 10px; */
+  .userNavItem {
+    width: 100%;
   }
 }
 
 @media screen and (min-width: 768px) {
   .userNav {
-    flex-direction: row; /* 🎯 На планшетах и больше в строку */
+    flex-direction: row;
     gap: 8px;
+  }
+  
+  .userNavList {
+    flex-direction: row;
   }
 }

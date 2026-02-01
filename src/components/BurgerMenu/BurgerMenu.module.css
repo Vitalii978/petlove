@@ -256,6 +256,18 @@
   display: none;
 }
 
+/* 🎯 НОВЫЕ СТИЛИ ДЛЯ UserBar В БУРГЕР-МЕНЮ */
+.burgerUserBar {
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+
+.burgerUserBar .userBar {
+  display: flex;
+  justify-content: center;
+}
+
 /* Планшетная версия */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .menuContainer {
@@ -297,6 +309,11 @@
   margin-top: auto;
   padding-bottom: 40px;
 }
+
+  /* 🎯 Адаптивные стили для UserBar на планшете */
+  .burgerUserBar {
+    padding: 0 49px;
+  }
 }
 
 /* На десктопе скрываем */

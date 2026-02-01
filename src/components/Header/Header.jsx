@@ -1,25 +1,21 @@
-// В начале файла Header.jsx ДОБАВЬТЕ импорт UserBar:
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { usePageType } from '../../hooks/usePageType';
 import styles from './Header.module.css';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import UserNav from '../UserNav/UserNav';
-import UserBar from '../UserBar/UserBar'; // ✅ ДОБАВЬТЕ ЭТУ СТРОКУ!
+import UserBar from '../UserBar/UserBar';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
 const Header = () => {
   const { isHomePage } = usePageType();
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
-  
-  // 🎯 Состояние авторизации - сейчас false (неавторизован)
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const toggleBurgerMenu = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
   
-  // 🎯 Функция выхода
   const handleLogout = () => {
     setIsLoggedIn(false);
     console.log('User logged out');
@@ -29,7 +25,6 @@ const Header = () => {
     <header className={`${styles.header} `}>
       <div className={`${styles.container} ${isHomePage ? styles.containerHome : styles.containerOther}`}>
         
-        {/* Логотип */}
         <NavLink
           to="/"
           className={`${styles.logo} ${isHomePage ? styles.linkLogoWhite : styles.linkLogoBlack}`}
@@ -41,7 +36,6 @@ const Header = () => {
           <span className={styles.logoText}>ve</span>
         </NavLink>
 
-        {/* Навигация для десктопа */}
         <nav className={styles.desktopNav} aria-label="Main navigation">
           <ul className={styles.navList}>
             <li className={styles.navItem}>
@@ -78,42 +72,46 @@ const Header = () => {
         </nav>
         
         <div className={styles.Authburg}>
-          {/* Авторизация для десктопа */}
+          {/* 🎯 Auth навигация ВСЕГДА внутри <nav> */}
           <nav className={styles.desktopAuth} aria-label="Authentication navigation">
-            {isLoggedIn ? (
-              // 🎯 Десктоп/Планшет: UserNav (UserBar + LogOutBtn)
-              <UserNav onLogout={handleLogout} isHomePage={isHomePage} />
-            ) : (
-              // 🎯 Если не авторизован - показываем AuthNav
-              <ul className={styles.authList}>
+            {/* 🎯 СПИСОК для всех состояний (авторизован/неавторизован) */}
+            <ul className={styles.authList}>
+              {isLoggedIn ? (
+                // 🎯 ЕСЛИ АВТОРИЗОВАН - один <li> с UserNav внутри
                 <li className={styles.authItem}>
-                  <NavLink 
-                    to="/login" 
-                    className={`${styles.authLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
-                  >
-                    LOG IN
-                  </NavLink>
+                  <UserNav onLogout={handleLogout} isHomePage={isHomePage} />
                 </li>
-                <li className={styles.authItem}>
-                  <NavLink 
-                    to="/register" 
-                    className={`${styles.registerLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
-                  >
-                    REGISTRATION
-                  </NavLink>
-                </li>
-              </ul>
-            )}
+              ) : (
+                // 🎯 ЕСЛИ НЕ АВТОРИЗОВАН - два <li> с ссылками
+                <>
+                  <li className={styles.authItem}>
+                    <NavLink 
+                      to="/login" 
+                      className={`${styles.authLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
+                    >
+                      LOG IN
+                    </NavLink>
+                  </li>
+                  <li className={styles.authItem}>
+                    <NavLink 
+                      to="/register" 
+                      className={`${styles.registerLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
+                    >
+                      REGISTRATION
+                    </NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
           </nav>
           
-          {/* 🎯 UserBar для мобильных (только иконка, без текста) */}
+          {/* 🎯 UserBar для мобильных (вне списка, так это отдельный элемент) */}
           {isLoggedIn && (
             <div className={styles.mobileUserIcon}>
-              <UserBar isMobile={true} isHomePage={isHomePage} /> {/* ✅ Только иконка, без имени */}
+              <UserBar isMobile={true} isHomePage={isHomePage} />
             </div>
           )}
           
-          {/* Бургер-кнопка для мобильных */}
           <button 
             className={styles.burgerButton}
             onClick={toggleBurgerMenu}
@@ -132,7 +130,6 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Бургер-меню */}
         {isBurgerOpen && (
           <BurgerMenu 
             isOpen={isBurgerOpen}
