@@ -1,8 +1,19 @@
 // src/pages/NewsPage.jsx
-
 import './NewsPage.css';
+import { useState } from 'react';
+import Pagination from '../../components/Pagination/Pagination.jsx';
 
 function NewsPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(10);
+
+  const totalPages = 10;
+
+    // Массив всех страниц [1, 2, 3, ..., 10]
+  const allPages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  
+
     return (
     <div className="news-page">
       <h1>📰 Pet News</h1>
@@ -27,6 +38,12 @@ function NewsPage() {
           <button>Read more</button>
         </div>
       </div>
+      <Pagination
+        numberOfPages={allPages} // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        totalPages={totalPages}  // 10
+        setToPage={setCurrentPage} // Функция изменения страницы
+        toPage={currentPage}     // Текущая страница
+      />
     </div>
     );
 }
