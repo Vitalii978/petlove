@@ -1,0 +1,128 @@
+.testContainer {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.controlPanel {
+  background: #fff4df;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  border: 2px solid #f6b83d;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.stateButton {
+  padding: 10px 20px;
+  background: #fff;
+  border: 2px solid #f6b83d;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.stateButton:hover {
+  background: #f6b83d;
+  color: white;
+}
+
+.stateButton.active {
+  background: #f6b83d;
+  color: white;
+  font-weight: bold;
+}
+
+.currentState {
+  margin-top: 15px;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  border-left: 4px solid #f6b83d;
+}
+
+.testSection {
+  margin: 40px 0;
+  padding: 25px;
+  border: 2px dashed #ddd;
+  border-radius: 15px;
+  background: #f9f9f9;
+}
+
+.testSection h3 {
+  color: #f6b83d;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.singleItemTest {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .singleItemTest {
+    flex-direction: column;
+  }
+}
+
+.singleList {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.newsListTest {
+  min-height: 300px;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 10px;
+  background: white;
+}
+
+.hint {
+  flex: 1;
+  background: #f0f8ff;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #4dabf7;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.requirements {
+  background: #e8f5e9;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 40px;
+  border: 2px solid #4caf50;
+}
+
+.requirements h3 {
+  color: #2e7d32;
+  margin-top: 0;
+}
+
+.requirements ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.requirements li {
+  margin: 8px 0;
+}
+
+.requirements ul ul {
+  margin-left: 20px;
+  color: #555;
+}

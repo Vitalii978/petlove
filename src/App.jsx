@@ -15,6 +15,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 // const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'));
 const TestSearchField = lazy(() => import('./test/TestSearchField'));
+const TestNewsComponents = lazy(() => import('./test/TestNewsComponents'));
 
 // Временные заглушки для страниц которые еще не созданы
 const TempPage = ({ title }) => (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           {/* <Route path="/profile" element={<TempPage title="Profile Page" />} /> */}
           <Route path="/test-search" element={<TestSearchField />} />
+          <Route path="/test-news-components" element={<TestNewsComponents />} />
         </Routes>
       </Layout>
     </Router>
