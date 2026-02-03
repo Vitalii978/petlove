@@ -8,28 +8,50 @@ export default function Pagination({
   setToPage,
   toPage,
 }) {
-  if (!numberOfPages) return;
-
+  
+  console.log('🔍 Pagination:', {
+    toPage,
+    totalPages,
+    hasSetToPage: typeof setToPage === 'function'
+  });
+  
+  // Если нет данных - не рендерим
+  if (!numberOfPages || numberOfPages.length <= 1) {
+    return null;
+  }
+  
+  // 🎯 ИСПРАВЛЕННЫЕ ОБРАБОТЧИКИ - передаем ЧИСЛА, не функции!
   const goToFirstPage = () => {
-    setToPage(1);
+    console.log('⬅️⬅️ Первая страница');
+    setToPage(1); // ✅ Число
   };
   
   const goToPrev = () => {
-    setToPage((prev) => Math.max(prev - 1, 1));
+    console.log('⬅️ Предыдущая страница');
+    const prevPage = Math.max(toPage - 1, 1); // ✅ Вычисляем число
+    setToPage(prevPage); // ✅ Передаем число
   };
   
   const goToNext = () => {
-    setToPage((prev) => Math.min(prev + 1, totalPages));
+    console.log('➡️ Следующая страница');
+    const nextPage = Math.min(toPage + 1, totalPages); // ✅ Вычисляем число
+    setToPage(nextPage); // ✅ Передаем число
   };
   
   const goToLastPage = () => {
-    setToPage(totalPages);
+    console.log('➡️➡️ Последняя страница');
+    setToPage(totalPages); // ✅ Число
   };
   
   const goToPage = (e) => {
-    setToPage(Number(e.target.textContent));
+    const pageNum = Number(e.target.textContent);
+    if (!isNaN(pageNum)) {
+      console.log('🔢 Переход на страницу:', pageNum);
+      setToPage(pageNum); // ✅ Число
+    }
   };
 
+  // Создаем кнопки страниц
   const button = numberOfPages.map((number, index) => {
     return (
       <button
@@ -47,7 +69,7 @@ export default function Pagination({
       <li className={s.arrows}>
         <button
           type="button"
-          disabled={toPage !== 1 ? false : true}
+          disabled={toPage === 1}
           className={clsx(s.buttonTwo, s.rotate)}
           onClick={goToFirstPage}
         >
@@ -60,7 +82,7 @@ export default function Pagination({
         </button>
         <button
           type="button"
-          disabled={toPage !== 1 ? false : true}
+          disabled={toPage === 1}
           className={clsx(s.buttonOne, s.rotate)}
           onClick={goToPrev}
         >
@@ -82,7 +104,7 @@ export default function Pagination({
           type="button"
           className={s.buttonOne}
           onClick={goToNext}
-          disabled={toPage !== totalPages ? false : true}
+          disabled={toPage === totalPages}
         >
           <svg className={clsx(s.icon, toPage === totalPages && s.iconDisabl)}>
             <use href={`${sprite}#icon-arrow-left`} />
@@ -92,7 +114,7 @@ export default function Pagination({
           type="button"
           className={s.buttonTwo}
           onClick={goToLastPage}
-          disabled={toPage !== totalPages ? false : true}
+          disabled={toPage === totalPages}
         >
           <svg className={clsx(s.iconOne, toPage === totalPages && s.iconDisabl)}>
             <use href={`${sprite}#icon-arrow-left`} />

@@ -1,0 +1,175 @@
+/* 
+  CSS Module для страницы NewsPage
+  Все классы здесь локальны для этого компонента
+  При сборке имена классов будут преобразованы в уникальные
+*/
+
+/* Основной контейнер страницы */
+.page {
+  padding-top: 40px; /* Отступ сверху */
+  padding-bottom: 100px; /* Отступ снизу */
+  background-color: #f8f8f8; /* Светлый фон как на скринах Figma */
+  min-height: calc(100vh - 80px); /* Минимальная высота: весь экран минус высота хедера */
+}
+
+/* Контейнер для центрирования и ограничения ширины контента */
+.container {
+  max-width: 1280px; /* Максимальная ширина по ТЗ для desktop */
+  margin: 0 auto; /* Центрирование по горизонтали */
+  padding: 0 20px; /* Отступы слева и справа */
+}
+
+/* Стили для состояния загрузки */
+.loading {
+  display: flex; /* Используем flexbox для выравнивания */
+  flex-direction: column; /* Элементы в колонку */
+  align-items: center; /* Выравнивание по центру */
+  justify-content: center; /* Выравнивание по центру */
+  padding: 60px 0; /* Отступы сверху и снизу */
+  text-align: center; /* Текст по центру */
+}
+
+/* Анимация спиннера загрузки */
+.spinner {
+  width: 50px; /* Ширина спиннера */
+  height: 50px; /* Высота спиннера */
+  border: 5px solid #f3f3f3; /* Светлая часть границы */
+  border-top: 5px solid #ff6b08; /* Цветная часть границы (оранжевый из дизайна) */
+  border-radius: 50%; /* Круглая форма */
+  animation: spin 1s linear infinite; /* Анимация вращения */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+/* Ключевые кадры анимации вращения */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Начальное положение */
+  }
+  100% {
+    transform: rotate(360deg); /* Конечное положение */
+  }
+}
+
+.loading p {
+  font-size: 18px; /* Размер шрифта */
+  color: #555; /* Цвет текста */
+  margin: 0; /* Убираем внешние отступы */
+}
+
+/* Стили для состояния ошибки */
+.error {
+  text-align: center; /* Текст по центру */
+  padding: 40px 0; /* Отступы сверху и снизу */
+}
+
+.error p {
+  color: #ff4444; /* Красный цвет для ошибки */
+  font-size: 16px; /* Размер шрифта */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+/* Кнопка "Попробовать снова" */
+.retryButton {
+  padding: 10px 20px; /* Внутренние отступы */
+  background-color: #ff6b08; /* Оранжевый цвет как в дизайне */
+  color: white; /* Белый текст */
+  border: none; /* Без рамки */
+  border-radius: 4px; /* Скругленные углы */
+  cursor: pointer; /* Курсор-указатель при наведении */
+  font-size: 14px; /* Размер шрифта */
+  font-weight: 500; /* Полужирный шрифт */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Плавные переходы */
+}
+
+/* Эффект при наведении на кнопку */
+.retryButton:hover {
+  background-color: #ff8500; /* Более светлый оранжевый */
+  transform: translateY(-1px); /* Легкое поднятие кнопки */
+}
+
+/* Эффект при нажатии на кнопку */
+.retryButton:active {
+  transform: translateY(0); /* Возвращаем на место */
+}
+
+/* Обертка для компонента пагинации */
+.paginationWrapper {
+  margin-top: 50px; /* Отступ сверху */
+  display: flex; /* Flexbox для центрирования */
+  justify-content: center; /* Центрирование по горизонтали */
+}
+
+/* Стили для пустого состояния (нет новостей) */
+.empty {
+  text-align: center; /* Текст по центру */
+  padding: 60px 0; /* Отступы сверху и снизу */
+}
+
+.empty p {
+  font-size: 18px; /* Размер шрифта */
+  color: #888; /* Серый цвет текста */
+  margin: 0; /* Убираем внешние отступы */
+}
+
+/* Текст с поисковым запросом в пустом состоянии */
+.searchQuery {
+  font-size: 14px !important; /* Меньший размер шрифта */
+  color: #666 !important; /* Темно-серый цвет */
+  margin-top: 10px !important; /* Отступ сверху */
+  font-style: italic; /* Курсив */
+}
+
+/* ============= АДАПТИВНЫЕ СТИЛИ (RESPONSIVE) ============= */
+
+/* Стили для мобильных устройств (ширина до 767px) */
+@media (max-width: 767px) {
+  .page {
+    padding-top: 20px; /* Меньший отступ сверху */
+    padding-bottom: 60px; /* Меньший отступ снизу */
+  }
+  
+  .container {
+    padding: 0 15px; /* Меньшие отступы по бокам */
+  }
+  
+  .loading,
+  .empty {
+    padding: 40px 0; /* Меньшие отступы */
+  }
+  
+  .loading p,
+  .empty p {
+    font-size: 16px; /* Меньший размер шрифта */
+  }
+  
+  .spinner {
+    width: 40px; /* Меньший спиннер */
+    height: 40px; /* Меньший спиннер */
+    border-width: 4px; /* Тоньше граница */
+  }
+}
+
+/* Стили для планшетов (ширина от 768px до 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .page {
+    padding-top: 30px; /* Средний отступ сверху */
+    padding-bottom: 80px; /* Средний отступ снизу */
+  }
+  
+  .container {
+    padding: 0 30px; /* Средние отступы по бокам */
+  }
+  
+  .loading,
+  .empty {
+    padding: 50px 0; /* Средние отступы */
+  }
+}
+
+/* Стили для десктопов (ширина от 1280px и больше) */
+@media (min-width: 1280px) {
+  .page {
+    padding-top: 40px; /* Большой отступ сверху */
+    padding-bottom: 100px; /* Большой отступ снизу */
+  }
+}
