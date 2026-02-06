@@ -1,0 +1,195 @@
+/* src/components/Notices/NoticesFilters/NoticesFilters.module.css */
+
+/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР */
+.filtersContainer {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+/* 🔍 СТРОКА ПОИСКА */
+.searchRow {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* 🎯 СПИСОК ФИЛЬТРОВ (ВСЕ В ОДНУ ЛИНИЮ) */
+.filtersList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+}
+
+/* 🎯 ЭЛЕМЕНТ СПИСКА ФИЛЬТРА */
+.filterItem {
+  flex: 1;
+  min-width: 150px;
+  margin: 0;
+}
+
+/* 🎯 ЭЛЕМЕНТ СОРТИРОВКИ */
+.sortItem {
+  margin: 0;
+  margin-left: auto;
+}
+
+/* 🎯 ЭЛЕМЕНТ КНОПКИ СБРОСА */
+.resetItem {
+  margin: 0;
+}
+
+/* 🎯 СПИСОК КНОПОК СОРТИРОВКИ */
+.sortButtonsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.sortButtonItem {
+  margin: 0;
+}
+
+/* 🎯 ВЫПАДАЮЩИЙ СПИСОК (ОВАЛЬНАЯ ФОРМА) */
+.filterSelect {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border: 2px solid #ff6b08;
+  border-radius: 30px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6b08' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 16px;
+  font-weight: 500;
+}
+
+.filterSelect:hover {
+  background-color: #fff5f0;
+}
+
+.filterSelect:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 8, 0.2);
+}
+
+.filterSelect:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #ccc;
+}
+
+/* 🎯 КНОПКИ СОРТИРОВКИ */
+.sortButton {
+  padding: 10px 20px;
+  background-color: white;
+  color: #ff6b08;
+  border: 2px solid #ff6b08;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sortButton:hover {
+  background-color: #fff5f0;
+}
+
+.sortButton.active {
+  background-color: #ff6b08;
+  color: white;
+}
+
+/* 🎯 КНОПКА СБРОСА */
+.resetButton {
+  padding: 10px 24px;
+  background-color: white;
+  color: #333;
+  border: 2px solid #e0e0e0;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.resetButton:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}
+
+/* 🎯 ============= АДАПТИВНОСТЬ ============= */
+
+/* 🎯 ПЛАНШЕТ (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .filtersList {
+    gap: 12px;
+  }
+  
+  .filterItem {
+    min-width: 130px;
+  }
+  
+  .sortButton,
+  .resetButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+/* 🎯 МОБИЛЬНЫЕ (до 767px) */
+@media (max-width: 767px) {
+  .filtersList {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .filterItem {
+    min-width: 100%;
+  }
+  
+  .sortItem {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .sortButtonsList {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .resetItem {
+    width: 100%;
+  }
+  
+  .resetButton {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* 🎯 ДЕСКТОП (1280px и больше) */
+@media (min-width: 1280px) {
+  .filtersList {
+    gap: 20px;
+  }
+  
+  .filterItem {
+    min-width: 180px;
+  }
+}

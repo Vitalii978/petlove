@@ -2,40 +2,46 @@
 
 import api from './api';
 
-// 🎯 ОБЪЕКТ ДЛЯ РАБОТЫ С ОБЪЯВЛЕНИЯМИ
 const noticesApi = {
   
-  // 🎯 ФУНКЦИЯ: Получить объявления с фильтрацией и пагинацией
-  getNotices: async ({ 
-    page = 1, 
-    limit = 12, 
-    query = '',
-    category = '',
-    gender = '',
-    species = '',
-    city = '',
-  } = {}) => {
-    
-    // 🎯 Собираем параметры фильтрации
-    const params = {
+  // 🎯 ПОЛУЧИТЬ ОБЪЯВЛЕНИЯ С ФИЛЬТРАМИ
+getNotices: async ({ 
+  page = 1, 
+  limit = 12, 
+  keyword = '',
+  category = '',
+  sex = '',
+  species = '',
+  locationId = '',
+  byDate = false,
+  byPrice = false,
+  byPopularity = false
+} = {}) => {
+  
+  try {
+    // 🎯 ПРАВИЛЬНЫЕ ПАРАМЕТРЫ - не отправляем false значения
+    const params = { 
       page,
       limit,
-      ...(query && { query }),
+      ...(keyword.trim() && { keyword: keyword.trim() }),
       ...(category && { category }),
-      ...(gender && { gender }),
+      ...(sex && { sex }),
       ...(species && { species }),
-      ...(city && { city }),
+      ...(locationId && { locationId }),
+      // 🎯 Отправляем только если true
+      ...(byDate && { byDate: true }),
+      ...(byPrice && { byPrice: true }),
+      ...(byPopularity && { byPopularity: true })
     };
     
-    console.log('📤 Отправляем запрос на /notices с параметрами:', params);
-    
-    try {
+    console.log('📤 Запрос к /notices с параметрами:', params);
+      
       const response = await api.get('/notices', { params });
       
-      console.log('📥 Получен ответ от /notices:', {
+      console.log('📥 Ответ от /notices:', {
         статус: response.status,
-        количество_объявлений: response.data.results?.length || 0,
-        всего_страниц: response.data.totalPages,
+        количество: response.data.results?.length || 0,
+        страниц: response.data.totalPages,
       });
       
       return {
@@ -43,9 +49,10 @@ const noticesApi = {
         data: response.data.results || [],
         pagination: {
           currentPage: response.data.page || page,
+          perPage: response.data.perPage || limit,
           totalPages: response.data.totalPages || 1,
-          totalItems: response.data.total || 0,
-        },
+          totalItems: (response.data.totalPages || 1) * limit
+        }
       };
       
     } catch (error) {
@@ -55,6 +62,9 @@ const noticesApi = {
       
       if (error.response) {
         errorMessage = `Ошибка сервера: ${error.response.status}`;
+        if (error.response.data && error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
       } else if (error.request) {
         errorMessage = 'Нет соединения с сервером';
       }
@@ -66,102 +76,125 @@ const noticesApi = {
         pagination: {
           currentPage: page,
           totalPages: 1,
-          totalItems: 0,
-        },
+          totalItems: 0
+        }
       };
     }
   },
   
-  // 🎯 ФУНКЦИЯ: Получить данные для фильтров
+  // 🎯 ПОЛУЧИТЬ ДАННЫЕ ДЛЯ ФИЛЬТРОВ
   getFiltersData: async () => {
     try {
       console.log('🔄 Запрашиваем данные для фильтров...');
       
-      // 🎯 Делаем параллельные запросы для всех фильтров
-      // Promise.all - выполняет все промисы параллельно
-      const [categories, genders, species, cities] = await Promise.all([
-        api.get('/notices/categories').catch(() => ({ data: [] })),
-        api.get('/notices/genders').catch(() => ({ data: [] })),
-        api.get('/notices/species').catch(() => ({ data: [] })),
-        api.get('/cities').catch(() => ({ data: [] })),
+      // 🎯 ПРАВИЛЬНЫЕ ЭНДПОИНТЫ
+      const [categories, sex, species, cities] = await Promise.all([
+        api.get('/notices/categories'),
+        api.get('/notices/sex'),
+        api.get('/notices/species'),
+        api.get('/cities/locations') // 🎯 ИСПРАВЛЕНО: /cities/locations
       ]);
+      
+      console.log('📊 Ответ от /cities/locations:', {
+        статус: cities.status,
+        количество: cities.data?.length || 0,
+        первыеГорода: cities.data?.slice(0, 3)
+      });
       
       return {
         success: true,
         data: {
           categories: categories.data || [],
-          genders: genders.data || [],
+          sex: sex.data || [],
           species: species.data || [],
-          cities: cities.data || [],
-        },
+          cities: cities.data || []
+        }
       };
       
     } catch (error) {
       console.error('❌ Ошибка при получении данных фильтров:', error);
+      
+      if (error.response) {
+        console.error('📡 Статус ошибки:', error.response.status);
+        console.error('📡 Данные ошибки:', error.response.data);
+      }
+      
       return {
         success: false,
-        error: 'Не удалось загрузить данные фильтров',
+        error: error.message,
         data: {
           categories: [],
-          genders: [],
+          sex: [],
           species: [],
-          cities: [],
-        },
+          cities: []
+        }
       };
     }
   },
   
-  // 🎯 ФУНКЦИЯ: Получить одно объявление по ID (для модального окна)
+  // 🎯 ПОЛУЧИТЬ ОДНО ОБЪЯВЛЕНИЕ ПО ID
   getNoticeById: async (id) => {
     try {
       const response = await api.get(`/notices/${id}`);
       return {
         success: true,
-        data: response.data,
+        data: response.data
       };
     } catch (error) {
       console.error('❌ Ошибка при получении объявления:', error);
       return {
         success: false,
         error: 'Не удалось загрузить объявление',
-        data: null,
+        data: null
       };
     }
   },
   
-  // 🎯 ФУНКЦИЯ: Добавить в избранное (будем использовать позже)
-  addToFavorites: async (noticeId) => {
+  // 🎯 ДОБАВИТЬ В ИЗБРАННОЕ
+  addToFavorites: async (id) => {
     try {
-      const response = await api.post(`/notices/${noticeId}/favorite`);
+      const response = await api.post(`/notices/favorites/add/${id}`);
       return {
         success: true,
-        data: response.data,
+        data: response.data
       };
     } catch (error) {
       console.error('❌ Ошибка при добавлении в избранное:', error);
+      
+      let errorMessage = 'Не удалось добавить в избранное';
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      }
+      
       return {
         success: false,
-        error: 'Не удалось добавить в избранное',
+        error: errorMessage
       };
     }
   },
   
-  // 🎯 ФУНКЦИЯ: Удалить из избранного
-  removeFromFavorites: async (noticeId) => {
+  // 🎯 УДАЛИТЬ ИЗ ИЗБРАННОГО
+  removeFromFavorites: async (id) => {
     try {
-      const response = await api.delete(`/notices/${noticeId}/favorite`);
+      const response = await api.delete(`/notices/favorites/remove/${id}`);
       return {
         success: true,
-        data: response.data,
+        data: response.data
       };
     } catch (error) {
       console.error('❌ Ошибка при удалении из избранного:', error);
+      
+      let errorMessage = 'Не удалось удалить из избранного';
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      }
+      
       return {
         success: false,
-        error: 'Не удалось удалить из избранного',
+        error: errorMessage
       };
     }
-  },
+  }
   
 };
 
