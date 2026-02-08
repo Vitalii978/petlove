@@ -1,23 +1,43 @@
 // src/pages/NoticesPage/NoticesPage.jsx
 
+// 🎯 ИМПОРТЫ
 import { useState, useEffect, useCallback } from 'react';
 import Title from '../../components/Title/Title';
 import NoticesFilters from '../../components/Notices/NoticesFilters/NoticesFilters';
+import NoticesList from '../../components/Notices/NoticesList/NoticesList'; // <-- ДОБАВИЛИ
 import Pagination from '../../components/Pagination/Pagination';
 import noticesApi from '../../services/noticesApi';
 import styles from './NoticesPage.module.css';
 
+// 🎯 КОМПОНЕНТ СТРАНИЦЫ ОБЪЯВЛЕНИЙ
 export const NoticesPage = () => {
-  // 🎯 СОСТОЯНИЯ ДАННЫХ
+  // =============== СОСТОЯНИЯ (STATE) ===============
+  
+  // 🎯 ПОЛКА 1: Объявления
   const [notices, setNotices] = useState([]);
+  
+  // 🎯 ПОЛКА 2: Статус загрузки
   const [loading, setLoading] = useState(false);
+  
+  // 🎯 ПОЛКА 3: Ошибки
   const [error, setError] = useState(null);
+  
+  // 🎯 ПОЛКА 4: Поисковый запрос
   const [searchKeyword, setSearchKeyword] = useState('');
+  
+  // 🎯 ПОЛКА 5: Текущая страница
   const [currentPage, setCurrentPage] = useState(1);
+  
+  // 🎯 ПОЛКА 6: Всего страниц
   const [totalPages, setTotalPages] = useState(1);
+  
+  // 🎯 ПОЛКА 7: Данные для фильтров
   const [filtersData, setFiltersData] = useState({});
   
-  // 🎯 СОСТОЯНИЯ ФИЛЬТРОВ (ПРАВИЛЬНЫЕ ИМЕНА)
+  // 🎯 ПОЛКА 8: Избранные объявления (ID)
+  const [favorites, setFavorites] = useState([]);
+  
+  // 🎯 ПОЛКА 9: Активные фильтры
   const [activeFilters, setActiveFilters] = useState({
     category: '',
     sex: '',
@@ -28,75 +48,68 @@ export const NoticesPage = () => {
     byPopularity: false
   });
   
-  // 🎯 ФУНКЦИЯ ЗАГРУЗКИ ОБЪЯВЛЕНИЙ
- // src/pages/NoticesPage/NoticesPage.jsx
-// В функции fetchNotices:
-
-const fetchNotices = useCallback(async () => {
-  try {
-    setLoading(true);
-    setError(null);
-    
-    console.log('🔍 НАЧАЛО fetchNotices для страницы', currentPage);
-    console.log('🔍 Состояние до запроса:', {
-      текущаяСтраница: currentPage,
-      активныеФильтры: activeFilters,
-      поисковыйЗапрос: searchKeyword
-    });
-    
-    const result = await noticesApi.getNotices({
-      page: currentPage,
-      limit: 12,
-      keyword: searchKeyword,
-      ...activeFilters
-    });
-    
-    console.log('📊 Ответ от API для страницы', currentPage, ':', {
-      успех: result.success,
-      получено_данных: result.data.length,
-      данные: result.data.slice(0, 3).map(n => ({id: n._id, title: n.title})),
-      все_id: result.data.map(n => n._id)
-    });
-    
-    if (result.success) {
-      console.log('✅ Устанавливаем notices:', result.data.length, 'элементов');
-      setNotices(result.data);
-      setTotalPages(result.pagination.totalPages);
+  // =============== ФУНКЦИИ ===============
+  
+  // 🎯 ФУНКЦИЯ 1: Загрузка объявлений
+  const fetchNotices = useCallback(async () => {
+    try {
+      // 1. Включаем спиннер
+      setLoading(true);
+      setError(null);
       
-      // 🎯 ПРОВЕРКА: что действительно установилось
-      console.log('🔍 После setNotices - проверим в следующем рендере');
-    } else {
-      console.error('❌ Ошибка API:', result.error);
-      setError(result.error);
+      console.log('🔄 Загрузка объявлений...');
+      
+      // 2. Говорим почтальону принести объявления
+      const result = await noticesApi.getNotices({
+        page: currentPage,
+        limit: 6,
+        keyword: searchKeyword,
+        ...activeFilters
+      });
+      
+      console.log('📊 Ответ от сервера:', {
+        успех: result.success,
+        количество: result.data.length
+      });
+      
+      // 3. Проверяем что принес почтальон
+      if (result.success) {
+        // Успех! Кладем объявления на полку
+        setNotices(result.data);
+        setTotalPages(result.pagination.totalPages);
+      } else {
+        // Ошибка! Кладем ошибку на полку
+        setError(result.error);
+        setNotices([]);
+        setTotalPages(1);
+      }
+      
+    } catch (err) {
+      // Если что-то сломалось
+      console.error('❌ Ошибка:', err);
+      setError('Произошла ошибка');
       setNotices([]);
       setTotalPages(1);
+    } finally {
+      // Всегда выключаем спиннер
+      setLoading(false);
     }
-    
-  } catch (err) {
-    console.error('❌ Неожиданная ошибка:', err);
-    setError('Произошла ошибка');
-    setNotices([]);
-    setTotalPages(1);
-  } finally {
-    setLoading(false);
-    console.log('🔚 КОНЕЦ fetchNotices для страницы', currentPage);
-  }
-}, [currentPage, searchKeyword, activeFilters]);
-  // 🎯 ФУНКЦИЯ ЗАГРУЗКИ ДАННЫХ ФИЛЬТРОВ
+  }, [currentPage, searchKeyword, activeFilters]);
+  
+  // 🎯 ФУНКЦИЯ 2: Загрузка данных для фильтров
   const fetchFiltersData = useCallback(async () => {
     console.log('🔄 Загружаем данные для фильтров...');
+    
+    // Говорим почтальону принести списки для фильтров
     const result = await noticesApi.getFiltersData();
     
     if (result.success) {
+      // Успех! Кладем данные на полку
       setFiltersData(result.data);
-      console.log('✅ Данные фильтров загружены:', {
-        categories: result.data.categories.length,
-        sex: result.data.sex.length,
-        species: result.data.species.length,
-        cities: result.data.cities.length
-      });
+      console.log('✅ Данные фильтров загружены');
     } else {
-      console.warn('⚠️ Не удалось загрузить данные фильтров:', result.error);
+      // Ошибка! Заполняем пустыми массивами
+      console.warn('⚠️ Не удалось загрузить данные фильтров');
       setFiltersData({
         categories: [],
         sex: [],
@@ -106,27 +119,61 @@ const fetchNotices = useCallback(async () => {
     }
   }, []);
   
-  // 🎯 ЭФФЕКТ ДЛЯ ЗАГРУЗКИ ДАННЫХ
-  useEffect(() => {
-    fetchNotices();
-  }, [fetchNotices]);
+  // 🎯 ФУНКЦИЯ 3: Обработка "Learn more"
+  const handleLearnMore = (noticeId) => {
+    console.log('🔍 Пользователь хочет узнать больше о объявлении:', noticeId);
+    // Здесь позже откроем модальное окно
+  };
   
-  // 🎯 ЭФФЕКТ ДЛЯ ЗАГРУЗКИ ДАННЫХ ФИЛЬТРОВ (только при монтировании)
-  useEffect(() => {
-    fetchFiltersData();
-  }, [fetchFiltersData]);
+  // 🎯 ФУНКЦИЯ 4: Добавление/удаление из избранного
+  const handleToggleFavorite = async (noticeId) => {
+    console.log('❤️ Пользователь кликнул на сердечко:', noticeId);
+    
+    // 1. Проверяем авторизован ли пользователь
+    const isLoggedIn = false; // Пока заглушка
+    
+    if (!isLoggedIn) {
+      // Если не авторизован - показываем сообщение
+      console.log('👤 Пользователь не авторизован');
+      // Здесь позже откроем модальное окно ModalAttention
+      return;
+    }
+    
+    // 2. Проверяем уже ли в избранном
+    const isFavorite = favorites.includes(noticeId);
+    
+    if (isFavorite) {
+      // Уже в избранном - удаляем
+      console.log('➖ Удаляем из избранного');
+      const result = await noticesApi.removeFromFavorites(noticeId);
+      
+      if (result.success) {
+        // Удаляем ID из массива favorites
+        setFavorites(prev => prev.filter(id => id !== noticeId));
+      }
+    } else {
+      // Не в избранном - добавляем
+      console.log('➕ Добавляем в избранное');
+      const result = await noticesApi.addToFavorites(noticeId);
+      
+      if (result.success) {
+        // Добавляем ID в массив favorites
+        setFavorites(prev => [...prev, noticeId]);
+      }
+    }
+  };
   
-  // 🎯 ОБРАБОТЧИК ПОИСКА
+  // 🎯 ФУНКЦИЯ 5: Обработка поиска
   const handleSearch = (keyword) => {
     setSearchKeyword(keyword);
     setCurrentPage(1);
   };
   
-  // 🎯 ОБРАБОТЧИК ИЗМЕНЕНИЯ ФИЛЬТРА
+  // 🎯 ФУНКЦИЯ 6: Обработка изменения фильтра
   const handleFilterChange = (filterName, value) => {
     console.log(`🎛️ Изменен фильтр ${filterName}:`, value);
     
-    // 🎯 ОСОБАЯ ОБРАБОТКА ДЛЯ СОРТИРОВКИ
+    // Особый случай для сортировки
     if (['byDate', 'byPrice', 'byPopularity'].includes(filterName)) {
       setActiveFilters(prev => ({
         ...prev,
@@ -135,7 +182,7 @@ const fetchNotices = useCallback(async () => {
         byPopularity: filterName === 'byPopularity' ? value : false
       }));
     } else {
-      // 🎯 ОБЫЧНЫЕ ФИЛЬТРЫ
+      // Обычные фильтры
       setActiveFilters(prev => ({
         ...prev,
         [filterName]: value
@@ -145,7 +192,7 @@ const fetchNotices = useCallback(async () => {
     setCurrentPage(1);
   };
   
-  // 🎯 ОБРАБОТЧИК СБРОСА ФИЛЬТРОВ
+  // 🎯 ФУНКЦИЯ 7: Сброс всех фильтров
   const handleResetFilters = () => {
     console.log('🔄 Сброс всех фильтров');
     
@@ -162,37 +209,45 @@ const fetchNotices = useCallback(async () => {
     setCurrentPage(1);
   };
   
-  // 🎯 ОБРАБОТЧИК ПАГИНАЦИИ
+  // 🎯 ФУНКЦИЯ 8: Обработка пагинации
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    // Плавная прокрутка вверх
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
-  // 🎯 ГЕНЕРАЦИЯ КНОПОК ПАГИНАЦИИ
+  // =============== АВТОМАТИЧЕСКИЕ ДЕЙСТВИЯ ===============
+  
+  // 🎯 ЭФФЕКТ 1: Загрузка объявлений при изменении данных
+  useEffect(() => {
+    fetchNotices();
+  }, [fetchNotices]);
+  
+  // 🎯 ЭФФЕКТ 2: Загрузка данных фильтров один раз при загрузке
+  useEffect(() => {
+    fetchFiltersData();
+  }, [fetchFiltersData]);
+  
+  // =============== ГЕНЕРАЦИЯ КНОПОК ПАГИНАЦИИ ===============
+  
   const paginationButtons = Array.from(
     { length: totalPages },
     (_, i) => i + 1
   );
   
-  // 🎯 ФОРМАТИРОВАНИЕ ДАТЫ
-  const formatDate = (dateString) => {
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-    } catch {
-      return dateString;
-    }
-  };
+  // =============== ОТОБРАЖЕНИЕ СТРАНИЦЫ ===============
   
   return (
+    // 🎯 СЕКЦИЯ СТРАНИЦЫ
     <section className={styles.page}>
+      
+      {/* 🎯 КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ */}
       <div className={styles.container}>
+        
+        {/* 🎯 ЗАГОЛОВОК СТРАНИЦЫ */}
         <Title text="Find pet" />
         
-        {/* 🎯 КОМПОНЕНТ ФИЛЬТРОВ */}
+        {/* 🎯 ПАНЕЛЬ ФИЛЬТРОВ */}
         <NoticesFilters
           onFilterChange={handleFilterChange}
           onSearch={handleSearch}
@@ -200,7 +255,9 @@ const fetchNotices = useCallback(async () => {
           filtersData={filtersData}
         />
         
-        {/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ */}
+        {/* =============== СОСТОЯНИЯ =============== */}
+        
+        {/* 🎯 СОСТОЯНИЕ 1: ЗАГРУЗКА */}
         {loading && (
           <div className={styles.loading}>
             <div className={styles.spinner}></div>
@@ -208,7 +265,7 @@ const fetchNotices = useCallback(async () => {
           </div>
         )}
         
-        {/* 🎯 СОСТОЯНИЕ ОШИБКИ */}
+        {/* 🎯 СОСТОЯНИЕ 2: ОШИБКА */}
         {error && !loading && (
           <div className={styles.error}>
             <p>{error}</p>
@@ -222,7 +279,7 @@ const fetchNotices = useCallback(async () => {
           </div>
         )}
         
-        {/* 🎯 УСПЕШНАЯ ЗАГРУЗКА */}
+        {/* 🎯 СОСТОЯНИЕ 3: УСПЕШНАЯ ЗАГРУЗКА */}
         {!loading && !error && (
           <>
             {/* 🎯 ИНФОРМАЦИЯ О РЕЗУЛЬТАТАХ */}
@@ -237,41 +294,16 @@ const fetchNotices = useCallback(async () => {
               )}
             </div>
             
-            {/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ (ЗАГЛУШКА) */}
-           {notices.length > 0 ? (
-              <ul className={styles.noticesList}>
-                {notices.map((notice) => (
-                  <li key={notice._id} className={styles.noticeItem}>
-        <div className={styles.noticeImage}>
-          <img 
-            src={notice.imgURL || 'https://placehold.co/300x200/cccccc/666666?text=No+Image'} 
-            alt={notice.title}
-            loading="lazy"
-          />
-        </div>
-        <div className={styles.noticeContent}>
-          <h3>{notice.title}</h3>
-          <p><strong>Name:</strong> {notice.name}</p>
-          <p><strong>Species:</strong> {notice.species}</p>
-          <p><strong>Category:</strong> {notice.category}</p>
-          <p><strong>Sex:</strong> {notice.sex}</p>
-          {notice.price && <p><strong>Price:</strong> ${notice.price}</p>}
-          <p><strong>Added:</strong> {formatDate(notice.createdAt)}</p>
-          <p><strong>Popularity:</strong> {notice.popularity || 0}</p>
-        </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-        <div className={styles.emptyState}>
-          <p>No notices found</p>
-          <p className={styles.emptySubtext}>
-            Try changing your search criteria or filters
-          </p>
-        </div>
-)}
+            {/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ */}
+            {/* Здесь теперь используем NoticesList вместо ul/li */}
+            <NoticesList
+              notices={notices}
+              onLearnMore={handleLearnMore}
+              onToggleFavorite={handleToggleFavorite}
+              favorites={favorites}
+            />
             
-            {/* 🎯 ПАГИНАЦИЯ */}
+            {/* 🎯 ПАГИНАЦИЯ (если больше 1 страницы) */}
             {totalPages > 1 && notices.length > 0 && (
               <div className={styles.paginationWrapper}>
                 <Pagination
@@ -284,9 +316,28 @@ const fetchNotices = useCallback(async () => {
             )}
           </>
         )}
+        
+        {/* 🎯 СОСТОЯНИЕ 4: ПУСТОЙ РЕЗУЛЬТАТ */}
+        {!loading && !error && notices.length === 0 && (
+          <div className={styles.empty}>
+            <p>No notices found</p>
+            <p className={styles.emptySubtext}>
+              Try changing your search criteria or filters
+            </p>
+            <button
+              className={styles.resetButton}
+              onClick={handleResetFilters}
+              type="button"
+            >
+              Reset filters and show all
+            </button>
+          </div>
+        )}
+        
       </div>
     </section>
   );
 };
 
+// 🎯 ЭКСПОРТ КОМПОНЕНТА
 export default NoticesPage;

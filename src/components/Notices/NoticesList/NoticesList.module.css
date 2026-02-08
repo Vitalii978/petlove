@@ -1,0 +1,80 @@
+/* src/components/Notices/NoticesList/NoticesList.module.css */
+
+/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ - 3 КОЛОНКИ */
+.noticesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* 🎯 ПУСТОЕ СОСТОЯНИЕ */
+.emptyContainer {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.emptyIcon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  color: #FF6B08;
+}
+
+.emptyTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 12px 0;
+}
+
+.emptyText {
+  font-size: 16px;
+  color: #666666;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+
+/* Планшет (2 колонки) */
+@media (max-width: 1279px) {
+  .noticesList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Мобильный (1 колонка) */
+@media (max-width: 767px) {
+  .noticesList {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .emptyContainer {
+    padding: 40px 16px;
+  }
+  
+  .emptyIcon {
+    font-size: 48px;
+  }
+  
+  .emptyTitle {
+    font-size: 20px;
+  }
+  
+  .emptyText {
+    font-size: 14px;
+  }
+}
