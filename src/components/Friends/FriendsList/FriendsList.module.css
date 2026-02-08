@@ -1,0 +1,34 @@
+/* src/components/Friends/FriendsList/FriendsList.module.css */
+
+.friendsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  /* 🎯 3 КАРТОЧКИ В СТРОКУ НА ДЕСКТОПЕ */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.emptyContainer {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 1279px) {
+  .friendsList {
+    /* 🎯 2 КАРТОЧКИ НА ПЛАНШЕТАХ */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .friendsList {
+    /* 🎯 1 КАРТОЧКА НА МОБИЛЬНЫХ */
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

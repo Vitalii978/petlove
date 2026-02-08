@@ -1,0 +1,157 @@
+/* src/pages/FriendsPage/FriendsPage.module.css */
+
+/* 🎯 ОСНОВНАЯ СТРАНИЦА */
+.page {
+  padding-top: 40px;
+  padding-bottom: 80px;
+  background-color: #f8f8f8;
+  min-height: calc(100vh - 80px);
+}
+
+/* 🎯 КОНТЕЙНЕР */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 🎯 ОПИСАНИЕ СТРАНИЦЫ */
+.description {
+  text-align: center;
+  margin: 30px auto 40px;
+  max-width: 700px;
+}
+
+.description p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+/* 🎯 ИНФОРМАЦИЯ О КОЛИЧЕСТВЕ */
+.info {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.count {
+  font-size: 20px;
+  color: #333;
+}
+
+.count strong {
+  color: #FF6B08;
+  font-weight: 700;
+}
+
+/* 🎯 ЗАГРУЗКА */
+.loading {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 107, 8, 0.3);
+  border-radius: 50%;
+  border-top-color: #FF6B08;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 18px;
+  color: #555;
+}
+
+/* 🎯 ОШИБКА */
+.error {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 40px 0;
+}
+
+.error p {
+  font-size: 18px;
+  color: #ff4444;
+  margin-bottom: 20px;
+}
+
+.retryButton {
+  padding: 12px 30px;
+  background-color: #FF6B08;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retryButton:hover {
+  background-color: #FF8500;
+  transform: translateY(-2px);
+}
+
+/* 🎯 ПУСТОЕ СОСТОЯНИЕ */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 40px 0;
+}
+
+.empty p {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.emptySubtext {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 767px) {
+  .page {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .description {
+    margin: 20px auto 30px;
+  }
+  
+  .description p {
+    font-size: 16px;
+  }
+  
+  .count {
+    font-size: 18px;
+  }
+  
+  .error,
+  .empty {
+    padding: 40px 15px;
+    margin: 30px 0;
+  }
+}

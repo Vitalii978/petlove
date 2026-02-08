@@ -136,7 +136,7 @@ export const NewsPage = () => {
           {/* 🎯 ПЕРВЫЙ ЭЛЕМЕНТ: ЗАГОЛОВОК И ПОИСК */}
           <li className={styles.titleAndSearch}>
             {/* Компонент заголовка с текстом "News" */}
-            <Title text="News" />
+            <Title children="News" />
             
             {/* Компонент поиска с обработчиком handleSearch */}
             <SearchField onSearch={handleSearch} />

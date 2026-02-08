@@ -245,7 +245,8 @@ export const NoticesPage = () => {
       <div className={styles.container}>
         
         {/* 🎯 ЗАГОЛОВОК СТРАНИЦЫ */}
-        <Title text="Find pet" />
+        <Title children="Find pet" />
+        
         
         {/* 🎯 ПАНЕЛЬ ФИЛЬТРОВ */}
         <NoticesFilters
