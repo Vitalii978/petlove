@@ -1,26 +1,43 @@
 /* src/pages/RegisterPage/RegisterPage.module.css */
 
+/* 🎯 ОСНОВНАЯ СТРАНИЦА */
 .page {
   min-height: calc(100vh - 80px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 40px 20px;
   background-color: #f8f8f8;
 }
 
 .container {
-  max-width: 500px;
-  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.card {
+/* 🎯 PetBlock - сверху на мобилке */
+.petBlockWrapper {
+  order: 1; /* Первый элемент на мобилке */
+}
+
+/* 🎯 Секция с формой */
+.formSection {
+  order: 2; /* Второй элемент на мобилке */
   background: white;
-  padding: 40px;
+  padding: 30px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* 🎯 Заголовок */
+.formSection h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #111;
+  font-size: 28px;
+}
+
+/* 🎯 Ошибка */
 .error {
   background: #ffe6e6;
   color: #ff4444;
@@ -28,48 +45,62 @@
   border-radius: 8px;
   margin-bottom: 20px;
   text-align: center;
+  font-size: 14px;
 }
 
+/* 🎯 Форма */
 .form {
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
 .formGroup {
   margin-bottom: 20px;
 }
 
-.formGroup label {
+.label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
   color: #333;
+  font-size: 14px;
 }
 
-.formGroup input {
+.label::after {
+  content: ' *';
+  color: #ff4444;
+}
+
+.input {
   width: 100%;
   padding: 14px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
   font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #fafafa;
   transition: border-color 0.3s;
-}
-
-.formGroup input:focus {
-  border-color: #ff6b08;
   outline: none;
 }
 
+.input:focus {
+  border-color: #ff6b08;
+}
+
+.input:disabled {
+  background-color: #f0f0f0;
+}
+
+/* 🎯 Кнопка */
 .submitButton {
   width: 100%;
   padding: 16px;
   background: #ff6b08;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
   margin-top: 10px;
 }
 
@@ -82,6 +113,7 @@
   cursor: not-allowed;
 }
 
+/* 🎯 Ссылка на вход */
 .loginLink {
   margin-top: 30px;
   text-align: center;
@@ -89,7 +121,8 @@
   border-top: 1px solid #eee;
 }
 
-.loginLink p {
+.loginText {
+  font-size: 14px;
   color: #666;
 }
 
@@ -101,4 +134,79 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+/* 🎯 ТАБЛЕТ (768px - 1279px) */
+@media (min-width: 768px) {
+  .page {
+    padding: 60px 30px;
+  }
+  
+  .container {
+    gap: 50px;
+  }
+  
+  .formSection {
+    padding: 40px;
+  }
+  
+  .formSection h1 {
+    font-size: 32px;
+  }
+  
+  .error {
+    padding: 15px;
+    font-size: 15px;
+  }
+  
+  .label {
+    font-size: 16px;
+  }
+  
+  .loginText {
+    font-size: 16px;
+  }
+}
+
+/* 🎯 ДЕСКТОП (1280px и больше) */
+@media (min-width: 1280px) {
+  .page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+  }
+  
+  .container {
+    flex-direction: row; /* Меняем направление на row */
+    align-items: center;
+    gap: 60px;
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    max-width: 1100px;
+  }
+  
+  /* 🎯 PetBlock слева на десктопе */
+  .petBlockWrapper {
+    order: 1;
+    flex: 1;
+    padding: 40px;
+    background: linear-gradient(135deg, #ff6b08 0%, #ff8500 100%);
+  }
+  
+  /* 🎯 Форма справа на десктопе */
+  .formSection {
+    order: 2;
+    flex: 1;
+    padding: 60px 40px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .formSection h1 {
+    text-align: left;
+    margin-bottom: 40px;
+  }
 }
