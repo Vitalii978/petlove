@@ -1,62 +1,173 @@
-// src/pages/RegisterPage.jsx
-import './RegisterPage.css';
-import { Link } from 'react-router-dom'; // Импортируем Link для перехода на Login
+// src/pages/RegisterPage/RegisterPage.jsx
 
-function RegisterPage() {
-  // Пока что функция просто выводит данные в консоль
-  const handleSubmit = (event) => {
-    event.preventDefault(); // ОСТАНОВИТЬ перезагрузку страницы!
-    
-    // Получаем данные из формы
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    
-    console.log('Данные для регистрации:', data);
-    // Здесь позже будет запрос на бэкенд
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../../utils/auth'; // Импортируем нашу функцию
+import Title from '../../components/Title/Title';
+import styles from './RegisterPage.module.css';
+
+const RegisterPage = () => {
+  const navigate = useNavigate();
+  
+  // 🎯 СОСТОЯНИЯ
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  // 🎯 ОБРАБОТЧИК ИЗМЕНЕНИЯ ПОЛЕЙ
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setError(''); // Очищаем ошибку
   };
-
+  
+  // 🎯 ОБРАБОТЧИК ОТПРАВКИ
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // 🎯 ПРОВЕРКА ДАННЫХ
+    if (!formData.name.trim()) {
+      setError('Please enter your name');
+      return;
+    }
+    
+    if (!formData.email.trim()) {
+      setError('Please enter your email');
+      return;
+    }
+    
+    if (formData.password.length < 7) {
+      setError('Password must be at least 7 characters');
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      // 🎯 ВЫЗЫВАЕМ НАШУ ФУНКЦИЮ register
+      const result = await register({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+      });
+      
+      console.log('📊 Результат регистрации:', result);
+      
+      if (result.success) {
+        console.log('✅ Успешная регистрация!');
+        // Переходим на профиль
+        navigate('/profile');
+      } else {
+        setError(result.error);
+      }
+    } catch (err) {
+      console.error('❌ Ошибка:', err);
+      setError('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   return (
-    <div className="register-page">
-      <h1>Create Your Account 🐶</h1>
-      <p>Join Petlove to find your new friend.</p>
-
-      {/* Простая HTML-форма */}
-      <form className="register-form" onSubmit={handleSubmit}>
-        <label>
-          Your Name:
-          <input type="text" name="name" required />
-        </label>
-
-        <label>
-          Email:
-          <input type="email" name="email" required />
-        </label>
-
-        <label>
-          Password:
-          <input type="password" name="password" minLength="7" required />
-        </label>
-
-        <label>
-          Confirm Password:
-          <input type="password" name="confirmPassword" minLength="7" required />
-        </label>
-
-        <button type="submit">Register</button>
-      </form>
-
-      {/* Ссылка на страницу логина, как в ТЗ */}
-      <p className="login-link">
-        Already have an account? <Link to="/login">Log in here</Link>.
-      </p>
-
-      {/* PetBlock - заглушка, как в ТЗ */}
-      <div className="pet-block">
-        <div className="pet-image-placeholder">Image</div>
-        <p>Your future friend is waiting!</p>
+    <section className={styles.page}>
+      <div className={styles.container}>
+        <Title text="Registration" />
+        
+        <div className={styles.card}>
+          {error && (
+            <div className={styles.error}>
+              <p>❌ {error}</p>
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <label>Name *</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+                disabled={loading}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label>Email *</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                disabled={loading}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label>Password *</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Min 7 characters"
+                disabled={loading}
+                required
+              />
+            </div>
+            
+            <div className={styles.formGroup}>
+              <label>Confirm Password *</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm password"
+                disabled={loading}
+                required
+              />
+            </div>
+            
+            <button 
+              type="submit" 
+              className={styles.submitButton}
+              disabled={loading}
+            >
+              {loading ? 'Registering...' : 'Register'}
+            </button>
+          </form>
+          
+          <div className={styles.loginLink}>
+            <p>
+              Already have an account?{' '}
+              <Link to="/login" className={styles.link}>
+                Log In
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
 
 export default RegisterPage;
