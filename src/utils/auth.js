@@ -1,4 +1,5 @@
 // src/utils/auth.js
+import api from '../services/api'; // ✅ Импортируем наш axios instance
 
 // 1. Проверка авторизации
 export function isAuthenticated() {
@@ -6,7 +7,7 @@ export function isAuthenticated() {
   return !!token;
 }
 
-// 2. Получить данные пользователя
+// 2. Получить данные пользователя (ИСПРАВЛЕНО - используем api)
 export async function getCurrentUser() {
   try {
     const token = localStorage.getItem('token');
@@ -15,68 +16,140 @@ export async function getCurrentUser() {
       return { success: false, error: 'Not authenticated' };
     }
     
-    const response = await fetch('https://petlove.b.goit.study/api/users/current', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await response.json();
+    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
+    const response = await api.get('/users/current');
     
-    if (response.ok) {
-      return { success: true, user: data };
-    } else {
-      return { success: false, error: 'Failed to get user' };
+    return {
+      success: true,
+      user: response.data
+    };
+    
+  } catch (error) {
+    console.error('❌ Ошибка при получении пользователя:', error);
+    
+    if (error.response && error.response.status === 401) {
+      // Токен невалидный
+      localStorage.removeItem('token');
     }
-  } catch {
-    return { success: false, error: 'Network error' };
+    
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Failed to get user'
+    };
   }
 }
 
-// 3. Регистрация
+// 3. Регистрация (ИСПРАВЛЕНО - используем api)
 export async function register(userData) {
   try {
-    const response = await fetch('https://petlove.b.goit.study/api/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
-    });
+    console.log('🔄 Регистрируем пользователя через api...');
     
-    const data = await response.json();
+    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
+    const response = await api.post('/users/signup', userData);
     
-    if (response.ok) {
-      localStorage.setItem('token', data.token);
-      return { success: true, user: data };
-    } else {
-      let errorMessage = 'Registration failed';
-      if (data.message) errorMessage = data.message;
-      return { success: false, error: errorMessage };
+    // Сохраняем токен
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      console.log('✅ Токен сохранен');
     }
-  } catch {
-    return { success: false, error: 'No internet connection' };
+    
+    return {
+      success: true,
+      user: response.data
+    };
+    
+  } catch (error) {
+    console.error('❌ Ошибка при регистрации через api:', error);
+    
+    let errorMessage = 'Registration failed';
+    
+    if (error.response) {
+      if (error.response.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response.status === 409) {
+        errorMessage = 'User with this email already exists';
+      } else if (error.response.status === 400) {
+        errorMessage = 'Invalid data';
+      }
+    } else if (error.request) {
+      errorMessage = 'No internet connection';
+    }
+    
+    return {
+      success: false,
+      error: errorMessage
+    };
   }
 }
 
-// 4. Вход
+// 4. Вход (ИСПРАВЛЕНО - используем api)
 export async function login(credentials) {
   try {
-    const response = await fetch('https://petlove.b.goit.study/api/users/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
+    console.log('🔄 Входим в систему через api...');
+    
+    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
+    const response = await api.post('/users/signin', credentials);
+    
+    console.log('📥 Ответ от сервера при входе:', {
+      статус: response.status,
+      естьТокен: !!response.data.token
     });
     
-    const data = await response.json();
-    
-    if (response.ok) {
-      localStorage.setItem('token', data.token);
-      return { success: true, user: data };
-    } else {
-      let errorMessage = 'Login failed';
-      if (data.message) errorMessage = data.message;
-      return { success: false, error: errorMessage };
+    // Сохраняем токен
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      console.log('✅ Токен сохранен');
     }
-  } catch {
-    return { success: false, error: 'No internet connection' };
+    
+    return {
+      success: true,
+      user: response.data
+    };
+    
+  } catch (error) {
+    console.error('❌ Ошибка при входе через api:', error);
+    
+    let errorMessage = 'Login failed';
+    
+    if (error.response) {
+      if (error.response.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response.status === 401) {
+        errorMessage = 'Wrong email or password';
+      } else if (error.response.status === 404) {
+        errorMessage = 'User not found';
+      }
+    } else if (error.request) {
+      errorMessage = 'No internet connection';
+    }
+    
+    return {
+      success: false,
+      error: errorMessage
+    };
   }
+}
+
+// 5. Выход (ИСПРАВЛЕНО - используем api)
+export async function logout() {
+  try {
+    console.log('🔄 Выходим из системы через api...');
+    
+    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
+    const response = await api.post('/users/signout');
+    
+    console.log('✅ Выход успешен:', response.data);
+    
+  } catch (error) {
+    console.error('❌ Ошибка при выходе через api:', error);
+  } finally {
+    // ВСЕГДА удаляем токен из localStorage
+    localStorage.removeItem('token');
+    console.log('🗑️ Токен удален из localStorage');
+  }
+}
+
+// 6. Получить токен (помощник)
+export function getToken() {
+  return localStorage.getItem('token');
 }

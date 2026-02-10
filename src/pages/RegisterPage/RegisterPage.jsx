@@ -80,7 +80,7 @@ const RegisterPage = () => {
         {/* 🎯 PetBlock - один компонент, позиционируется стилями */}
         <div className={styles.petBlockWrapper}>
           <PetBlock >
-                      <source
+            <source
               srcSet="/catRegisterMob_1x.png 1x, /catRegisterMob_2x.png 2x"
               media="(max-width: 767px)"
             />
