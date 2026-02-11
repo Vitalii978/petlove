@@ -1,0 +1,197 @@
+/* src/pages/ProfilePage/ProfilePage.module.css */
+
+/* 🎯 ОСНОВНАЯ СТРАНИЦА */
+.page {
+  padding-top: 40px;
+  padding-bottom: 80px;
+  background-color: #f8f8f8;
+  min-height: calc(100vh - 80px);
+}
+
+/* 🎯 КОНТЕЙНЕР */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  text-align: center;
+  gap: 20px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 107, 8, 0.3);
+  border-radius: 50%;
+  border-top-color: #ff6b08;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  font-size: 18px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 🎯 СОСТОЯНИЕ ОШИБКИ */
+.errorState {
+  background-color: white;
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.errorTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 16px 0;
+}
+
+.errorText {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.retryButton {
+  padding: 14px 32px;
+  background-color: #ff6b08;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.retryButton:hover {
+  background-color: #ff8500;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
+}
+
+/* 🎯 ПУСТОЕ СОСТОЯНИЕ */
+.emptyState {
+  background-color: white;
+  border-radius: 20px;
+  padding: 80px 40px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.emptyTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 16px 0;
+}
+
+.emptyText {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loginButton {
+  padding: 14px 32px;
+  background-color: #ff6b08;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.loginButton:hover {
+  background-color: #ff8500;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 767px) {
+  .page {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .profileContent {
+    gap: 24px;
+  }
+  
+  .loadingState {
+    padding: 60px 15px;
+  }
+  
+  .errorState {
+    padding: 40px 20px;
+    border-radius: 16px;
+  }
+  
+  .errorTitle {
+    font-size: 20px;
+  }
+  
+  .emptyState {
+    padding: 40px 20px;
+    border-radius: 16px;
+  }
+  
+  .emptyTitle {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .page {
+    padding-top: 30px;
+    padding-bottom: 60px;
+  }
+  
+  .container {
+    padding: 0 30px;
+  }
+  
+  .profileContent {
+    gap: 28px;
+  }
+}

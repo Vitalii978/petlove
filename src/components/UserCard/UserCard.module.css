@@ -1,0 +1,87 @@
+/* src/components/UserCard/UserCard.module.css */
+
+/* 🎯 ОСНОВНАЯ КАРТОЧКА ПОЛЬЗОВАТЕЛЯ */
+.userCard {
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+/* 🎯 ЗАГОЛОВОК КАРТОЧКИ */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #ff6b08 0%, #ff8500 100%);
+  color: white;
+}
+
+.cardTitle {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */
+.cardContent {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* 🎯 ФУТЕР КАРТОЧКИ */
+.cardFooter {
+  padding: 24px 32px;
+  border-top: 1px solid #eaeaea;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 767px) {
+  .userCard {
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  
+  .cardHeader {
+    padding: 20px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .cardTitle {
+    font-size: 24px;
+  }
+  
+  .cardContent {
+    padding: 24px;
+    gap: 24px;
+  }
+  
+  .cardFooter {
+    padding: 20px 24px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .cardHeader {
+    padding: 24px 28px;
+  }
+  
+  .cardContent {
+    padding: 28px;
+    gap: 28px;
+  }
+  
+  .cardFooter {
+    padding: 22px 28px;
+  }
+}

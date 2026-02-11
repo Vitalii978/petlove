@@ -1,0 +1,28 @@
+/* src/components/UserCard/EditUserBtn/EditUserBtn.module.css */
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #ff6b08;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.editButton:hover {
+  background-color: #ff8500;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
+}
+
+.editIcon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}

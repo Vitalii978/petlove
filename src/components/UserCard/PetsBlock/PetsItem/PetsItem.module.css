@@ -1,0 +1,223 @@
+/* src/components/UserCard/PetsBlock/PetsItem/PetsItem.module.css */
+
+/* 🎯 ОСНОВНАЯ КАРТОЧКА ПИТОМЦА */
+.petsItem {
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.petsItem:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+/* 🎯 АНИМАЦИЯ УДАЛЕНИЯ */
+.petsItem.deleting {
+  animation: slideOut 0.3s ease forwards;
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* 🎯 КОНТЕЙНЕР ДЛЯ ИЗОБРАЖЕНИЯ */
+.petImageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.petImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.petsItem:hover .petImage {
+  transform: scale(1.05);
+}
+
+/* 🎯 БЕЙДЖИК ВИДА ПИТОМЦА */
+.speciesBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  backdrop-filter: blur(4px);
+}
+
+.speciesIcon {
+  width: 14px;
+  height: 14px;
+  fill: #ff6b08;
+}
+
+/* 🎯 КОНТЕНТ КАРТОЧКИ */
+.petContent {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🎯 ЗАГОЛОВОК И КНОПКА УДАЛЕНИЯ */
+.petHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.petName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.3;
+  flex-grow: 1;
+}
+
+/* 🎯 КНОПКА УДАЛЕНИЯ */
+.deleteButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #fff5f5;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background-color: #ffebee;
+  transform: scale(1.1);
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deleteIcon {
+  width: 18px;
+  height: 18px;
+  fill: #ff4444;
+}
+
+/* 🎯 ОПИСАНИЕ ПИТОМЦА */
+.petDescription {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 🎯 СПИСОК ИНФОРМАЦИИ О ПИТОМЦЕ */
+.petInfoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 🎯 ЭЛЕМЕНТ ИНФОРМАЦИИ */
+.petInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.petInfoItem:first-child {
+  border-top: none;
+}
+
+.infoIcon {
+  width: 20px;
+  height: 20px;
+  fill: #888;
+  flex-shrink: 0;
+}
+
+.infoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-grow: 1;
+}
+
+.infoLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 767px) {
+  .petImageContainer {
+    height: 180px;
+  }
+  
+  .petContent {
+    padding: 16px;
+  }
+  
+  .petName {
+    font-size: 16px;
+  }
+  
+  .petDescription {
+    font-size: 13px;
+  }
+  
+  .infoValue {
+    font-size: 13px;
+  }
+}

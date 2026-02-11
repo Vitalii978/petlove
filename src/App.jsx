@@ -15,7 +15,7 @@ const NoticesPage = lazy(() => import('./pages/NoticesPage/NoticesPage'));
 const FriendsPage = lazy(() => import('./pages/FriendsPage/FriendsPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
-// const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'));
 
 // 🎯 ПРОСТОЙ компонент для приватных маршрутов
 const PrivateRoute = ({ children }) => {
@@ -71,10 +71,7 @@ function App() {
             {/* Профиль (только для авторизованных) */}
             <Route path="/profile" element={
               <PrivateRoute>
-                <div style={{ padding: '50px', textAlign: 'center' }}>
-                  <h1>Profile Page</h1>
-                  <p>This page will be created later</p>
-                </div>
+                <ProfilePage />
               </PrivateRoute>
             } />
             

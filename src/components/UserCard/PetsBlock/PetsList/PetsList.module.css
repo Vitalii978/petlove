@@ -1,0 +1,60 @@
+/* src/components/UserCard/PetsBlock/PetsList/PetsList.module.css */
+
+/* 🎯 ОСНОВНОЙ СПИСОК ПИТОМЦЕВ */
+.petsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* 🎯 ЭЛЕМЕНТ СПИСКА (LI) */
+.petsListItem {
+  margin: 0;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.petsListItem:hover {
+  transform: translateY(-4px);
+}
+
+/* 🎯 ПУСТОЙ СПИСОК */
+.emptyList {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  border: 2px dashed #e0e0e0;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 16px;
+  color: #888;
+  font-style: italic;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 767px) {
+  .petsList {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .petsList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .petsList {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
