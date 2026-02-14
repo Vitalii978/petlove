@@ -1,3 +1,7 @@
+/* 📁 src/components/ModalApproveAction/ModalApproveAction.module.css */
+/* 🎯 ТЗ: Адаптивна верстка - mobile: від 320px, tablet: від 768px, desktop: від 1280px */
+
+/* 🎯 Mobile: від 320px - гумова */
 .overlay {
   position: fixed;
   top: 0;
@@ -13,32 +17,39 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
+/* 🎯 Mobile: від 375px - адаптивна */
 .modal {
   position: relative;
   background-color: #ffffff;
   border-radius: 30px;
   padding: 40px 20px;
   max-width: 335px;
-  width: 100%;
+  width: 90%;
   margin: 0 20px;
   animation: slideUp 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  to { 
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+/* 🎯 Кнопка закриття (крестик) */
 .closeButton {
   position: absolute;
   top: 20px;
@@ -52,18 +63,25 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  transition: opacity 0.3s ease;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
 }
 
 .closeIcon {
   width: 16px;
   height: 16px;
-  color: #262626;
+  fill: #262626; /* 🎯 Змінено color на fill для SVG */
 }
 
+/* 🎯 Контейнер контенту */
 .content {
   text-align: center;
 }
 
+/* 🎯 Заголовок модалки */
 .title {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
@@ -73,6 +91,7 @@
   margin-bottom: 16px;
 }
 
+/* 🎯 Повідомлення */
 .message {
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
@@ -83,12 +102,14 @@
   opacity: 0.7;
 }
 
+/* 🎯 Контейнер кнопок */
 .buttons {
   display: flex;
   gap: 8px;
   justify-content: center;
 }
 
+/* 🎯 Стилі для обох кнопок */
 .cancelButton,
 .confirmButton {
   font-family: 'Manrope', sans-serif;
@@ -103,6 +124,7 @@
   min-width: 120px;
 }
 
+/* 🎯 Кнопка Cancel (по ТЗ - функціональна кнопка) */
 .cancelButton {
   background-color: #f6b83d;
   color: #ffffff;
@@ -112,6 +134,7 @@
   background-color: #f9b020;
 }
 
+/* 🎯 Кнопка Confirm (по ТЗ - функціональна кнопка) */
 .confirmButton {
   background-color: #fff4df;
   color: #f6b83d;
@@ -121,24 +144,103 @@
   background-color: #fbe7c1;
 }
 
+/* 🎯 Tablet: від 768px */
 @media screen and (min-width: 768px) {
   .modal {
     max-width: 500px;
     padding: 50px 40px;
+    width: 90%;
   }
-  
+
   .title {
     font-size: 32px;
+    margin-bottom: 20px;
   }
-  
+
   .message {
     font-size: 16px;
+    margin-bottom: 32px;
   }
-  
+
   .cancelButton,
   .confirmButton {
     font-size: 16px;
     padding: 18px 30px;
     min-width: 140px;
+  }
+
+  .closeButton {
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .closeIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* 🎯 Desktop: від 1280px */
+@media screen and (min-width: 1280px) {
+  .modal {
+    max-width: 550px;
+    padding: 60px 50px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .message {
+    font-size: 18px;
+  }
+
+  .cancelButton,
+  .confirmButton {
+    font-size: 18px;
+    padding: 20px 35px;
+    min-width: 160px;
+  }
+
+  .closeButton {
+    top: 28px;
+    right: 28px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .closeIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* 🎯 Для дуже маленьких екранів (320px - 374px) */
+@media screen and (max-width: 374px) {
+  .modal {
+    padding: 30px 15px;
+    max-width: 290px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cancelButton,
+  .confirmButton {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .closeButton {
+    top: 16px;
+    right: 16px;
   }
 }
