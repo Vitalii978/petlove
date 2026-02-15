@@ -7,7 +7,7 @@ export function isAuthenticated() {
   return !!token;
 }
 
-// 2. Получить данные пользователя (ИСПРАВЛЕНО - используем api)
+// 2. Получить данные пользователя (базовые - БЕЗ питомцев)
 export async function getCurrentUser() {
   try {
     const token = localStorage.getItem('token');
@@ -16,7 +16,6 @@ export async function getCurrentUser() {
       return { success: false, error: 'Not authenticated' };
     }
     
-    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
     const response = await api.get('/users/current');
     
     return {
@@ -28,7 +27,6 @@ export async function getCurrentUser() {
     console.error('❌ Ошибка при получении пользователя:', error);
     
     if (error.response && error.response.status === 401) {
-      // Токен невалидный
       localStorage.removeItem('token');
     }
     
@@ -39,15 +37,49 @@ export async function getCurrentUser() {
   }
 }
 
-// 3. Регистрация (ИСПРАВЛЕНО - используем api)
+// ✅ НОВАЯ ФУНКЦИЯ: Получить ПОЛНЫЕ данные пользователя (С ПИТОМЦАМИ!)
+export async function getCurrentUserFull() {
+  try {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      return { success: false, error: 'Not authenticated' };
+    }
+    
+    console.log('🔄 Загружаем ПОЛНЫЕ данные пользователя с /users/current/full');
+    
+    // 🟢 ВАЖНО! Используем другой эндпоинт!
+    const response = await api.get('/users/current/full');
+    
+    console.log('✅ Получены данные с питомцами:', response.data);
+    console.log('🐕 Количество питомцев:', response.data.pets?.length || 0);
+    
+    return {
+      success: true,
+      user: response.data
+    };
+    
+  } catch (error) {
+    console.error('❌ Ошибка при получении ПОЛНЫХ данных:', error);
+    
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+    }
+    
+    return {
+      success: false,
+      error: error.response?.data?.message || 'Failed to get full user data'
+    };
+  }
+}
+
+// 3. Регистрация
 export async function register(userData) {
   try {
     console.log('🔄 Регистрируем пользователя через api...');
     
-    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
     const response = await api.post('/users/signup', userData);
     
-    // Сохраняем токен
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       console.log('✅ Токен сохранен');
@@ -59,7 +91,7 @@ export async function register(userData) {
     };
     
   } catch (error) {
-    console.error('❌ Ошибка при регистрации через api:', error);
+    console.error('❌ Ошибка при регистрации:', error);
     
     let errorMessage = 'Registration failed';
     
@@ -82,20 +114,13 @@ export async function register(userData) {
   }
 }
 
-// 4. Вход (ИСПРАВЛЕНО - используем api)
+// 4. Вход
 export async function login(credentials) {
   try {
-    console.log('🔄 Входим в систему через api...');
+    console.log('🔄 Входим в систему...');
     
-    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
     const response = await api.post('/users/signin', credentials);
     
-    console.log('📥 Ответ от сервера при входе:', {
-      статус: response.status,
-      естьТокен: !!response.data.token
-    });
-    
-    // Сохраняем токен
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       console.log('✅ Токен сохранен');
@@ -107,7 +132,7 @@ export async function login(credentials) {
     };
     
   } catch (error) {
-    console.error('❌ Ошибка при входе через api:', error);
+    console.error('❌ Ошибка при входе:', error);
     
     let errorMessage = 'Login failed';
     
@@ -130,20 +155,18 @@ export async function login(credentials) {
   }
 }
 
-// 5. Выход (ИСПРАВЛЕНО - используем api)
+// 5. Выход
 export async function logout() {
   try {
-    console.log('🔄 Выходим из системы через api...');
+    console.log('🔄 Выходим из системы...');
     
-    // ✅ ИСПРАВЛЕНО: используем api вместо fetch
     const response = await api.post('/users/signout');
     
     console.log('✅ Выход успешен:', response.data);
     
   } catch (error) {
-    console.error('❌ Ошибка при выходе через api:', error);
+    console.error('❌ Ошибка при выходе:', error);
   } finally {
-    // ВСЕГДА удаляем токен из localStorage
     localStorage.removeItem('token');
     console.log('🗑️ Токен удален из localStorage');
   }

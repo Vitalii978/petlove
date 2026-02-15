@@ -1,58 +1,138 @@
 /* 📁 src/pages/AddPetPage/AddPetPage.module.css */
 /* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ */
+/* ✅ ИСПРАВЛЕНО: адаптивность по ТЗ */
 
 .page {
-  padding: 40px 20px;
+  padding: 20px;
   min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  align-items: center;
 }
 
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
   background: white;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  display: grid;
 }
 
-.petBlockWrapper {
-  background: #f8f9fa;
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.formWrapper {
-  padding: 40px;
-  background: white;
-}
-
-/* Адаптивность */
-@media (max-width: 968px) {
+/* 🎯 РЕЗИНОВАЯ ВЕРСИЯ (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .page {
+    padding: 10px;
+  }
+  
   .container {
     grid-template-columns: 1fr;
+    gap: 0;
   }
-
+  
   .petBlockWrapper {
-    padding: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
+  
+  .petImage {
+    width: 100%;
+    height: auto;
+    max-width: 280px;
+    object-fit: contain;
+  }
+  
   .formWrapper {
-    padding: 30px;
+    padding: 20px;
+    background: white;
   }
 }
 
-@media (max-width: 480px) {
-  .page {
-    padding: 20px 10px;
+/* 🎯 МОБИЛЬНАЯ АДАПТИВНАЯ (375px - 767px) */
+@media (min-width: 375px) and (max-width: 767px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
-
+  
+  .petBlockWrapper {
+    padding: 30px;
+    background: #fafaf8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .petImage {
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+    object-fit: contain;
+  }
+  
   .formWrapper {
-    padding: 20px;
+    padding: 30px;
+    background: white;
+  }
+}
+
+/* 🎯 ПЛАНШЕТНАЯ ВЕРСИЯ (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .petBlockWrapper {
+    padding: 30px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .petImage {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    object-fit: contain;
+  }
+  
+  .formWrapper {
+    padding: 30px;
+    background: white;
+  }
+}
+
+/* 🎯 ДЕСКТОПНАЯ ВЕРСИЯ (1280px +) */
+@media (min-width: 1280px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  
+  .petBlockWrapper {
+    padding: 40px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .petImage {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    object-fit: contain;
+  }
+  
+  .formWrapper {
+    padding: 40px;
+    background: white;
   }
 }

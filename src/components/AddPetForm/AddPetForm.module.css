@@ -251,21 +251,19 @@
 
 /* 🎯 SELECT */
 .selectInput {
-  appearance: none;
-  background: white;
+  appearance: none;  /* Убирает стандартную стрелку */
+  background-color: white;
   cursor: pointer;
-  padding-right: 40px;
+  padding-right: 40px;  /* Место для кастомной стрелки */
 }
 
 .selectArrow {
-  width: 20px;
-  height: 20px;
   position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  fill: #666;
+  right: 23px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  rotate: 90deg;
 }
 
 /* 🎯 КНОПКИ */
@@ -373,5 +371,165 @@
   .genderIcon {
     width: 25px;
     height: 25px;
+  }
+}
+
+
+/* 🎯 РЕЗИНОВАЯ ВЕРСИЯ (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .form {
+    max-width: 100%;
+  }
+
+  .genderButton {
+    width: 45px;
+    height: 45px;
+  }
+
+  .genderIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .photoPreview {
+    width: 70px;
+    height: 70px;
+  }
+
+  .urlInput {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .uploadButton {
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+
+  .input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .backButton,
+  .submitButton {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}
+
+/* 🎯 МОБИЛЬНАЯ ВЕРСИЯ (375px - 767px) */
+@media (min-width: 375px) and (max-width: 767px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .genderButton {
+    width: 50px;
+    height: 50px;
+  }
+
+  .genderIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .photoPreview {
+    width: 80px;
+    height: 80px;
+  }
+
+  .backButton,
+  .submitButton {
+    padding: 12px 40px;
+  }
+}
+
+/* 🎯 ПЛАНШЕТНАЯ ВЕРСИЯ (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .genderButton {
+    width: 55px;
+    height: 55px;
+  }
+
+  .genderIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .photoPreview {
+    width: 90px;
+    height: 90px;
+  }
+
+  .rowInputs {
+    gap: 15px;
+  }
+}
+
+/* 🎯 ДЕСКТОПНАЯ ВЕРСИЯ (1280px +) */
+@media (min-width: 1280px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .genderButton {
+    width: 65px;
+    height: 65px;
+    transition: all 0.3s;
+  }
+
+  .genderButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .genderIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .photoPreview {
+    width: 120px;
+    height: 120px;
+    transition: all 0.3s;
+  }
+
+  .photoPreview:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .input {
+    padding: 16px;
+    font-size: 15px;
+  }
+
+  .backButton,
+  .submitButton {
+    padding: 16px 60px;
+    font-size: 18px;
+    transition: all 0.3s;
+  }
+
+  .backButton:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .submitButton:hover {
+    background: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
   }
 }
