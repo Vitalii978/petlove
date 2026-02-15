@@ -1,0 +1,58 @@
+/* 📁 src/pages/AddPetPage/AddPetPage.module.css */
+/* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ */
+
+.page {
+  padding: 40px 20px;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.petBlockWrapper {
+  background: #f8f9fa;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formWrapper {
+  padding: 40px;
+  background: white;
+}
+
+/* Адаптивность */
+@media (max-width: 968px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .petBlockWrapper {
+    padding: 30px;
+  }
+
+  .formWrapper {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 20px 10px;
+  }
+
+  .formWrapper {
+    padding: 20px;
+  }
+}

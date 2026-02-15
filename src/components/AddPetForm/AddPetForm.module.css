@@ -1,0 +1,377 @@
+/* 📁 src/components/AddPetForm/AddPetForm.module.css */
+/* 🎯 ПОЛНЫЕ СТИЛИ ДЛЯ ФОРМЫ */
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.spanTitle {
+  font-weight: 400;
+  color: #666;
+}
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 🎯 ГЛАВНЫЙ СПИСОК ПОЛЕЙ */
+.fieldsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.fieldItem {
+  margin-bottom: 25px;
+}
+
+.fieldItem:last-child {
+  margin-bottom: 0;
+}
+
+/* 🎯 СПИСОК ДЛЯ ПОЛА */
+.genderList {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.genderItem {
+  margin: 0;
+}
+
+.genderTitle {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  color: #333;
+  text-align: center;
+}
+
+.genderLabel {
+  cursor: pointer;
+  display: block;
+}
+
+.hiddenRadio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.genderButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.genderButton:hover {
+  transform: scale(1.05);
+  background: #e0e0e0;
+}
+
+.activeFemale {
+  background: #ff6b6b;
+}
+
+.activeMale {
+  background: #4d9eff;
+}
+
+.activeMultiple {
+  background: #ffd966;
+}
+
+.genderIcon {
+  width: 30px;
+  height: 30px;
+  fill: white;
+}
+
+.checkIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  fill: #4caf50;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* 🎯 СЕКЦИЯ ФОТО */
+.photoSection {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.photoPreview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholderIcon {
+  width: 50px;
+  height: 50px;
+  fill: #ccc;
+}
+
+.urlInputWrapper {
+  flex: 1;
+}
+
+.urlInput {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.urlInput:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.urlInput.filled {
+  border-color: #4caf50;
+  background: #f0fff0;
+}
+
+.hiddenFileInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  border: none;
+}
+
+.uploadButton:hover {
+  background: #1976d2;
+}
+
+.uploadButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.uploadIcon {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+/* 🎯 ОБЩИЕ ПОЛЯ */
+.input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.input.filled {
+  border-color: #4caf50;
+  background: #f0fff0;
+}
+
+/* 🎯 СТРОКА С ДВУМЯ ПОЛЯМИ */
+.rowInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* 🎯 ДАТА */
+.dateInput {
+  font-family: inherit;
+  color: #333;
+}
+
+/* 🎯 SELECT */
+.selectInput {
+  appearance: none;
+  background: white;
+  cursor: pointer;
+  padding-right: 40px;
+}
+
+.selectArrow {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  fill: #666;
+}
+
+/* 🎯 КНОПКИ */
+.buttonRow {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+  border-top: 1px solid #eee;
+  padding-top: 30px;
+}
+
+.backButton {
+  padding: 15px 50px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #333;
+}
+
+.backButton:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.submitButton {
+  padding: 15px 50px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submitButton:hover {
+  background: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.submitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 🎯 ОШИБКИ */
+.error {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+.errorMessage {
+  background: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #f44336;
+  font-size: 14px;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media (max-width: 768px) {
+  .photoSection {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rowInputs {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .buttonRow {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .backButton,
+  .submitButton {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .genderList {
+    gap: 10px;
+  }
+
+  .genderButton {
+    width: 50px;
+    height: 50px;
+  }
+
+  .genderIcon {
+    width: 25px;
+    height: 25px;
+  }
+}
