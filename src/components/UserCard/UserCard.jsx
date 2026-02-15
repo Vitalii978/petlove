@@ -1,6 +1,111 @@
-// src/components/UserCard/UserCard.jsx
+// // src/components/UserCard/UserCard.jsx
 
-// 🎯 ИМПОРТЫ
+// // 🎯 ИМПОРТЫ
+// import { useState } from 'react';
+// import EditUserBtn from './EditUserBtn/EditUserBtn';
+// import UserBlock from './UserBlock/UserBlock';
+// import PetsBlock from './PetsBlock/PetsBlock';
+// import LogOutBtn from '../LogOutBtn/LogOutBtn';
+// import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
+// import styles from './UserCard.module.css';
+
+// // 🎯 КОМПОНЕНТ USERCARD: Объединяет все компоненты профиля
+// // Props:
+// // - userData: данные пользователя
+// // - onUserUpdate: функция при обновлении данных
+// // - onAddPet: функция при добавлении питомца
+// // - onLogout: функция выхода
+// const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
+//   // 🎯 СОСТОЯНИЯ
+//   const [user, setUser] = useState(userData);
+//   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+//   // 🎯 ОБРАБОТЧИК ОБНОВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ
+//   const handleUserUpdate = (updatedUser) => {
+//     setUser(updatedUser);
+//     if (onUserUpdate) {
+//       onUserUpdate(updatedUser);
+//     }
+//   };
+
+//   // 🎯 ОБРАБОТЧИК ДОБАВЛЕНИЯ ПИТОМЦА
+//   const handleAddPet = () => {
+//     if (onAddPet) {
+//       onAddPet();
+//     }
+//   };
+
+//   // 🎯 ОБРАБОТЧИКИ ВЫХОДА
+//   const handleLogoutClick = () => {
+//     setShowLogoutModal(true);
+//   };
+
+//   const handleLogoutConfirm = () => {
+//     if (onLogout) {
+//       onLogout();
+//     }
+//     setShowLogoutModal(false);
+//   };
+
+//   const handleLogoutCancel = () => {
+//     setShowLogoutModal(false);
+//   };
+
+//   // 🎯 РЕНДЕР КОМПОНЕНТА
+//   return (
+//     <article className={styles.userCard}>
+      
+//       {/* 🎯 ЗАГОЛОВОК КАРТОЧКИ С КНОПКОЙ РЕДАКТИРОВАНИЯ */}
+//       <header className={styles.cardHeader}>
+//         <h2 className={styles.cardTitle}>My Profile</h2>
+//         <EditUserBtn 
+//           user={user} 
+//           onUpdate={handleUserUpdate} 
+//         />
+//       </header>
+
+//       {/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */}
+//       <div className={styles.cardContent}>
+        
+//         {/* 🎯 БЛОК ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ */}
+//         <UserBlock user={user} />
+        
+//         {/* 🎯 БЛОК С ПИТОМЦАМИ */}
+//         <PetsBlock 
+//           pets={user.pets || []} 
+//           onAddPet={handleAddPet}
+//         />
+        
+//       </div>
+
+//       {/* 🎯 ФУТЕР С КНОПКОЙ ВЫХОДА */}
+//       <footer className={styles.cardFooter}>
+//         <LogOutBtn onLogout={handleLogoutClick} />
+//       </footer>
+
+//       {/* 🎯 МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА */}
+//       {showLogoutModal && (
+//         <ModalApproveAction
+//           title="Log Out"
+//           message="Are you sure you want to log out?"
+//           confirmText="Yes, Log Out"
+//           cancelText="Cancel"
+//           onConfirm={handleLogoutConfirm}
+//           onCancel={handleLogoutCancel}
+//           onClose={handleLogoutCancel}
+//         />
+//       )}
+//     </article>
+//   );
+// };
+
+// export default UserCard;
+
+
+
+// 📁 src/components/UserCard/UserCard.jsx
+// 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ - ПОЛНАЯ ВЕРСИЯ
+
 import { useState } from 'react';
 import EditUserBtn from './EditUserBtn/EditUserBtn';
 import UserBlock from './UserBlock/UserBlock';
@@ -9,18 +114,13 @@ import LogOutBtn from '../LogOutBtn/LogOutBtn';
 import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
 import styles from './UserCard.module.css';
 
-// 🎯 КОМПОНЕНТ USERCARD: Объединяет все компоненты профиля
-// Props:
-// - userData: данные пользователя
-// - onUserUpdate: функция при обновлении данных
-// - onAddPet: функция при добавлении питомца
-// - onLogout: функция выхода
 const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
-  // 🎯 СОСТОЯНИЯ
   const [user, setUser] = useState(userData);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  // 🎯 ОБРАБОТЧИК ОБНОВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ
+  console.log('👤 UserCard получил userData:', userData);
+  console.log('🐕 Питомцы в UserCard:', userData?.pets || []);
+
   const handleUserUpdate = (updatedUser) => {
     setUser(updatedUser);
     if (onUserUpdate) {
@@ -28,14 +128,12 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
     }
   };
 
-  // 🎯 ОБРАБОТЧИК ДОБАВЛЕНИЯ ПИТОМЦА
   const handleAddPet = () => {
     if (onAddPet) {
       onAddPet();
     }
   };
 
-  // 🎯 ОБРАБОТЧИКИ ВЫХОДА
   const handleLogoutClick = () => {
     setShowLogoutModal(true);
   };
@@ -51,39 +149,30 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
     setShowLogoutModal(false);
   };
 
-  // 🎯 РЕНДЕР КОМПОНЕНТА
   return (
     <article className={styles.userCard}>
       
-      {/* 🎯 ЗАГОЛОВОК КАРТОЧКИ С КНОПКОЙ РЕДАКТИРОВАНИЯ */}
       <header className={styles.cardHeader}>
         <h2 className={styles.cardTitle}>My Profile</h2>
-        <EditUserBtn 
-          user={user} 
-          onUpdate={handleUserUpdate} 
-        />
+        <EditUserBtn user={user} onUpdate={handleUserUpdate} />
       </header>
 
-      {/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */}
       <div className={styles.cardContent}>
         
-        {/* 🎯 БЛОК ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ */}
         <UserBlock user={user} />
         
-        {/* 🎯 БЛОК С ПИТОМЦАМИ */}
+        {/* 🎯 Передаем pets и onAddPet в PetsBlock */}
         <PetsBlock 
-          pets={user.pets || []} 
+          pets={user?.pets || []} 
           onAddPet={handleAddPet}
         />
         
       </div>
 
-      {/* 🎯 ФУТЕР С КНОПКОЙ ВЫХОДА */}
       <footer className={styles.cardFooter}>
         <LogOutBtn onLogout={handleLogoutClick} />
       </footer>
 
-      {/* 🎯 МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА */}
       {showLogoutModal && (
         <ModalApproveAction
           title="Log Out"
