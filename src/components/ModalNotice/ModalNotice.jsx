@@ -1,8 +1,5 @@
-
-
 // src/components/ModalNotice/ModalNotice.jsx
-// 🎯 МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ОБЪЯВЛЕНИЯ
-// ✅ ИСПРАВЛЕНО: кнопка меняется в зависимости от isFavorite
+// 🎯 ИСПРАВЛЕНО: добавлена кнопка Contact рядом с Add/Delete
 
 import React, { useEffect } from 'react';
 import sprite from '../../assets/icon/icon-sprite.svg';
@@ -14,7 +11,7 @@ const ModalNotice = ({
   notice,
   onAdd,
   onRemove,
-  isFavorite = false  // 👈 ВАЖНО: флаг "в избранном" для этой модалки
+  isFavorite = false
 }) => {
   
   // 🎯 Закрытие по Escape
@@ -177,42 +174,44 @@ const ModalNotice = ({
               <div className={styles.noPrice}>No price</div>
             )}
 
-            {/* 🎯 КНОПКИ В ОДНУ СТРОКУ */}
+            {/* 🎯 КНОПКИ В ДВЕ СТРОКИ */}
             <div className={styles.actions}>
               
-              {/* ✅ ИСПРАВЛЕНО: кнопка меняется в зависимости от isFavorite */}
-              {isFavorite ? (
-                // Если в избранном - показываем Delete с корзиной
-                <button
-                  className={`${styles.actionButton} ${styles.deleteButton}`}
-                  onClick={() => onRemove(notice._id)}
-                >
-                  <svg className={styles.buttonIcon}>
-                    <use href={`${sprite}#icon-trash`} />
-                  </svg>
-                  Delete
-                </button>
-              ) : (
-                // Если не в избранном - показываем Add to favorites с сердечком
-                <button
-                  className={`${styles.actionButton} ${styles.addButton}`}
-                  onClick={() => onAdd(notice._id)}
-                >
-                  <svg className={styles.buttonIcon}>
-                    <use href={`${sprite}#icon-heart`} />
-                  </svg>
-                  Add to favorites
-                </button>
-              )}
+              {/* ✅ Первая строка: Add/Delete кнопка */}
+              <div className={styles.actionRow}>
+                {isFavorite ? (
+                  // Если в избранном - показываем Delete с корзиной
+                  <button
+                    className={`${styles.actionButton} ${styles.deleteButton}`}
+                    onClick={() => onRemove(notice._id)}
+                  >
+                    <svg className={styles.buttonIcon}>
+                      <use href={`${sprite}#icon-basket-white`} />
+                    </svg>
+                    Delete
+                  </button>
+                ) : (
+                  // Если не в избранном - показываем Add to favorites с сердечком
+                  <button
+                    className={`${styles.actionButton} ${styles.addButton}`}
+                    onClick={() => onAdd(notice._id)}
+                  >
+                    <svg className={styles.buttonIcon}>
+                      <use href={`${sprite}#icon-heart`} />
+                    </svg>
+                    Add to 
+                  </button>
+                )}
+              </div>
               
-              {/* Правая кнопка: Contact */}
-              {notice.user && notice.user.phone && (
-                <a
-                  href={`tel:${notice.user.phone}`}
-                  className={`${styles.actionButton} ${styles.contactButton}`}
-                >
-                  Contact
-                </a>
+              {/* ✅ Вторая строка: Contact кнопка */}
+              {notice.user &&  (
+                  <a
+                    href={`tel:${notice.user.phone}`}
+                    className={`${styles.actionButton} ${styles.contactButton}`}
+                  >
+                    Contact
+                  </a>
               )}
             </div>
           </div>
@@ -223,6 +222,3 @@ const ModalNotice = ({
 };
 
 export default ModalNotice;
-
-
-

@@ -1,5 +1,5 @@
 // src/pages/NoticesPage/NoticesPage.jsx
-// 🎯 ИСПРАВЛЕНО: правильная работа с избранным и модалками
+// 🎯 ИСПРАВЛЕНО: мгновенное обновление после удаления/добавления
 
 import { useState, useEffect, useCallback } from 'react';
 import Title from '../../components/Title/Title';
@@ -41,6 +41,28 @@ export const NoticesPage = () => {
   // =============== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===============
   
   const { favorites: userFavorites, addToViewed, refreshUser } = useUser();
+  
+  // =============== ЛОКАЛЬНЫЙ КЭШ ИЗБРАННЫХ ID ===============
+  // 👇 Добавляем локальное состояние для мгновенного обновления UI
+  const [favoriteIds, setFavoriteIds] = useState(new Set());
+  
+  // 👇 Синхронизируем локальный кэш с данными из useUser
+  useEffect(() => {
+    if (userFavorites && userFavorites.length > 0) {
+      const ids = new Set();
+      userFavorites.forEach(fav => {
+        if (typeof fav === 'object' && fav !== null) {
+          if (fav._id) ids.add(fav._id);
+          if (fav.id) ids.add(fav.id);
+        } else {
+          ids.add(fav);
+        }
+      });
+      setFavoriteIds(ids);
+    } else {
+      setFavoriteIds(new Set());
+    }
+  }, [userFavorites]);
   
   // =============== ФУНКЦИИ ===============
   
@@ -100,15 +122,9 @@ export const NoticesPage = () => {
   
   // 🎯 Функция проверки, находится ли объявление в избранном
   const isNoticeFavorite = useCallback((noticeId) => {
-    if (!noticeId || !userFavorites) return false;
-    
-    return userFavorites.some(fav => {
-      if (typeof fav === 'object' && fav !== null) {
-        return fav._id === noticeId || fav.id === noticeId;
-      }
-      return fav === noticeId;
-    });
-  }, [userFavorites]);
+    if (!noticeId) return false;
+    return favoriteIds.has(noticeId);  // 👈 Используем локальный Set
+  }, [favoriteIds]);
   
   // 🎯 Обработка открытия модалки с деталями
   const handleLearnMore = useCallback(async (notice) => {
@@ -161,6 +177,13 @@ export const NoticesPage = () => {
     
     const result = await noticesApi.addToFavorites(id);
     if (result.success) {
+      // 👇 МГНОВЕННО обновляем локальный кэш
+      setFavoriteIds(prev => {
+        const newSet = new Set(prev);
+        newSet.add(id);
+        return newSet;
+      });
+      
       await refreshUser();
       
       // ✅ Обновляем выбранное объявление с новым флагом isFavorite
@@ -181,6 +204,13 @@ export const NoticesPage = () => {
     
     const result = await noticesApi.removeFromFavorites(id);
     if (result.success) {
+      // 👇 МГНОВЕННО обновляем локальный кэш
+      setFavoriteIds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
+      
       await refreshUser();
       
       // ✅ Обновляем выбранное объявление с новым флагом isFavorite
@@ -225,6 +255,13 @@ export const NoticesPage = () => {
         console.log('🗑️ Удаляем из избранного:', noticeId);
         const result = await noticesApi.removeFromFavorites(noticeId);
         if (result.success) {
+          // 👇 МГНОВЕННО обновляем локальный кэш
+          setFavoriteIds(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(noticeId);
+            return newSet;
+          });
+          
           await refreshUser();
           console.log('✅ Удалено из избранного');
         }
@@ -233,6 +270,13 @@ export const NoticesPage = () => {
         console.log('➕ Добавляем в избранное:', noticeId);
         const result = await noticesApi.addToFavorites(noticeId);
         if (result.success) {
+          // 👇 МГНОВЕННО обновляем локальный кэш
+          setFavoriteIds(prev => {
+            const newSet = new Set(prev);
+            newSet.add(noticeId);
+            return newSet;
+          });
+          
           await refreshUser();
           console.log('✅ Добавлено в избранное');
         }
@@ -374,7 +418,7 @@ export const NoticesPage = () => {
                 notices={notices}
                 onLearnMore={handleLearnMore}
                 onToggleFavorite={handleToggleFavorite}
-                favorites={userFavorites}
+                favorites={Array.from(favoriteIds)}  // 👈 Передаем как массив
               />
               
               {totalPages > 1 && notices.length > 0 && (
