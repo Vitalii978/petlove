@@ -1,4 +1,5 @@
 /* src/components/ModalNotice/ModalNotice.module.css */
+/* 🎯 ПОЛНОСТЬЮ ПОД ФИГМУ! */
 
 .overlay {
   position: fixed;
@@ -11,19 +12,20 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 16px;
+  padding: 20px;
 }
 
 .modal {
   background: white;
-  border-radius: 20px;
-  max-width: 900px;
+  border-radius: 30px;
+  max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   animation: slideIn 0.3s ease;
+  padding: 30px;
 }
 
 @keyframes slideIn {
@@ -39,10 +41,10 @@
 
 .closeButton {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
   background: white;
-  border: none;
+  border: 1px solid #e0e0e0;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -53,72 +55,58 @@
   color: #666;
   transition: all 0.2s;
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .closeButton:hover {
-  background: #f0f0f0;
+  background: #f5f5f5;
   color: #333;
   transform: scale(1.1);
 }
 
-.content {
+/* 🟢 КРУГЛОЕ ФОТО */
+.imageWrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@media (min-width: 768px) {
-  .content {
-    flex-direction: row;
-  }
-}
-
-/* ИЗОБРАЖЕНИЕ */
 .imageContainer {
-  flex: 1;
-  min-height: 300px;
-  background-color: #f8f8f8;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #ff6b6b;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 20px 20px 0 0;
 }
 
-@media (min-width: 768px) {
-  .image {
-    border-radius: 20px 0 0 20px;
-  }
-}
-
-/* ИНФОРМАЦИЯ */
+/* 🟢 ИНФОРМАЦИЯ */
 .info {
-  flex: 1;
-  padding: 24px;
+  text-align: center;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: 600;
+.petName {
+  font-size: 28px;
+  font-weight: 700;
   color: #333;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
-.popularity {
-  display: flex;
+/* 🟢 РЕЙТИНГ */
+.rating {
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: #666;
-  font-weight: 500;
+  gap: 8px;
+  background-color: #f8f8f8;
+  padding: 8px 16px;
+  border-radius: 30px;
+  margin-bottom: 30px;
 }
 
 .star {
@@ -126,126 +114,171 @@
   color: #ffb800;
 }
 
-/* ХАРАКТЕРИСТИКИ */
+.ratingValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 🟢 ХАРАКТЕРИСТИКИ */
 .characteristics {
   display: flex;
-  gap: 32px;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+  text-align: left;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.labels {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  min-width: 100px;
+.characteristic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.labels li {
+.label {
   color: #888;
   font-size: 14px;
-  margin-bottom: 12px;
+  font-weight: 400;
 }
 
-.values {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex: 1;
-}
-
-.values li {
+.value {
   color: #333;
   font-size: 14px;
-  margin-bottom: 12px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.price {
-  color: #ff6b6b;
-  font-weight: 700;
-  font-size: 18px;
+.genderIcon {
+  width: 16px;
+  height: 16px;
 }
 
+/* 🟢 КОММЕНТАРИЙ */
 .comment {
   color: #666;
+  font-size: 14px;
   line-height: 1.6;
-  max-height: 100px;
-  overflow-y: auto;
-  padding-right: 8px;
+  margin: 20px 0;
+  padding: 16px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  text-align: left;
 }
 
-.comment::-webkit-scrollbar {
-  width: 4px;
+/* 🟢 ЦЕНА */
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff6b6b;
+  margin: 20px 0;
+  text-align: center;
 }
 
-.comment::-webkit-scrollbar-track {
-  background: #f0f0f0;
+.noPrice {
+  font-size: 24px;
+  font-weight: 500;
+  color: #999;
+  margin: 20px 0;
+  text-align: center;
+  font-style: italic;
 }
 
-.comment::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
-}
-
-/* КНОПКИ */
+/* 🟢 КНОПКИ В ОДНУ СТРОКУ */
 .actions {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
-.mainButton {
+.actionButton {
   flex: 1;
-  padding: 14px 24px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Кнопка Delete (корзина) */
+.deleteButton {
+  background-color: #ff4444;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 68, 68, 0.3);
+}
+
+/* Кнопка Add (сердечко) */
+.addButton {
   background-color: #ff6b6b;
   color: white;
-  border: none;
-  border-radius: 40px;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.mainButton:hover {
+.addButton:hover {
   background-color: #ff5252;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
 }
 
+/* Кнопка Contact */
 .contactButton {
-  flex: 1;
-  padding: 14px 24px;
   background-color: #f0f0f0;
   color: #333;
-  border: none;
-  border-radius: 40px;
-  font-weight: 600;
-  font-size: 16px;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .contactButton:hover {
   background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* АДАПТИВНОСТЬ */
-@media (max-width: 767px) {
-  .info {
+/* 🟢 АДАПТИВНОСТЬ */
+@media (max-width: 480px) {
+  .modal {
     padding: 20px;
   }
 
-  .title {
-    font-size: 20px;
+  .imageContainer {
+    width: 100px;
+    height: 100px;
+  }
+
+  .petName {
+    font-size: 24px;
+  }
+
+  .price {
+    font-size: 28px;
   }
 
   .actions {
     flex-direction: column;
   }
 
-  .mainButton,
-  .contactButton {
+  .actionButton {
     width: 100%;
   }
 }
+

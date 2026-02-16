@@ -1,6 +1,10 @@
-// src/components/ModalNotice/ModalNotice.jsx
 
-import React from 'react';
+
+// src/components/ModalNotice/ModalNotice.jsx
+// 🎯 МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ОБЪЯВЛЕНИЯ
+// ✅ ИСПРАВЛЕНО: кнопка меняется в зависимости от isFavorite
+
+import React, { useEffect } from 'react';
 import sprite from '../../assets/icon/icon-sprite.svg';
 import styles from './ModalNotice.module.css';
 
@@ -9,9 +13,27 @@ const ModalNotice = ({
   onClose, 
   notice,
   onAdd,
-  onRemove 
+  onRemove,
+  isFavorite = false  // 👈 ВАЖНО: флаг "в избранном" для этой модалки
 }) => {
   
+  // 🎯 Закрытие по Escape
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !notice) return null;
 
   // 🎯 Форматирование даты
@@ -29,19 +51,34 @@ const ModalNotice = ({
     }
   };
 
-  // 🎯 Обработчик клика по кнопке
-  const handleButtonClick = () => {
-    if (notice.isFavorite) {
-      onRemove(notice._id);
-    } else {
-      onAdd(notice._id);
-    }
-  };
-
   // 🎯 Закрытие по клику на оверлей
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
+    }
+  };
+
+  // 🎯 Пол иконка
+  const getGenderIcon = () => {
+    switch (notice.sex) {
+      case 'female':
+        return '#icon-femali-white';
+      case 'male':
+        return '#icon-male-blue';
+      default:
+        return '#icon-femali-male-yellow';
+    }
+  };
+
+  // 🎯 Пол текст
+  const getGenderText = () => {
+    switch (notice.sex) {
+      case 'female':
+        return 'Female';
+      case 'male':
+        return 'Male';
+      default:
+        return 'Unknown';
     }
   };
 
@@ -63,89 +100,116 @@ const ModalNotice = ({
         {/* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */}
         <div className={styles.content}>
           
-          {/* 🎯 ИЗОБРАЖЕНИЕ */}
-          <div className={styles.imageContainer}>
-            <img 
-              src={notice.imgURL || 'https://placehold.co/400x280/cccccc/666666?text=Pet+Photo'}
-              alt={notice.title}
-              className={styles.image}
-              onError={(e) => {
-                e.target.src = 'https://placehold.co/400x280/cccccc/666666?text=No+Image';
-              }}
-            />
+          {/* 🎯 КРУГЛОЕ ФОТО ВВЕРХУ ПОСЕРЕДИНЕ */}
+          <div className={styles.imageWrapper}>
+            <div className={styles.imageContainer}>
+              <img 
+                src={notice.imgURL || 'https://placehold.co/200x200/cccccc/666666?text=Pet+Photo'}
+                alt={notice.title}
+                className={styles.image}
+                onError={(e) => {
+                  e.target.src = 'https://placehold.co/200x200/cccccc/666666?text=No+Image';
+                }}
+              />
+            </div>
           </div>
 
           {/* 🎯 ИНФОРМАЦИЯ */}
           <div className={styles.info}>
             
-            {/* ЗАГОЛОВОК И ПОПУЛЯРНОСТЬ */}
-            <div className={styles.header}>
-              <h2 className={styles.title}>{notice.title}</h2>
-              <div className={styles.popularity}>
-                <svg className={styles.star} width="16" height="16">
-                  <use href={`${sprite}#icon-star`} />
-                </svg>
-                <span>{notice.popularity || 0}</span>
-              </div>
+            {/* 🎯 ИМЯ ЖИВОТНОГО */}
+            <h2 className={styles.petName}>{notice.name || 'Unnamed'}</h2>
+            
+            {/* 🎯 РЕЙТИНГ (ПОПУЛЯРНОСТЬ) */}
+            <div className={styles.rating}>
+              <svg className={styles.star} width="20" height="20">
+                <use href={`${sprite}#icon-star`} />
+              </svg>
+              <span className={styles.ratingValue}>{notice.popularity || 0}</span>
             </div>
 
-            {/* ТАБЛИЦА ХАРАКТЕРИСТИК */}
+            {/* 🎯 ХАРАКТЕРИСТИКИ - ТОЛЬКО 4 ПОЛЯ КАК В ФИГМЕ */}
             <div className={styles.characteristics}>
               
-              {/* ЛЕВЫЙ СТОЛБЕЦ - НАЗВАНИЯ */}
-              <ul className={styles.labels}>
-                <li>Name:</li>
-                <li>Birthday:</li>
-                <li>Gender:</li>
-                <li>Species:</li>
-                <li>Category:</li>
-                {notice.category === 'sell' && <li>Price:</li>}
-                <li>Comments:</li>
-              </ul>
+              {/* Name */}
+              <div className={styles.characteristic}>
+                <span className={styles.label}>Name</span>
+                <span className={styles.value}>{notice.name || 'Not specified'}</span>
+              </div>
 
-              {/* ПРАВЫЙ СТОЛБЕЦ - ЗНАЧЕНИЯ */}
-              <ul className={styles.values}>
-                <li>{notice.name || 'Not specified'}</li>
-                <li>{formatDate(notice.birthday)}</li>
-                <li>
-                  {notice.sex === 'male' ? 'Male' : 
-                   notice.sex === 'female' ? 'Female' : 'Unknown'}
-                </li>
-                <li>
+              {/* Birthday */}
+              <div className={styles.characteristic}>
+                <span className={styles.label}>Birthday</span>
+                <span className={styles.value}>{formatDate(notice.birthday)}</span>
+              </div>
+
+              {/* Gender */}
+              <div className={styles.characteristic}>
+                <span className={styles.label}>Gender</span>
+                <span className={styles.value}>
+                  <svg className={styles.genderIcon}>
+                    <use href={`${sprite}${getGenderIcon()}`} />
+                  </svg>
+                  {getGenderText()}
+                </span>
+              </div>
+
+              {/* Species */}
+              <div className={styles.characteristic}>
+                <span className={styles.label}>Species</span>
+                <span className={styles.value}>
                   {notice.species ? 
                     notice.species.charAt(0).toUpperCase() + notice.species.slice(1) 
                     : 'Unknown'}
-                </li>
-                <li>
-                  {notice.category ? 
-                    notice.category.charAt(0).toUpperCase() + notice.category.slice(1) 
-                    : 'Unknown'}
-                </li>
-                {notice.category === 'sell' && (
-                  <li className={styles.price}>
-                    ${notice.price}
-                  </li>
-                )}
-                <li className={styles.comment}>
-                  {notice.comment || 'No comments'}
-                </li>
-              </ul>
+                </span>
+              </div>
             </div>
 
-            {/* 🎯 КНОПКИ ДЕЙСТВИЙ */}
+            {/* 🎯 КОММЕНТАРИЙ */}
+            <p className={styles.comment}>
+              {notice.comment || 'No comments'}
+            </p>
+
+            {/* 🎯 ЦЕНА ИЛИ "No price" */}
+            {notice.category === 'sell' && notice.price ? (
+              <div className={styles.price}>${notice.price}</div>
+            ) : (
+              <div className={styles.noPrice}>No price</div>
+            )}
+
+            {/* 🎯 КНОПКИ В ОДНУ СТРОКУ */}
             <div className={styles.actions}>
-              <button
-                className={styles.mainButton}
-                onClick={handleButtonClick}
-              >
-                {notice.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-              </button>
               
-              {/* Контактная информация пользователя */}
-              {notice.user && (
+              {/* ✅ ИСПРАВЛЕНО: кнопка меняется в зависимости от isFavorite */}
+              {isFavorite ? (
+                // Если в избранном - показываем Delete с корзиной
+                <button
+                  className={`${styles.actionButton} ${styles.deleteButton}`}
+                  onClick={() => onRemove(notice._id)}
+                >
+                  <svg className={styles.buttonIcon}>
+                    <use href={`${sprite}#icon-trash`} />
+                  </svg>
+                  Delete
+                </button>
+              ) : (
+                // Если не в избранном - показываем Add to favorites с сердечком
+                <button
+                  className={`${styles.actionButton} ${styles.addButton}`}
+                  onClick={() => onAdd(notice._id)}
+                >
+                  <svg className={styles.buttonIcon}>
+                    <use href={`${sprite}#icon-heart`} />
+                  </svg>
+                  Add to favorites
+                </button>
+              )}
+              
+              {/* Правая кнопка: Contact */}
+              {notice.user && notice.user.phone && (
                 <a
                   href={`tel:${notice.user.phone}`}
-                  className={styles.contactButton}
+                  className={`${styles.actionButton} ${styles.contactButton}`}
                 >
                   Contact
                 </a>
@@ -159,3 +223,6 @@ const ModalNotice = ({
 };
 
 export default ModalNotice;
+
+
+
