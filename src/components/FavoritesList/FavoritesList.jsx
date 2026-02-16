@@ -1,7 +1,9 @@
-// // src/components/FavoritesList/FavoritesList.jsx
 
-// import React, { useState } from 'react';
-// import useUser from '../../hooks/useUser'; // 👈 ДОБАВЛЯЕМ ЭТУ СТРОКУ
+// // src/components/FavoritesList/FavoritesList.jsx
+// // 🎯 ИСПРАВЛЕНО: убираем цикл
+
+// import React, { useState, useCallback, useEffect, useRef } from 'react';
+// import useUser from '../../hooks/useUser';
 // import noticesApi from '../../services/noticesApi';
 // import NoticesItem from '../Notices/NoticeItem/NoticeItem';
 // import ModalAttention from '../ModalAttention/ModalAttention';
@@ -9,16 +11,46 @@
 // import styles from './FavoritesList.module.css';
 
 // const FavoritesList = () => {
-//   // ВРЕМЕННО: заменим старый источник данных на новый
+//   console.log('🔥 FavoritesList рендерится');
+  
 //   const { favorites, refreshUser } = useUser();
   
-//   // А старый источник закомментируем
-//   // const dispatch = useDispatch();
-//   // const data = useSelector(selectFavorites);
+//   // 🟢 ЛОКАЛЬНОЕ СОСТОЯНИЕ
+//   const [localFavorites, setLocalFavorites] = useState(favorites);
   
+//   // 🟢 useRef для отслеживания предыдущих значений
+//   const prevFavoritesRef = useRef(favorites);
+  
+//   // 🟢 ИСПРАВЛЕННЫЙ useEffect
+//   useEffect(() => {
+//     const prevFavorites = prevFavoritesRef.current;
+//     const currentFavorites = favorites;
+    
+//     // Проверяем по длине
+//     if (prevFavorites.length !== currentFavorites.length) {
+//       console.log('🔄 favorites изменился по длине');
+//       setLocalFavorites(currentFavorites);
+//       prevFavoritesRef.current = currentFavorites;
+//       return;
+//     }
+    
+//     // Проверяем по содержимому
+//     const prevIds = prevFavorites.map(f => f._id).sort().join(',');
+//     const currentIds = currentFavorites.map(f => f._id).sort().join(',');
+    
+//     if (prevIds !== currentIds) {
+//       console.log('🔄 favorites изменился по содержимому');
+//       setLocalFavorites(currentFavorites);
+//       prevFavoritesRef.current = currentFavorites;
+//     } else {
+//       console.log('⏭️ favorites не изменился');
+//     }
+//   }, [favorites]);
+
 //   const [isModalAttention, setIsModalAttention] = useState(false);
 //   const [isModalOneFriend, setIsModalOneFriend] = useState(false);
 //   const [selectedNotice, setSelectedNotice] = useState(null);
+//   const [processingIds, setProcessingIds] = useState(new Set());
 
 //   const token = localStorage.getItem('token');
 
@@ -26,7 +58,13 @@
 //   const closeModalOneFriend = () => setIsModalOneFriend(false);
 
 //   const handleOpenModal = (notice) => {
-//     setSelectedNotice(notice);
+//     console.log('🔍 Открываем модалку для:', notice.title);
+//     const noticeWithFavorite = {
+//       ...notice,
+//       isFavorite: true
+//     };
+//     setSelectedNotice(noticeWithFavorite);
+    
 //     if (token) {
 //       setIsModalOneFriend(true);
 //     } else {
@@ -34,37 +72,104 @@
 //     }
 //   };
 
-//   const handleAddToFavorites = async (id) => {
+//   const handleRemoveFromFavorites = useCallback(async (id) => {
+//     console.log('🗑️ handleRemoveFromFavorites для ID:', id);
+    
+//     if (processingIds.has(id)) return;
+    
 //     try {
-//       const response = await noticesApi.addToFavorites(id);
-//       if (response.success) {
-//         await refreshUser();
-//         closeModalOneFriend();
-//       }
-//     } catch (error) {
-//       console.error('Ошибка:', error);
-//     }
-//   };
-
-//   const handleRemoveFromFavorites = async (id) => {
-//     try {
+//       setProcessingIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.add(id);
+//         return newSet;
+//       });
+      
+//       // 🔥 Оптимистичное удаление
+//       setLocalFavorites(prev => prev.filter(item => item._id !== id));
+      
 //       const response = await noticesApi.removeFromFavorites(id);
+      
 //       if (response.success) {
+//         console.log('✅ Успешно удалено с сервера');
 //         await refreshUser();
 //         closeModalOneFriend();
+//       } else {
+//         // Ошибка - возвращаем
+//         setLocalFavorites(favorites);
 //       }
 //     } catch (error) {
-//       console.error('Ошибка:', error);
+//       console.error('❌ Ошибка при удалении:', error);
+      
+//       if (error.response?.status === 409) {
+//         console.log('⚠️ Уже удалено');
+//         setLocalFavorites(prev => prev.filter(item => item._id !== id));
+//         await refreshUser();
+//         closeModalOneFriend();
+//       } else {
+//         setLocalFavorites(favorites);
+//       }
+//     } finally {
+//       setProcessingIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.delete(id);
+//         return newSet;
+//       });
 //     }
-//   };
+//   }, [processingIds, refreshUser, favorites]);
 
-//   if (!favorites || favorites.length === 0) {
+//   const handleDeleteFromCard = useCallback(async (id) => {
+//     console.log('🗑️ handleDeleteFromCard для ID:', id);
+    
+//     if (processingIds.has(id)) return;
+    
+//     try {
+//       setProcessingIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.add(id);
+//         return newSet;
+//       });
+      
+//       // 🔥 ОПТИМИСТИЧНОЕ УДАЛЕНИЕ
+//       setLocalFavorites(prev => prev.filter(item => item._id !== id));
+      
+//       const response = await noticesApi.removeFromFavorites(id);
+      
+//       if (response.success) {
+//         console.log('✅ Успешно удалено с сервера');
+//         await refreshUser();
+//       } else {
+//         // Ошибка - возвращаем карточку
+//         setLocalFavorites(favorites);
+//       }
+//     } catch (error) {
+//       console.error('❌ Ошибка при удалении из карточки:', error);
+      
+//       if (error.response?.status === 409) {
+//         console.log('⚠️ Уже удалено');
+//         setLocalFavorites(prev => prev.filter(item => item._id !== id));
+//         await refreshUser();
+//       } else {
+//         setLocalFavorites(favorites);
+//       }
+//     } finally {
+//       setProcessingIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.delete(id);
+//         return newSet;
+//       });
+//     }
+//   }, [processingIds, refreshUser, favorites]);
+
+//   if (!localFavorites || localFavorites.length === 0) {
+//     console.log('📭 Нет избранных объявлений');
 //     return (
 //       <div className={styles.noFavorites}>
 //         <p>Нет избранных объявлений</p>
 //       </div>
 //     );
 //   }
+
+//   console.log(`📋 Рендерим ${localFavorites.length} избранных объявлений`);
 
 //   return (
 //     <>
@@ -78,66 +183,38 @@
 //           isOpen={isModalOneFriend}
 //           onClose={closeModalOneFriend}
 //           notice={selectedNotice}
-//           onAdd={handleAddToFavorites}
+//           onAdd={handleRemoveFromFavorites}
 //           onRemove={handleRemoveFromFavorites}
+//           isFavorite={true}
 //         />
 //       )}
 
-//       {/* <ul className={styles.noticesList}>
-//         {favorites.map((notice) => (
-//           <li key={notice._id} className={styles.oneCard}>
-//             <NoticesItem
-//               id={notice._id}
-//               imgURL={notice.imgURL}
-//               title={notice.title}
-//               name={notice.name}
-//               birthday={notice.birthday}
-//               gender={notice.sex}
-//               species={notice.species}
-//               category={notice.category}
-//               comment={notice.comment}
-//               price={notice.price}
-//               popularity={notice.popularity}
-//               onOpenModal={() => handleOpenModal(notice)}
-//               favorites={true}
-//               boxFavorite={false}
-//             />
-//           </li>
-//         ))}
-//       </ul> */}
 //       <ul className={styles.noticesList}>
-//   {favorites.map((notice) => {
-//     // 👇 ВРЕМЕННО: логируем каждое объявление
-//     console.log('📦 Данные избранного:', {
-//       _id: notice._id,
-//       imgURL: notice.imgURL,
-//       title: notice.title,
-//       // проверяем структуру notice
-//       keys: Object.keys(notice)
-//     });
-    
-//     return (
-//       <li key={notice._id} className={styles.oneCard}>
-//         <NoticesItem
-//           id={notice._id}
-//           imgURL={notice.imgURL}
-//           title={notice.title}
-//           name={notice.name}
-//           birthday={notice.birthday}
-//           gender={notice.sex}
-//           species={notice.species}
-//           category={notice.category}
-//           comment={notice.comment}
-//           price={notice.price}
-//           popularity={notice.popularity}
-//           onOpenModal={() => handleOpenModal(notice)}
-//           favorites={true}
-//           boxFavorite={false}
-//         />
-//       </li>
-//     );
-//   })}
-// </ul>
+//         {localFavorites.map((notice) => {
+//           return (
+//             <li key={notice._id} className={styles.oneCard}>
+//               <NoticesItem
+//                 id={notice._id}
+//                 imgURL={notice.imgURL}
+//                 title={notice.title}
+//                 name={notice.name}
+//                 birthday={notice.birthday}
+//                 gender={notice.sex}
+//                 species={notice.species}
+//                 category={notice.category}
+//                 comment={notice.comment}
+//                 price={notice.price}
+//                 popularity={notice.popularity}
+//                 onOpenModal={() => handleOpenModal(notice)}
+//                 isFavorite={true}
+//                 boxFavorite={true}
+//                 onDelete={handleDeleteFromCard}
+//                 isDisabled={processingIds.has(notice._id)}
+//               />
+//             </li>
+//           );
+//         })}
+//       </ul>
 //     </>
 //   );
 // };
@@ -146,86 +223,197 @@
 
 
 
-
-
-
-
 // src/components/FavoritesList/FavoritesList.jsx
-// 🎯 ЭТО КОМПОНЕНТ ДЛЯ ОТОБРАЖЕНИЯ ИЗБРАННЫХ ОБЪЯВЛЕНИЙ
+// 🎯 КОМПОНЕНТ ДЛЯ ОТОБРАЖЕНИЯ ИЗБРАННЫХ ОБЪЯВЛЕНИЙ
+// ✅ ИСПРАВЛЕНО: оптимистичное удаление и синхронизация
 
-import React, { useState } from 'react';
-// 👇 ИСПОЛЬЗУЕМ НАШ НОВЫЙ ХУК - ОН ДАЕТ НАМ favorites И refreshUser
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+// useState     - для хранения локальных данных
+// useCallback  - для стабильных функций
+// useEffect    - для синхронизации с useUser
+// useRef       - для сравнения предыдущих значений
+
 import useUser from '../../hooks/useUser';
+// useUser - дает нам favorites и refreshUser
+
 import noticesApi from '../../services/noticesApi';
+// noticesApi - для отправки запросов на сервер
+
 import NoticesItem from '../Notices/NoticeItem/NoticeItem';
 import ModalAttention from '../ModalAttention/ModalAttention';
 import ModalNotice from '../ModalNotice/ModalNotice';
 import styles from './FavoritesList.module.css';
 
 const FavoritesList = () => {
-  // 🎯 ПОЛУЧАЕМ ДАННЫЕ ИЗ ХУКА useUser
-  // favorites - массив избранных объявлений
-  // refreshUser - функция для обновления данных пользователя
-  const { favorites, refreshUser } = useUser();
+  console.log('🔥 FavoritesList рендерится');
   
-  // 🎯 СОСТОЯНИЯ ДЛЯ МОДАЛЬНЫХ ОКОН
-  const [isModalAttention, setIsModalAttention] = useState(false);  // Модалка для неавторизованных
-  const [isModalOneFriend, setIsModalOneFriend] = useState(false);  // Модалка с деталями
-  const [selectedNotice, setSelectedNotice] = useState(null);       // Выбранное объявление
+  // 🎯 ПОЛУЧАЕМ ДАННЫЕ ИЗ ХУКА useUser
+  const { favorites, refreshUser } = useUser();
+  console.log('📦 favorites из useUser:', favorites?.length || 0, 'элементов');
+  console.log('📦 содержимое favorites:', favorites?.map(f => f._id));
+  
+  // 🟢 ЛОКАЛЬНОЕ СОСТОЯНИЕ для мгновенного обновления
+  // Это позволяет удалять карточку сразу, не дожидаясь сервера
+  const [localFavorites, setLocalFavorites] = useState(favorites);
+  
+  // 🟢 useRef для отслеживания предыдущих значений
+  // Нужен, чтобы избежать бесконечного цикла при синхронизации
+  const prevFavoritesRef = useRef(favorites);
+  
+  // 🟢 СОСТОЯНИЯ ДЛЯ МОДАЛЬНЫХ ОКОН
+  const [isModalAttention, setIsModalAttention] = useState(false);
+  const [isModalOneFriend, setIsModalOneFriend] = useState(false);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+  
+  // 🟢 СОСТОЯНИЕ ДЛЯ БЛОКИРОВКИ КНОПОК
+  // Хранит ID объявлений, которые сейчас обрабатываются
+  // Чтобы нельзя было нажать два раза подряд
+  const [processingIds, setProcessingIds] = useState(new Set());
 
-  // 🎯 ПРОВЕРЯЕМ, ЕСТЬ ЛИ ТОКЕН (авторизован ли пользователь)
   const token = localStorage.getItem('token');
 
-  // 🎯 ФУНКЦИИ ЗАКРЫТИЯ МОДАЛЬНЫХ ОКОН
   const closeModalAttention = () => setIsModalAttention(false);
   const closeModalOneFriend = () => setIsModalOneFriend(false);
 
-  // 🎯 ОБРАБОТЧИК ОТКРЫТИЯ МОДАЛЬНОГО ОКНА
-  // Когда пользователь кликает на карточку объявления
+  // =============== 🟢 СИНХРОНИЗАЦИЯ С useUser ===============
+  // 🔥 ВАЖНО: сравниваем по содержимому, чтобы избежать цикла
+  useEffect(() => {
+    const prevFavorites = prevFavoritesRef.current;
+    const currentFavorites = favorites;
+    
+    // Проверяем по длине
+    if (prevFavorites.length !== currentFavorites.length) {
+      console.log('🔄 favorites изменился по длине');
+      setLocalFavorites(currentFavorites);
+      prevFavoritesRef.current = currentFavorites;
+      return;
+    }
+    
+    // Проверяем по содержимому (сортируем ID для стабильного сравнения)
+    const prevIds = prevFavorites.map(f => f._id).sort().join(',');
+    const currentIds = currentFavorites.map(f => f._id).sort().join(',');
+    
+    if (prevIds !== currentIds) {
+      console.log('🔄 favorites изменился по содержимому');
+      setLocalFavorites(currentFavorites);
+      prevFavoritesRef.current = currentFavorites;
+    } else {
+      console.log('⏭️ favorites не изменился');
+    }
+  }, [favorites]);
+
+  // =============== 🟢 ОБРАБОТЧИК ОТКРЫТИЯ МОДАЛКИ ===============
   const handleOpenModal = (notice) => {
-    setSelectedNotice(notice);  // Запоминаем, какое объявление выбрали
+    console.log('🔍 Открываем модалку для:', notice.title);
+    // Добавляем флаг isFavorite = true (так как это избранное)
+    const noticeWithFavorite = {
+      ...notice,
+      isFavorite: true
+    };
+    setSelectedNotice(noticeWithFavorite);
     
     if (token) {
-      // Если авторизован - показываем детальную модалку
       setIsModalOneFriend(true);
     } else {
-      // Если нет - показываем предупреждение "зарегистрируйтесь"
       setIsModalAttention(true);
     }
   };
 
-  // 🎯 ДОБАВЛЕНИЕ В ИЗБРАННОЕ
-  const handleAddToFavorites = async (id) => {
+  // =============== 🟢 УДАЛЕНИЕ ИЗ ИЗБРАННОГО (из модалки) ===============
+  const handleRemoveFromFavorites = useCallback(async (id) => {
+    console.log('🗑️ handleRemoveFromFavorites для ID:', id);
+    
+    if (processingIds.has(id)) return;
+    
     try {
-      // Отправляем запрос на сервер
-      const response = await noticesApi.addToFavorites(id);
-      if (response.success) {
-        // 🎯 ВАЖНО: Обновляем данные пользователя
-        // refreshUser загрузит свежие данные с сервера
-        await refreshUser();
-        closeModalOneFriend();  // Закрываем модалку
-      }
-    } catch (error) {
-      console.error('Ошибка:', error);
-    }
-  };
-
-  // 🎯 УДАЛЕНИЕ ИЗ ИЗБРАННОГО
-  const handleRemoveFromFavorites = async (id) => {
-    try {
+      setProcessingIds(prev => {
+        const newSet = new Set(prev);
+        newSet.add(id);
+        return newSet;
+      });
+      
+      // 🔥 ОПТИМИСТИЧНОЕ УДАЛЕНИЕ - удаляем СРАЗУ!
+      setLocalFavorites(prev => prev.filter(item => item._id !== id));
+      
       const response = await noticesApi.removeFromFavorites(id);
+      
       if (response.success) {
-        // 🎯 ВАЖНО: Обновляем данные - карточка исчезнет из списка
+        console.log('✅ Успешно удалено с сервера');
         await refreshUser();
         closeModalOneFriend();
+      } else {
+        // Если ошибка - возвращаем карточку обратно
+        console.log('❌ Ошибка сервера, откатываем');
+        setLocalFavorites(favorites);
       }
     } catch (error) {
-      console.error('Ошибка:', error);
+      console.error('❌ Ошибка при удалении:', error);
+      
+      if (error.response?.status === 409) {
+        console.log('⚠️ Уже удалено');
+        setLocalFavorites(prev => prev.filter(item => item._id !== id));
+        await refreshUser();
+        closeModalOneFriend();
+      } else {
+        setLocalFavorites(favorites);
+      }
+    } finally {
+      setProcessingIds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
     }
-  };
+  }, [processingIds, refreshUser, favorites]);
 
-  // 🎯 СОСТОЯНИЕ: НЕТ ИЗБРАННЫХ
-  if (!favorites || favorites.length === 0) {
+  // =============== 🟢 УДАЛЕНИЕ ИЗ КАРТОЧКИ (клик на корзину) ===============
+  const handleDeleteFromCard = useCallback(async (id) => {
+    console.log('🗑️ handleDeleteFromCard для ID:', id);
+    
+    if (processingIds.has(id)) return;
+    
+    try {
+      setProcessingIds(prev => {
+        const newSet = new Set(prev);
+        newSet.add(id);
+        return newSet;
+      });
+      
+      // 🔥 ОПТИМИСТИЧНОЕ УДАЛЕНИЕ - карточка исчезает МГНОВЕННО!
+      setLocalFavorites(prev => prev.filter(item => item._id !== id));
+      
+      const response = await noticesApi.removeFromFavorites(id);
+      
+      if (response.success) {
+        console.log('✅ Успешно удалено с сервера');
+        await refreshUser();
+      } else {
+        // Ошибка - возвращаем карточку
+        console.log('❌ Ошибка сервера, откатываем');
+        setLocalFavorites(favorites);
+      }
+    } catch (error) {
+      console.error('❌ Ошибка при удалении из карточки:', error);
+      
+      if (error.response?.status === 409) {
+        console.log('⚠️ Уже удалено');
+        setLocalFavorites(prev => prev.filter(item => item._id !== id));
+        await refreshUser();
+      } else {
+        setLocalFavorites(favorites);
+      }
+    } finally {
+      setProcessingIds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
+    }
+  }, [processingIds, refreshUser, favorites]);
+
+  // =============== 🟢 СОСТОЯНИЕ: НЕТ ИЗБРАННЫХ ===============
+  if (!localFavorites || localFavorites.length === 0) {
+    console.log('📭 Нет избранных объявлений');
     return (
       <div className={styles.noFavorites}>
         <p>Нет избранных объявлений</p>
@@ -233,7 +421,9 @@ const FavoritesList = () => {
     );
   }
 
-  // 🎯 ОСНОВНОЙ РЕНДЕР: ЕСТЬ ИЗБРАННЫЕ
+  console.log(`📋 Рендерим ${localFavorites.length} избранных объявлений`);
+
+  // =============== 🟢 ОСНОВНОЙ РЕНДЕР ===============
   return (
     <>
       {/* Модальное окно для неавторизованных */}
@@ -248,33 +438,39 @@ const FavoritesList = () => {
           isOpen={isModalOneFriend}
           onClose={closeModalOneFriend}
           notice={selectedNotice}
-          onAdd={handleAddToFavorites}
+          onAdd={handleRemoveFromFavorites} // В избранном Add = Remove
           onRemove={handleRemoveFromFavorites}
+          isFavorite={true}
         />
       )}
 
       {/* 🎯 СПИСОК ИЗБРАННЫХ ОБЪЯВЛЕНИЙ */}
       <ul className={styles.noticesList}>
-        {favorites.map((notice) => (
-          <li key={notice._id} className={styles.oneCard}>
-            <NoticesItem
-              id={notice._id}
-              imgURL={notice.imgURL}
-              title={notice.title}
-              name={notice.name}
-              birthday={notice.birthday}
-              gender={notice.sex}
-              species={notice.species}
-              category={notice.category}
-              comment={notice.comment}
-              price={notice.price}
-              popularity={notice.popularity}
-              onOpenModal={() => handleOpenModal(notice)}
-              favorites={true}
-              boxFavorite={false}
-            />
-          </li>
-        ))}
+        {localFavorites.map((notice) => {
+          return (
+            <li key={notice._id} className={styles.oneCard}>
+              <NoticesItem
+                id={notice._id}
+                imgURL={notice.imgURL}
+                title={notice.title}
+                name={notice.name}
+                birthday={notice.birthday}
+                gender={notice.sex}
+                species={notice.species}
+                category={notice.category}
+                comment={notice.comment}
+                price={notice.price}
+                popularity={notice.popularity}
+                onOpenModal={() => handleOpenModal(notice)}
+                // 🔥 В избранном всегда isFavorite = true (показываем корзину)
+                isFavorite={true}
+                boxFavorite={true}
+                onDelete={handleDeleteFromCard} // функция удаления
+                isDisabled={processingIds.has(notice._id)} // блокировка
+              />
+            </li>
+          );
+        })}
       </ul>
     </>
   );
