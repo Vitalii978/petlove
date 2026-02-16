@@ -42,7 +42,7 @@ const UserBar = ({ isMobile = false, isHomePage = false }) => {
   }
 
   return (
-    <NavLink to="/profile" className={styles.userBar}>
+    <NavLink to="/profile/favorites" className={styles.userBar}>
       <div className={styles.userInfo}>
         <div className={styles.avatarWrapper}>
           {user.avatar ? (
