@@ -221,7 +221,7 @@
 /* Кнопка Delete (корзина) */
 .deleteButton {
   background-color: #ff4444;
-  fell: white;
+  fill: white;
 }
 
 .deleteButton:hover {

@@ -22,9 +22,9 @@ const NewsList = ({ news = [] }) => {
     return (
       <div className={styles.emptyContainer}>
         {/* 🎯 Сообщение для пользователя */}
-        <p>Новостей не найдено</p>
+        <p>No news found</p>
         <p className={styles.subtext}>
-          Попробуйте изменить поисковый запрос или зайти позже
+          Please try changing your search query or come back later.
         </p>
       </div>
     );
