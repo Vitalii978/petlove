@@ -8,15 +8,12 @@
   background-color: inherit;
 }
 
-
 .container {
-   
   display: flex;
   align-items: center;
   justify-content: space-between;
   max-width: 100%;
   overflow: hidden;
-
 }
 
 .containerHome {
@@ -30,8 +27,6 @@
   background-color: #f9f9f9;
   padding-top: 14px;
 }
-
-
 
 .logo {
   text-decoration: none;
@@ -59,7 +54,7 @@
 }
 
 .linkLogoBlack .logoText {
-  color: #000000; 
+  color: #000000;
 }
 
 .logoIcon {
@@ -70,7 +65,7 @@
 }
 
 .logoIconWhite {
- fill: #ffffff;
+  fill: #ffffff;
 }
 
 .logoIconYellow {
@@ -105,7 +100,6 @@
 }
 
 .navLink {
-  
   text-decoration: none;
   font-family: 'Manrope', sans-serif;
   font-size: 16px;
@@ -116,14 +110,13 @@
   /* position: relative; */
   transition: color 0.3s ease;
   line-height: 1.25;
-  
 }
 
 .navLinkHome {
   color: #ffffff;
 }
 
-.navLinkHome:hover { 
+.navLinkHome:hover {
   background-color: #fff4df;
   color: #f6b83d;
 }
@@ -133,16 +126,13 @@
   color: #262626;
 }
 
-.navLinkOther:hover { 
-  
+.navLinkOther:hover {
   border-color: #f6b83d;
 }
 
 .navLinkOther.active {
   border: 1px solid #f6b83d;
 }
-
-
 
 .desktopAuth {
   display: none;
@@ -167,12 +157,11 @@
   line-height: 1.25;
 }
 
-
 .authLinkHome {
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.4);
   font-weight: 700;
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 1.25;
   text-transform: uppercase;
   border-radius: 30px;
@@ -181,15 +170,14 @@
 
 .authLinkOther {
   font-weight: 700;
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 1.25;
   text-transform: uppercase;
   /* border: 2px solid #000000; */
-  background-color: #f6b83d;;
+  background-color: #f6b83d;
   color: #fff;
   border-radius: 30px;
   padding: 15px 35px;
-
 }
 
 .authLinkOther:hover {
@@ -202,8 +190,6 @@
   background: #fff4df;
   color: #f6b83d;
 }
-
-
 
 .registerLinkHome {
   background-color: #fff4df;
@@ -227,7 +213,7 @@
   text-transform: uppercase;
   color: #f6b83d;
   background-color: #fff4df;
-  border: none
+  border: none;
 }
 
 .registerLink:hover {
@@ -241,7 +227,7 @@
 }
 
 .burgerButton {
-    padding: 0;
+  padding: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -314,89 +300,85 @@
   text-align: center;
 }
 
-
 @media screen and (max-width: 374px) {
   .container {
     /* padding: 18px 20px; */
-  } 
+  }
 }
 
 @media screen and (min-width: 768px) {
-.desktopAuth {
+  .desktopAuth {
     display: block;
   }
 
   .burgerButton {
-  width: 32px;
-  height: 32px;
+    width: 32px;
+    height: 32px;
   }
 
   .Authburg {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
 
   .header {
     width: 100%;
     max-width: 768px;
     padding: 16px 32px 0 32px;
   }
-  
+
   .containerHome {
     padding: 16px 32px;
-    border-top-right-radius: 60px;  
+    border-top-right-radius: 60px;
     border-top-left-radius: 60px;
-}
+  }
 
   .containerOther {
     background-color: #f9f9f9;
     padding-top: 16px;
-}
+  }
 
   .logo {
     font-size: 28px;
     font-weight: 700;
     line-height: 1;
   }
-  
+
   .logoIcon {
     width: 23px;
     height: 23px;
   }
 }
 
-
 @media screen and (min-width: 1280px) {
   .header {
     width: 100%;
     max-width: 1280px;
-    padding: 16px 32px 0 32px;
+    padding: 16px 64px 0 64px;
   }
-  
+
   .containerHome {
     padding: 16px 64px;
-    border-top-right-radius: 60px;  
+    border-top-right-radius: 60px;
     border-top-left-radius: 60px;
-}
+  }
 
   .containerOther {
     background-color: #f9f9f9;
     /* padding-top: 16px; */
     padding: 16px 32px;
-}
-  
+  }
+
   .desktopNav,
   .desktopAuth {
     display: block;
   }
-  
+
   .burgerButton {
     display: none;
   }
-
 }
-
 
 /* Добавьте в конец файла: */
 
@@ -410,12 +392,12 @@
   .mobileUserIcon {
     display: block;
   }
-  
+
   /* Скрываем desktopAuth на мобильных для авторизованных */
   .desktopAuth {
     display: none;
   }
-  
+
   /* Показываем AuthNav для неавторизованных */
   .desktopAuth ul.authList {
     display: none; /* Скрываем на мобильных */
@@ -427,7 +409,7 @@
   .mobileUserIcon {
     display: none; /* Скрываем на планшетах/десктопах */
   }
-  
+
   .desktopAuth {
     display: block; /* Показываем UserNav/AuthNav */
   }
@@ -438,7 +420,7 @@
   .desktopNav {
     display: block;
   }
-  
+
   .burgerButton {
     display: none;
   }
