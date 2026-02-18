@@ -381,9 +381,9 @@ export const NoticesPage = () => {
         onClose={handleCloseAttention}
       />
 
-      <section className={styles.page}>
+      <section className={styles.pageNotices}>
         <div className={styles.container}>
-          <Title children="Find pet" />
+          <Title children="Find your favorite pet" />
 
           <NoticesFilters
             onFilterChange={handleFilterChange}
@@ -414,16 +414,6 @@ export const NoticesPage = () => {
 
           {!loading && !error && (
             <>
-              <div className={styles.noticesInfo}>
-                <p>
-                  Found {notices.length} notices • Page {currentPage} of{' '}
-                  {totalPages}
-                </p>
-                {searchKeyword && (
-                  <p className={styles.searchInfo}>Search: "{searchKeyword}"</p>
-                )}
-              </div>
-
               <NoticesList
                 notices={notices}
                 onLearnMore={handleLearnMore}

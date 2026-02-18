@@ -355,11 +355,11 @@
   .header {
     width: 100%;
     max-width: 1280px;
-    padding: 16px 32px 0 32px;
+    padding: 16px 64px 0 64px;
   }
 
   .containerHome {
-    padding: 16px 64px;
+    padding: 16px 32px;
     border-top-right-radius: 60px;
     border-top-left-radius: 60px;
   }
@@ -367,7 +367,7 @@
   .containerOther {
     background-color: #f9f9f9;
     /* padding-top: 16px; */
-    padding: 16px 32px;
+    padding: 16px 0px;
   }
 
   .desktopNav,

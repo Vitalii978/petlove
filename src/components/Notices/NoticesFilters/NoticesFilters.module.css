@@ -3,7 +3,7 @@
 /* 🎯 ОСНОВНОЙ КОНТЕЙНЕР */
 .filtersContainer {
   width: 100%;
-  margin-bottom: 40px;
+  margin: 40px 0 40px 0;
 }
 
 /* 🔍 СТРОКА ПОИСКА */
