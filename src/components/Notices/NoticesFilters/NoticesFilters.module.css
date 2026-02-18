@@ -138,11 +138,11 @@
   .filtersList {
     gap: 12px;
   }
-  
+
   .filterItem {
     min-width: 130px;
   }
-  
+
   .sortButton,
   .resetButton {
     padding: 8px 16px;
@@ -157,26 +157,26 @@
     gap: 12px;
     align-items: stretch;
   }
-  
+
   .filterItem {
     min-width: 100%;
   }
-  
+
   .sortItem {
     width: 100%;
     margin-left: 0;
   }
-  
+
   .sortButtonsList {
     width: 100%;
     justify-content: center;
     gap: 8px;
   }
-  
+
   .resetItem {
     width: 100%;
   }
-  
+
   .resetButton {
     width: 100%;
     text-align: center;
@@ -188,7 +188,7 @@
   .filtersList {
     gap: 20px;
   }
-  
+
   .filterItem {
     min-width: 180px;
   }

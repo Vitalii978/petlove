@@ -19,7 +19,7 @@ const LogOutBtn = ({ onLogout }) => {
 
   return (
     <>
-      <button 
+      <button
         className={styles.logoutBtn}
         onClick={handleClick} // ✅ Теперь открывает модалку
         type="button"
@@ -28,7 +28,7 @@ const LogOutBtn = ({ onLogout }) => {
         {/* <svg className={styles.logoutIcon}>
           <use href={`${sprite}#icon-logout`} />
         </svg> */}
-        
+
         <span className={styles.logoutText}>Log Out</span>
       </button>
 

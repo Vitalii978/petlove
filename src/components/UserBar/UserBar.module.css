@@ -11,7 +11,6 @@
   gap: 8px;
 }
 
-
 /* 🎯 ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ */
 .userInfo {
   display: flex;
@@ -61,15 +60,13 @@
   color: #262626; /* Черный цвет как в вашем коде */
 }
 
-
-
 /* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
   .avatarWrapper {
     width: 44px;
     height: 44px;
   }
-  
+
   .userName {
     font-size: 18px;
   }

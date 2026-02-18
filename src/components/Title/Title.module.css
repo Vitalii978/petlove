@@ -3,7 +3,7 @@
   /* Шрифт - по дизайну Figma (предположительно Manrope) */
   font-family: 'Manrope', sans-serif;
   font-weight: 700; /* Жирный шрифт */
-  font-size: 28px;  /* Размер для мобильных */
+  font-size: 28px; /* Размер для мобильных */
   line-height: 1; /* Межстрочный интервал */
   letter-spacing: -0.03em; /* Буквы чуть ближе */
   color: #262626;

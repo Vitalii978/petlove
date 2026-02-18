@@ -147,7 +147,6 @@
 
 // export default PetsItem;
 
-
 // 📁 src/components/UserCard/PetsBlock/PetsItem/PetsItem.jsx
 // 🎯 КАРТОЧКА ПИТОМЦА - ПОЛНАЯ ВЕРСИЯ
 
@@ -167,35 +166,38 @@ const PetsItem = ({ pet, onDelete }) => {
     species = 'Unknown',
     birthday = '',
     sex = 'unknown',
-    title = ''
+    title = '',
   } = pet || {};
 
-  const formatBirthday = (dateString) => {
+  const formatBirthday = dateString => {
     if (!dateString) return 'Not specified';
     try {
       const date = new Date(dateString);
       return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       });
     } catch {
       return dateString;
     }
   };
 
-  const formatSex = (sexValue) => {
+  const formatSex = sexValue => {
     switch (sexValue) {
-      case 'male': return 'Male';
-      case 'female': return 'Female';
-      default: return 'Unknown';
+      case 'male':
+        return 'Male';
+      case 'female':
+        return 'Female';
+      default:
+        return 'Unknown';
     }
   };
 
   // ✅ ОБРАБОТЧИК УДАЛЕНИЯ
   const handleDelete = () => {
     console.log('🗑️ Клик по кнопке удаления для:', name);
-    
+
     // Проверяем, что onDelete существует и является функцией
     if (typeof onDelete === 'function') {
       setIsDeleting(true);
@@ -209,34 +211,36 @@ const PetsItem = ({ pet, onDelete }) => {
   };
 
   return (
-    <article className={`${styles.petsItem} ${isDeleting ? styles.deleting : ''}`}>
-      
+    <article
+      className={`${styles.petsItem} ${isDeleting ? styles.deleting : ''}`}
+    >
       <div className={styles.petImageContainer}>
-        <img 
-          src={imgURL || 'https://placehold.co/400x300/cccccc/666666?text=Pet+Photo'} 
+        <img
+          src={
+            imgURL ||
+            'https://placehold.co/400x300/cccccc/666666?text=Pet+Photo'
+          }
           alt={`Photo of ${name}`}
           className={styles.petImage}
           loading="lazy"
-          onError={(e) => {
-            e.target.src = 'https://placehold.co/400x300/cccccc/666666?text=No+Image';
+          onError={e => {
+            e.target.src =
+              'https://placehold.co/400x300/cccccc/666666?text=No+Image';
           }}
         />
-        
+
         <div className={styles.speciesBadge}>
           <svg className={styles.speciesIcon}>
             <use href={`${sprite}#icon-paw`} />
           </svg>
-          <span className={styles.speciesText}>
-            {species}
-          </span>
+          <span className={styles.speciesText}>{species}</span>
         </div>
       </div>
 
       <div className={styles.petContent}>
-        
         <header className={styles.petHeader}>
           <h4 className={styles.petName}>{name}</h4>
-          
+
           {/* ✅ КНОПКА УДАЛЕНИЯ */}
           <button
             className={styles.deleteButton}
@@ -251,21 +255,18 @@ const PetsItem = ({ pet, onDelete }) => {
           </button>
         </header>
 
-        {title && (
-          <p className={styles.petDescription}>
-            {title}
-          </p>
-        )}
+        {title && <p className={styles.petDescription}>{title}</p>}
 
         <ul className={styles.petInfoList}>
-          
           <li className={styles.petInfoItem}>
             <svg className={styles.infoIcon} aria-hidden="true">
               <use href={`${sprite}#icon-calendar`} />
             </svg>
             <div className={styles.infoContent}>
               <span className={styles.infoLabel}>Birthday</span>
-              <span className={styles.infoValue}>{formatBirthday(birthday)}</span>
+              <span className={styles.infoValue}>
+                {formatBirthday(birthday)}
+              </span>
             </div>
           </li>
 
@@ -278,7 +279,6 @@ const PetsItem = ({ pet, onDelete }) => {
               <span className={styles.infoValue}>{formatSex(sex)}</span>
             </div>
           </li>
-
         </ul>
       </div>
     </article>

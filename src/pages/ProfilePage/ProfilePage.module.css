@@ -43,7 +43,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loadingText {
@@ -149,33 +151,33 @@
     padding-top: 20px;
     padding-bottom: 40px;
   }
-  
+
   .container {
     padding: 0 15px;
   }
-  
+
   .profileContent {
     gap: 24px;
   }
-  
+
   .loadingState {
     padding: 60px 15px;
   }
-  
+
   .errorState {
     padding: 40px 20px;
     border-radius: 16px;
   }
-  
+
   .errorTitle {
     font-size: 20px;
   }
-  
+
   .emptyState {
     padding: 40px 20px;
     border-radius: 16px;
   }
-  
+
   .emptyTitle {
     font-size: 20px;
   }
@@ -186,11 +188,11 @@
     padding-top: 30px;
     padding-bottom: 60px;
   }
-  
+
   .container {
     padding: 0 30px;
   }
-  
+
   .profileContent {
     gap: 28px;
   }

@@ -5,18 +5,17 @@ import React, { useEffect } from 'react';
 import sprite from '../../assets/icon/icon-sprite.svg';
 import styles from './ModalNotice.module.css';
 
-const ModalNotice = ({ 
-  isOpen, 
-  onClose, 
+const ModalNotice = ({
+  isOpen,
+  onClose,
   notice,
   onAdd,
   onRemove,
-  isFavorite = false
+  isFavorite = false,
 }) => {
-  
   // 🎯 Закрытие по Escape
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') onClose();
     };
 
@@ -34,22 +33,24 @@ const ModalNotice = ({
   if (!isOpen || !notice) return null;
 
   // 🎯 Форматирование даты
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     if (!dateString) return 'Not specified';
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      }).replace(/\//g, '.');
+      return date
+        .toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .replace(/\//g, '.');
     } catch {
       return dateString;
     }
   };
 
   // 🎯 Закрытие по клику на оверлей
-  const handleOverlayClick = (e) => {
+  const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -82,30 +83,37 @@ const ModalNotice = ({
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <div className={styles.modal}>
-        
         {/* 🎯 КНОПКА ЗАКРЫТИЯ */}
-        <button 
+        <button
           className={styles.closeButton}
           onClick={onClose}
           aria-label="Close modal"
         >
           <svg width="24" height="24" viewBox="0 0 24 24">
-            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <path
+              d="M18 6L6 18M6 6l12 12"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
 
         {/* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */}
         <div className={styles.content}>
-          
           {/* 🎯 КРУГЛОЕ ФОТО ВВЕРХУ ПОСЕРЕДИНЕ */}
           <div className={styles.imageWrapper}>
             <div className={styles.imageContainer}>
-              <img 
-                src={notice.imgURL || 'https://placehold.co/200x200/cccccc/666666?text=Pet+Photo'}
+              <img
+                src={
+                  notice.imgURL ||
+                  'https://placehold.co/200x200/cccccc/666666?text=Pet+Photo'
+                }
                 alt={notice.title}
                 className={styles.image}
-                onError={(e) => {
-                  e.target.src = 'https://placehold.co/200x200/cccccc/666666?text=No+Image';
+                onError={e => {
+                  e.target.src =
+                    'https://placehold.co/200x200/cccccc/666666?text=No+Image';
                 }}
               />
             </div>
@@ -113,31 +121,35 @@ const ModalNotice = ({
 
           {/* 🎯 ИНФОРМАЦИЯ */}
           <div className={styles.info}>
-            
             {/* 🎯 ИМЯ ЖИВОТНОГО */}
             <h2 className={styles.petName}>{notice.name || 'Unnamed'}</h2>
-            
+
             {/* 🎯 РЕЙТИНГ (ПОПУЛЯРНОСТЬ) */}
             <div className={styles.rating}>
               <svg className={styles.star} width="20" height="20">
                 <use href={`${sprite}#icon-star`} />
               </svg>
-              <span className={styles.ratingValue}>{notice.popularity || 0}</span>
+              <span className={styles.ratingValue}>
+                {notice.popularity || 0}
+              </span>
             </div>
 
             {/* 🎯 ХАРАКТЕРИСТИКИ - ТОЛЬКО 4 ПОЛЯ КАК В ФИГМЕ */}
             <div className={styles.characteristics}>
-              
               {/* Name */}
               <div className={styles.characteristic}>
                 <span className={styles.label}>Name</span>
-                <span className={styles.value}>{notice.name || 'Not specified'}</span>
+                <span className={styles.value}>
+                  {notice.name || 'Not specified'}
+                </span>
               </div>
 
               {/* Birthday */}
               <div className={styles.characteristic}>
                 <span className={styles.label}>Birthday</span>
-                <span className={styles.value}>{formatDate(notice.birthday)}</span>
+                <span className={styles.value}>
+                  {formatDate(notice.birthday)}
+                </span>
               </div>
 
               {/* Gender */}
@@ -155,17 +167,16 @@ const ModalNotice = ({
               <div className={styles.characteristic}>
                 <span className={styles.label}>Species</span>
                 <span className={styles.value}>
-                  {notice.species ? 
-                    notice.species.charAt(0).toUpperCase() + notice.species.slice(1) 
+                  {notice.species
+                    ? notice.species.charAt(0).toUpperCase() +
+                      notice.species.slice(1)
                     : 'Unknown'}
                 </span>
               </div>
             </div>
 
             {/* 🎯 КОММЕНТАРИЙ */}
-            <p className={styles.comment}>
-              {notice.comment || 'No comments'}
-            </p>
+            <p className={styles.comment}>{notice.comment || 'No comments'}</p>
 
             {/* 🎯 ЦЕНА ИЛИ "No price" */}
             {notice.category === 'sell' && notice.price ? (
@@ -176,7 +187,6 @@ const ModalNotice = ({
 
             {/* 🎯 КНОПКИ В ДВЕ СТРОКИ */}
             <div className={styles.actions}>
-              
               {/* ✅ Первая строка: Add/Delete кнопка */}
               <div className={styles.actionRow}>
                 {isFavorite ? (
@@ -199,19 +209,19 @@ const ModalNotice = ({
                     <svg className={styles.buttonIcon}>
                       <use href={`${sprite}#icon-heart`} />
                     </svg>
-                    Add to 
+                    Add to
                   </button>
                 )}
               </div>
-              
+
               {/* ✅ Вторая строка: Contact кнопка */}
-              {notice.user &&  (
-                  <a
-                    href={`tel:${notice.user.phone}`}
-                    className={`${styles.actionButton} ${styles.contactButton}`}
-                  >
-                    Contact
-                  </a>
+              {notice.user && (
+                <a
+                  href={`tel:${notice.user.phone}`}
+                  className={`${styles.actionButton} ${styles.contactButton}`}
+                >
+                  Contact
+                </a>
               )}
             </div>
           </div>

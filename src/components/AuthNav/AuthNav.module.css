@@ -10,11 +10,11 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  
+
   /* Располагаем ссылки в строку */
   display: flex;
   gap: 15px; /* Расстояние между кнопками */
-  
+
   /* Выравниваем по центру по вертикали */
   align-items: center;
 }
@@ -29,21 +29,21 @@
 .registerLink {
   /* Убираем подчеркивание */
   text-decoration: none;
-  
+
   /* Шрифт */
   font-family: 'Arial', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  
+
   /* Внутренние отступы для удобства клика */
   padding: 8px 16px;
-  
+
   /* Плавный переход для hover-эффекта */
   transition: all 0.3s ease;
-  
+
   /* Скругление углов */
   border-radius: 4px;
-  
+
   /* Убираем стандартные стили кнопки/ссылки */
   display: inline-block;
   text-align: center;
@@ -59,27 +59,27 @@
 
 /* Hover-эффект для "LOG IN" */
 .authLink:hover {
-  color: #FF6B6B; /* Меняем цвет текста при наведении */
+  color: #ff6b6b; /* Меняем цвет текста при наведении */
   text-decoration: underline; /* Добавляем подчеркивание */
 }
 
 /* СТИЛИ ДЛЯ КНОПКИ "REGISTRATION" (с фоном) */
 .registerLink {
   /* Цвета по дизайну (предположительно) */
-  color: #FFFFFF; /* Белый текст */
-  background-color: #FF6B6B; /* Красный/розовый фон */
-  border: 2px solid #FF6B6B; /* Рамка того же цвета */
+  color: #ffffff; /* Белый текст */
+  background-color: #ff6b6b; /* Красный/розовый фон */
+  border: 2px solid #ff6b6b; /* Рамка того же цвета */
 }
 
 /* Hover-эффект для "REGISTRATION" */
 .registerLink:hover {
   /* Немного затемняем фон при наведении */
-  background-color: #E55A5A;
-  border-color: #E55A5A;
-  
+  background-color: #e55a5a;
+  border-color: #e55a5a;
+
   /* Легкая тень при наведении */
   box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
-  
+
   /* Легкое поднятие кнопки */
   transform: translateY(-2px);
 }
@@ -95,7 +95,7 @@
   .authList {
     gap: 20px; /* Увеличиваем расстояние между кнопками */
   }
-  
+
   .authLink,
   .registerLink {
     font-size: 16px; /* Увеличиваем шрифт */
@@ -108,7 +108,7 @@
   .authList {
     gap: 25px; /* Еще больше расстояния на десктопе */
   }
-  
+
   .authLink,
   .registerLink {
     font-size: 18px; /* Большой шрифт на десктопе */

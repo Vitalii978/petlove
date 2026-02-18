@@ -6,10 +6,8 @@ const AuthNav = () => {
   return (
     // Блок навигации для неавторизованных пользователей
     <div className={styles.authNav}>
-      
       {/* Список ссылок для авторизации */}
       <ul className={styles.authList}>
-        
         {/* Ссылка на страницу входа (Login) */}
         <li className={styles.authItem}>
           <Link to="/login" className={styles.authLink}>
@@ -17,7 +15,7 @@ const AuthNav = () => {
             LOG IN
           </Link>
         </li>
-        
+
         {/* Ссылка на страницу регистрации (Register) */}
         <li className={styles.authItem}>
           <Link to="/register" className={styles.registerLink}>

@@ -26,12 +26,12 @@
   .page {
     padding: 10px;
   }
-  
+
   .container {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .petBlockWrapper {
     padding: 20px;
     background: #f8f9fa;
@@ -39,14 +39,14 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .petImage {
     width: 100%;
     height: auto;
     max-width: 280px;
     object-fit: contain;
   }
-  
+
   .formWrapper {
     padding: 20px;
     background: white;
@@ -59,7 +59,7 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .petBlockWrapper {
     padding: 30px;
     background: #fafaf8;
@@ -67,14 +67,14 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .petImage {
     width: 100%;
     height: auto;
     max-width: 320px;
     object-fit: contain;
   }
-  
+
   .formWrapper {
     padding: 30px;
     background: white;
@@ -87,7 +87,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-  
+
   .petBlockWrapper {
     padding: 30px;
     background: #f8f9fa;
@@ -95,14 +95,14 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .petImage {
     width: 100%;
     height: auto;
     max-width: 300px;
     object-fit: contain;
   }
-  
+
   .formWrapper {
     padding: 30px;
     background: white;
@@ -115,7 +115,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
-  
+
   .petBlockWrapper {
     padding: 40px;
     background: #f8f9fa;
@@ -123,14 +123,14 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .petImage {
     width: 100%;
     height: auto;
     max-width: 400px;
     object-fit: contain;
   }
-  
+
   .formWrapper {
     padding: 40px;
     background: white;

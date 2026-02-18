@@ -13,13 +13,13 @@
 // const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
 //   // 🎯 СТАН: список пітомців
 //   const [pets, setPets] = useState(initialPets);
-  
+
 //   // 🎯 СТАН: завантаження
 //   const [loading, setLoading] = useState(false);
-  
+
 //   // 🎯 СТАН: помилка
 //   const [error, setError] = useState('');
-  
+
 //   // 🎯 СТАН: модалка видалення
 //   const [petToDelete, setPetToDelete] = useState(null);
 //   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -41,7 +41,7 @@
 
 //       const response = await api.get('/users/current');
 //       const userPets = response.data.pets || [];
-      
+
 //       console.log(`✅ Завантажено ${userPets.length} пітомців`);
 //       setPets(userPets);
 //     } catch (error) {
@@ -205,10 +205,6 @@
 
 // export default PetsBlock;
 
-
-
-
-
 // 📁 src/components/UserCard/PetsBlock/PetsBlock.jsx
 // 🎯 БЛОК С ПИТОМЦАМИ - ПОЛНАЯ ВЕРСИЯ
 
@@ -243,16 +239,15 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
     try {
       setLoading(true);
       setError('');
-      
+
       console.log('🔄 Загружаем питомцев с сервера...');
       const response = await api.get('/users/current/full');
-      
+
       console.log('✅ Данные получены:', response.data);
       const userPets = response.data.pets || [];
       console.log('🐕 Питомцы загружены:', userPets);
-      
+
       setPets(userPets);
-      
     } catch (error) {
       console.error('❌ Ошибка загрузки:', error);
       setError('Failed to load pets');
@@ -262,23 +257,22 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
   };
 
   // ✅ ФУНКЦИЯ УДАЛЕНИЯ ПИТОМЦА
-  const handleDeletePet = async (petId) => {
+  const handleDeletePet = async petId => {
     try {
       console.log('🗑️ Удаляем питомца с ID:', petId);
-      
+
       if (!window.confirm('Are you sure you want to delete this pet?')) {
         return;
       }
-      
+
       const response = await api.delete(`/users/current/pets/remove/${petId}`);
-      
+
       console.log('✅ Питомец удален:', response.data);
-      
+
       // Обновляем список, убирая удаленного питомца
       setPets(prevPets => prevPets.filter(pet => pet._id !== petId));
-      
+
       alert('Pet deleted successfully');
-      
     } catch (error) {
       console.error('❌ Ошибка при удалении питомца:', error);
       alert('Failed to delete pet');
@@ -293,12 +287,11 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
 
   return (
     <section className={styles.petsBlock}>
-      
       <header className={styles.blockHeader}>
         <h3 className={styles.blockTitle}>My Pets</h3>
-        
-        <Link 
-          to="/add-pet" 
+
+        <Link
+          to="/add-pet"
           className={styles.addPetButton}
           onClick={handleAddPetClick}
           aria-label="Add new pet"
@@ -311,7 +304,6 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
       </header>
 
       <div className={styles.blockContent}>
-        
         {loading && (
           <div className={styles.loadingState}>
             <div className={styles.spinner}></div>
@@ -322,7 +314,7 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
         {error && !loading && (
           <div className={styles.errorState}>
             <p>{error}</p>
-            <button 
+            <button
               className={styles.retryButton}
               onClick={loadPets}
               type="button"
@@ -341,8 +333,8 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
             <p className={styles.emptyText}>
               Add your first pet to keep track of their information
             </p>
-            <Link 
-              to="/add-pet" 
+            <Link
+              to="/add-pet"
               className={styles.emptyAddButton}
               onClick={handleAddPetClick}
             >
@@ -355,15 +347,13 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
           <>
             <div className={styles.petsInfo}>
               <p className={styles.petsCount}>
-                You have <strong>{pets.length}</strong> pet{pets.length !== 1 ? 's' : ''}
+                You have <strong>{pets.length}</strong> pet
+                {pets.length !== 1 ? 's' : ''}
               </p>
             </div>
-            
+
             {/* ✅ ПЕРЕДАЕМ handleDeletePet ВНИЗ */}
-            <PetsList 
-              pets={pets} 
-              onDeletePet={handleDeletePet}
-            />
+            <PetsList pets={pets} onDeletePet={handleDeletePet} />
           </>
         )}
       </div>

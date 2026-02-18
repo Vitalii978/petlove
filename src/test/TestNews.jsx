@@ -9,7 +9,7 @@ export default function TestNews() {
   useEffect(() => {
     const testAPI = async () => {
       console.log('🧪 Начинаем тест API...');
-      
+
       // Тест 1: Загрузка без поиска
       const test1 = await newsApi.getNews({
         page: 1,
@@ -17,7 +17,7 @@ export default function TestNews() {
         query: '',
       });
       console.log('📊 Тест 1 (без поиска):', test1);
-      
+
       // Тест 2: Загрузка с поиском "dog"
       const test2 = await newsApi.getNews({
         page: 1,
@@ -25,7 +25,7 @@ export default function TestNews() {
         query: 'dog',
       });
       console.log('📊 Тест 2 (поиск "dog"):', test2);
-      
+
       // Тест 3: Загрузка с поиском "фыввцфавцй"
       const test3 = await newsApi.getNews({
         page: 1,
@@ -33,11 +33,11 @@ export default function TestNews() {
         query: 'фыввцфавцй',
       });
       console.log('📊 Тест 3 (поиск рандом):', test3);
-      
+
       setResult({ test1, test2, test3 });
       setLoading(false);
     };
-    
+
     testAPI();
   }, []);
 

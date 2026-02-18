@@ -15,7 +15,7 @@ import styles from './NoticesPage.module.css';
 // 🎯 КОМПОНЕНТ СТРАНИЦЫ ОБЪЯВЛЕНИЙ
 export const NoticesPage = () => {
   // =============== СОСТОЯНИЯ (STATE) ===============
-  
+
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,22 +30,22 @@ export const NoticesPage = () => {
     locationId: '',
     byDate: false,
     byPrice: false,
-    byPopularity: false
+    byPopularity: false,
   });
-  
+
   // =============== СОСТОЯНИЯ ДЛЯ МОДАЛОК ===============
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState(null);
   const [isModalAttention, setIsModalAttention] = useState(false);
-  
+
   // =============== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===============
-  
+
   const { favorites: userFavorites, addToViewed, refreshUser } = useUser();
-  
+
   // =============== ЛОКАЛЬНЫЙ КЭШ ИЗБРАННЫХ ID ===============
   // 👇 Добавляем локальное состояние для мгновенного обновления UI
   const [favoriteIds, setFavoriteIds] = useState(new Set());
-  
+
   // 👇 Синхронизируем локальный кэш с данными из useUser
   useEffect(() => {
     if (userFavorites && userFavorites.length > 0) {
@@ -63,37 +63,35 @@ export const NoticesPage = () => {
       setFavoriteIds(new Set());
     }
   }, [userFavorites]);
-  
+
   // =============== ФУНКЦИИ ===============
-  
+
   // 🎯 Загрузка объявлений
   const fetchNotices = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const result = await noticesApi.getNotices({
         page: currentPage,
         limit: 6,
         keyword: searchKeyword,
-        ...activeFilters
+        ...activeFilters,
       });
-      
+
       if (result.success) {
         setNotices(result.data);
         setTotalPages(result.pagination.totalPages);
-        
+
         console.log('📥 Данные с сервера:', {
           количество: result.data.length,
-          первыйЭлемент: result.data[0]
+          первыйЭлемент: result.data[0],
         });
-        
       } else {
         setError(result.error);
         setNotices([]);
         setTotalPages(1);
       }
-      
     } catch (err) {
       console.error('❌ Ошибка:', err);
       setError('Произошла ошибка');
@@ -103,11 +101,11 @@ export const NoticesPage = () => {
       setLoading(false);
     }
   }, [currentPage, searchKeyword, activeFilters]);
-  
+
   // 🎯 Загрузка данных для фильтров
   const fetchFiltersData = useCallback(async () => {
     const result = await noticesApi.getFiltersData();
-    
+
     if (result.success) {
       setFiltersData(result.data);
     } else {
@@ -115,183 +113,200 @@ export const NoticesPage = () => {
         categories: [],
         sex: [],
         species: [],
-        cities: []
+        cities: [],
       });
     }
   }, []);
-  
+
   // 🎯 Функция проверки, находится ли объявление в избранном
-  const isNoticeFavorite = useCallback((noticeId) => {
-    if (!noticeId) return false;
-    return favoriteIds.has(noticeId);  // 👈 Используем локальный Set
-  }, [favoriteIds]);
-  
+  const isNoticeFavorite = useCallback(
+    noticeId => {
+      if (!noticeId) return false;
+      return favoriteIds.has(noticeId); // 👈 Используем локальный Set
+    },
+    [favoriteIds]
+  );
+
   // 🎯 Обработка открытия модалки с деталями
-  const handleLearnMore = useCallback(async (notice) => {
-    console.log('🔍 Открываем модалку для объявления:', notice.title);
-    
-    if (!notice || !notice._id) {
-      console.error('❌ Нет данных объявления');
-      return;
-    }
-    
-    const token = localStorage.getItem('token');
-    
-    if (token) {
-      // ✅ Добавляем в просмотренные
-      addToViewed(notice._id);
-      
-      // ✅ Проверяем, в избранном ли это объявление
-      const isFavorite = isNoticeFavorite(notice._id);
-      
-      // ✅ Добавляем флаг isFavorite в объект notice
-      const noticeWithFavorite = {
-        ...notice,
-        isFavorite: isFavorite
-      };
-      
-      setSelectedNotice(noticeWithFavorite);
-      setIsModalOpen(true);
-    } else {
-      // Если не авторизован - показываем модалку внимания
-      setSelectedNotice(notice);
-      setIsModalAttention(true);
-    }
-  }, [addToViewed, isNoticeFavorite]);
-  
+  const handleLearnMore = useCallback(
+    async notice => {
+      console.log('🔍 Открываем модалку для объявления:', notice.title);
+
+      if (!notice || !notice._id) {
+        console.error('❌ Нет данных объявления');
+        return;
+      }
+
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        // ✅ Добавляем в просмотренные
+        addToViewed(notice._id);
+
+        // ✅ Проверяем, в избранном ли это объявление
+        const isFavorite = isNoticeFavorite(notice._id);
+
+        // ✅ Добавляем флаг isFavorite в объект notice
+        const noticeWithFavorite = {
+          ...notice,
+          isFavorite: isFavorite,
+        };
+
+        setSelectedNotice(noticeWithFavorite);
+        setIsModalOpen(true);
+      } else {
+        // Если не авторизован - показываем модалку внимания
+        setSelectedNotice(notice);
+        setIsModalAttention(true);
+      }
+    },
+    [addToViewed, isNoticeFavorite]
+  );
+
   // 🎯 Закрытие модалки
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedNotice(null);
   }, []);
-  
+
   // 🎯 Закрытие модалки внимания
   const handleCloseAttention = useCallback(() => {
     setIsModalAttention(false);
     setSelectedNotice(null);
   }, []);
-  
+
   // 🎯 Добавление в избранное из модалки
-  const handleAddToFavorites = useCallback(async (id) => {
-    console.log('➕ Добавляем в избранное из модалки:', id);
-    
-    const result = await noticesApi.addToFavorites(id);
-    if (result.success) {
-      // 👇 МГНОВЕННО обновляем локальный кэш
-      setFavoriteIds(prev => {
-        const newSet = new Set(prev);
-        newSet.add(id);
-        return newSet;
-      });
-      
-      await refreshUser();
-      
-      // ✅ Обновляем выбранное объявление с новым флагом isFavorite
-      if (selectedNotice) {
-        setSelectedNotice({
-          ...selectedNotice,
-          isFavorite: true
+  const handleAddToFavorites = useCallback(
+    async id => {
+      console.log('➕ Добавляем в избранное из модалки:', id);
+
+      const result = await noticesApi.addToFavorites(id);
+      if (result.success) {
+        // 👇 МГНОВЕННО обновляем локальный кэш
+        setFavoriteIds(prev => {
+          const newSet = new Set(prev);
+          newSet.add(id);
+          return newSet;
         });
+
+        await refreshUser();
+
+        // ✅ Обновляем выбранное объявление с новым флагом isFavorite
+        if (selectedNotice) {
+          setSelectedNotice({
+            ...selectedNotice,
+            isFavorite: true,
+          });
+        }
+
+        handleCloseModal();
       }
-      
-      handleCloseModal();
-    }
-  }, [refreshUser, selectedNotice, handleCloseModal]);
-  
+    },
+    [refreshUser, selectedNotice, handleCloseModal]
+  );
+
   // 🎯 Удаление из избранного из модалки
-  const handleRemoveFromFavorites = useCallback(async (id) => {
-    console.log('🗑️ Удаляем из избранного из модалки:', id);
-    
-    const result = await noticesApi.removeFromFavorites(id);
-    if (result.success) {
-      // 👇 МГНОВЕННО обновляем локальный кэш
-      setFavoriteIds(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(id);
-        return newSet;
-      });
-      
-      await refreshUser();
-      
-      // ✅ Обновляем выбранное объявление с новым флагом isFavorite
-      if (selectedNotice) {
-        setSelectedNotice({
-          ...selectedNotice,
-          isFavorite: false
+  const handleRemoveFromFavorites = useCallback(
+    async id => {
+      console.log('🗑️ Удаляем из избранного из модалки:', id);
+
+      const result = await noticesApi.removeFromFavorites(id);
+      if (result.success) {
+        // 👇 МГНОВЕННО обновляем локальный кэш
+        setFavoriteIds(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(id);
+          return newSet;
         });
+
+        await refreshUser();
+
+        // ✅ Обновляем выбранное объявление с новым флагом isFavorite
+        if (selectedNotice) {
+          setSelectedNotice({
+            ...selectedNotice,
+            isFavorite: false,
+          });
+        }
+
+        handleCloseModal();
       }
-      
-      handleCloseModal();
-    }
-  }, [refreshUser, selectedNotice, handleCloseModal]);
-  
+    },
+    [refreshUser, selectedNotice, handleCloseModal]
+  );
+
   // 🎯 Добавление/удаление из избранного (сердечко в карточке)
-  const handleToggleFavorite = useCallback(async (noticeId) => {
-    console.log('❤️ Пользователь кликнул на сердечко для ID:', noticeId);
-    
-    const token = localStorage.getItem('token');
-    
-    if (!token) {
-      console.log('👤 Пользователь не авторизован');
-      
-      // Находим объявление в списке
-      const notice = notices.find(n => n._id === noticeId);
-      if (notice) {
-        setSelectedNotice(notice);
-      }
-      
-      setIsModalAttention(true);
-      return;
-    }
-    
-    try {
-      // Проверяем, есть ли уже это объявление в избранном
-      const isFavorite = isNoticeFavorite(noticeId);
-      
-      console.log(`📊 Текущее состояние: ${isFavorite ? 'в избранном' : 'не в избранном'}`);
-      
-      if (isFavorite) {
-        // ✅ Если уже в избранном - удаляем
-        console.log('🗑️ Удаляем из избранного:', noticeId);
-        const result = await noticesApi.removeFromFavorites(noticeId);
-        if (result.success) {
-          // 👇 МГНОВЕННО обновляем локальный кэш
-          setFavoriteIds(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(noticeId);
-            return newSet;
-          });
-          
-          await refreshUser();
-          console.log('✅ Удалено из избранного');
+  const handleToggleFavorite = useCallback(
+    async noticeId => {
+      console.log('❤️ Пользователь кликнул на сердечко для ID:', noticeId);
+
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        console.log('👤 Пользователь не авторизован');
+
+        // Находим объявление в списке
+        const notice = notices.find(n => n._id === noticeId);
+        if (notice) {
+          setSelectedNotice(notice);
         }
-      } else {
-        // ✅ Если не в избранном - добавляем
-        console.log('➕ Добавляем в избранное:', noticeId);
-        const result = await noticesApi.addToFavorites(noticeId);
-        if (result.success) {
-          // 👇 МГНОВЕННО обновляем локальный кэш
-          setFavoriteIds(prev => {
-            const newSet = new Set(prev);
-            newSet.add(noticeId);
-            return newSet;
-          });
-          
-          await refreshUser();
-          console.log('✅ Добавлено в избранное');
-        }
+
+        setIsModalAttention(true);
+        return;
       }
-    } catch (error) {
-      console.error('❌ Ошибка при переключении избранного:', error);
-    }
-  }, [notices, isNoticeFavorite, refreshUser]);
-  
+
+      try {
+        // Проверяем, есть ли уже это объявление в избранном
+        const isFavorite = isNoticeFavorite(noticeId);
+
+        console.log(
+          `📊 Текущее состояние: ${isFavorite ? 'в избранном' : 'не в избранном'}`
+        );
+
+        if (isFavorite) {
+          // ✅ Если уже в избранном - удаляем
+          console.log('🗑️ Удаляем из избранного:', noticeId);
+          const result = await noticesApi.removeFromFavorites(noticeId);
+          if (result.success) {
+            // 👇 МГНОВЕННО обновляем локальный кэш
+            setFavoriteIds(prev => {
+              const newSet = new Set(prev);
+              newSet.delete(noticeId);
+              return newSet;
+            });
+
+            await refreshUser();
+            console.log('✅ Удалено из избранного');
+          }
+        } else {
+          // ✅ Если не в избранном - добавляем
+          console.log('➕ Добавляем в избранное:', noticeId);
+          const result = await noticesApi.addToFavorites(noticeId);
+          if (result.success) {
+            // 👇 МГНОВЕННО обновляем локальный кэш
+            setFavoriteIds(prev => {
+              const newSet = new Set(prev);
+              newSet.add(noticeId);
+              return newSet;
+            });
+
+            await refreshUser();
+            console.log('✅ Добавлено в избранное');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Ошибка при переключении избранного:', error);
+      }
+    },
+    [notices, isNoticeFavorite, refreshUser]
+  );
+
   // 🎯 Обработка поиска
-  const handleSearch = useCallback((keyword) => {
+  const handleSearch = useCallback(keyword => {
     setSearchKeyword(keyword);
     setCurrentPage(1);
   }, []);
-  
+
   // 🎯 Обработка изменения фильтра
   const handleFilterChange = useCallback((filterName, value) => {
     if (['byDate', 'byPrice', 'byPopularity'].includes(filterName)) {
@@ -299,18 +314,18 @@ export const NoticesPage = () => {
         ...prev,
         byDate: filterName === 'byDate' ? value : false,
         byPrice: filterName === 'byPrice' ? value : false,
-        byPopularity: filterName === 'byPopularity' ? value : false
+        byPopularity: filterName === 'byPopularity' ? value : false,
       }));
     } else {
       setActiveFilters(prev => ({
         ...prev,
-        [filterName]: value
+        [filterName]: value,
       }));
     }
-    
+
     setCurrentPage(1);
   }, []);
-  
+
   // 🎯 Сброс всех фильтров
   const handleResetFilters = useCallback(() => {
     setSearchKeyword('');
@@ -321,34 +336,31 @@ export const NoticesPage = () => {
       locationId: '',
       byDate: false,
       byPrice: false,
-      byPopularity: false
+      byPopularity: false,
     });
     setCurrentPage(1);
   }, []);
-  
+
   // 🎯 Обработка пагинации
-  const handlePageChange = useCallback((page) => {
+  const handlePageChange = useCallback(page => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-  
+
   // =============== ЭФФЕКТЫ ===============
-  
+
   useEffect(() => {
     fetchNotices();
   }, [fetchNotices]);
-  
+
   useEffect(() => {
     fetchFiltersData();
   }, [fetchFiltersData]);
-  
+
   // =============== РЕНДЕР ===============
-  
-  const paginationButtons = Array.from(
-    { length: totalPages },
-    (_, i) => i + 1
-  );
-  
+
+  const paginationButtons = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
     <>
       {/* Модальное окно с деталями */}
@@ -362,32 +374,31 @@ export const NoticesPage = () => {
           isFavorite={selectedNotice.isFavorite || false}
         />
       )}
-      
+
       {/* Модальное окно для неавторизованных */}
-      <ModalAttention 
-        isOpen={isModalAttention} 
-        onClose={handleCloseAttention} 
+      <ModalAttention
+        isOpen={isModalAttention}
+        onClose={handleCloseAttention}
       />
-      
+
       <section className={styles.page}>
         <div className={styles.container}>
-          
           <Title children="Find pet" />
-          
+
           <NoticesFilters
             onFilterChange={handleFilterChange}
             onSearch={handleSearch}
             onReset={handleResetFilters}
             filtersData={filtersData}
           />
-          
+
           {loading && (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
               <p>Loading notices...</p>
             </div>
           )}
-          
+
           {error && !loading && (
             <div className={styles.error}>
               <p>{error}</p>
@@ -400,27 +411,26 @@ export const NoticesPage = () => {
               </button>
             </div>
           )}
-          
+
           {!loading && !error && (
             <>
               <div className={styles.noticesInfo}>
                 <p>
-                  Found {notices.length} notices • Page {currentPage} of {totalPages}
+                  Found {notices.length} notices • Page {currentPage} of{' '}
+                  {totalPages}
                 </p>
                 {searchKeyword && (
-                  <p className={styles.searchInfo}>
-                    Search: "{searchKeyword}"
-                  </p>
+                  <p className={styles.searchInfo}>Search: "{searchKeyword}"</p>
                 )}
               </div>
-              
+
               <NoticesList
                 notices={notices}
                 onLearnMore={handleLearnMore}
                 onToggleFavorite={handleToggleFavorite}
-                favorites={Array.from(favoriteIds)}  // 👈 Передаем как массив
+                favorites={Array.from(favoriteIds)} // 👈 Передаем как массив
               />
-              
+
               {totalPages > 1 && notices.length > 0 && (
                 <div className={styles.paginationWrapper}>
                   <Pagination
@@ -433,7 +443,7 @@ export const NoticesPage = () => {
               )}
             </>
           )}
-          
+
           {!loading && !error && notices.length === 0 && (
             <div className={styles.empty}>
               <p>No notices found</p>
@@ -449,7 +459,6 @@ export const NoticesPage = () => {
               </button>
             </div>
           )}
-          
         </div>
       </section>
     </>

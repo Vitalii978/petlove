@@ -24,7 +24,7 @@
 .emptyIcon {
   font-size: 60px;
   margin-bottom: 20px;
-  color: #FF6B08;
+  color: #ff6b08;
 }
 
 .emptyTitle {
@@ -61,19 +61,19 @@
     max-width: 400px;
     margin: 0 auto;
   }
-  
+
   .emptyContainer {
     padding: 40px 16px;
   }
-  
+
   .emptyIcon {
     font-size: 48px;
   }
-  
+
   .emptyTitle {
     font-size: 20px;
   }
-  
+
   .emptyText {
     font-size: 14px;
   }

@@ -80,7 +80,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loadingState p {
@@ -211,34 +213,34 @@
     padding: 20px;
     border-radius: 16px;
   }
-  
+
   .blockHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
-  
+
   .addPetButton {
     width: 100%;
     justify-content: center;
   }
-  
+
   .blockTitle {
     font-size: 18px;
   }
-  
+
   .emptyState {
     padding: 40px 16px;
   }
-  
+
   .emptyTitle {
     font-size: 18px;
   }
-  
+
   .emptyText {
     font-size: 15px;
   }
-  
+
   .emptyAddButton {
     width: 100%;
     text-align: center;

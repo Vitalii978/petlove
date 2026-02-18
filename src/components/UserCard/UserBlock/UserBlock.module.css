@@ -139,29 +139,29 @@
     padding: 20px;
     border-radius: 16px;
   }
-  
+
   .blockTitle {
     font-size: 18px;
   }
-  
+
   .avatarContainer {
     width: 100px;
     height: 100px;
   }
-  
+
   .avatarDefault {
     width: 50px;
     height: 50px;
   }
-  
+
   .userName {
     font-size: 16px;
   }
-  
+
   .infoItem {
     padding: 10px 14px;
   }
-  
+
   .infoValue {
     font-size: 15px;
   }

@@ -1,6 +1,6 @@
-import s from "./Pagination.module.css";
-import sprite from "../../assets/icon/icon-sprite.svg";
-import clsx from "clsx";
+import s from './Pagination.module.css';
+import sprite from '../../assets/icon/icon-sprite.svg';
+import clsx from 'clsx';
 
 export default function Pagination({
   numberOfPages,
@@ -8,42 +8,41 @@ export default function Pagination({
   setToPage,
   toPage,
 }) {
-  
   console.log('🔍 Pagination:', {
     toPage,
     totalPages,
-    hasSetToPage: typeof setToPage === 'function'
+    hasSetToPage: typeof setToPage === 'function',
   });
-  
+
   // Если нет данных - не рендерим
   if (!numberOfPages || numberOfPages.length <= 1) {
     return null;
   }
-  
+
   // 🎯 ИСПРАВЛЕННЫЕ ОБРАБОТЧИКИ - передаем ЧИСЛА, не функции!
   const goToFirstPage = () => {
     console.log('⬅️⬅️ Первая страница');
     setToPage(1); // ✅ Число
   };
-  
+
   const goToPrev = () => {
     console.log('⬅️ Предыдущая страница');
     const prevPage = Math.max(toPage - 1, 1); // ✅ Вычисляем число
     setToPage(prevPage); // ✅ Передаем число
   };
-  
+
   const goToNext = () => {
     console.log('➡️ Следующая страница');
     const nextPage = Math.min(toPage + 1, totalPages); // ✅ Вычисляем число
     setToPage(nextPage); // ✅ Передаем число
   };
-  
+
   const goToLastPage = () => {
     console.log('➡️➡️ Последняя страница');
     setToPage(totalPages); // ✅ Число
   };
-  
-  const goToPage = (e) => {
+
+  const goToPage = e => {
     const pageNum = Number(e.target.textContent);
     if (!isNaN(pageNum)) {
       console.log('🔢 Переход на страницу:', pageNum);
@@ -116,7 +115,9 @@ export default function Pagination({
           onClick={goToLastPage}
           disabled={toPage === totalPages}
         >
-          <svg className={clsx(s.iconOne, toPage === totalPages && s.iconDisabl)}>
+          <svg
+            className={clsx(s.iconOne, toPage === totalPages && s.iconDisabl)}
+          >
             <use href={`${sprite}#icon-arrow-left`} />
           </svg>
           <svg className={clsx(s.icon, toPage === totalPages && s.iconDisabl)}>

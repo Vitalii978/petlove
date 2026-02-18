@@ -13,14 +13,14 @@ import sprite from '../../assets/icon/icon-sprite.svg';
 const Header = () => {
   const { isHomePage } = usePageType();
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
-  
+
   // 🎯 ИСПРАВЛЕНО: используем реальную проверку авторизации
   const isLoggedIn = isAuthenticated(); // true/false в зависимости от токена
-  
+
   const toggleBurgerMenu = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
-  
+
   // 🎯 Функция выхода (теперь работает с auth.js)
   const handleLogout = () => {
     // Удаляем токен из localStorage
@@ -32,15 +32,18 @@ const Header = () => {
 
   return (
     <header className={`${styles.header} `}>
-      <div className={`${styles.container} ${isHomePage ? styles.containerHome : styles.containerOther}`}>
-        
+      <div
+        className={`${styles.container} ${isHomePage ? styles.containerHome : styles.containerOther}`}
+      >
         {/* Логотип */}
         <NavLink
           to="/"
           className={`${styles.logo} ${isHomePage ? styles.linkLogoWhite : styles.linkLogoBlack}`}
         >
           <span className={styles.logoText}>petl</span>
-          <svg className={`${styles.logoIcon} ${isHomePage ? styles.logoIconWhite : styles.logoIconYellow}`}>
+          <svg
+            className={`${styles.logoIcon} ${isHomePage ? styles.logoIconWhite : styles.logoIconYellow}`}
+          >
             <use href={`${sprite}#icon-heart-circle`} />
           </svg>
           <span className={styles.logoText}>ve</span>
@@ -50,9 +53,9 @@ const Header = () => {
         <nav className={styles.desktopNav} aria-label="Main navigation">
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <NavLink 
-                to="/news" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/news"
+                className={({ isActive }) =>
                   `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
                 }
               >
@@ -60,9 +63,9 @@ const Header = () => {
               </NavLink>
             </li>
             <li className={styles.navItem}>
-              <NavLink 
-                to="/notices" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/notices"
+                className={({ isActive }) =>
                   `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
                 }
               >
@@ -70,9 +73,9 @@ const Header = () => {
               </NavLink>
             </li>
             <li className={styles.navItem}>
-              <NavLink 
-                to="/friends" 
-                className={({ isActive }) => 
+              <NavLink
+                to="/friends"
+                className={({ isActive }) =>
                   `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
                 }
               >
@@ -81,10 +84,13 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        
+
         <div className={styles.Authburg}>
           {/* Авторизация для десктопа */}
-          <nav className={styles.desktopAuth} aria-label="Authentication navigation">
+          <nav
+            className={styles.desktopAuth}
+            aria-label="Authentication navigation"
+          >
             {isLoggedIn ? (
               // 🎯 Если авторизован - показываем UserNav
               <UserNav onLogout={handleLogout} isHomePage={isHomePage} />
@@ -92,16 +98,16 @@ const Header = () => {
               // 🎯 Если не авторизован - показываем кнопки входа/регистрации
               <ul className={styles.authList}>
                 <li className={styles.authItem}>
-                  <NavLink 
-                    to="/login" 
+                  <NavLink
+                    to="/login"
                     className={`${styles.authLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
                   >
                     LOG IN
                   </NavLink>
                 </li>
                 <li className={styles.authItem}>
-                  <NavLink 
-                    to="/register" 
+                  <NavLink
+                    to="/register"
                     className={`${styles.registerLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
                   >
                     REGISTRATION
@@ -110,27 +116,31 @@ const Header = () => {
               </ul>
             )}
           </nav>
-          
+
           {/* 🎯 UserBar для мобильных (только иконка, без текста) */}
           {isLoggedIn && (
             <div className={styles.mobileUserIcon}>
               <UserBar isMobile={true} isHomePage={isHomePage} />
             </div>
           )}
-          
+
           {/* Бургер-кнопка для мобильных */}
-          <button 
+          <button
             className={styles.burgerButton}
             onClick={toggleBurgerMenu}
             type="button"
-            aria-label={isBurgerOpen ? "Close menu" : "Open menu"}
+            aria-label={isBurgerOpen ? 'Close menu' : 'Open menu'}
           >
             {isBurgerOpen ? (
-              <svg className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`}>
+              <svg
+                className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`}
+              >
                 <use href={`${sprite}#icon-close`} />
               </svg>
             ) : (
-              <svg className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`}>
+              <svg
+                className={`${styles.iconMenu} ${isHomePage ? styles.iconMenuWhite : styles.iconMenuBlack}`}
+              >
                 <use href={`${sprite}#icon-menu`} />
               </svg>
             )}
@@ -139,7 +149,7 @@ const Header = () => {
 
         {/* Бургер-меню */}
         {isBurgerOpen && (
-          <BurgerMenu 
+          <BurgerMenu
             isOpen={isBurgerOpen}
             onClose={toggleBurgerMenu}
             isLoggedIn={isLoggedIn}

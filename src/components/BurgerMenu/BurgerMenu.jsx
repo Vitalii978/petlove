@@ -8,7 +8,7 @@ import sprite from '../../assets/icon/icon-sprite.svg';
 const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
   // Закрытие по Escape
   useEffect(() => {
-    const handleEscape = (event) => {
+    const handleEscape = event => {
       if (event.key === 'Escape') {
         onClose();
       }
@@ -25,7 +25,7 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
   }, [isOpen, onClose]);
 
   // Закрытие по клику на overlay
-  const handleOverlayClick = (event) => {
+  const handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       onClose();
     }
@@ -36,7 +36,9 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <div className={styles.menuContainer}>
-        <div className={`${styles.menu} ${isHomePage ? styles.menuWhite : styles.menuYellow}`}>
+        <div
+          className={`${styles.menu} ${isHomePage ? styles.menuWhite : styles.menuYellow}`}
+        >
           <button className={styles.closeButton} onClick={onClose}>
             <svg className={styles.closeIcon}>
               <use href={`${sprite}#icon-close`} />
@@ -47,9 +49,9 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
             <nav className={styles.burgerNav}>
               <ul className={styles.burgerNavList}>
                 <li className={styles.burgerNavItem}>
-                  <NavLink 
-                    to="/news" 
-                    className={({ isActive }) => 
+                  <NavLink
+                    to="/news"
+                    className={({ isActive }) =>
                       `${styles.burgerNavLink} ${isActive ? styles.active : ''}`
                     }
                     onClick={onClose}
@@ -58,9 +60,9 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
                   </NavLink>
                 </li>
                 <li className={styles.burgerNavItem}>
-                  <NavLink 
-                    to="/notices" 
-                    className={({ isActive }) => 
+                  <NavLink
+                    to="/notices"
+                    className={({ isActive }) =>
                       `${styles.burgerNavLink} ${isActive ? styles.active : ''}`
                     }
                     onClick={onClose}
@@ -69,9 +71,9 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
                   </NavLink>
                 </li>
                 <li className={styles.burgerNavItem}>
-                  <NavLink 
-                    to="/friends" 
-                    className={({ isActive }) => 
+                  <NavLink
+                    to="/friends"
+                    className={({ isActive }) =>
                       `${styles.burgerNavLink} ${isActive ? styles.active : ''}`
                     }
                     onClick={onClose}
@@ -87,20 +89,22 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
                 <div className={styles.burgerUserBar}>
                   <UserBar isMobile={false} isHomePage={isHomePage} />
                 </div>
-                
+
                 <div className={styles.burgerLogout}>
-                  <LogOutBtn onLogout={() => {
-                    onLogout();
-                    onClose();
-                  }} />
+                  <LogOutBtn
+                    onLogout={() => {
+                      onLogout();
+                      onClose();
+                    }}
+                  />
                 </div>
               </>
             ) : (
               <nav className={styles.burgerAuth}>
                 <ul className={styles.burgerAuthList}>
                   <li className={styles.burgerAuthItem}>
-                    <NavLink 
-                      to="/login" 
+                    <NavLink
+                      to="/login"
                       className={`${styles.burgerAuthLink} ${isHomePage ? styles.authLinkHome : styles.authLinkOther}`}
                       onClick={onClose}
                     >
@@ -108,8 +112,8 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
                     </NavLink>
                   </li>
                   <li className={styles.burgerAuthItem}>
-                    <NavLink 
-                      to="/register" 
+                    <NavLink
+                      to="/register"
                       className={`${styles.burgerRegisterLink} ${isHomePage ? styles.registerLinkHome : styles.registerLinkOther}`}
                       onClick={onClose}
                     >

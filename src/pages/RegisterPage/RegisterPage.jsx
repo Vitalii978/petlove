@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../utils/auth';
@@ -8,7 +7,7 @@ import styles from './RegisterPage.module.css';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,49 +16,49 @@ const RegisterPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  const handleChange = (e) => {
+
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     setError('');
   };
-  
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!formData.name.trim()) {
       setError('Please enter your name');
       return;
     }
-    
+
     if (!formData.email.trim()) {
       setError('Please enter your email');
       return;
     }
-    
+
     if (formData.password.length < 7) {
       setError('Password must be at least 7 characters');
       return;
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     setLoading(true);
     setError('');
-    
+
     try {
       const result = await register({
         name: formData.name.trim(),
         email: formData.email.trim(),
         password: formData.password,
       });
-      
+
       if (result.success) {
         navigate('/profile');
       } else {
@@ -72,14 +71,13 @@ const RegisterPage = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <section className={styles.page}>
       <div className={styles.container}>
-        
         {/* 🎯 PetBlock - один компонент, позиционируется стилями */}
         <div className={styles.petBlockWrapper}>
-          <PetBlock >
+          <PetBlock>
             <source
               srcSet="/catRegisterMob_1x.png 1x, /catRegisterMob_2x.png 2x"
               media="(max-width: 767px)"
@@ -96,22 +94,20 @@ const RegisterPage = () => {
             <img src="/catRegisterMob_1x.png" alt="cat" />
           </PetBlock>
         </div>
-        
+
         {/* 🎯 Форма регистрации */}
         <div className={styles.formSection}>
           <Title text="Registration" />
-          
+
           {error && (
             <div className={styles.error}>
               <p>{error}</p>
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
-              <label className={styles.label}>
-                Name *
-              </label>
+              <label className={styles.label}>Name *</label>
               <input
                 type="text"
                 name="name"
@@ -123,11 +119,9 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label className={styles.label}>
-                Email *
-              </label>
+              <label className={styles.label}>Email *</label>
               <input
                 type="email"
                 name="email"
@@ -139,11 +133,9 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label className={styles.label}>
-                Password *
-              </label>
+              <label className={styles.label}>Password *</label>
               <input
                 type="password"
                 name="password"
@@ -155,11 +147,9 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label className={styles.label}>
-                Confirm Password *
-              </label>
+              <label className={styles.label}>Confirm Password *</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -171,16 +161,16 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               className={styles.submitButton}
               disabled={loading}
             >
               {loading ? 'Registering...' : 'Register'}
             </button>
           </form>
-          
+
           <div className={styles.loginLink}>
             <p className={styles.loginText}>
               Already have an account?{' '}

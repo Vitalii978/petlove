@@ -251,10 +251,10 @@
 
 /* 🎯 SELECT */
 .selectInput {
-  appearance: none;  /* Убирает стандартную стрелку */
+  appearance: none; /* Убирает стандартную стрелку */
   background-color: white;
   cursor: pointer;
-  padding-right: 40px;  /* Место для кастомной стрелки */
+  padding-right: 40px; /* Место для кастомной стрелки */
 }
 
 .selectArrow {
@@ -373,7 +373,6 @@
     height: 25px;
   }
 }
-
 
 /* 🎯 РЕЗИНОВАЯ ВЕРСИЯ (320px - 374px) */
 @media (min-width: 320px) and (max-width: 374px) {

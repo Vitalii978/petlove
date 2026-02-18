@@ -11,39 +11,38 @@ import styles from './ModalEditUser.module.css';
 
 // 🎯 СХЕМА ВАЛИДАЦИИ YUP
 // Определяем правила проверки для каждого поля
-const editUserSchema = yup.object({
-  name: yup
-    .string()
-    .required('Name is required')
-    .min(2, 'Name must be at least 2 characters')
-    .max(50, 'Name must be less than 50 characters'),
-  
-  email: yup
-    .string()
-    .required('Email is required')
-    .email('Please enter a valid email')
-    .matches(
-      /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-      'Invalid email format'
-    ),
-  
-  avatar: yup
-    .string()
-    .url('Please enter a valid URL')
-    .matches(
-      /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
-      'URL must point to an image (png, jpg, jpeg, gif, bmp, webp)'
-    )
-    .optional(),
-  
-  phone: yup
-    .string()
-    .matches(
-      /^\+38\d{10}$/,
-      'Phone must be in format: +38XXXXXXXXXX'
-    )
-    .optional(),
-}).required();
+const editUserSchema = yup
+  .object({
+    name: yup
+      .string()
+      .required('Name is required')
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be less than 50 characters'),
+
+    email: yup
+      .string()
+      .required('Email is required')
+      .email('Please enter a valid email')
+      .matches(
+        /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+        'Invalid email format'
+      ),
+
+    avatar: yup
+      .string()
+      .url('Please enter a valid URL')
+      .matches(
+        /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
+        'URL must point to an image (png, jpg, jpeg, gif, bmp, webp)'
+      )
+      .optional(),
+
+    phone: yup
+      .string()
+      .matches(/^\+38\d{10}$/, 'Phone must be in format: +38XXXXXXXXXX')
+      .optional(),
+  })
+  .required();
 
 // 🎯 КОМПОНЕНТ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ
 const ModalEditUser = ({ user, onSave, onClose }) => {
@@ -53,13 +52,14 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
 
   // 🎯 ИНИЦИАЛИЗАЦИЯ REACT-HOOK-FORM С YUP ВАЛИДАЦИЕЙ
   const {
-    register,           // Регистрация полей ввода
-    handleSubmit,       // Обработчик отправки формы
+    register, // Регистрация полей ввода
+    handleSubmit, // Обработчик отправки формы
     formState: { errors }, // Объект с ошибками валидации
-    reset,              // Сброс формы
+    reset, // Сброс формы
   } = useForm({
     resolver: yupResolver(editUserSchema), // Подключаем Yup валидацию
-    defaultValues: {    // Начальные значения из данных пользователя
+    defaultValues: {
+      // Начальные значения из данных пользователя
       name: user.name || '',
       email: user.email || '',
       avatar: user.avatar || '',
@@ -68,7 +68,7 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
   });
 
   // 🎯 ОБРАБОТЧИК ОТПРАВКИ ФОРМЫ
-  const onSubmit = async (formData) => {
+  const onSubmit = async formData => {
     try {
       setLoading(true);
       setApiError('');
@@ -89,10 +89,9 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
       if (onClose) {
         onClose();
       }
-
     } catch (error) {
       console.error('❌ Ошибка при обновлении пользователя:', error);
-      
+
       // 🎯 ОБРАБОТКА ОШИБОК ОТ API
       if (error.response) {
         // Сервер вернул ошибку
@@ -126,7 +125,7 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
   };
 
   // 🎯 ОБРАБОТЧИК ЗАКРЫТИЯ ПО BACKDROP И ESCAPE
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
       handleCancel();
     }
@@ -134,7 +133,7 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
 
   // Добавляем обработчик Escape
   useState(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
         handleCancel();
       }
@@ -146,21 +145,20 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
 
   // 🎯 РЕНДЕР МОДАЛЬНОГО ОКНА
   return (
-    <div 
-      className={styles.modalOverlay} 
+    <div
+      className={styles.modalOverlay}
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div className={styles.modalContent}>
-        
         {/* 🎯 ЗАГОЛОВОК МОДАЛКИ */}
         <header className={styles.modalHeader}>
           <h2 id="modal-title" className={styles.modalTitle}>
             Edit Profile
           </h2>
-          
+
           {/* 🎯 КНОПКА ЗАКРЫТИЯ */}
           <button
             className={styles.closeButton}
@@ -186,10 +184,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
 
         {/* 🎯 ФОРМА РЕДАКТИРОВАНИЯ */}
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          
           {/* 🎯 СПИСОК ПОЛЕЙ ВВОДА */}
           <ul className={styles.formFields}>
-            
             {/* 🎯 ПОЛЕ 1: ИМЯ */}
             <li className={styles.formField}>
               <label htmlFor="edit-name" className={styles.label}>
@@ -202,8 +198,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                 placeholder="Enter your name"
                 disabled={loading}
                 {...register('name')} // 🎯 Регистрируем поле в react-hook-form
-                aria-invalid={errors.name ? "true" : "false"}
-                aria-describedby={errors.name ? "name-error" : undefined}
+                aria-invalid={errors.name ? 'true' : 'false'}
+                aria-describedby={errors.name ? 'name-error' : undefined}
               />
               {errors.name && (
                 <p id="name-error" className={styles.errorMessage}>
@@ -224,8 +220,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                 placeholder="Enter your email"
                 disabled={loading}
                 {...register('email')}
-                aria-invalid={errors.email ? "true" : "false"}
-                aria-describedby={errors.email ? "email-error" : undefined}
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
               />
               {errors.email && (
                 <p id="email-error" className={styles.errorMessage}>
@@ -246,8 +242,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                 placeholder="https://example.com/avatar.jpg"
                 disabled={loading}
                 {...register('avatar')}
-                aria-invalid={errors.avatar ? "true" : "false"}
-                aria-describedby={errors.avatar ? "avatar-error" : undefined}
+                aria-invalid={errors.avatar ? 'true' : 'false'}
+                aria-describedby={errors.avatar ? 'avatar-error' : undefined}
               />
               {errors.avatar && (
                 <p id="avatar-error" className={styles.errorMessage}>
@@ -271,8 +267,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                 placeholder="+380123456789"
                 disabled={loading}
                 {...register('phone')}
-                aria-invalid={errors.phone ? "true" : "false"}
-                aria-describedby={errors.phone ? "phone-error" : undefined}
+                aria-invalid={errors.phone ? 'true' : 'false'}
+                aria-describedby={errors.phone ? 'phone-error' : undefined}
               />
               {errors.phone && (
                 <p id="phone-error" className={styles.errorMessage}>
@@ -295,7 +291,7 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
             >
               Cancel
             </button>
-            
+
             <button
               type="submit"
               className={styles.saveButton}

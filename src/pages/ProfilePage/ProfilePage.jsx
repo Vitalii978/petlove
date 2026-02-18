@@ -21,26 +21,26 @@
 //     try {
 //       setLoading(true);
 //       setError('');
-      
+
 //       console.log('🔄 Загружаем ПОЛНЫЕ данные профиля с питомцами...');
-      
+
 //       // ✅ МЕНЯЕМ ВЫЗОВ - используем getCurrentUserFull вместо getCurrentUser!
 //       const result = await getCurrentUserFull();  // ← ИЗМЕНИЛОСЬ!
-      
+
 //       if (result.success) {
 //         console.log('✅ Данные пользователя загружены:', {
 //           имя: result.user.name,
 //           email: result.user.email,
 //           питомцев: result.user.pets?.length || 0  // ← ТЕПЕРЬ ЗДЕСЬ БУДУТ ПИТОМЦЫ!
 //         });
-        
+
 //         // 🟢 Проверяем, есть ли питомцы
 //         if (result.user.pets && result.user.pets.length > 0) {
 //           console.log('🐕 СПИСОК ПИТОМЦЕВ:', result.user.pets);
 //         } else {
 //           console.log('🐕 У пользователя пока нет питомцев');
 //         }
-        
+
 //         setUser(result.user);
 //       } else {
 //         setError(result.error || 'Failed to load profile');
@@ -108,7 +108,7 @@
 //           <div className={styles.errorState}>
 //             <h3 className={styles.errorTitle}>Unable to load profile</h3>
 //             <p className={styles.errorText}>{error}</p>
-//             <button 
+//             <button
 //               className={styles.retryButton}
 //               onClick={handleRetry}
 //               type="button"
@@ -131,7 +131,7 @@
 //             <p className={styles.emptyText}>
 //               Please log in to view your profile
 //             </p>
-//             <button 
+//             <button
 //               className={styles.loginButton}
 //               onClick={() => navigate('/login')}
 //               type="button"
@@ -147,24 +147,24 @@
 //   return (
 //     <section className={styles.page}>
 //       <div className={styles.container}>
-        
+
 //         <Title text="My Profile" />
-        
+
 //         <div className={styles.profileContent}>
-          
-//           <UserCard 
+
+//           <UserCard
 //             userData={user}  // ← В user УЖЕ ЕСТЬ pets!
 //             onUserUpdate={handleUserUpdate}
 //             onAddPet={handleAddPet}
 //             onLogout={handleLogout}
 //           />
-          
-//           <MyNotices 
+
+//           <MyNotices
 //             activeTab={activeTab}
 //             onTabChange={handleTabChange}
 //             userId={user._id}
 //           />
-          
+
 //         </div>
 //       </div>
 //     </section>
@@ -172,9 +172,6 @@
 // };
 
 // export default ProfilePage;
-
-
-
 
 // 📁 src/pages/ProfilePage/ProfilePage.jsx
 // 🎯 СТРАНИЦА ПРОФИЛЯ - ПОЛНАЯ ВЕРСИЯ
@@ -198,21 +195,21 @@ const ProfilePage = () => {
     try {
       setLoading(true);
       setError('');
-      
+
       console.log('🔄 Загружаем ПОЛНЫЕ данные профиля...');
-      
+
       const result = await getCurrentUserFull();
-      
+
       if (result.success) {
         console.log('✅ Данные пользователя загружены:', {
           имя: result.user.name,
-          питомцев: result.user.pets?.length || 0
+          питомцев: result.user.pets?.length || 0,
         });
-        
+
         if (result.user.pets && result.user.pets.length > 0) {
           console.log('🐕 СПИСОК ПИТОМЦЕВ:', result.user.pets);
         }
-        
+
         setUser(result.user);
       } else {
         setError(result.error || 'Failed to load profile');
@@ -231,7 +228,7 @@ const ProfilePage = () => {
     loadUserData();
   }, [loadUserData]);
 
-  const handleUserUpdate = (updatedUser) => {
+  const handleUserUpdate = updatedUser => {
     setUser(updatedUser);
   };
 
@@ -253,7 +250,7 @@ const ProfilePage = () => {
     loadUserData();
   };
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = tab => {
     setActiveTab(tab);
   };
 
@@ -278,7 +275,7 @@ const ProfilePage = () => {
           <div className={styles.errorState}>
             <h3 className={styles.errorTitle}>Unable to load profile</h3>
             <p className={styles.errorText}>{error}</p>
-            <button 
+            <button
               className={styles.retryButton}
               onClick={handleRetry}
               type="button"
@@ -301,7 +298,7 @@ const ProfilePage = () => {
             <p className={styles.emptyText}>
               Please log in to view your profile
             </p>
-            <button 
+            <button
               className={styles.loginButton}
               onClick={() => navigate('/login')}
               type="button"
@@ -317,24 +314,21 @@ const ProfilePage = () => {
   return (
     <section className={styles.page}>
       <div className={styles.container}>
-        
         <Title text="My Profile" />
-        
+
         <div className={styles.profileContent}>
-          
-          <UserCard 
+          <UserCard
             userData={user}
             onUserUpdate={handleUserUpdate}
             onAddPet={handleAddPet}
             onLogout={handleLogout}
           />
-          
-          <MyNotices 
+
+          <MyNotices
             activeTab={activeTab}
             onTabChange={handleTabChange}
             userId={user._id}
           />
-          
         </div>
       </div>
     </section>

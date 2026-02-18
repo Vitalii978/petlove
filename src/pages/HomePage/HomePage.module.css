@@ -1,11 +1,10 @@
 .sectionHome {
   box-sizing: border-box;
   width: 100%;
-  max-width: 375px; 
-  padding: 0 20px; 
+  max-width: 375px;
+  padding: 0 20px;
   margin: 0 auto;
 }
-
 
 .listHome {
   display: flex;
@@ -13,17 +12,15 @@
   gap: 0px;
 }
 
-
 .titleBox {
   background-color: #f6b83d;
-  padding: 42px 20px 50px 20px; 
-  border-bottom-right-radius: 30px; 
+  padding: 42px 20px 50px 20px;
+  border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
 }
 
-
 .title {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 50px;
   line-height: 0.96;
@@ -31,26 +28,23 @@
   color: #fff;
 }
 
-
 .colorTitle {
   color: rgba(255, 255, 255, 0.4);
 }
 
-
 .paragraph {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #fff;
   margin-top: 24px;
 }
 
-
 .homeImg {
-  border-radius: 30px; 
-  width: 100%; 
+  border-radius: 30px;
+  width: 100%;
   height: 402px;
   background-image: url(../../assets/homeMob_1x.jpg);
   background-repeat: no-repeat;
@@ -59,26 +53,22 @@
   margin: 0 auto;
 }
 
-
 @media screen and (min-resolution: 192dpi) {
   .homeImg {
     background-image: url(../../assets/homeMob_2x.jpg);
   }
 }
 
-
 @media screen and (max-width: 374px) {
   /* .sectionHome {
     padding: 0 20px;
     max-width: 375px;
   } */
-  
+
   /* .titleBox {
   padding: 50px 20px;
   } */
-  
 }
-
 
 @media screen and (min-width: 768px) {
   .sectionHome {
@@ -123,7 +113,6 @@
   }
 }
 
-
 @media screen and (min-width: 1280px) {
   .sectionHome {
     max-width: 1280px;
@@ -157,7 +146,6 @@
     height: 384px;
     background-image: url(../../assets/homeDesktop_1x.jpg);
   }
-
 
   @media screen and (min-resolution: 192dpi) {
     .homeImg {

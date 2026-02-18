@@ -1,4 +1,3 @@
-
 // src/components/UserBar/UserBar.jsx
 
 import { useState, useEffect } from 'react';
@@ -11,7 +10,7 @@ const UserBar = ({ isMobile = false, isHomePage = false }) => {
   const [user, setUser] = useState({
     name: 'User',
     avatar: null,
-    email: ''
+    email: '',
   });
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +23,7 @@ const UserBar = ({ isMobile = false, isHomePage = false }) => {
           setUser({
             name: result.user.name || 'User',
             avatar: result.user.avatar || null,
-            email: result.user.email || ''
+            email: result.user.email || '',
           });
         }
       } catch (error) {
@@ -46,20 +45,18 @@ const UserBar = ({ isMobile = false, isHomePage = false }) => {
       <div className={styles.userInfo}>
         <div className={styles.avatarWrapper}>
           {user.avatar ? (
-            <img 
-              src={user.avatar} 
-              alt={user.name}
-              className={styles.avatar}
-            />
+            <img src={user.avatar} alt={user.name} className={styles.avatar} />
           ) : (
             <svg className={styles.avatarDefault}>
               <use href={`${sprite}#icon-user`} />
             </svg>
           )}
         </div>
-        
+
         {!isMobile && (
-          <span className={`${styles.userName} ${isHomePage ? styles.userNameWhite : styles.userNameBlack}`}>
+          <span
+            className={`${styles.userName} ${isHomePage ? styles.userNameWhite : styles.userNameBlack}`}
+          >
             {user.name}
           </span>
         )}

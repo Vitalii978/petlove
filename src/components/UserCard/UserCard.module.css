@@ -49,23 +49,23 @@
     border-radius: 20px;
     margin-bottom: 24px;
   }
-  
+
   .cardHeader {
     padding: 20px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
-  
+
   .cardTitle {
     font-size: 24px;
   }
-  
+
   .cardContent {
     padding: 24px;
     gap: 24px;
   }
-  
+
   .cardFooter {
     padding: 20px 24px;
   }
@@ -75,12 +75,12 @@
   .cardHeader {
     padding: 24px 28px;
   }
-  
+
   .cardContent {
     padding: 28px;
     gap: 28px;
   }
-  
+
   .cardFooter {
     padding: 22px 28px;
   }

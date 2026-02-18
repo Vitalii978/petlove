@@ -4,13 +4,12 @@
 import NoticesItem from '../NoticeItem/NoticeItem';
 import styles from './NoticesList.module.css';
 
-const NoticesList = ({ 
+const NoticesList = ({
   notices = [],
   onLearnMore,
   onToggleFavorite,
-  favorites = []  // 👈 теперь это массив ID
+  favorites = [], // 👈 теперь это массив ID
 }) => {
-  
   if (!notices || notices.length === 0) {
     return (
       <div className={styles.emptyContainer}>
@@ -22,23 +21,23 @@ const NoticesList = ({
       </div>
     );
   }
-  
+
   // 🎯 Функция проверки, находится ли объявление в избранном
-  const isNoticeFavorite = (noticeId) => {
+  const isNoticeFavorite = noticeId => {
     if (!noticeId) return false;
     return favorites.includes(noticeId);
   };
-  
+
   return (
     <ul className={styles.noticesList}>
-      {notices.map((notice) => {
+      {notices.map(notice => {
         if (!notice || !notice._id) {
           console.warn('⚠️ NoticesList: notice без _id', notice);
           return null;
         }
-        
+
         const isFavorite = isNoticeFavorite(notice._id);
-        
+
         return (
           <NoticesItem
             key={notice._id}

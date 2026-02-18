@@ -2,21 +2,23 @@
 .logo {
   /* Убираем стандартное подчеркивание ссылки */
   text-decoration: none;
-  
+
   /* Цвет текста - черный как на скриншоте */
   color: #000000;
-  
+
   /* Шрифт - пока базовый, позже подключим нужный из Figma */
   font-family: 'Arial', sans-serif;
   font-weight: bold;
   font-size: 24px; /* Размер по дизайну */
-  
+
   /* Убираем стандартные стили ссылки */
   display: inline-block;
-  
+
   /* Для плавного hover-эффекта */
-  transition: color 0.3s ease, transform 0.3s ease;
-  
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+
   /* Отключаем выделение текста при клике */
   user-select: none;
 }
@@ -30,8 +32,8 @@
 /* Эффект при наведении на логотип */
 .logo:hover {
   /* Немного меняем цвет при наведении */
-  color: #FF6B6B; /* Можно выбрать другой цвет по дизайну */
-  
+  color: #ff6b6b; /* Можно выбрать другой цвет по дизайну */
+
   /* Легкое увеличение при наведении */
   transform: scale(1.05);
 }

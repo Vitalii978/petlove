@@ -16,7 +16,6 @@ const Layout = ({ children }) => {
     // Это главный div-контейнер всего приложения.
     // `className={styles.layout}` — применяем к нему стили из файла Layout.module.css
     <div className={styles.layout}>
-      
       {/* Рендерим компонент Header. Он будет отображаться ВСЕГДА наверху каждой страницы. */}
       <Header />
 
@@ -27,9 +26,7 @@ const Layout = ({ children }) => {
             пока она грузится, пользователь увидит Loader.
             `fallback={<Loader />}` — это то, что показывается в ожидании.
             `{children}` — это сама загружаемая страница. */}
-        <React.Suspense fallback={<Loader />}>
-          {children}
-        </React.Suspense>
+        <React.Suspense fallback={<Loader />}>{children}</React.Suspense>
       </main>
 
       {/* Здесь в будущем, если понадобится по дизайну, мы добавим подвал (Footer). */}

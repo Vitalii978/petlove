@@ -15,19 +15,19 @@ const EditUserBtn = ({ user, onUpdate }) => {
     setShowModal(false);
   };
 
-  const handleSave = async (updatedData) => {
+  const handleSave = async updatedData => {
     try {
       console.log('🔄 Сохраняем обновленные данные:', updatedData);
-      
+
       // 🎯 ЗДЕСЬ БУДЕТ ЗАПРОС К API ДЛЯ ОБНОВЛЕНИЯ
       // const response = await api.patch('/users/current', updatedData);
-      
+
       // Пока имитируем успешное обновление
-      const mockResponse = { 
-        success: true, 
-        data: { ...user, ...updatedData } 
+      const mockResponse = {
+        success: true,
+        data: { ...user, ...updatedData },
       };
-      
+
       if (mockResponse.success) {
         // Обновляем данные в родительском компоненте
         if (onUpdate) {
@@ -35,7 +35,7 @@ const EditUserBtn = ({ user, onUpdate }) => {
         }
         console.log('✅ Профиль обновлен');
       }
-      
+
       setShowModal(false);
     } catch (error) {
       console.error('❌ Ошибка при обновлении пользователя:', error);

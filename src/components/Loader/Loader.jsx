@@ -9,11 +9,10 @@ const Loader = () => {
     // Основной контейнер для лоадера
     // Он будет центрировать анимацию на экране
     <div className={styles.loaderContainer}>
-      
       {/* Сам элемент анимации.
           Это просто div, который мы заставим вращаться с помощью CSS. */}
       <div className={styles.loader}></div>
-      
+
       {/* Можно добавить текст под анимацией */}
       <p className={styles.loaderText}>Loading...</p>
     </div>

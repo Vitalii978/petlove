@@ -54,28 +54,28 @@
 //   // 🎯 РЕНДЕР КОМПОНЕНТА
 //   return (
 //     <article className={styles.userCard}>
-      
+
 //       {/* 🎯 ЗАГОЛОВОК КАРТОЧКИ С КНОПКОЙ РЕДАКТИРОВАНИЯ */}
 //       <header className={styles.cardHeader}>
 //         <h2 className={styles.cardTitle}>My Profile</h2>
-//         <EditUserBtn 
-//           user={user} 
-//           onUpdate={handleUserUpdate} 
+//         <EditUserBtn
+//           user={user}
+//           onUpdate={handleUserUpdate}
 //         />
 //       </header>
 
 //       {/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */}
 //       <div className={styles.cardContent}>
-        
+
 //         {/* 🎯 БЛОК ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ */}
 //         <UserBlock user={user} />
-        
+
 //         {/* 🎯 БЛОК С ПИТОМЦАМИ */}
-//         <PetsBlock 
-//           pets={user.pets || []} 
+//         <PetsBlock
+//           pets={user.pets || []}
 //           onAddPet={handleAddPet}
 //         />
-        
+
 //       </div>
 
 //       {/* 🎯 ФУТЕР С КНОПКОЙ ВЫХОДА */}
@@ -101,8 +101,6 @@
 
 // export default UserCard;
 
-
-
 // 📁 src/components/UserCard/UserCard.jsx
 // 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ - ПОЛНАЯ ВЕРСИЯ
 
@@ -121,7 +119,7 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
   console.log('👤 UserCard получил userData:', userData);
   console.log('🐕 Питомцы в UserCard:', userData?.pets || []);
 
-  const handleUserUpdate = (updatedUser) => {
+  const handleUserUpdate = updatedUser => {
     setUser(updatedUser);
     if (onUserUpdate) {
       onUserUpdate(updatedUser);
@@ -151,22 +149,16 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
 
   return (
     <article className={styles.userCard}>
-      
       <header className={styles.cardHeader}>
         <h2 className={styles.cardTitle}>My Profile</h2>
         <EditUserBtn user={user} onUpdate={handleUserUpdate} />
       </header>
 
       <div className={styles.cardContent}>
-        
         <UserBlock user={user} />
-        
+
         {/* 🎯 Передаем pets и onAddPet в PetsBlock */}
-        <PetsBlock 
-          pets={user?.pets || []} 
-          onAddPet={handleAddPet}
-        />
-        
+        <PetsBlock pets={user?.pets || []} onAddPet={handleAddPet} />
       </div>
 
       <footer className={styles.cardFooter}>

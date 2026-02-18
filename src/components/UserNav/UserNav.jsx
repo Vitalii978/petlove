@@ -6,10 +6,8 @@ const UserNav = ({ onLogout, isHomePage }) => {
   return (
     // 🎯 МЕНЯЕМ <div> на <nav> для семантики навигации
     <nav className={styles.userNav} aria-label="User navigation">
-      
       {/* 🎯 ДОБАВЛЯЕМ <ul> - список элементов навигации пользователя */}
       <ul className={styles.userNavList}>
-        
         {/* 🎯 ПЕРВЫЙ <li>: LogOutBtn (кнопка выхода) */}
         <li className={styles.userNavItem}>
           {/* Оборачиваем LogOutBtn в div с вашим классом logoutWrapper */}
@@ -17,7 +15,7 @@ const UserNav = ({ onLogout, isHomePage }) => {
             <LogOutBtn onLogout={onLogout} />
           </div>
         </li>
-        
+
         {/* 🎯 ВТОРОЙ <li>: UserBar (информация о пользователе) */}
         <li className={styles.userNavItem}>
           {/* Оборачиваем UserBar в div с вашим классом userBarWrapper */}

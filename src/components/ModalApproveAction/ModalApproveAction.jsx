@@ -17,7 +17,7 @@ const ModalApproveAction = ({
 }) => {
   // 🎯 ТЗ: press по Escape закриває модальне вікно
   useEffect(() => {
-    const handleEscape = (event) => {
+    const handleEscape = event => {
       if (event.key === 'Escape') {
         onClose();
       }
@@ -37,7 +37,7 @@ const ModalApproveAction = ({
   }, [isOpen, onClose]);
 
   // 🎯 ТЗ: click по backdrop закриває модальне вікно
-  const handleOverlayClick = (event) => {
+  const handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       onClose();
     }

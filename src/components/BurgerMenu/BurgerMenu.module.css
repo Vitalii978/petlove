@@ -8,13 +8,17 @@
   /* background-color: rgba(0, 0, 0, 0.5); */
   z-index: 1000;
   animation: fadeIn 0.3s ease;
-    display: flex;
+  display: flex;
   justify-content: flex-end;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* 🎯 Контейнер как в Header */
@@ -45,8 +49,12 @@
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* Цвет фона */
@@ -76,7 +84,7 @@
 
 .closeIcon {
   width: 32px;
-  height: 32px;  
+  height: 32px;
   color: #000;
   stroke: currentColor;
 }
@@ -159,7 +167,7 @@
 /* AuthNav в бургер-меню */
 .burgerAuth {
   width: 100%;
-  
+
   margin-top: auto;
   padding-bottom: 40px;
 }
@@ -208,7 +216,7 @@
 /* Цвета для белого фона (HomePage) */
 .menuWhite .burgerAuthLink {
   color: #fff;
-  background-color:  #f6b83d;
+  background-color: #f6b83d;
   border: none;
 }
 
@@ -242,7 +250,6 @@
   width: 100%;
   padding: 0 41px 40px 41px;
   margin-top: auto;
- 
 }
 
 .burgerLogout .logoutBtn {
@@ -262,11 +269,11 @@
     max-width: 768px; /* 🎯 Такая же ширина как Header на планшете */
     padding: 0 32px;
   }
-  
+
   .menu {
     max-width: 374px;
     /* right: 32px; */
-    padding-top:369px; /* 🎯 Отступ от правого края контейнера */
+    padding-top: 369px; /* 🎯 Отступ от правого края контейнера */
   }
 
   .burgerNavList {
@@ -292,11 +299,11 @@
   }
 
   .burgerLogout {
-  width: 100%;
-  padding: 0 119px 40px 119px;
-  margin-top: auto;
-  padding-bottom: 40px;
-}
+    width: 100%;
+    padding: 0 119px 40px 119px;
+    margin-top: auto;
+    padding-bottom: 40px;
+  }
 }
 
 /* На десктопе скрываем */

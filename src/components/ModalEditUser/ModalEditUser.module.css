@@ -17,8 +17,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */
@@ -34,11 +38,11 @@
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     transform: translateY(30px);
     opacity: 0;
   }
-  to { 
+  to {
     transform: translateY(0);
     opacity: 1;
   }
@@ -156,7 +160,9 @@
   font-size: 16px;
   color: #333;
   background-color: white;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
   box-sizing: border-box;
 }
 
@@ -263,7 +269,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 🎯 АДАПТИВНОСТЬ */
@@ -271,35 +279,35 @@
   .modalContent {
     border-radius: 16px;
   }
-  
+
   .modalHeader {
     padding: 20px 20px 12px;
   }
-  
+
   .modalTitle {
     font-size: 20px;
   }
-  
+
   .form {
     padding: 20px;
   }
-  
+
   .formFields {
     gap: 16px;
   }
-  
+
   .input {
     padding: 12px 14px;
     font-size: 15px;
   }
-  
+
   .cancelButton,
   .saveButton {
     padding: 12px 24px;
     font-size: 15px;
     min-width: 100px;
   }
-  
+
   .formButtons {
     flex-direction: column-reverse;
   }

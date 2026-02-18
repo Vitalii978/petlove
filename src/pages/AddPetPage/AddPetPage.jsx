@@ -1,7 +1,7 @@
 // 📁 src/pages/AddPetPage/AddPetPage.jsx
 // 🎯 ЭТО "КОРОБКА", В КОТОРОЙ ЛЕЖИТ НАША ФОРМА
 
-import { useEffect } from 'react';           // Хук для побочных эффектов
+import { useEffect } from 'react'; // Хук для побочных эффектов
 import { useNavigate } from 'react-router-dom'; // Для перемещения между страницами
 import { isAuthenticated } from '../../utils/auth'; // Проверка: залогинен ли пользователь
 import PetBlock from '../../components/PetBlock/PetBlock'; // Картинка слева
@@ -27,11 +27,10 @@ const AddPetPage = () => {
     <section className={styles.page}>
       {/* Контейнер для двух колонок */}
       <div className={styles.container}>
-        
         {/* 🎯 ЛЕВАЯ КОЛОНКА - КАРТИНКА */}
         <div className={styles.petBlockWrapper}>
           {/* PetBlock - это готовый компонент с картинкой */}
-          <PetBlock >
+          <PetBlock>
             {/* 🎯 РАЗНЫЕ КАРТИНКИ ДЛЯ РАЗНЫХ ЭКРАНОВ */}
             {/* Для телефонов (до 767px) */}
             <source
@@ -52,7 +51,7 @@ const AddPetPage = () => {
             <img src="/addPets_mob_1x.png" alt="dog" />
           </PetBlock>
         </div>
-        
+
         {/* 🎯 ПРАВАЯ КОЛОНКА - ФОРМА */}
         <div className={styles.formWrapper}>
           {/* Вот она - наша главная форма! */}
