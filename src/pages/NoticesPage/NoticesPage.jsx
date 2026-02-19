@@ -1,5 +1,515 @@
+// // src/pages/NoticesPage/NoticesPage.jsx (МОЖНО ИСПОЛЬЗОВАТЬ)
+// // 🎯 ИСПРАВЛЕНО: фильтрация по локации
+
+// import { useState, useEffect, useCallback } from 'react';
+// import Title from '../../components/Title/Title';
+// import NoticesFilters from '../../components/Notices/NoticesFilters/NoticesFilters';
+// import NoticesList from '../../components/Notices/NoticesList/NoticesList';
+// import Pagination from '../../components/Pagination/Pagination';
+// import ModalNotice from '../../components/ModalNotice/ModalNotice';
+// import ModalAttention from '../../components/ModalAttention/ModalAttention';
+// import noticesApi from '../../services/noticesApi';
+// import useUser from '../../hooks/useUser';
+// import styles from './NoticesPage.module.css';
+
+// export const NoticesPage = () => {
+//   // =============== СОСТОЯНИЯ ===============
+//   const [notices, setNotices] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [searchKeyword, setSearchKeyword] = useState('');
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [totalPages, setTotalPages] = useState(1);
+//   const [totalItems, setTotalItems] = useState(0);
+//   const [filtersData, setFiltersData] = useState({});
+//   const [activeFilters, setActiveFilters] = useState({
+//     category: '',
+//     sex: '',
+//     species: '',
+//     locationId: '',
+//     byDate: false,
+//     byPrice: false,
+//     byPopularity: false,
+//   });
+
+//   // =============== МОДАЛКИ ===============
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [selectedNotice, setSelectedNotice] = useState(null);
+//   const [isModalAttention, setIsModalAttention] = useState(false);
+
+//   // =============== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===============
+//   const { favorites: userFavorites, addToViewed, refreshUser } = useUser();
+//   const [favoriteIds, setFavoriteIds] = useState(new Set());
+
+//   // Синхронизация избранных ID
+//   useEffect(() => {
+//     if (userFavorites && userFavorites.length > 0) {
+//       const ids = new Set();
+//       userFavorites.forEach(fav => {
+//         if (typeof fav === 'object' && fav !== null) {
+//           if (fav._id) ids.add(fav._id);
+//           if (fav.id) ids.add(fav.id);
+//         } else {
+//           ids.add(fav);
+//         }
+//       });
+//       setFavoriteIds(ids);
+//     } else {
+//       setFavoriteIds(new Set());
+//     }
+//   }, [userFavorites]);
+
+//   // =============== 🎯 ФУНКЦИЯ СОРТИРОВКИ НА ФРОНТЕНДЕ ===============
+//   const sortNotices = (data, filters) => {
+//     if (!data || data.length === 0) return data;
+
+//     let sortedData = [...data];
+
+//     // Сортировка по популярности
+//     if (filters.byPopularity === 'popular') {
+//       console.log('📊 Сортировка Popular (от большего к меньшему)');
+//       sortedData.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+//     } else if (filters.byPopularity === 'unpopular') {
+//       console.log('📊 Сортировка Unpopular (от меньшего к большему)');
+//       sortedData.sort((a, b) => (a.popularity || 0) - (b.popularity || 0));
+//     }
+
+//     // Сортировка по цене
+//     if (filters.byPrice === 'expensive') {
+//       console.log('📊 Сортировка Expensive (от большей к меньшей)');
+//       sortedData.sort((a, b) => (b.price || 0) - (a.price || 0));
+//     } else if (filters.byPrice === 'cheap') {
+//       console.log('📊 Сортировка Cheap (от меньшей к большей)');
+//       sortedData.sort((a, b) => (a.price || 0) - (b.price || 0));
+//     }
+
+//     // Сортировка по дате
+//     if (filters.byDate) {
+//       console.log('📊 Сортировка Date');
+//       sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+//     }
+
+//     return sortedData;
+//   };
+
+//   // =============== ЗАГРУЗКА ВСЕХ ОБЪЯВЛЕНИЙ ===============
+//   const fetchAllNotices = useCallback(async () => {
+//     try {
+//       setLoading(true);
+//       setError(null);
+
+//       console.log('📤 Запрос ВСЕХ объявлений с параметрами:', {
+//         keyword: searchKeyword,
+//         ...activeFilters,
+//       });
+
+//       // 🔥 Загружаем ВСЕ объявления (лимит 100)
+//       const result = await noticesApi.getAllNotices(100);
+
+//       if (result.success && result.data) {
+//         // 🎯 Фильтруем по поиску и другим параметрам
+//         let filteredData = [...result.data];
+
+//         // Фильтр по ключевому слову
+//         if (searchKeyword.trim()) {
+//           const keyword = searchKeyword.toLowerCase().trim();
+//           filteredData = filteredData.filter(
+//             item =>
+//               item.title?.toLowerCase().includes(keyword) ||
+//               item.description?.toLowerCase().includes(keyword) ||
+//               item.comment?.toLowerCase().includes(keyword)
+//           );
+//         }
+
+//         // Фильтр по категории
+//         if (activeFilters.category) {
+//           filteredData = filteredData.filter(
+//             item => item.category === activeFilters.category
+//           );
+//         }
+
+//         // Фильтр по полу
+//         if (activeFilters.sex) {
+//           filteredData = filteredData.filter(
+//             item => item.sex === activeFilters.sex
+//           );
+//         }
+
+//         // Фильтр по виду животного
+//         if (activeFilters.species) {
+//           filteredData = filteredData.filter(
+//             item => item.species === activeFilters.species
+//           );
+//         }
+
+//         // 🔥 ИСПРАВЛЕНО: фильтр по локации (работает с разными структурами данных)
+//         if (activeFilters.locationId) {
+//           filteredData = filteredData.filter(item => {
+//             // Вариант 1: прямое поле locationId
+//             if (item.locationId) {
+//               return item.locationId === activeFilters.locationId;
+//             }
+//             // Вариант 2: объект location с полем _id
+//             else if (item.location && item.location._id) {
+//               return item.location._id === activeFilters.locationId;
+//             }
+//             // Вариант 3: location как строка (ID)
+//             else if (item.location && typeof item.location === 'string') {
+//               return item.location === activeFilters.locationId;
+//             }
+//             // Вариант 4: нет данных о локации
+//             return false;
+//           });
+//         }
+
+//         console.log(
+//           '📊 Данные ДО сортировки:',
+//           filteredData.length,
+//           'элементов'
+//         );
+
+//         // 🎯 Применяем сортировку ко ВСЕМ данным
+//         const sortedData = sortNotices(filteredData, activeFilters);
+
+//         console.log(
+//           '📊 Данные ПОСЛЕ сортировки:',
+//           sortedData.length,
+//           'элементов'
+//         );
+
+//         // Показываем первые 5 для проверки
+//         if (sortedData.length > 0) {
+//           console.log('Первые 5 элементов после сортировки:');
+//           sortedData.slice(0, 5).forEach((item, index) => {
+//             console.log(`  ${index + 1}.`, {
+//               title: item.title,
+//               popularity: item.popularity,
+//               price: item.price,
+//               location: item.location || item.locationId,
+//             });
+//           });
+//         }
+
+//         // Сохраняем ВСЕ отсортированные данные
+//         setNotices(sortedData);
+//         setTotalItems(sortedData.length);
+//         setTotalPages(Math.ceil(sortedData.length / 6));
+
+//         // Сбрасываем на первую страницу
+//         setCurrentPage(1);
+//       } else {
+//         setError('Не удалось загрузить объявления');
+//         setNotices([]);
+//         setTotalPages(1);
+//         setTotalItems(0);
+//       }
+//     } catch (err) {
+//       console.error('❌ Ошибка:', err);
+//       setError('Произошла ошибка');
+//       setNotices([]);
+//       setTotalPages(1);
+//       setTotalItems(0);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, [searchKeyword, activeFilters]);
+
+//   // =============== ПОЛУЧЕНИЕ ТЕКУЩЕЙ СТРАНИЦЫ ===============
+//   const getCurrentPageNotices = () => {
+//     if (!notices.length) return [];
+//     const start = (currentPage - 1) * 6;
+//     const end = start + 6;
+//     return notices.slice(start, end);
+//   };
+
+//   // =============== ОСТАЛЬНЫЕ ФУНКЦИИ ===============
+
+//   const isNoticeFavorite = useCallback(
+//     noticeId => favoriteIds.has(noticeId),
+//     [favoriteIds]
+//   );
+
+//   const handleLearnMore = useCallback(
+//     async notice => {
+//       if (!notice || !notice._id) return;
+//       const token = localStorage.getItem('token');
+//       if (token) {
+//         addToViewed(notice._id);
+//         const isFavorite = isNoticeFavorite(notice._id);
+//         setSelectedNotice({ ...notice, isFavorite });
+//         setIsModalOpen(true);
+//       } else {
+//         setSelectedNotice(notice);
+//         setIsModalAttention(true);
+//       }
+//     },
+//     [addToViewed, isNoticeFavorite]
+//   );
+
+//   const handleCloseModal = () => {
+//     setIsModalOpen(false);
+//     setSelectedNotice(null);
+//   };
+
+//   const handleCloseAttention = () => {
+//     setIsModalAttention(false);
+//     setSelectedNotice(null);
+//   };
+
+//   const handleAddToFavorites = async id => {
+//     const result = await noticesApi.addToFavorites(id);
+//     if (result.success) {
+//       setFavoriteIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.add(id);
+//         return newSet;
+//       });
+//       await refreshUser();
+//       if (selectedNotice) {
+//         setSelectedNotice({ ...selectedNotice, isFavorite: true });
+//       }
+//       handleCloseModal();
+//     }
+//   };
+
+//   const handleRemoveFromFavorites = async id => {
+//     const result = await noticesApi.removeFromFavorites(id);
+//     if (result.success) {
+//       setFavoriteIds(prev => {
+//         const newSet = new Set(prev);
+//         newSet.delete(id);
+//         return newSet;
+//       });
+//       await refreshUser();
+//       if (selectedNotice) {
+//         setSelectedNotice({ ...selectedNotice, isFavorite: false });
+//       }
+//       handleCloseModal();
+//     }
+//   };
+
+//   const handleToggleFavorite = async noticeId => {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//       const notice = notices.find(n => n._id === noticeId);
+//       if (notice) setSelectedNotice(notice);
+//       setIsModalAttention(true);
+//       return;
+//     }
+
+//     try {
+//       const isFavorite = isNoticeFavorite(noticeId);
+//       if (isFavorite) {
+//         const result = await noticesApi.removeFromFavorites(noticeId);
+//         if (result.success) {
+//           setFavoriteIds(prev => {
+//             const newSet = new Set(prev);
+//             newSet.delete(noticeId);
+//             return newSet;
+//           });
+//           await refreshUser();
+//         }
+//       } else {
+//         const result = await noticesApi.addToFavorites(noticeId);
+//         if (result.success) {
+//           setFavoriteIds(prev => {
+//             const newSet = new Set(prev);
+//             newSet.add(noticeId);
+//             return newSet;
+//           });
+//           await refreshUser();
+//         }
+//       }
+//     } catch (error) {
+//       console.error('❌ Ошибка:', error);
+//     }
+//   };
+
+//   const fetchFiltersData = useCallback(async () => {
+//     const result = await noticesApi.getFiltersData();
+//     if (result.success) {
+//       setFiltersData(result.data);
+//     } else {
+//       setFiltersData({ categories: [], sex: [], species: [], cities: [] });
+//     }
+//   }, []);
+
+//   const handleSearch = useCallback(keyword => {
+//     setSearchKeyword(keyword);
+//   }, []);
+
+//   const handleFilterChange = useCallback((filterName, value) => {
+//     console.log(`🎯 Фильтр изменен: ${filterName} = ${value}`);
+
+//     if (filterName === 'byPopularity') {
+//       setActiveFilters(prev => ({ ...prev, byPopularity: value }));
+//     } else if (filterName === 'byPrice') {
+//       setActiveFilters(prev => ({ ...prev, byPrice: value }));
+//     } else {
+//       setActiveFilters(prev => ({ ...prev, [filterName]: value }));
+//     }
+//   }, []);
+
+//   const handleResetFilters = useCallback(() => {
+//     setSearchKeyword('');
+//     setActiveFilters({
+//       category: '',
+//       sex: '',
+//       species: '',
+//       locationId: '',
+//       byDate: false,
+//       byPrice: false,
+//       byPopularity: false,
+//     });
+//   }, []);
+
+//   const handlePageChange = useCallback(page => {
+//     setCurrentPage(page);
+//     window.scrollTo({ top: 0, behavior: 'smooth' });
+//   }, []);
+
+//   // =============== ЭФФЕКТЫ ===============
+
+//   // Загружаем данные при изменении фильтров
+//   useEffect(() => {
+//     fetchAllNotices();
+//   }, [fetchAllNotices]);
+
+//   useEffect(() => {
+//     fetchFiltersData();
+//   }, [fetchFiltersData]);
+
+//   useEffect(() => {
+//     console.log('🔄 Фильтры изменились, загружаем все данные...');
+//     console.log('  → byPopularity:', activeFilters.byPopularity);
+//     console.log('  → byPrice:', activeFilters.byPrice);
+//     console.log('  → byDate:', activeFilters.byDate);
+//     console.log('  → category:', activeFilters.category);
+//     console.log('  → sex:', activeFilters.sex);
+//     console.log('  → species:', activeFilters.species);
+//     console.log('  → locationId:', activeFilters.locationId);
+//   }, [activeFilters]);
+
+//   // =============== РЕНДЕР ===============
+
+//   const currentNotices = getCurrentPageNotices();
+//   const paginationButtons = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+//   return (
+//     <>
+//       {selectedNotice && (
+//         <ModalNotice
+//           isOpen={isModalOpen}
+//           onClose={handleCloseModal}
+//           notice={selectedNotice}
+//           onAdd={handleAddToFavorites}
+//           onRemove={handleRemoveFromFavorites}
+//           isFavorite={selectedNotice.isFavorite || false}
+//         />
+//       )}
+
+//       <ModalAttention
+//         isOpen={isModalAttention}
+//         onClose={handleCloseAttention}
+//       />
+
+//       <section className={styles.pageNotices}>
+//         <div className={styles.container}>
+//           <Title children="Find pet" />
+
+//           <NoticesFilters
+//             onFilterChange={handleFilterChange}
+//             onSearch={handleSearch}
+//             onReset={handleResetFilters}
+//             filtersData={filtersData}
+//           />
+
+//           {loading && (
+//             <div className={styles.loading}>
+//               <div className={styles.spinner}></div>
+//               <p>Loading notices...</p>
+//             </div>
+//           )}
+
+//           {error && !loading && (
+//             <div className={styles.error}>
+//               <p>{error}</p>
+//               <button
+//                 className={styles.retryButton}
+//                 onClick={fetchAllNotices}
+//                 type="button"
+//               >
+//                 Try again
+//               </button>
+//             </div>
+//           )}
+
+//           {!loading && !error && (
+//             <>
+//               <div className={styles.noticesInfo}>
+//                 <p>
+//                   Found {totalItems} notices • Page {currentPage} of{' '}
+//                   {totalPages}
+//                 </p>
+//                 {searchKeyword && (
+//                   <p className={styles.searchInfo}>Search: "{searchKeyword}"</p>
+//                 )}
+//               </div>
+
+//               <NoticesList
+//                 notices={currentNotices}
+//                 onLearnMore={handleLearnMore}
+//                 onToggleFavorite={handleToggleFavorite}
+//                 favorites={Array.from(favoriteIds)}
+//               />
+
+//               {totalPages > 1 && currentNotices.length > 0 && (
+//                 <div className={styles.paginationWrapper}>
+//                   <Pagination
+//                     toPage={currentPage}
+//                     totalPages={totalPages}
+//                     setToPage={handlePageChange}
+//                     numberOfPages={paginationButtons}
+//                   />
+//                 </div>
+//               )}
+//             </>
+//           )}
+
+//           {!loading && !error && notices.length === 0 && (
+//             <div className={styles.empty}>
+//               <p>No notices found</p>
+//               <p className={styles.emptySubtext}>
+//                 Try changing your search criteria or filters
+//               </p>
+//               <button
+//                 className={styles.resetButton}
+//                 onClick={handleResetFilters}
+//                 type="button"
+//               >
+//                 Reset filters and show all
+//               </button>
+//             </div>
+//           )}
+//         </div>
+//       </section>
+//     </>
+//   );
+// };
+
+// export default NoticesPage;
+
 // src/pages/NoticesPage/NoticesPage.jsx
-// 🎯 ИСПРАВЛЕНО: мгновенное обновление после удаления/добавления
+// 🎯 ГЛАВНАЯ СТРАНИЦА ОБЪЯВЛЕНИЙ
+// ====================================================
+// Что делает этот компонент:
+// 1. Управляет состоянием фильтров и поиска
+// 2. Загружает все данные с сервера (100 карточек)
+// 3. Фильтрует на фронтенде по выбранным параметрам
+// 4. Сортирует на фронтенде (Popular, Unpopular, Cheap, Expensive)
+// 5. Управляет пагинацией
+// 6. Открывает модальные окна
+// ====================================================
 
 import { useState, useEffect, useCallback } from 'react';
 import Title from '../../components/Title/Title';
@@ -12,41 +522,54 @@ import noticesApi from '../../services/noticesApi';
 import useUser from '../../hooks/useUser';
 import styles from './NoticesPage.module.css';
 
-// 🎯 КОМПОНЕНТ СТРАНИЦЫ ОБЪЯВЛЕНИЙ
 export const NoticesPage = () => {
   // =============== СОСТОЯНИЯ (STATE) ===============
 
+  // 📦 notices - массив ВСЕХ отфильтрованных и отсортированных объявлений
   const [notices, setNotices] = useState([]);
+
+  // ⏳ loading - флаг загрузки (показываем спиннер)
   const [loading, setLoading] = useState(false);
+
+  // ❌ error - текст ошибки, если что-то пошло не так
   const [error, setError] = useState(null);
+
+  // 🔍 searchKeyword - текст поиска
   const [searchKeyword, setSearchKeyword] = useState('');
+
+  // 📄 currentPage - текущая страница (для пагинации)
   const [currentPage, setCurrentPage] = useState(1);
+
+  // 🔢 totalPages - всего страниц (вычисляется из длины массива / 6)
   const [totalPages, setTotalPages] = useState(1);
+
+  // 🔢 totalItems - всего элементов (для отображения)
+  const [totalItems, setTotalItems] = useState(0);
+
+  // 🎛️ filtersData - данные для выпадающих списков (категории, пол, типы, города)
   const [filtersData, setFiltersData] = useState({});
+
+  // 🎯 activeFilters - активные фильтры (что выбрал пользователь)
   const [activeFilters, setActiveFilters] = useState({
-    category: '',
-    sex: '',
-    species: '',
-    locationId: '',
-    byDate: false,
-    byPrice: false,
-    byPopularity: false,
+    category: '', // Категория
+    sex: '', // Пол
+    species: '', // Вид животного
+    locationId: '', // ID локации
+    byDate: false, // Сортировка по дате
+    byPrice: false, // Сортировка по цене (false, 'cheap', 'expensive')
+    byPopularity: false, // Сортировка по популярности (false, 'popular', 'unpopular')
   });
 
-  // =============== СОСТОЯНИЯ ДЛЯ МОДАЛОК ===============
+  // =============== МОДАЛКИ ===============
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState(null);
   const [isModalAttention, setIsModalAttention] = useState(false);
 
   // =============== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===============
-
   const { favorites: userFavorites, addToViewed, refreshUser } = useUser();
-
-  // =============== ЛОКАЛЬНЫЙ КЭШ ИЗБРАННЫХ ID ===============
-  // 👇 Добавляем локальное состояние для мгновенного обновления UI
   const [favoriteIds, setFavoriteIds] = useState(new Set());
 
-  // 👇 Синхронизируем локальный кэш с данными из useUser
+  // 🔄 Синхронизируем избранные ID с данными из useUser
   useEffect(() => {
     if (userFavorites && userFavorites.length > 0) {
       const ids = new Set();
@@ -64,98 +587,194 @@ export const NoticesPage = () => {
     }
   }, [userFavorites]);
 
-  // =============== ФУНКЦИИ ===============
+  // =============== 🎯 ФУНКЦИЯ СОРТИРОВКИ НА ФРОНТЕНДЕ ===============
+  // 🔥 ВАЖНО: сортируем ТОЛЬКО 4 кнопки (Popular, Unpopular, Cheap, Expensive)
+  // Все остальные фильтры (category, sex, species, locationId) работают до сортировки
+  const sortNotices = (data, filters) => {
+    if (!data || data.length === 0) return data;
 
-  // 🎯 Загрузка объявлений
-  const fetchNotices = useCallback(async () => {
+    let sortedData = [...data];
+
+    // 📊 Сортировка по популярности
+    if (filters.byPopularity === 'popular') {
+      console.log('📊 Сортировка Popular (от большего к меньшему)');
+      // b.popularity - a.popularity = от большего к меньшему
+      sortedData.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    } else if (filters.byPopularity === 'unpopular') {
+      console.log('📊 Сортировка Unpopular (от меньшего к большему)');
+      // a.popularity - b.popularity = от меньшего к большему
+      sortedData.sort((a, b) => (a.popularity || 0) - (b.popularity || 0));
+    }
+
+    // 💰 Сортировка по цене
+    if (filters.byPrice === 'expensive') {
+      console.log('📊 Сортировка Expensive (от большей к меньшей)');
+      sortedData.sort((a, b) => (b.price || 0) - (a.price || 0));
+    } else if (filters.byPrice === 'cheap') {
+      console.log('📊 Сортировка Cheap (от меньшей к большей)');
+      sortedData.sort((a, b) => (a.price || 0) - (b.price || 0));
+    }
+
+    // 📅 Сортировка по дате
+    if (filters.byDate) {
+      console.log('📊 Сортировка Date');
+      sortedData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    return sortedData;
+  };
+
+  // =============== ЗАГРУЗКА ВСЕХ ОБЪЯВЛЕНИЙ ===============
+  const fetchAllNotices = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const result = await noticesApi.getNotices({
-        page: currentPage,
-        limit: 6,
+      console.log('📤 Запрос ВСЕХ объявлений с параметрами:', {
         keyword: searchKeyword,
         ...activeFilters,
       });
 
-      if (result.success) {
-        setNotices(result.data);
-        setTotalPages(result.pagination.totalPages);
+      // 🔥 Загружаем ВСЕ объявления (лимит 100)
+      // Это единственный запрос к серверу - все остальное делаем на фронтенде
+      const result = await noticesApi.getAllNotices(100);
 
-        console.log('📥 Данные с сервера:', {
-          количество: result.data.length,
-          первыйЭлемент: result.data[0],
-        });
+      if (result.success && result.data) {
+        // 🎯 ШАГ 1: Фильтруем по поиску и другим параметрам
+        let filteredData = [...result.data];
+
+        // Фильтр по ключевому слову (поиск)
+        if (searchKeyword.trim()) {
+          const keyword = searchKeyword.toLowerCase().trim();
+          filteredData = filteredData.filter(
+            item =>
+              item.title?.toLowerCase().includes(keyword) ||
+              item.description?.toLowerCase().includes(keyword) ||
+              item.comment?.toLowerCase().includes(keyword)
+          );
+        }
+
+        // Фильтр по категории (sell/free/lost/found)
+        if (activeFilters.category) {
+          filteredData = filteredData.filter(
+            item => item.category === activeFilters.category
+          );
+        }
+
+        // Фильтр по полу (male/female/multiple/unknown)
+        if (activeFilters.sex) {
+          filteredData = filteredData.filter(
+            item => item.sex === activeFilters.sex
+          );
+        }
+
+        // Фильтр по виду животного (dog/cat/bird и т.д.)
+        if (activeFilters.species) {
+          filteredData = filteredData.filter(
+            item => item.species === activeFilters.species
+          );
+        }
+
+        // 🔥 ИСПРАВЛЕНО: фильтр по локации (работает с разными структурами данных)
+        if (activeFilters.locationId) {
+          filteredData = filteredData.filter(item => {
+            // Вариант 1: есть прямое поле locationId
+            if (item.locationId) {
+              return item.locationId === activeFilters.locationId;
+            }
+            // Вариант 2: location - это объект с полем _id
+            else if (item.location && item.location._id) {
+              return item.location._id === activeFilters.locationId;
+            }
+            // Вариант 3: location - это строка (ID)
+            else if (item.location && typeof item.location === 'string') {
+              return item.location === activeFilters.locationId;
+            }
+            // Вариант 4: нет данных о локации
+            return false;
+          });
+        }
+
+        console.log(
+          '📊 Данные ДО сортировки:',
+          filteredData.length,
+          'элементов'
+        );
+
+        // 🎯 ШАГ 2: Применяем сортировку ко ВСЕМ данным
+        const sortedData = sortNotices(filteredData, activeFilters);
+
+        console.log(
+          '📊 Данные ПОСЛЕ сортировки:',
+          sortedData.length,
+          'элементов'
+        );
+
+        // Показываем первые 5 для проверки (для отладки)
+        if (sortedData.length > 0) {
+          console.log('Первые 5 элементов после сортировки:');
+          sortedData.slice(0, 5).forEach((item, index) => {
+            console.log(`  ${index + 1}.`, {
+              title: item.title,
+              popularity: item.popularity,
+              price: item.price,
+              location: item.location || item.locationId,
+            });
+          });
+        }
+
+        // Сохраняем ВСЕ отсортированные данные
+        setNotices(sortedData);
+        setTotalItems(sortedData.length);
+        setTotalPages(Math.ceil(sortedData.length / 6)); // 6 карточек на страницу
+
+        // Сбрасываем на первую страницу
+        setCurrentPage(1);
       } else {
-        setError(result.error);
+        setError('Не удалось загрузить объявления');
         setNotices([]);
         setTotalPages(1);
+        setTotalItems(0);
       }
     } catch (err) {
       console.error('❌ Ошибка:', err);
       setError('Произошла ошибка');
       setNotices([]);
       setTotalPages(1);
+      setTotalItems(0);
     } finally {
       setLoading(false);
     }
-  }, [currentPage, searchKeyword, activeFilters]);
+  }, [searchKeyword, activeFilters]);
 
-  // 🎯 Загрузка данных для фильтров
-  const fetchFiltersData = useCallback(async () => {
-    const result = await noticesApi.getFiltersData();
+  // =============== ПОЛУЧЕНИЕ ТЕКУЩЕЙ СТРАНИЦЫ ===============
+  // Из ВСЕГО массива notices берем только 6 элементов для текущей страницы
+  const getCurrentPageNotices = () => {
+    if (!notices.length) return [];
+    const start = (currentPage - 1) * 6;
+    const end = start + 6;
+    return notices.slice(start, end);
+  };
 
-    if (result.success) {
-      setFiltersData(result.data);
-    } else {
-      setFiltersData({
-        categories: [],
-        sex: [],
-        species: [],
-        cities: [],
-      });
-    }
-  }, []);
+  // =============== ОСТАЛЬНЫЕ ФУНКЦИИ ===============
 
-  // 🎯 Функция проверки, находится ли объявление в избранном
+  // Проверка, находится ли объявление в избранном
   const isNoticeFavorite = useCallback(
-    noticeId => {
-      if (!noticeId) return false;
-      return favoriteIds.has(noticeId); // 👈 Используем локальный Set
-    },
+    noticeId => favoriteIds.has(noticeId),
     [favoriteIds]
   );
 
-  // 🎯 Обработка открытия модалки с деталями
+  // Открытие модалки с деталями
   const handleLearnMore = useCallback(
     async notice => {
-      console.log('🔍 Открываем модалку для объявления:', notice.title);
-
-      if (!notice || !notice._id) {
-        console.error('❌ Нет данных объявления');
-        return;
-      }
-
+      if (!notice || !notice._id) return;
       const token = localStorage.getItem('token');
-
       if (token) {
-        // ✅ Добавляем в просмотренные
         addToViewed(notice._id);
-
-        // ✅ Проверяем, в избранном ли это объявление
         const isFavorite = isNoticeFavorite(notice._id);
-
-        // ✅ Добавляем флаг isFavorite в объект notice
-        const noticeWithFavorite = {
-          ...notice,
-          isFavorite: isFavorite,
-        };
-
-        setSelectedNotice(noticeWithFavorite);
+        setSelectedNotice({ ...notice, isFavorite });
         setIsModalOpen(true);
       } else {
-        // Если не авторизован - показываем модалку внимания
         setSelectedNotice(notice);
         setIsModalAttention(true);
       }
@@ -163,170 +782,117 @@ export const NoticesPage = () => {
     [addToViewed, isNoticeFavorite]
   );
 
-  // 🎯 Закрытие модалки
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedNotice(null);
-  }, []);
+  };
 
-  // 🎯 Закрытие модалки внимания
-  const handleCloseAttention = useCallback(() => {
+  const handleCloseAttention = () => {
     setIsModalAttention(false);
     setSelectedNotice(null);
-  }, []);
+  };
 
-  // 🎯 Добавление в избранное из модалки
-  const handleAddToFavorites = useCallback(
-    async id => {
-      console.log('➕ Добавляем в избранное из модалки:', id);
-
-      const result = await noticesApi.addToFavorites(id);
-      if (result.success) {
-        // 👇 МГНОВЕННО обновляем локальный кэш
-        setFavoriteIds(prev => {
-          const newSet = new Set(prev);
-          newSet.add(id);
-          return newSet;
-        });
-
-        await refreshUser();
-
-        // ✅ Обновляем выбранное объявление с новым флагом isFavorite
-        if (selectedNotice) {
-          setSelectedNotice({
-            ...selectedNotice,
-            isFavorite: true,
-          });
-        }
-
-        handleCloseModal();
+  // Добавление в избранное
+  const handleAddToFavorites = async id => {
+    const result = await noticesApi.addToFavorites(id);
+    if (result.success) {
+      setFavoriteIds(prev => {
+        const newSet = new Set(prev);
+        newSet.add(id);
+        return newSet;
+      });
+      await refreshUser();
+      if (selectedNotice) {
+        setSelectedNotice({ ...selectedNotice, isFavorite: true });
       }
-    },
-    [refreshUser, selectedNotice, handleCloseModal]
-  );
+      handleCloseModal();
+    }
+  };
 
-  // 🎯 Удаление из избранного из модалки
-  const handleRemoveFromFavorites = useCallback(
-    async id => {
-      console.log('🗑️ Удаляем из избранного из модалки:', id);
-
-      const result = await noticesApi.removeFromFavorites(id);
-      if (result.success) {
-        // 👇 МГНОВЕННО обновляем локальный кэш
-        setFavoriteIds(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(id);
-          return newSet;
-        });
-
-        await refreshUser();
-
-        // ✅ Обновляем выбранное объявление с новым флагом isFavorite
-        if (selectedNotice) {
-          setSelectedNotice({
-            ...selectedNotice,
-            isFavorite: false,
-          });
-        }
-
-        handleCloseModal();
+  // Удаление из избранного
+  const handleRemoveFromFavorites = async id => {
+    const result = await noticesApi.removeFromFavorites(id);
+    if (result.success) {
+      setFavoriteIds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
+      });
+      await refreshUser();
+      if (selectedNotice) {
+        setSelectedNotice({ ...selectedNotice, isFavorite: false });
       }
-    },
-    [refreshUser, selectedNotice, handleCloseModal]
-  );
+      handleCloseModal();
+    }
+  };
 
-  // 🎯 Добавление/удаление из избранного (сердечко в карточке)
-  const handleToggleFavorite = useCallback(
-    async noticeId => {
-      console.log('❤️ Пользователь кликнул на сердечко для ID:', noticeId);
-
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        console.log('👤 Пользователь не авторизован');
-
-        // Находим объявление в списке
-        const notice = notices.find(n => n._id === noticeId);
-        if (notice) {
-          setSelectedNotice(notice);
-        }
-
-        setIsModalAttention(true);
-        return;
-      }
-
-      try {
-        // Проверяем, есть ли уже это объявление в избранном
-        const isFavorite = isNoticeFavorite(noticeId);
-
-        console.log(
-          `📊 Текущее состояние: ${isFavorite ? 'в избранном' : 'не в избранном'}`
-        );
-
-        if (isFavorite) {
-          // ✅ Если уже в избранном - удаляем
-          console.log('🗑️ Удаляем из избранного:', noticeId);
-          const result = await noticesApi.removeFromFavorites(noticeId);
-          if (result.success) {
-            // 👇 МГНОВЕННО обновляем локальный кэш
-            setFavoriteIds(prev => {
-              const newSet = new Set(prev);
-              newSet.delete(noticeId);
-              return newSet;
-            });
-
-            await refreshUser();
-            console.log('✅ Удалено из избранного');
-          }
-        } else {
-          // ✅ Если не в избранном - добавляем
-          console.log('➕ Добавляем в избранное:', noticeId);
-          const result = await noticesApi.addToFavorites(noticeId);
-          if (result.success) {
-            // 👇 МГНОВЕННО обновляем локальный кэш
-            setFavoriteIds(prev => {
-              const newSet = new Set(prev);
-              newSet.add(noticeId);
-              return newSet;
-            });
-
-            await refreshUser();
-            console.log('✅ Добавлено в избранное');
-          }
-        }
-      } catch (error) {
-        console.error('❌ Ошибка при переключении избранного:', error);
-      }
-    },
-    [notices, isNoticeFavorite, refreshUser]
-  );
-
-  // 🎯 Обработка поиска
-  const handleSearch = useCallback(keyword => {
-    setSearchKeyword(keyword);
-    setCurrentPage(1);
-  }, []);
-
-  // 🎯 Обработка изменения фильтра
-  const handleFilterChange = useCallback((filterName, value) => {
-    if (['byDate', 'byPrice', 'byPopularity'].includes(filterName)) {
-      setActiveFilters(prev => ({
-        ...prev,
-        byDate: filterName === 'byDate' ? value : false,
-        byPrice: filterName === 'byPrice' ? value : false,
-        byPopularity: filterName === 'byPopularity' ? value : false,
-      }));
-    } else {
-      setActiveFilters(prev => ({
-        ...prev,
-        [filterName]: value,
-      }));
+  // Переключение избранного (сердечко в карточке)
+  const handleToggleFavorite = async noticeId => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      const notice = notices.find(n => n._id === noticeId);
+      if (notice) setSelectedNotice(notice);
+      setIsModalAttention(true);
+      return;
     }
 
-    setCurrentPage(1);
+    try {
+      const isFavorite = isNoticeFavorite(noticeId);
+      if (isFavorite) {
+        const result = await noticesApi.removeFromFavorites(noticeId);
+        if (result.success) {
+          setFavoriteIds(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(noticeId);
+            return newSet;
+          });
+          await refreshUser();
+        }
+      } else {
+        const result = await noticesApi.addToFavorites(noticeId);
+        if (result.success) {
+          setFavoriteIds(prev => {
+            const newSet = new Set(prev);
+            newSet.add(noticeId);
+            return newSet;
+          });
+          await refreshUser();
+        }
+      }
+    } catch (error) {
+      console.error('❌ Ошибка:', error);
+    }
+  };
+
+  // Загрузка данных для фильтров
+  const fetchFiltersData = useCallback(async () => {
+    const result = await noticesApi.getFiltersData();
+    if (result.success) {
+      setFiltersData(result.data);
+    } else {
+      setFiltersData({ categories: [], sex: [], species: [], cities: [] });
+    }
   }, []);
 
-  // 🎯 Сброс всех фильтров
+  // Обработка поиска
+  const handleSearch = useCallback(keyword => {
+    setSearchKeyword(keyword);
+  }, []);
+
+  // Обработка изменения фильтра
+  const handleFilterChange = useCallback((filterName, value) => {
+    console.log(`🎯 Фильтр изменен: ${filterName} = ${value}`);
+
+    if (filterName === 'byPopularity') {
+      setActiveFilters(prev => ({ ...prev, byPopularity: value }));
+    } else if (filterName === 'byPrice') {
+      setActiveFilters(prev => ({ ...prev, byPrice: value }));
+    } else {
+      setActiveFilters(prev => ({ ...prev, [filterName]: value }));
+    }
+  }, []);
+
+  // Сброс всех фильтров
   const handleResetFilters = useCallback(() => {
     setSearchKeyword('');
     setActiveFilters({
@@ -338,10 +904,9 @@ export const NoticesPage = () => {
       byPrice: false,
       byPopularity: false,
     });
-    setCurrentPage(1);
   }, []);
 
-  // 🎯 Обработка пагинации
+  // Обработка смены страницы
   const handlePageChange = useCallback(page => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -349,21 +914,36 @@ export const NoticesPage = () => {
 
   // =============== ЭФФЕКТЫ ===============
 
+  // Загружаем данные при изменении фильтров
   useEffect(() => {
-    fetchNotices();
-  }, [fetchNotices]);
+    fetchAllNotices();
+  }, [fetchAllNotices]);
 
+  // Загружаем данные для фильтров один раз при монтировании
   useEffect(() => {
     fetchFiltersData();
   }, [fetchFiltersData]);
 
+  // Логируем изменение фильтров (для отладки)
+  useEffect(() => {
+    console.log('🔄 Фильтры изменились, загружаем все данные...');
+    console.log('  → byPopularity:', activeFilters.byPopularity);
+    console.log('  → byPrice:', activeFilters.byPrice);
+    console.log('  → byDate:', activeFilters.byDate);
+    console.log('  → category:', activeFilters.category);
+    console.log('  → sex:', activeFilters.sex);
+    console.log('  → species:', activeFilters.species);
+    console.log('  → locationId:', activeFilters.locationId);
+  }, [activeFilters]);
+
   // =============== РЕНДЕР ===============
 
+  const currentNotices = getCurrentPageNotices();
   const paginationButtons = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <>
-      {/* Модальное окно с деталями */}
+      {/* Модальное окно с деталями объявления */}
       {selectedNotice && (
         <ModalNotice
           isOpen={isModalOpen}
@@ -383,8 +963,9 @@ export const NoticesPage = () => {
 
       <section className={styles.pageNotices}>
         <div className={styles.container}>
-          <Title children="Find your favorite pet" />
+          <Title children="Find pet" />
 
+          {/* Компонент с фильтрами */}
           <NoticesFilters
             onFilterChange={handleFilterChange}
             onSearch={handleSearch}
@@ -392,6 +973,7 @@ export const NoticesPage = () => {
             filtersData={filtersData}
           />
 
+          {/* Состояние загрузки */}
           {loading && (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
@@ -399,12 +981,13 @@ export const NoticesPage = () => {
             </div>
           )}
 
+          {/* Состояние ошибки */}
           {error && !loading && (
             <div className={styles.error}>
               <p>{error}</p>
               <button
                 className={styles.retryButton}
-                onClick={fetchNotices}
+                onClick={fetchAllNotices}
                 type="button"
               >
                 Try again
@@ -412,16 +995,29 @@ export const NoticesPage = () => {
             </div>
           )}
 
+          {/* Основной контент */}
           {!loading && !error && (
             <>
+              <div className={styles.noticesInfo}>
+                <p>
+                  Found {totalItems} notices • Page {currentPage} of{' '}
+                  {totalPages}
+                </p>
+                {searchKeyword && (
+                  <p className={styles.searchInfo}>Search: "{searchKeyword}"</p>
+                )}
+              </div>
+
+              {/* Список объявлений */}
               <NoticesList
-                notices={notices}
+                notices={currentNotices}
                 onLearnMore={handleLearnMore}
                 onToggleFavorite={handleToggleFavorite}
-                favorites={Array.from(favoriteIds)} // 👈 Передаем как массив
+                favorites={Array.from(favoriteIds)}
               />
 
-              {totalPages > 1 && notices.length > 0 && (
+              {/* Пагинация */}
+              {totalPages > 1 && currentNotices.length > 0 && (
                 <div className={styles.paginationWrapper}>
                   <Pagination
                     toPage={currentPage}
@@ -434,6 +1030,7 @@ export const NoticesPage = () => {
             </>
           )}
 
+          {/* Пустое состояние (нет результатов) */}
           {!loading && !error && notices.length === 0 && (
             <div className={styles.empty}>
               <p>No notices found</p>
