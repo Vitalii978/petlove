@@ -1,11 +1,13 @@
 // // src/components/Notices/NoticeItem/NoticeItem.jsx
-// // 🎯 ПРОВЕРЯЕМ, ЧТО ВСЕ ПРОПСЫ ПЕРЕДАЮТСЯ ПРАВИЛЬНО
+// // 🎯 КОМПОНЕНТ КАРТОЧКИ ОБЪЯВЛЕНИЯ
+// // ✅ ИСПРАВЛЕНО: правильная логика вызова функций
 
 // import { useState } from 'react';
 // import sprite from '../../../assets/icon/icon-sprite.svg';
 // import styles from './NoticeItem.module.css';
 
 // const NoticesItem = ({
+//   // 📌 ОСНОВНЫЕ ДАННЫЕ ОБЪЯВЛЕНИЯ
 //   id,
 //   imgURL,
 //   title,
@@ -17,14 +19,16 @@
 //   comment,
 //   price,
 //   popularity,
+
+//   // 📌 ФУНКЦИИ И ФЛАГИ
 //   onOpenModal,
 //   boxFavorite,
 //   onDelete,
 //   isFavorite = false,
 //   onToggleFavorite,
-//   isDisabled = false
+//   isDisabled = false,
 // }) => {
-
+//   // 🟢 ЛОКАЛЬНОЕ СОСТОЯНИЕ ДЛЯ АНИМАЦИИ
 //   const [isHeartAnimating, setIsHeartAnimating] = useState(false);
 
 //   if (!id) {
@@ -32,27 +36,37 @@
 //     return null;
 //   }
 
-//   const handleFavoriteClick = (e) => {
+//   // =============== 🎯 ОБРАБОТЧИК КЛИКА НА СЕРДЕЧКО/КОРЗИНУ ===============
+//   const handleFavoriteClick = e => {
 //     e.stopPropagation();
 //     e.preventDefault();
 
-//     console.log(`🔘 Клик на кнопку для ID: ${id}, isDisabled: ${isDisabled}, isFavorite: ${isFavorite}`);
+//     console.log(
+//       `🔘 Клик на кнопку для ID: ${id}, isDisabled: ${isDisabled}, isFavorite: ${isFavorite}`
+//     );
 
+//     // Если кнопка заблокирована - ничего не делаем
 //     if (isDisabled) {
 //       console.log('⏳ Кнопка заблокирована, пропускаем');
 //       return;
 //     }
 
+//     // Анимация
 //     setIsHeartAnimating(true);
 //     setTimeout(() => setIsHeartAnimating(false), 300);
 
-//     if (onToggleFavorite) {
-//       console.log(`  → Вызываем onToggleFavorite с ID: ${id}`);
-//       onToggleFavorite(id);
-//     } else if (onDelete) {
+//     // 🔥 ВАЖНО: правильный выбор функции
+//     // Приоритет: onDelete (корзина) > onToggleFavorite (сердечко) > onOpenModal (модалка)
+//     if (onDelete) {
+//       // Если есть onDelete - значит это корзина (удаление)
 //       console.log(`  → Вызываем onDelete с ID: ${id}`);
 //       onDelete(id);
+//     } else if (onToggleFavorite) {
+//       // Если есть onToggleFavorite - значит это сердечко (добавление)
+//       console.log(`  → Вызываем onToggleFavorite с ID: ${id}`);
+//       onToggleFavorite(id);
 //     } else if (onOpenModal) {
+//       // Если нет ни того, ни другого - открываем модалку
 //       console.log(`  → Вызываем onOpenModal с ID: ${id}`);
 //       onOpenModal({
 //         _id: id,
@@ -65,12 +79,13 @@
 //         category,
 //         comment,
 //         price,
-//         popularity
+//         popularity,
 //       });
 //     }
 //   };
 
-//   const handleLearnMoreClick = (e) => {
+//   // =============== 🎯 ОБРАБОТЧИК КЛИКА НА LEARN MORE ===============
+//   const handleLearnMoreClick = e => {
 //     e.preventDefault();
 //     console.log(`🔍 Клик на Learn more для ID: ${id}`);
 
@@ -86,26 +101,31 @@
 //         category,
 //         comment,
 //         price,
-//         popularity
+//         popularity,
 //       });
 //     }
 //   };
 
-//   const formatDate = (dateString) => {
+//   // =============== 🎯 ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
+//   const formatDate = dateString => {
 //     if (!dateString) return 'Not specified';
 //     try {
 //       const date = new Date(dateString);
-//       return date.toLocaleDateString('en-GB', {
-//         day: '2-digit',
-//         month: '2-digit',
-//         year: 'numeric'
-//       }).replace(/\//g, '.');
+//       return date
+//         .toLocaleDateString('en-GB', {
+//           day: '2-digit',
+//           month: '2-digit',
+//           year: 'numeric',
+//         })
+//         .replace(/\//g, '.');
 //     } catch {
 //       return dateString;
 //     }
 //   };
 
-//   const safeImgURL = imgURL || 'https://placehold.co/400x280/cccccc/666666?text=Pet+Photo';
+//   // Значения по умолчанию
+//   const safeImgURL =
+//     imgURL || 'https://placehold.co/400x280/cccccc/666666?text=Pet+Photo';
 //   const safeTitle = title || 'No title';
 //   const safeName = name || 'No name';
 //   const safeGender = gender || 'unknown';
@@ -113,23 +133,26 @@
 //   const safeCategory = category || 'unknown';
 //   const safePopularity = popularity || 0;
 
+//   // =============== 🎯 РЕНДЕР КОМПОНЕНТА ===============
 //   return (
 //     <article className={styles.noticeItem}>
-
+//       {/* БЛОК С ФОТОГРАФИЕЙ */}
 //       <div className={styles.imageContainer}>
 //         <img
 //           src={safeImgURL}
 //           alt={safeTitle}
 //           className={styles.image}
 //           loading="lazy"
-//           onError={(e) => {
-//             e.target.src = 'https://placehold.co/400x280/cccccc/666666?text=No+Image';
+//           onError={e => {
+//             e.target.src =
+//               'https://placehold.co/400x280/cccccc/666666?text=No+Image';
 //           }}
 //         />
 //       </div>
 
+//       {/* БЛОК С ИНФОРМАЦИЕЙ */}
 //       <div className={styles.content}>
-
+//         {/* ВЕРХНЯЯ СТРОКА: Заголовок и рейтинг */}
 //         <div className={styles.titleRow}>
 //           <h3 className={styles.title}>{safeTitle}</h3>
 //           <div className={styles.rating}>
@@ -140,8 +163,8 @@
 //           </div>
 //         </div>
 
+//         {/* ТАБЛИЦА С ДАННЫМИ */}
 //         <div className={styles.infoTable}>
-
 //           <ul className={styles.fieldNames}>
 //             <li className={styles.fieldName}>Name</li>
 //             <li className={styles.fieldName}>Birthday</li>
@@ -154,23 +177,29 @@
 //             <li className={styles.fieldValue}>{safeName}</li>
 //             <li className={styles.fieldValue}>{formatDate(birthday)}</li>
 //             <li className={styles.fieldValue}>
-//               {safeGender === 'male' ? 'Male' :
-//                safeGender === 'female' ? 'Female' : 'Unknown'}
+//               {safeGender === 'male'
+//                 ? 'Male'
+//                 : safeGender === 'female'
+//                   ? 'Female'
+//                   : 'Unknown'}
 //             </li>
 //             <li className={styles.fieldValue}>
-//               {safeSpecies ? safeSpecies.charAt(0).toUpperCase() + safeSpecies.slice(1) : 'Unknown'}
+//               {safeSpecies
+//                 ? safeSpecies.charAt(0).toUpperCase() + safeSpecies.slice(1)
+//                 : 'Unknown'}
 //             </li>
 //             <li className={styles.fieldValue}>
 //               {safeCategory.charAt(0).toUpperCase() + safeCategory.slice(1)}
 //             </li>
 //           </ul>
-
 //         </div>
 
+//         {/* ОПИСАНИЕ */}
 //         <div className={styles.description}>
 //           {comment || 'No description available'}
 //         </div>
 
+//         {/* ЦЕНА */}
 //         <div className={styles.pricePlain}>
 //           {price && safeCategory === 'sell' ? (
 //             <span className={styles.priceText}>${price}</span>
@@ -179,8 +208,8 @@
 //           )}
 //         </div>
 
+//         {/* КНОПКИ */}
 //         <div className={styles.buttonsRow}>
-
 //           <button
 //             className={styles.learnMoreButton}
 //             onClick={handleLearnMoreClick}
@@ -197,20 +226,22 @@
 //               onClick={handleFavoriteClick}
 //               type="button"
 //               disabled={isDisabled}
-//               aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+//               aria-label={
+//                 isFavorite ? 'Remove from favorites' : 'Add to favorites'
+//               }
 //             >
 //               <svg className={styles.heartIcon}>
 //                 {isFavorite ? (
+//                   // Если в избранном - показываем КОРЗИНУ
 //                   <use href={`${sprite}#icon-basket`} />
 //                 ) : (
+//                   // Если не в избранном - показываем СЕРДЕЧКО
 //                   <use href={`${sprite}#icon-heart`} />
 //                 )}
 //               </svg>
 //             </button>
 //           )}
-
 //         </div>
-
 //       </div>
 //     </article>
 //   );
@@ -220,7 +251,7 @@
 
 // src/components/Notices/NoticeItem/NoticeItem.jsx
 // 🎯 КОМПОНЕНТ КАРТОЧКИ ОБЪЯВЛЕНИЯ
-// ✅ ИСПРАВЛЕНО: правильная логика вызова функций
+// ✅ ИСПРАВЛЕНО: блок информации теперь как в примере - один список
 
 import { useState } from 'react';
 import sprite from '../../../assets/icon/icon-sprite.svg';
@@ -265,28 +296,21 @@ const NoticesItem = ({
       `🔘 Клик на кнопку для ID: ${id}, isDisabled: ${isDisabled}, isFavorite: ${isFavorite}`
     );
 
-    // Если кнопка заблокирована - ничего не делаем
     if (isDisabled) {
       console.log('⏳ Кнопка заблокирована, пропускаем');
       return;
     }
 
-    // Анимация
     setIsHeartAnimating(true);
     setTimeout(() => setIsHeartAnimating(false), 300);
 
-    // 🔥 ВАЖНО: правильный выбор функции
-    // Приоритет: onDelete (корзина) > onToggleFavorite (сердечко) > onOpenModal (модалка)
     if (onDelete) {
-      // Если есть onDelete - значит это корзина (удаление)
       console.log(`  → Вызываем onDelete с ID: ${id}`);
       onDelete(id);
     } else if (onToggleFavorite) {
-      // Если есть onToggleFavorite - значит это сердечко (добавление)
       console.log(`  → Вызываем onToggleFavorite с ID: ${id}`);
       onToggleFavorite(id);
     } else if (onOpenModal) {
-      // Если нет ни того, ни другого - открываем модалку
       console.log(`  → Вызываем onOpenModal с ID: ${id}`);
       onOpenModal({
         _id: id,
@@ -331,13 +355,11 @@ const NoticesItem = ({
     if (!dateString) return 'Not specified';
     try {
       const date = new Date(dateString);
-      return date
-        .toLocaleDateString('en-GB', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })
-        .replace(/\//g, '.');
+      // 🔥 Форматируем как в примере: DD.MM.YYYY
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
     } catch {
       return dateString;
     }
@@ -383,41 +405,59 @@ const NoticesItem = ({
           </div>
         </div>
 
-        {/* ТАБЛИЦА С ДАННЫМИ */}
-        <div className={styles.infoTable}>
-          <ul className={styles.fieldNames}>
-            <li className={styles.fieldName}>Name</li>
-            <li className={styles.fieldName}>Birthday</li>
-            <li className={styles.fieldName}>Gender</li>
-            <li className={styles.fieldName}>Species</li>
-            <li className={styles.fieldName}>Category</li>
-          </ul>
+        {/* 🔥 ИСПРАВЛЕНО: ТЕПЕРЬ ЭТО ОДИН СПИСОК КАК В ПРИМЕРЕ */}
+        <ul className={styles.infoList}>
+          {/* Name */}
+          <li>
+            <p className={styles.fieldLabel}>Name</p>
+            <p className={styles.fieldValue}>{safeName}</p>
+          </li>
 
-          <ul className={styles.fieldValues}>
-            <li className={styles.fieldValue}>{safeName}</li>
-            <li className={styles.fieldValue}>{formatDate(birthday)}</li>
-            <li className={styles.fieldValue}>
+          {/* Birthday */}
+          <li>
+            <p className={styles.fieldLabel}>Birthday</p>
+            {birthday ? (
+              <p className={styles.fieldValue}>{formatDate(birthday)}</p>
+            ) : (
+              <p className={styles.fieldValue}>Not specified</p>
+            )}
+          </li>
+
+          {/* Gender */}
+          <li>
+            <p className={styles.fieldLabel}>Gender</p>
+            <p className={styles.fieldValue}>
               {safeGender === 'male'
                 ? 'Male'
                 : safeGender === 'female'
                   ? 'Female'
                   : 'Unknown'}
-            </li>
-            <li className={styles.fieldValue}>
+            </p>
+          </li>
+
+          {/* Species */}
+          <li>
+            <p className={styles.fieldLabel}>Species</p>
+            <p className={styles.fieldValue}>
               {safeSpecies
                 ? safeSpecies.charAt(0).toUpperCase() + safeSpecies.slice(1)
                 : 'Unknown'}
-            </li>
-            <li className={styles.fieldValue}>
+            </p>
+          </li>
+
+          {/* Category */}
+          <li>
+            <p className={styles.fieldLabel}>Category</p>
+            <p className={styles.fieldValue}>
               {safeCategory.charAt(0).toUpperCase() + safeCategory.slice(1)}
-            </li>
-          </ul>
-        </div>
+            </p>
+          </li>
+        </ul>
 
         {/* ОПИСАНИЕ */}
-        <div className={styles.description}>
+        <p className={styles.description}>
           {comment || 'No description available'}
-        </div>
+        </p>
 
         {/* ЦЕНА */}
         <div className={styles.pricePlain}>
@@ -452,10 +492,8 @@ const NoticesItem = ({
             >
               <svg className={styles.heartIcon}>
                 {isFavorite ? (
-                  // Если в избранном - показываем КОРЗИНУ
                   <use href={`${sprite}#icon-basket`} />
                 ) : (
-                  // Если не в избранном - показываем СЕРДЕЧКО
                   <use href={`${sprite}#icon-heart`} />
                 )}
               </svg>

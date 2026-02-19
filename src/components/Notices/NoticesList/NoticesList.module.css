@@ -1,13 +1,15 @@
 /* src/components/Notices/NoticesList/NoticesList.module.css */
+/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ - ИСПРАВЛЕНО: правильные отступы */
 
-/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ - 3 КОЛОНКИ */
+/* =============== БАЗОВЫЕ СТИЛИ (МОБИЛЬНЫЕ) =============== */
 .noticesList {
   list-style: none;
   padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  margin: 0 auto 44px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 375px;
 }
 
 /* 🎯 ПУСТОЕ СОСТОЯНИЕ */
@@ -43,23 +45,16 @@
   margin: 0 auto;
 }
 
-/* 🎯 АДАПТИВНОСТЬ */
-
-/* Планшет (2 колонки) */
-@media (max-width: 1279px) {
-  .noticesList {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-}
-
-/* Мобильный (1 колонка) */
-@media (max-width: 767px) {
-  .noticesList {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: 400px;
-    margin: 0 auto;
+/* =============== ПЛАНШЕТ (768px) =============== */
+@media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
+    .noticesList {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* ✅ 2 колонки */
+      gap: 20px; /* ✅ Горизонтальный и вертикальный gap 20px */
+      max-width: 768px;
+      margin: 0 auto 60px;
+    }
   }
 
   .emptyContainer {
@@ -76,5 +71,15 @@
 
   .emptyText {
     font-size: 14px;
+  }
+}
+
+/* =============== ДЕСКТОП (1280px) =============== */
+@media (min-width: 1280px) {
+  .noticesList {
+    grid-template-columns: repeat(3, 1fr); /* ✅ 3 колонки */
+    column-gap: 32px; /* ✅ Горизонтальный отступ 32px */
+    row-gap: 40px; /* ✅ Вертикальный отступ 40px */
+    max-width: 1280px;
   }
 }
