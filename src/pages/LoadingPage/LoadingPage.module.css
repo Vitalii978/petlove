@@ -1,0 +1,79 @@
+/* src/pages/LoadingPage/LoadingPage.module.css */
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('/main-desktop-1x.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.logoButton {
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 50px;
+  color: #fff;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.logoButton:hover {
+  transform: scale(1.05);
+}
+
+.heartIcon {
+  width: 44px;
+  height: 44px;
+  fill: #f6b83d;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+@media (min-width: 768px) {
+  .container {
+    background-image: url('/main-tab-1x.jpg');
+  }
+
+  @media (min-resolution: 192dpi) {
+    .container {
+      background-image: url('/main-tab-2x.jpg');
+    }
+  }
+
+  .logoButton {
+    font-size: 100px;
+  }
+
+  .heartIcon {
+    width: 82px;
+    height: 82px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    background-image: url('/main-desktop-1x.jpg');
+  }
+  @media (min-resolution: 192dpi) {
+    .container {
+      background-image: url('/main-desktop-2x.jpg');
+    }
+  }
+}
