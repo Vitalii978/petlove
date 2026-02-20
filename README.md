@@ -5,7 +5,6 @@
 
 # PetLove 🐾 (English)
 
-[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black)](https://petlove.vercel.app)
 👉 **[View Live Site](https://petlove.vercel.app)**
 
 A platform for finding pets. Find your friend among thousands of listings for sale, free adoption, lost and found animals.
