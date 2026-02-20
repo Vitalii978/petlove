@@ -5,7 +5,7 @@
 
 # PetLove 🐾 (English)
 
-👉 **[View Live Site](https://petlove.vercel.app)**
+👉 **[View Live Site](https://tailfriend.vercel.app)*
 
 A platform for finding pets. Find your friend among thousands of listings for sale, free adoption, lost and found animals.
 
@@ -227,7 +227,7 @@ This project was created for educational purposes as part of a technical assignm
 # PetLove 🐾
 
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black)](https://petlove.vercel.app)
-👉 **[Посмотреть сайт](https://petlove.vercel.app)**
+👉 **[Посмотреть сайт](https://tailfriend.vercel.app)**
 
 Платформа для поиска домашних животных. Найди себе друга среди тысяч объявлений о продаже, дарении, потерянных и найденных животных.
 
