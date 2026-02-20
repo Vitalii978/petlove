@@ -1,0 +1,156 @@
+/* src/pages/NotFoundPage/NotFoundPage.module.css */
+/* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ 404 */
+
+.notFoundPage {
+  box-sizing: border-box;
+  max-width: 375px;
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 🎯 ОСНОВНОЙ БЛОК */
+.boxNotFound {
+  background-color: #f6b83d;
+  border-radius: 30px;
+  height: 712px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 🎯 СТРОКА С ЦИФРАМИ 404 И КОТИКОМ */
+.titleBox {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🎯 ЦИФРЫ 4 */
+.number {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 120px;
+  line-height: 1;
+  color: #fff;
+}
+
+/* 🎯 КОНТЕЙНЕР ДЛЯ КОТИКА */
+.imgBox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 100%;
+}
+
+/* 🎯 ИЗОБРАЖЕНИЕ КОТИКА */
+.img {
+  width: 109px;
+  height: 109px;
+}
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 🎯 ТЕКСТ ОШИБКИ */
+.paragraph {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+
+/* 🎯 ССЫЛКА НА ГЛАВНУЮ */
+.linkHome {
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 12px 30px;
+  background-color: #fff4df;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #f6b83d;
+  text-decoration: none;
+  /* display: inline-block; */
+  transition: all 0.3s ease;
+  width: 150px;
+  height: 42px;
+  text-align: center;
+  align-items: center;
+}
+
+.linkHome:hover {
+  color: #f6b83d;
+  background-color: #fbe7c1;
+}
+
+/* 🎯 КОНТЕЙНЕР ДЛЯ ССЫЛКИ */
+.containerLink {
+  margin-top: 12px;
+}
+
+/* ============= АДАПТИВНОСТЬ ============= */
+
+@media screen and (min-width: 768px) {
+  .notFoundPage {
+    max-width: 768px;
+    padding: 32px;
+  }
+
+  .boxNotFound {
+    border-radius: 60px;
+    height: 878px;
+  }
+
+  .number {
+    font-size: 300px;
+  }
+
+  .img {
+    width: 280px;
+    height: 280px;
+  }
+
+  .paragraph {
+    font-size: 24px;
+    line-height: 1.17;
+  }
+
+  .linkHome {
+    padding: 14px 30px;
+    font-size: 16px;
+    width: 162px;
+    height: 48px;
+  }
+
+  .containerLink {
+    margin-top: 14px;
+  }
+}
+
+/* 🎯 ДЕСКТОП (1280px и больше) */
+@media screen and (min-width: 1280px) {
+  .notFoundPage {
+    min-width: 1280px;
+  }
+
+  .boxNotFound {
+    border-radius: 60px;
+    height: 654px;
+  }
+}
