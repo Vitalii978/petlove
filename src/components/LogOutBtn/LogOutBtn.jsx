@@ -37,7 +37,7 @@ const LogOutBtn = ({ onLogout }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
-        title="Log out"
+        title="Already leaving?"
         message="Do you really want to log out?"
       />
     </>

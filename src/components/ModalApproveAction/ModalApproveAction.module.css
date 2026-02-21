@@ -1,19 +1,29 @@
-/* 📁 src/components/ModalApproveAction/ModalApproveAction.module.css */
-/* 🎯 ТЗ: Адаптивна верстка - mobile: від 320px, tablet: від 768px, desktop: від 1280px */
+/* src/components/ModalApproveAction/ModalApproveAction.module.css */
+/* 🎯 СТИЛІ ДЛЯ МОДАЛКИ ПІДТВЕРДЖЕННЯ */
 
-/* 🎯 Mobile: від 320px - гумова */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  background-color: rgba(25, 26, 21, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
   animation: fadeIn 0.3s ease;
+}
+
+.modal {
+  position: relative;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 0;
+  animation: slideUp 0.3s ease;
+  outline: none;
+  width: 100%;
+  max-width: 335px;
 }
 
 @keyframes fadeIn {
@@ -23,19 +33,6 @@
   to {
     opacity: 1;
   }
-}
-
-/* 🎯 Mobile: від 375px - адаптивна */
-.modal {
-  position: relative;
-  background-color: #ffffff;
-  border-radius: 30px;
-  padding: 40px 20px;
-  max-width: 335px;
-  width: 90%;
-  margin: 0 20px;
-  animation: slideUp 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 @keyframes slideUp {
@@ -49,7 +46,7 @@
   }
 }
 
-/* 🎯 Кнопка закриття (крестик) */
+/* 🎯 КНОПКА ЗАКРИТТЯ */
 .closeButton {
   position: absolute;
   top: 20px;
@@ -57,13 +54,13 @@
   background: none;
   border: none;
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  /* width: 24px;
+  height: 24px; */
+  padding: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  transition: opacity 0.3s ease;
 }
 
 .closeButton:hover {
@@ -71,176 +68,125 @@
 }
 
 .closeIcon {
-  width: 16px;
-  height: 16px;
-  fill: #262626; /* 🎯 Змінено color на fill для SVG */
+  width: 24px;
+  height: 24px;
+  stroke: #262626;
+  fill: none;
 }
 
-/* 🎯 Контейнер контенту */
-.content {
+/* 🎯 ОСНОВНИЙ КОНТЕЙНЕР МОДАЛКИ */
+.modalApproveAction {
+  list-style: none;
+  margin: 0;
+  padding: 40px 28px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  height: 270px;
+}
+
+/* 🎯 КОНТЕЙНЕР ДЛЯ КАРТИНКИ */
+.imageWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff4df;
+  margin-bottom: 20px;
+}
+
+/* 🎯 КАРТИНКА */
+.catImage {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+/* 🎯 ЗАГОЛОВОК */
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  color: #262626;
+  margin-bottom: 28px;
   text-align: center;
 }
 
-/* 🎯 Заголовок модалки */
-.title {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.25;
-  color: #262626;
-  margin-bottom: 16px;
-}
-
-/* 🎯 Повідомлення */
-.message {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.29;
-  color: #262626;
-  margin-bottom: 24px;
-  opacity: 0.7;
-}
-
-/* 🎯 Контейнер кнопок */
-.buttons {
+/* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК */
+.buttonsWrapper {
   display: flex;
   gap: 8px;
   justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  /* margin-top: 10px; */
 }
 
-/* 🎯 Стилі для обох кнопок */
-.cancelButton,
-.confirmButton {
-  font-family: 'Manrope', sans-serif;
+/* 🎯 КНОПКИ */
+.confirmButton,
+.cancelButton {
+  padding: 12px 30px;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
-  padding: 15px 25px;
   border-radius: 30px;
-  border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 120px;
+  border: none;
+  width: 137px;
 }
 
-/* 🎯 Кнопка Cancel (по ТЗ - функціональна кнопка) */
-.cancelButton {
-  background-color: #f6b83d;
-  color: #ffffff;
-}
-
-.cancelButton:hover {
-  background-color: #f9b020;
-}
-
-/* 🎯 Кнопка Confirm (по ТЗ - функціональна кнопка) */
 .confirmButton {
-  background-color: #fff4df;
-  color: #f6b83d;
+  background-color: #f6b83d;
+  color: #fff;
 }
 
 .confirmButton:hover {
-  background-color: #fbe7c1;
+  background-color: #f9b020;
 }
 
-/* 🎯 Tablet: від 768px */
-@media screen and (min-width: 768px) {
+.cancelButton {
+  background-color: rgba(38, 38, 38, 0.05);
+  color: #262626;
+}
+
+.cancelButton:hover {
+  border: 1px solid #f6b83d;
+}
+
+/* 🎯 АДАПТИВНІСТЬ */
+@media (min-width: 768px) {
   .modal {
-    max-width: 500px;
-    padding: 50px 40px;
-    width: 90%;
+    max-width: 448px;
   }
 
+  /* 🎯 ОСНОВНИЙ КОНТЕЙНЕР МОДАЛКИ */
+  .modalApproveAction {
+    padding: 80px;
+    height: 364px;
+  }
+
+  /* 🎯 ЗАГОЛОВОК */
   .title {
-    font-size: 32px;
-    margin-bottom: 20px;
+    font-size: 24px;
+    line-height: 1.17;
   }
 
-  .message {
+  .buttonsWrapper {
+    width: 288px;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    padding: 14px 44px;
     font-size: 16px;
-    margin-bottom: 32px;
-  }
-
-  .cancelButton,
-  .confirmButton {
-    font-size: 16px;
-    padding: 18px 30px;
-    min-width: 140px;
-  }
-
-  .closeButton {
-    top: 24px;
-    right: 24px;
-    width: 36px;
-    height: 36px;
-  }
-
-  .closeIcon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* 🎯 Desktop: від 1280px */
-@media screen and (min-width: 1280px) {
-  .modal {
-    max-width: 550px;
-    padding: 60px 50px;
-  }
-
-  .title {
-    font-size: 36px;
-  }
-
-  .message {
-    font-size: 18px;
-  }
-
-  .cancelButton,
-  .confirmButton {
-    font-size: 18px;
-    padding: 20px 35px;
-    min-width: 160px;
-  }
-
-  .closeButton {
-    top: 28px;
-    right: 28px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .closeIcon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-/* 🎯 Для дуже маленьких екранів (320px - 374px) */
-@media screen and (max-width: 374px) {
-  .modal {
-    padding: 30px 15px;
-    max-width: 290px;
-  }
-
-  .buttons {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .cancelButton,
-  .confirmButton {
-    width: 100%;
-    min-width: unset;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-
-  .closeButton {
-    top: 16px;
-    right: 16px;
+    line-height: 1.25;
+    width: 140px;
   }
 }

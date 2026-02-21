@@ -1,5 +1,5 @@
 // 📁 src/components/ModalApproveAction/ModalApproveAction.jsx
-// 🎯 ТЗ: Модальне вікно підтвердження дії
+// 🎯 МОДАЛЬНЕ ВІКНО ПІДТВЕРДЖЕННЯ ДІЇ (ВИХІД, ВИДАЛЕННЯ)
 // 🎯 ТЗ: Закривається по clickу на кнопку Cancel, clickу на кнопку закриття, click по backdrop, press по Escape
 
 import { useEffect } from 'react';
@@ -10,8 +10,7 @@ const ModalApproveAction = ({
   isOpen,
   onClose,
   onConfirm,
-  title = 'Are you sure?',
-  message = 'Do you really want to log out?',
+  title = 'Already leaving?',
   confirmText = 'Yes',
   cancelText = 'Cancel',
 }) => {
@@ -72,34 +71,36 @@ const ModalApproveAction = ({
           </svg>
         </button>
 
-        {/* 🎯 КОНТЕНТ МОДАЛКИ */}
-        <div className={styles.content}>
-          {/* 🎯 ТЗ: заголовок модального вікна */}
-          <h3 id="modal-title" className={styles.title}>
-            {title}
-          </h3>
+        {/* 🎯 РОЗМІТКА ЯК У ПРИКЛАДІ */}
+        <ul className={styles.modalApproveAction}>
+          {/* 🎯 Картинка в кружечку */}
+          <li className={styles.imageWrapper}>
+            <img src="/🐈.png" alt="cat" className={styles.catImage} />
+          </li>
 
-          {/* 🎯 ТЗ: повідомлення */}
-          <p className={styles.message}>{message}</p>
+          {/* 🎯 Заголовок */}
+          <li>
+            <h2 className={styles.title}>{title}</h2>
+          </li>
 
-          {/* 🎯 ТЗ: 2 функціональні кнопки */}
-          <div className={styles.buttons}>
+          {/* 🎯 Кнопки */}
+          <li className={styles.buttonsWrapper}>
             <button
-              className={styles.cancelButton}
-              onClick={onClose}
               type="button"
-            >
-              {cancelText}
-            </button>
-            <button
-              className={styles.confirmButton}
               onClick={handleConfirm}
-              type="button"
+              className={styles.confirmButton}
             >
               {confirmText}
             </button>
-          </div>
-        </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.cancelButton}
+            >
+              {cancelText}
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   );
