@@ -16,17 +16,16 @@
 .emptyContainer {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 60px 20px;
-  background: white;
+  padding: 30px 20px;
+  background: #f6b83d;
+
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
 }
 
 .emptyIcon {
-  font-size: 60px;
+  font-size: 100px;
   margin-bottom: 20px;
-  color: #ff6b08;
 }
 
 .emptyTitle {
@@ -55,22 +54,6 @@
       max-width: 768px;
       margin: 0 auto 60px;
     }
-  }
-
-  .emptyContainer {
-    padding: 40px 16px;
-  }
-
-  .emptyIcon {
-    font-size: 48px;
-  }
-
-  .emptyTitle {
-    font-size: 20px;
-  }
-
-  .emptyText {
-    font-size: 14px;
   }
 }
 

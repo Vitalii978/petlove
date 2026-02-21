@@ -517,23 +517,6 @@ export const NoticesPage = () => {
               )}
             </>
           )}
-
-          {/* Пустое состояние (нет результатов) */}
-          {!loading && !error && notices.length === 0 && (
-            <div className={styles.empty}>
-              <p>No notices found</p>
-              <p className={styles.emptySubtext}>
-                Try changing your search criteria or filters
-              </p>
-              <button
-                className={styles.resetButton}
-                onClick={handleResetFilters}
-                type="button"
-              >
-                Reset filters and show all
-              </button>
-            </div>
-          )}
         </div>
       </section>
     </>

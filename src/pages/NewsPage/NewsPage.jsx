@@ -140,14 +140,14 @@ export const NewsPage = () => {
 
           {/* 🎯 ИНФОРМАЦИЯ О ПОИСКЕ (только если есть поиск) */}
           {/* Условный рендеринг: && - если searchKeyword не пустой */}
-          {searchKeyword && (
+          {/* {searchKeyword && (
             <li className={styles.searchInfo}>
               <p>
                 Поиск: "{searchKeyword}" • Страница {currentPage} из{' '}
                 {totalPages}
               </p>
             </li>
-          )}
+          )} */}
 
           {/* 🎯 СПИСОК НОВОСТЕЙ */}
           <li className={styles.noticesList}>
