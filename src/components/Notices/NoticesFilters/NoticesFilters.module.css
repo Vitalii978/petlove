@@ -1,6 +1,4 @@
 /* src/components/Notices/NoticesFilters/NoticesFilters.module.css */
-/* 🎯 СТИЛИ ДЛЯ КОМПОНЕНТА ФИЛЬТРОВ */
-/* ✅ ИСПРАВЛЕНО: кастомные стрелки для всех селектов */
 
 /* 🎯 ОСНОВНОЙ КОНТЕЙНЕР */
 .filtersContainer {
@@ -341,7 +339,7 @@
 
   /* 🎯 КОНТЕЙНЕР ДЛЯ ВСЕХ 4 КНОПОК СОРТИРОВКИ */
   .sortingButtonsWrapper {
-    max-width: 440px;
+    max-width: 480px;
     width: 100%;
     flex-direction: row;
     gap: 8px;
@@ -351,7 +349,7 @@
   .sortingRow {
     display: flex;
     gap: 8px;
-    min-width: 205px;
+    min-width: 300px;
     width: 100%;
   }
 
