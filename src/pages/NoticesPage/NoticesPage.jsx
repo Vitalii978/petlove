@@ -770,13 +770,15 @@ export const NoticesPage = () => {
       if (!notice || !notice._id) return;
       const token = localStorage.getItem('token');
       if (token) {
+        // ✅ Авторизован - показываем детальную модалку
         addToViewed(notice._id);
         const isFavorite = isNoticeFavorite(notice._id);
         setSelectedNotice({ ...notice, isFavorite });
         setIsModalOpen(true);
       } else {
+        // 🔥 Не авторизован - показываем модалку внимания
         setSelectedNotice(notice);
-        setIsModalAttention(true);
+        setIsModalAttention(true); //👈 ОТКРЫВАЕМ ModalAttention
       }
     },
     [addToViewed, isNoticeFavorite]
@@ -830,9 +832,10 @@ export const NoticesPage = () => {
   const handleToggleFavorite = async noticeId => {
     const token = localStorage.getItem('token');
     if (!token) {
+      // 🔥 Не авторизован - показываем модалку внимания
       const notice = notices.find(n => n._id === noticeId);
       if (notice) setSelectedNotice(notice);
-      setIsModalAttention(true);
+      setIsModalAttention(true); // 👈 ОТКРЫВАЕМ ModalAttention
       return;
     }
 

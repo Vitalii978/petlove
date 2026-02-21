@@ -1,4 +1,5 @@
 /* src/components/ModalAttention/ModalAttention.module.css */
+/* 🎯 СТИЛИ ДЛЯ МОДАЛКИ ВНИМАНИЯ */
 
 .overlay {
   position: fixed;
@@ -10,74 +11,145 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal {
-  background: white;
-  border-radius: 12px;
-  padding: 32px;
+  position: relative;
   max-width: 400px;
   width: 90%;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 40px 30px;
+  text-align: center;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .closeButton {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
   background: none;
   border: none;
-  font-size: 24px;
   cursor: pointer;
-  color: #666;
+  width: 24px;
+  height: 24px;
+  color: #262626;
+  transition: opacity 0.3s ease;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
+}
+
+.iconWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.attentionIcon {
+  width: 60px;
+  height: 60px;
+  color: #f6b83d;
 }
 
 .title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   font-size: 24px;
-  color: #333;
-  margin-bottom: 16px;
-  text-align: center;
+  line-height: 1.2;
+  color: #262626;
+  margin: 0 0 15px 0;
 }
 
 .message {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
   font-size: 16px;
-  color: #666;
-  margin-bottom: 24px;
-  text-align: center;
-  line-height: 1.5;
+  line-height: 1.4;
+  color: rgba(38, 38, 38, 0.7);
+  margin: 0 0 30px 0;
 }
 
-.buttons {
+.actions {
   display: flex;
-  gap: 12px;
+  gap: 15px;
   justify-content: center;
 }
 
 .loginButton,
 .registerButton {
-  padding: 12px 24px;
-  border-radius: 40px;
-  text-decoration: none;
+  padding: 12px 30px;
+  font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  transition: background-color 0.2s;
+  font-size: 16px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
 }
 
 .loginButton {
-  background-color: #ff6b6b;
-  color: white;
+  background-color: #f6b83d;
+  color: #fff;
 }
 
 .loginButton:hover {
-  background-color: #ff5252;
+  background-color: #f9b020;
 }
 
 .registerButton {
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #fff4df;
+  color: #f6b83d;
 }
 
 .registerButton:hover {
-  background-color: #e0e0e0;
+  background-color: #fbe7c1;
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 30px 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .message {
+    font-size: 14px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .loginButton,
+  .registerButton {
+    width: 100%;
+  }
 }
