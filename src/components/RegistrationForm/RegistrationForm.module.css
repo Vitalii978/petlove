@@ -1,59 +1,70 @@
-/* src/components/LoginForm/LoginForm.module.css */
-/* 🎯 СТИЛИ ДЛЯ ФОРМЫ ВХОДА - ИСПРАВЛЕНО: ошибки красного цвета */
+/* src/components/RegistrationForm/RegistrationForm.module.css */
+/* 🎯 СТИЛИ ДЛЯ ФОРМЫ РЕГИСТРАЦИИ - ИЗ ПРИМЕРА */
 /* ==================================================== */
 
-.boxLogin {
+/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР ФОРМЫ */
+.boxRegistration {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 12px;
-  list-style: none;
-  padding: 0;
-  width: 100%; /* На всю ширину родителя */
+  flex-direction: column; /* Вертикальное расположение */
+  margin-top: 12px; /* Отступ сверху */
+  list-style: none; /* Убираем маркеры списка */
+  padding: 0; /* Убираем стандартные отступы */
+  width: 100%; /* На всю ширину */
 }
 
+/* 🎯 ПРИВЕТСТВЕННЫЙ ТЕКСТ */
 .paragraphGreeting {
   font-family: 'Manrope', sans-serif;
+  text-align: left; /* Выравнивание по левому краю */
   font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #262626;
-  max-width: 280px; /* Ограничиваем ширину для читаемости */
-  margin: 0 auto;
+  max-width: 280px; /* Ограничение ширины */
+  margin: 0 auto; /* Центрирование */
 }
 
+/* 🎯 КОНТЕЙНЕР ДЛЯ FORMik */
 .formikBox {
-  margin-top: 24px;
+  margin-top: 20px;
   width: 100%;
 }
 
+/* 🎯 САМА ФОРМА */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* Расстояние между полями */
   width: 100%;
 }
 
+/* 🎯 КОНТЕЙНЕР ДЛЯ КАЖДОГО ПОЛЯ */
 .boxInput {
-  position: relative;
+  position: relative; /* Для позиционирования иконок */
   width: 100%;
 }
 
-/* 🔥 ИСПРАВЛЕНО: убираем фиксированную ширину, ставим проценты */
+/* 🎯 ПОЛЯ ВВОДА */
 .input {
   box-sizing: border-box;
   border: 1px solid rgba(38, 38, 38, 0.15);
   border-radius: 30px;
-  padding: 12px 38px 12px 12px;
-  width: 100%; /* Было 295px, стало 100% */
+  padding: 12px 38px 12px 12px; /* Отступ справа для иконок */
+  width: 100%;
   height: 42px;
+
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   color: rgba(38, 38, 38, 0.8);
 
+  /* Стили для placeholder */
   &::placeholder {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
     font-size: 14px;
     line-height: 1.29;
     letter-spacing: -0.03em;
@@ -61,114 +72,114 @@
   }
 }
 
-/* 🔥 ИСПРАВЛЕНО: ошибки теперь красного цвета */
+/* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
+.errorName,
 .errorEmail {
   position: absolute;
   left: 18px;
-  top: 45px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
+  top: 45px; /* Под полем ввода */
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.03em;
   color: #ef2447; /* Красный цвет */
-  white-space: nowrap;
+  white-space: nowrap; /* Запрещаем перенос текста */
 }
 
-.errorPassword {
+.errorPassword,
+.errorPasswordSecond {
   position: absolute;
   left: 18px;
-  top: 45px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
+  top: 70px; /* Для полей пароля (ниже) */
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  color: #ef2447; /* Красный цвет */
+  color: #ef2447;
   white-space: nowrap;
 }
 
-/* 🟢 Стили для иконки глаза */
+/* 🎯 ЛЕЙБЛ ДЛЯ ИКОНКИ ГЛАЗА (показать/скрыть пароль) */
 .labelPassword {
   display: block;
   position: absolute;
   width: 26px;
   height: 26px;
   top: 12px;
-  right: 12px;
+  right: 12px; /* Справа от поля */
   left: auto;
-  z-index: 2; /* Чтобы иконка была поверх поля */
-  cursor: pointer;
+  z-index: 2; /* Поверх поля */
 }
 
-/* 🔥 ИСПРАВЛЕНО: кнопка на всю ширину */
+/* 🎯 КНОПКА ОТПРАВКИ */
 .buttonSubmit {
   border-radius: 30px;
   padding: 12px 20px;
   width: 100%;
   height: 42px;
-  background-color: #f6b83d;
+  background-color: #f6b83d; /* Оранжевый как в дизайне */
   border: none;
-  margin-top: 40px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
+  margin-top: 14px;
+
+  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
+  text-transform: uppercase; /* Заглавные буквы */
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #f9b020;
+    background-color: #f9b020; /* Светлее при наведении */
   }
 
   &:disabled {
-    background-color: #ccc;
+    background-color: #ccc; /* Серый при блокировке */
     cursor: not-allowed;
   }
 }
 
-/* 🟢 Границы для валидации */
+/* 🎯 КЛАССЫ ДЛЯ ПОДСВЕТКИ ГРАНИЦ */
 .errBorderRed {
-  border: 1px solid #ef2447; /* Красная граница при ошибке */
+  border: 1px solid #ef2447; /* Красная граница */
 }
 
 .errBorderGreen {
-  border: 1px solid #08aa83; /* Зеленая граница при успехе */
+  border: 1px solid #08aa83; /* Зеленая граница */
 }
 
-/* 🔥 ИСПРАВЛЕНО: иконки позиционируем через right */
+/* 🎯 ИКОНКИ ВАЛИДАЦИИ (крестик/галочка) */
 .iconEmail {
   position: absolute;
   top: 15px;
-  right: 12px;
+  right: 12px; /* Справа от поля */
   left: auto;
   width: 12px;
   height: 12px;
-  pointer-events: none; /* Иконка не блокирует клики */
 }
 
 .iconPassword {
   position: absolute;
   top: 16px;
-  right: 45px; /* Отступ от иконки глаза */
+  right: 45px; /* Слева от иконки глаза */
   left: auto;
-  width: 16px;
-  height: 16px;
-  pointer-events: none; /* Иконка не блокирует клики */
+  width: 12px;
+  height: 12px;
 }
 
-/* ============= АДАПТИВНОСТЬ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
+/* ============= ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
 @media screen and (max-width: 374px) {
-  .boxLogin {
-    padding: 0 10px;
+  .boxRegistration {
+    padding: 0 5px;
   }
 
   .paragraphGreeting {
     font-size: 13px;
-    max-width: 260px;
+    max-width: 240px;
   }
 
   .input {
@@ -177,13 +188,7 @@
     padding: 10px 35px 10px 10px;
   }
 
-  .input::placeholder {
-    font-size: 13px;
-  }
-
   .labelPassword {
-    width: 24px;
-    height: 24px;
     top: 10px;
     right: 10px;
   }
@@ -191,7 +196,6 @@
   .buttonSubmit {
     height: 40px;
     font-size: 13px;
-    padding: 10px 16px;
   }
 
   .iconEmail {
@@ -207,30 +211,18 @@
     width: 11px;
     height: 11px;
   }
-
-  .errorEmail {
-    font-size: 9px;
-    left: 14px;
-    top: 42px;
-  }
-
-  .errorPassword {
-    font-size: 9px;
-    left: 14px;
-    top: 65px;
-  }
 }
 
 /* ============= ПЛАНШЕТЫ ============= */
 @media screen and (min-width: 768px) {
-  .boxLogin {
+  .boxRegistration {
     margin-top: 16px;
     width: auto;
   }
 
   .form {
-    gap: 30px;
-    width: 424px;
+    gap: 16px;
+    width: 424px; /* Фиксированная ширина как в дизайне */
   }
 
   .paragraphGreeting {
@@ -256,6 +248,7 @@
     }
   }
 
+  .errorName,
   .errorEmail {
     left: 18px;
     top: 55px;
@@ -263,7 +256,8 @@
     line-height: 1.17;
   }
 
-  .errorPassword {
+  .errorPassword,
+  .errorPasswordSecond {
     left: 18px;
     top: 79px;
     font-size: 12px;
@@ -273,15 +267,13 @@
   .labelPassword {
     top: 16px;
     right: 16px;
-    width: 22px;
-    height: 22px;
   }
 
   .buttonSubmit {
     padding: 16px 20px;
     width: 424px;
     height: 52px;
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 16px;
     line-height: 1.25;
   }
@@ -294,7 +286,7 @@
   }
 
   .iconPassword {
-    top: 20px;
+    top: 18px;
     right: 55px;
     width: 16px;
     height: 16px;
@@ -303,7 +295,5 @@
 
 /* ============= ДЕСКТОП ============= */
 @media screen and (min-width: 1280px) {
-  .buttonSubmit {
-    margin-top: 34px;
-  }
+  /* Стили наследуются от планшета */
 }
