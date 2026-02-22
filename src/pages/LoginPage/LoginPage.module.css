@@ -1,47 +1,41 @@
 /* src/pages/LoginPage/LoginPage.module.css */
 
-/* 🎯 ОСНОВНАЯ СТРАНИЦА */
-.page {
-  min-height: 100vh;
-  background-color: #f8f8f8;
+.loginSection {
+  box-sizing: border-box;
+  max-width: 375px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
-/* 🎯 КОНТЕЙНЕР */
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
+.login {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 80px); /* Минус высота хедера */
-}
-
-/* 🎯 КАРТИНКА ПИТОМЦА */
-.petBlockWrapper {
+  gap: 10px;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto 40px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-/* 🎯 СЕКЦИЯ С ФОРМОЙ */
-.formSection {
+.petBlock {
   width: 100%;
-  max-width: 400px;
-  background-color: white;
-  padding: 40px 32px;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
-/* 🎯 СООБЩЕНИЕ ОБ ОШИБКЕ */
+.boxLogin {
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 60px 20px;
+  height: 422px;
+}
+
 .error {
   background-color: #ffebee;
   color: #c62828;
   padding: 12px 16px;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin: 16px 0 0;
   font-size: 14px;
   text-align: center;
 }
@@ -50,160 +44,91 @@
   margin: 0;
 }
 
-/* 🎯 ФОРМА */
-.form {
-  margin-top: 32px;
-}
-
-/* 🎯 ГРУППА ПОЛЕЙ */
-.formGroup {
-  margin-bottom: 24px;
-}
-
-/* 🎯 ЛЕЙБЛЫ */
-.label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-/* 🎯 ПОЛЯ ВВОДА */
-.input {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #ff6b08;
-  background-color: white;
-  box-shadow: 0 0 0 3px rgba(255, 107, 8, 0.1);
-}
-
-.input:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
-}
-
-/* 🎯 ПОДСКАЗКА ДЛЯ ПАРОЛЯ */
-.passwordHint {
-  margin-top: 6px;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 0;
-}
-
-/* 🎯 КНОПКА ОТПРАВКИ */
-.submitButton {
-  width: 100%;
-  padding: 16px;
-  background-color: #ff6b08;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-.submitButton:hover:not(:disabled) {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
-}
-
-.submitButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* 🎯 ССЫЛКА НА РЕГИСТРАЦИЮ */
 .registerLink {
-  margin-top: 32px;
+  margin-top: 12px;
   text-align: center;
 }
 
 .registerText {
-  color: #666;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.5);
   margin: 0;
 }
 
 .link {
-  color: #ff6b08;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.03em;
+  color: #f6b83d;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .link:hover {
-  color: #ff8500;
+  color: #f9b020;
   text-decoration: underline;
 }
 
-/* ============= АДАПТИВНОСТЬ ============= */
-
-/* 🎯 МОБИЛЬНЫЕ УСТРОЙСТВА (до 767px) */
-@media (max-width: 767px) {
-  .container {
-    padding: 20px 16px;
-    min-height: calc(100vh - 60px);
+@media screen and (min-width: 768px) {
+  .loginSection {
+    max-width: 768px;
+    padding: 32px;
+    margin: 0 auto;
   }
 
-  .formSection {
-    padding: 32px 24px;
+  .login {
+    gap: 16px;
   }
 
-  .petBlockWrapper {
-    margin-bottom: 30px;
-  }
-}
-
-/* 🎯 ПЛАНШЕТЫ (768px - 1279px) */
-@media (min-width: 768px) and (max-width: 1279px) {
-  .container {
-    flex-direction: row;
-    gap: 60px;
-    padding: 40px;
+  .boxLogin {
+    border-radius: 60px;
+    padding: 71px 140px;
+    width: 704px;
+    height: 560px;
   }
 
-  .petBlockWrapper {
-    flex: 1;
-    margin-bottom: 0;
+  .registerLink {
+    margin-top: 16px;
   }
 
-  .formSection {
-    flex: 1;
-    max-width: 400px;
+  .registerText {
+    font-size: 14px;
+    line-height: 1.43;
+  }
+
+  .link {
+    font-size: 14px;
+    line-height: 1.43;
   }
 }
 
 /* 🎯 ДЕСКТОП (1280px и больше) */
-@media (min-width: 1280px) {
-  .container {
+@media screen and (min-width: 1280px) {
+  .loginSection {
+    max-width: 1280px;
+    padding: 16px 32px 32px 32px;
+    margin: 0 auto;
+  }
+
+  .login {
     flex-direction: row;
-    gap: 80px;
-    padding: 60px 40px;
+    gap: 32px;
+    align-items: center;
   }
 
-  .petBlockWrapper {
+  .petBlock {
     flex: 1;
-    max-width: 600px;
-    margin-bottom: 0;
+    max-width: 592px;
   }
 
-  .formSection {
+  .boxLogin {
     flex: 1;
-    max-width: 400px;
+    padding: 118px 84px;
+    width: 592px;
+    height: 654px;
+    margin: 0;
   }
 }

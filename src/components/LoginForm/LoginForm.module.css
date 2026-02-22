@@ -1,0 +1,299 @@
+/* src/components/LoginForm/LoginForm.module.css */
+
+.boxLogin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  list-style: none;
+  padding: 0;
+  width: 100%; /* На всю ширину родителя */
+}
+
+.paragraphGreeting {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #262626;
+  max-width: 280px; /* Ограничиваем ширину для читаемости */
+  margin: 0 auto;
+}
+
+.formikBox {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.boxInput {
+  position: relative;
+  width: 100%;
+}
+
+/* 🔥 ИСПРАВЛЕНО: убираем фиксированную ширину, ставим проценты */
+.input {
+  box-sizing: border-box;
+  border: 1px solid rgba(38, 38, 38, 0.15);
+  border-radius: 30px;
+  padding: 12px 38px 12px 12px;
+  width: 100%; /* Было 295px, стало 100% */
+  height: 42px;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.8);
+
+  &::placeholder {
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.03em;
+    color: rgba(38, 38, 38, 0.5);
+  }
+}
+
+/* 🔥 ИСПРАВЛЕНО: позиционирование иконок через right */
+.errorEmail {
+  position: absolute;
+  left: 18px;
+  top: 45px;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #ef2447;
+  white-space: nowrap; /* Запрещаем перенос текста */
+}
+
+.errorPassword {
+  position: absolute;
+  left: 18px;
+  top: 70px;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #ef2447;
+  white-space: nowrap;
+}
+
+.labelPassword {
+  display: block;
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 12px;
+  right: 12px; /* Было left: 260px, стало right: 12px */
+  left: auto; /* Сбрасываем left */
+}
+
+/* 🔥 ИСПРАВЛЕНО: кнопка на всю ширину */
+.buttonSubmit {
+  border-radius: 30px;
+  padding: 12px 20px; /* Уменьшаем горизонтальные паддинги */
+  width: 100%; /* Было 295px, стало 100% */
+  height: 42px;
+  background-color: #f6b83d;
+  border: none;
+  margin-top: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f9b020;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.errBorderRed {
+  border: 1px solid #ef2447;
+}
+
+.errBorderGreen {
+  border: 1px solid #08aa83;
+}
+
+/* 🔥 ИСПРАВЛЕНО: иконки позиционируем через right */
+.iconEmail {
+  position: absolute;
+  top: 15px;
+  right: 12px; /* Было left: 263px, стало right: 12px */
+  left: auto;
+  /* width: 12px;
+  height: 12px; */
+}
+
+.iconPassword {
+  position: absolute;
+  top: 16px;
+  right: 45px; /* Было left: 240px, стало right: 45px (чтобы не налезать на иконку глаза) */
+  left: auto;
+  width: 16px;
+  height: 16px;
+}
+
+/* ============= АДАПТИВНОСТЬ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
+/* 🔥 ДОБАВЛЕНО: специально для экранов от 320px до 374px */
+@media screen and (max-width: 374px) {
+  .boxLogin {
+    padding: 0 10px; /* Добавляем отступы по бокам */
+  }
+
+  .paragraphGreeting {
+    font-size: 13px; /* Чуть меньше шрифт */
+    max-width: 260px;
+  }
+
+  .input {
+    font-size: 13px; /* Чуть меньше шрифт */
+    height: 40px; /* Чуть меньше высота */
+    padding: 10px 35px 10px 10px;
+  }
+
+  .input::placeholder {
+    font-size: 13px;
+  }
+
+  .labelPassword {
+    width: 24px;
+    height: 24px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .buttonSubmit {
+    height: 40px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  .iconEmail {
+    top: 13px;
+    right: 10px;
+    width: 11px;
+    height: 11px;
+  }
+
+  .iconPassword {
+    top: 14px;
+    right: 42px;
+    width: 11px;
+    height: 11px;
+  }
+
+  .errorEmail {
+    font-size: 9px;
+    left: 14px;
+    top: 42px;
+  }
+
+  .errorPassword {
+    font-size: 9px;
+    left: 14px;
+    top: 65px;
+  }
+}
+
+/* ============= ПЛАНШЕТЫ ============= */
+@media screen and (min-width: 768px) {
+  .boxLogin {
+    margin-top: 16px;
+    width: auto; /* Сбрасываем ширину для планшетов */
+  }
+
+  .form {
+    gap: 30px;
+    width: 424px; /* Фиксированная ширина как в дизайне */
+  }
+
+  .paragraphGreeting {
+    font-size: 18px;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    color: #262626;
+    max-width: 400px;
+  }
+
+  .formikBox {
+    margin-top: 32px;
+  }
+
+  .input {
+    padding: 16px 43px 16px 16px;
+    width: 424px; /* Фиксированная ширина как в дизайне */
+    height: 52px;
+    font-size: 16px;
+    line-height: 1.25;
+
+    &::placeholder {
+      font-size: 16px;
+      line-height: 1.25;
+    }
+  }
+
+  .errorEmail {
+    left: 18px;
+    top: 55px;
+    font-size: 12px;
+    line-height: 1.17;
+  }
+
+  .errorPassword {
+    left: 18px;
+    top: 79px;
+    font-size: 12px;
+    line-height: 1.17;
+  }
+
+  .labelPassword {
+    top: 16px;
+    right: 16px; /* Для планшетов */
+    width: 22px;
+    height: 22px;
+  }
+
+  .buttonSubmit {
+    padding: 16px 20px;
+    width: 424px; /* Фиксированная ширина как в дизайне */
+    height: 52px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .iconEmail {
+    top: 19px;
+    right: 16px; /* Для планшетов */
+    width: 16px;
+    height: 16px;
+  }
+
+  .iconPassword {
+    top: 20px;
+    right: 55px; /* Для планшетов (чтобы не налезать на иконку глаза) */
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ============= ДЕСКТОП ============= */
+@media screen and (min-width: 1280px) {
+  .buttonSubmit {
+    margin-top: 34px;
+  }
+}
