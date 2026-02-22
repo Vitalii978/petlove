@@ -59,7 +59,7 @@ export const NoticesPage = () => {
   // =============== МОДАЛКИ ===============
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState(null);
-  const [isModalAttention, setIsModalAttention] = useState(true);
+  const [isModalAttention, setIsModalAttention] = useState(false);
 
   // =============== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===============
   const { favorites: userFavorites, addToViewed, refreshUser } = useUser();

@@ -1,13 +1,15 @@
 /* src/components/ModalAttention/ModalAttention.module.css */
-/* 🎯 СТИЛИ ДЛЯ МОДАЛКИ ВНИМАНИЯ */
+/* 🎯 СТИЛИ ДЛЯ МОДАЛКИ ВНИМАНИЯ - ИЗ ПРИМЕРА */
+/* ==================================================== */
 
+/* 🎯 ОВЕРЛЕЙ (ЗАТЕМНЕНИЕ) */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(25, 26, 21, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,17 +17,7 @@
   animation: fadeIn 0.3s ease;
 }
 
-.modal {
-  position: relative;
-  max-width: 400px;
-  width: 90%;
-  background-color: #fff;
-  border-radius: 30px;
-  padding: 40px 30px;
-  text-align: center;
-  animation: slideUp 0.3s ease;
-}
-
+/* 🎯 АНИМАЦИЯ ПОЯВЛЕНИЯ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -35,6 +27,23 @@
   }
 }
 
+/* 🎯 ОСНОВНОЙ МОДАЛЬНЫЙ КОНТЕЙНЕР */
+.modal {
+  border-radius: 30px;
+  width: 335px;
+  height: 394px;
+  padding: 20px 20px 40px 20px;
+  box-sizing: border-box;
+  background-color: #fff; /* добавляем белый фон */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  animation: slideUp 0.3s ease;
+}
+
+/* 🎯 АНИМАЦИЯ ПОЯВЛЕНИЯ СНИЗУ */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -46,110 +55,166 @@
   }
 }
 
-.closeButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
+/* 🎯 КНОПКА ЗАКРЫТИЯ */
+.buttonClose {
   border: none;
+  background-color: inherit;
+  margin-left: 271px;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
-  color: #262626;
   transition: opacity 0.3s ease;
 }
 
-.closeButton:hover {
+.buttonClose:hover {
   opacity: 0.7;
 }
 
-.iconWrapper {
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #262626;
+}
+
+/* 🎯 БЛОК С ИКОНКОЙ */
+.boxImg {
+  border-radius: 100%;
+  background-color: #fff4df;
+  width: 80px;
+  height: 80px;
+
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-top: 0;
 }
 
-.attentionIcon {
-  width: 60px;
-  height: 60px;
-  color: #f6b83d;
-}
-
+/* 🎯 ЗАГОЛОВОК */
 .title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #f6b83d;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+/* 🎯 ТЕКСТ СООБЩЕНИЯ */
+.message {
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #2b2b2a;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+/* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК */
+.boxLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px; /* как в примере */
+  margin-top: 24px;
+}
+
+/* 🎯 КНОПКА LOG IN */
+.linkLogin {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 12px 46px;
+  width: 132px;
+  height: 42px;
+  background-color: #f6b83d;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f9b020;
+  }
+}
+
+/* 🎯 КНОПКА REGISTRATION */
+.linkRegister {
+  box-sizing: border-box;
+  display: block;
+  border-radius: 30px;
+  padding: 12px 24px;
+  width: 132px;
+  height: 42px;
+  background-color: #fff4df;
+
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 1.2;
-  color: #262626;
-  margin: 0 0 15px 0;
-}
-
-.message {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.4;
-  color: rgba(38, 38, 38, 0.7);
-  margin: 0 0 30px 0;
-}
-
-.actions {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-
-.loginButton,
-.registerButton {
-  padding: 12px 30px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
-}
-
-.loginButton {
-  background-color: #f6b83d;
-  color: #fff;
-}
-
-.loginButton:hover {
-  background-color: #f9b020;
-}
-
-.registerButton {
-  background-color: #fff4df;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
   color: #f6b83d;
+  text-decoration: none;
+  text-align: center;
+
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #fbe7c1;
+  }
 }
 
-.registerButton:hover {
-  background-color: #fbe7c1;
-}
-
-@media (max-width: 480px) {
+/* ============= ПЛАНШЕТЫ ============= */
+@media screen and (min-width: 768px) {
   .modal {
-    padding: 30px 20px;
+    width: 466px;
+    height: 434px;
+    padding: 20px 60px 60px 60px;
+  }
+
+  .buttonClose {
+    margin-left: 395px;
   }
 
   .title {
-    font-size: 20px;
+    font-size: 24px;
+    line-height: 1.17;
+    margin-top: 20px;
   }
 
   .message {
     font-size: 14px;
+    line-height: 1.29;
+    margin-top: 20px;
   }
 
-  .actions {
-    flex-direction: column;
-    gap: 10px;
+  .boxLink {
+    margin-top: 28px;
+    gap: 8px;
   }
 
-  .loginButton,
-  .registerButton {
-    width: 100%;
+  .linkLogin {
+    padding: 14px 48px;
+    width: 140px;
+    height: 48px;
+    font-size: 16px;
+    line-height: 1.25;
   }
+
+  .linkRegister {
+    padding: 14px 24px;
+    width: 140px;
+    height: 48px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+
+/* ============= ДЕСКТОП ============= */
+@media screen and (min-width: 1280px) {
+  /* стили наследуются от планшета */
 }

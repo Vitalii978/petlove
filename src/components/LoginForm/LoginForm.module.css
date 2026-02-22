@@ -13,13 +13,11 @@
 }
 
 .paragraphGreeting {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #262626;
-  max-width: 280px; /* Ограничиваем ширину для читаемости */
+  max-width: 295px; /* Ограничиваем ширину для читаемости */
   margin: 0 auto;
 }
 
@@ -162,10 +160,6 @@
 
 /* ============= АДАПТИВНОСТЬ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
 @media screen and (max-width: 374px) {
-  .boxLogin {
-    padding: 0 10px;
-  }
-
   .paragraphGreeting {
     font-size: 13px;
     max-width: 260px;
@@ -236,7 +230,7 @@
   .paragraphGreeting {
     font-size: 18px;
     line-height: 1.22;
-    max-width: 400px;
+    max-width: 424px;
   }
 
   .formikBox {
