@@ -1,5 +1,6 @@
 /* src/components/ModalNotice/ModalNotice.module.css */
-/* 🎯 ПОЛНОСТЬЮ ПОД ФИГМУ! */
+/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА */
+/* ✅ Цвета заданы в CSS как просили: color: #f6b83d; background: #fff4df; */
 
 .overlay {
   position: fixed;
@@ -7,25 +8,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(38, 38, 38, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
 }
 
 .modal {
-  background: white;
-  border-radius: 30px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
   position: relative;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 40px 28px;
+  border-radius: 30px;
+  width: 335px;
+  /* height: 476px; */
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   animation: slideIn 0.3s ease;
-  padding: 30px;
 }
 
 @keyframes slideIn {
@@ -39,245 +40,248 @@
   }
 }
 
-.closeButton {
+.buttonClose {
   position: absolute;
-  top: 20px;
+  border: none;
+  background-color: inherit;
   right: 20px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 20px;
   cursor: pointer;
-  color: #666;
-  transition: all 0.2s;
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.closeButton:hover {
-  background: #f5f5f5;
-  color: #333;
+.buttonClose:hover {
   transform: scale(1.1);
 }
 
-/* 🟢 КРУГЛОЕ ФОТО */
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+}
+
+/* 🟢 КОНТЕЙНЕР ДЛЯ ФОТО (для позиционирования плашки) */
 .imageWrapper {
-  display: flex;
-  justify-content: center;
+  position: relative;
+  display: inline-block;
   margin-bottom: 20px;
 }
 
-.imageContainer {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid #ff6b6b;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+/* 🟢 ПЛАШКА КАТЕГОРИИ (НЕ КНОПКА!) */
+.categoryBadge {
+  position: absolute;
+  top: 0px; /* Часть плашки выходит за пределы фото */
+  left: 0px; /* Часть плашки выходит за пределы фото */
+
+  /* 🎯 ЦВЕТА ИЗ ЗАДАНИЯ */
+  color: #f6b83d; /* Оранжевый текст */
+  background-color: #fff4df; /* Светло-оранжевый фон */
+
+  /* Стили овальной рамки */
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+
+  /* Тень для объема */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  /* Чтобы текст не переносился */
+  white-space: nowrap;
+
+  /* Плавность при наведении (хотя это не кнопка) */
+  transition: transform 0.2s ease;
+  z-index: 10;
 }
 
-.image {
-  width: 100%;
-  height: 100%;
+/* Легкий эффект при наведении на всю модалку */
+.modal:hover .categoryBadge {
+  transform: scale(1.02);
+}
+
+.imgModal {
+  border-radius: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 }
 
-/* 🟢 ИНФОРМАЦИЯ */
-.info {
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #2b2b2a;
   text-align: center;
 }
 
-.petName {
-  font-size: 28px;
-  font-weight: 700;
-  color: #333;
-  margin: 0 0 10px 0;
-}
-
-/* 🟢 РЕЙТИНГ */
-.rating {
-  display: inline-flex;
+.boxPopularity {
+  margin-top: 10px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
-  background-color: #f8f8f8;
-  padding: 8px 16px;
-  border-radius: 30px;
-  margin-bottom: 30px;
+  gap: 4px;
 }
 
-.star {
-  fill: #ffb800;
-  color: #ffb800;
+.popularity {
+  font-size: 14px;
+  line-height: 1.43;
+  color: #2b2b2a;
 }
 
-.ratingValue {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
+.boxCharacteristics {
+  display: flex;
+  flex-direction: row;
+  gap: 27px;
+  margin-bottom: 16px;
+  list-style: none;
+  padding: 0;
 }
 
-/* 🟢 ХАРАКТЕРИСТИКИ */
-.characteristics {
+.oneCharacteristics {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 30px;
-  text-align: left;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.characteristic {
-  display: flex;
-  justify-content: space-between;
+  gap: 4px;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
 }
 
-.label {
-  color: #888;
-  font-size: 14px;
-  font-weight: 400;
+.description {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: rgba(38, 38, 38, 0.5);
 }
 
-.value {
-  color: #333;
-  font-size: 14px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.meaning {
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #262626;
+  text-transform: capitalize;
 }
 
-.genderIcon {
-  width: 16px;
-  height: 16px;
-}
-
-/* 🟢 КОММЕНТАРИЙ */
 .comment {
-  color: #666;
   font-size: 14px;
-  line-height: 1.6;
-  margin: 20px 0;
-  padding: 16px;
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  text-align: left;
+  line-height: 1.29;
+  letter-spacing: -0.02em;
+  color: #2b2b2a;
+  margin-bottom: 32px;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-/* 🟢 ЦЕНА */
 .price {
-  font-size: 32px;
   font-weight: 700;
-  color: #ff6b6b;
-  margin: 20px 0;
-  text-align: center;
-}
-
-.noPrice {
-  font-size: 24px;
-  font-weight: 500;
-  color: #999;
-  margin: 20px 0;
-  text-align: center;
-  font-style: italic;
-}
-
-/* 🟢 КНОПКИ В ОДНУ СТРОКУ */
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.actionButton {
-  flex: 1;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 40px;
-  font-weight: 600;
   font-size: 16px;
+  line-height: 1.25;
+  color: #2b2b2a;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.boxButton {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  /* justify-content: center; */
+}
+
+.buttonAdd {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 31px;
+  width: 135px;
+  height: 44px;
+  background-color: #f6b83d;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: #fff;
   cursor: pointer;
   transition: all 0.2s;
+  justify-content: center;
+}
+
+.buttonAdd:hover {
+  background-color: #f9b020;
+  transform: translateY(-2px);
+}
+
+.linkBtn {
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 12px 37px;
+  width: 134px;
+  height: 44px;
+  background-color: #fff4df;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: #f6b83d;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  text-decoration: none;
+  transition: all 0.2s;
 }
 
-.buttonIcon {
-  width: 18px;
-  height: 18px;
-}
-
-/* Кнопка Delete (корзина) */
-.deleteButton {
-  background-color: #ff4444;
-  fill: white;
-}
-
-.deleteButton:hover {
-  background-color: #cc0000;
+.linkBtn:hover {
+  background-color: #fbe7c1;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(255, 68, 68, 0.3);
 }
 
-/* Кнопка Add (сердечко) */
-.addButton {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.addButton:hover {
-  background-color: #ff5252;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
-}
-
-/* Кнопка Contact */
-.contactButton {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.contactButton:hover {
-  background-color: #e0e0e0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 🟢 АДАПТИВНОСТЬ */
-@media (max-width: 480px) {
+/* 🟢 АДАПТИВНОСТЬ - ПЛАНШЕТ */
+@media screen and (min-width: 768px) {
   .modal {
-    padding: 20px;
+    width: 473px;
+    height: 510px;
   }
 
-  .imageContainer {
-    width: 100px;
-    height: 100px;
+  .categoryBadge {
+    top: 0px;
+    left: 0px;
+    padding: 8px 14px;
+    font-size: 16px;
   }
 
-  .petName {
-    font-size: 24px;
+  .imgModal {
+    width: 150px;
+    height: 150px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+  .boxPopularity {
+    margin-bottom: 20px;
   }
 
   .price {
-    font-size: 28px;
+    font-size: 18px;
+    line-height: 1.33;
   }
 
-  .actions {
-    flex-direction: column;
+  .buttonAdd {
+    padding: 14px 42px;
+    width: 160px;
+    height: 48px;
   }
 
-  .actionButton {
-    width: 100%;
+  .linkBtn {
+    padding: 14px 50px;
+    width: 160px;
+    height: 48px;
   }
 }
