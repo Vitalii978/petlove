@@ -1,6 +1,5 @@
-/* src/components/ModalEditUser/ModalEditUser.module.css */
+/* src/components/ModalEditUser/ModalEditUser.module.css
 
-/* 🎯 ОВЕРЛЕЙ МОДАЛЬНОГО ОКНА (фон) */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -25,7 +24,6 @@
   }
 }
 
-/* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */
 .modalContent {
   background-color: white;
   border-radius: 20px;
@@ -48,7 +46,6 @@
   }
 }
 
-/* 🎯 ЗАГОЛОВОК МОДАЛКИ */
 .modalHeader {
   display: flex;
   align-items: center;
@@ -64,7 +61,7 @@
   margin: 0;
 }
 
-/* 🎯 КНОПКА ЗАКРЫТИЯ */
+
 .closeButton {
   width: 40px;
   height: 40px;
@@ -89,7 +86,7 @@
   fill: #666;
 }
 
-/* 🎯 ОШИБКА ОТ API */
+
 .apiError {
   background-color: #fff2f2;
   border: 1px solid #ffcdd2;
@@ -116,12 +113,12 @@
   line-height: 1.4;
 }
 
-/* 🎯 ФОРМА */
+
 .form {
   padding: 24px;
 }
 
-/* 🎯 СПИСОК ПОЛЕЙ ФОРМЫ */
+
 .formFields {
   list-style: none;
   padding: 0;
@@ -137,7 +134,7 @@
   gap: 8px;
 }
 
-/* 🎯 ЛЕЙБЛЫ ПОЛЕЙ */
+
 .label {
   font-size: 14px;
   font-weight: 600;
@@ -151,7 +148,7 @@
   margin-left: 4px;
 }
 
-/* 🎯 ПОЛЯ ВВОДА */
+
 .input {
   width: 100%;
   padding: 14px 16px;
@@ -182,7 +179,7 @@
   opacity: 0.7;
 }
 
-/* 🎯 ПОЛЕ С ОШИБКОЙ */
+
 .inputError {
   border-color: #ff4444;
   background-color: #fffafa;
@@ -193,7 +190,7 @@
   box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
 }
 
-/* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ ВАЛИДАЦИИ */
+
 .errorMessage {
   margin: 0;
   font-size: 13px;
@@ -201,7 +198,7 @@
   padding-left: 4px;
 }
 
-/* 🎯 ПОДСКАЗКИ К ПОЛЯМ */
+
 .fieldHint {
   margin: 4px 0 0 0;
   font-size: 12px;
@@ -209,7 +206,7 @@
   font-style: italic;
 }
 
-/* 🎯 КНОПКИ ФОРМЫ */
+
 .formButtons {
   display: flex;
   gap: 16px;
@@ -255,7 +252,6 @@
   transform: none;
 }
 
-/* 🎯 СПИННЕР ДЛЯ ЗАГРУЗКИ */
 .spinner {
   display: inline-block;
   width: 16px;
@@ -274,7 +270,7 @@
   }
 }
 
-/* 🎯 АДАПТИВНОСТЬ */
+
 @media (max-width: 767px) {
   .modalContent {
     border-radius: 16px;
@@ -310,5 +306,469 @@
 
   .formButtons {
     flex-direction: column-reverse;
+  }
+} */
+
+/* src/components/ModalEditUser/ModalEditUser.module.css */
+/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ */
+/* ✅ ИСПРАВЛЕНО: резиновая верстка для экранов <374px */
+
+/* 🎯 ОВЕРЛЕЙ МОДАЛЬНОГО ОКНА (фон) */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(25, 26, 21, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 12px; /* Уменьшен padding для маленьких экранов */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */
+.modalContent {
+  background-color: white;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 335px; /* Фиксированная максимальная ширина */
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  .modalContent {
+    max-width: 100%; /* На всю ширину */
+    width: 100%;
+    border-radius: 20px; /* Чуть меньше скругление */
+  }
+
+  .modalOverlay {
+    padding: 8px; /* Минимальные отступы по бокам */
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 🎯 СПИСОК ВСЕГО КОНТЕНТА (как в примере) */
+.modalList {
+  list-style: none;
+  padding: 20px 20px 40px 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  .modalList {
+    padding: 16px 12px 32px 12px; /* Уменьшенные отступы */
+    gap: 12px; /* Меньше расстояние между элементами */
+  }
+}
+
+/* 🎯 КНОПКА ЗАКРЫТИЯ */
+.closeButtonItem {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  fill: #2b2b2a;
+}
+
+/* 🎯 ЗАГОЛОВОК */
+.modalTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  color: #2b2b2a;
+  text-align: left;
+  margin: 0 0 15px 0;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  .modalTitle {
+    font-size: 18px; /* Чуть меньше размер шрифта */
+    margin-bottom: 12px;
+  }
+}
+
+/* 🎯 АВАТАР */
+.avatarItem {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.avatarContainer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff4df;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarIcon {
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: #2b2b2a;
+}
+
+/* 🎯 ОШИБКА ОТ API */
+.apiError {
+  background-color: #fff2f2;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.errorIcon {
+  width: 20px;
+  height: 20px;
+  fill: #ff4444;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.apiError p {
+  margin: 0;
+  color: #d32f2f;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  .apiError {
+    padding: 10px 12px;
+  }
+
+  .apiError p {
+    font-size: 13px;
+  }
+}
+
+/* 🎯 ФОРМА */
+.form {
+  width: 100%;
+}
+
+/* 🎯 БЛОК ЗАГРУЗКИ АВАТАРА */
+.avatarUpload {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.avatarUrlInput {
+  box-sizing: border-box;
+  border: 1px solid #f6b83d;
+  border-radius: 30px;
+  padding: 13px;
+  width: 161px;
+  height: 42px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.02em;
+  color: #262626;
+  flex: 1; /* Позволяем полю растягиваться */
+}
+
+.avatarUrlInput:focus {
+  outline: none;
+  border-color: #f6b83d;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileInputLabel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 4px; /* Уменьшен gap */
+  border-radius: 30px;
+  padding: 12px 8px; /* Адаптивные отступы */
+  width: auto; /* Автоматическая ширина */
+  min-width: 100px; /* Минимальная ширина */
+  height: 42px;
+  background-color: #fff4df;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.02em;
+  color: #262626;
+  transition: background-color 0.3s;
+  white-space: nowrap; /* Текст в одну строку */
+}
+
+.fileInputLabel:hover {
+  background-color: #fbe7c1;
+}
+
+.uploadIcon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #262626;
+  flex-shrink: 0;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  .avatarUpload {
+    gap: 6px;
+  }
+
+  .fileInputLabel {
+    padding: 12px 6px;
+    min-width: 80px;
+    font-size: 11px;
+  }
+
+  .uploadIcon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* 🎯 ОСНОВНЫЕ ПОЛЯ ФОРМЫ */
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.input {
+  box-sizing: border-box;
+  border: 1px solid #f6b83d;
+  border-radius: 30px;
+  padding: 12px;
+  width: 100%; /* На всю ширину родителя */
+  height: 42px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #262626;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #f6b83d;
+}
+
+.inputError {
+  border-color: #ff4444;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+/* @media (max-width: 374px) {
+  .input {
+    font-size: 13px; Чуть меньше шрифт
+    padding: 10px 12px;
+    
+  }
+
+  .formFields {
+    gap: 8px;
+  }
+} */
+
+/* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
+.errorMessage {
+  padding-left: 4px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #ef2447;
+  margin: 0;
+}
+
+/* 🎯 КНОПКА SUBMIT */
+.submitButton {
+  box-sizing: border-box;
+  border: none;
+  margin-top: 21px;
+  border-radius: 30px;
+  padding: 12px 0; /* Горизонтальный padding 0 */
+  width: 100%; /* На всю ширину */
+  height: 42px;
+  background-color: #f6b83d;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #f9b020;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
+@media (max-width: 374px) {
+  /* .submitButton {
+    margin-top: 16px;
+    height: 40px;
+    font-size: 13px;
+  } */
+}
+
+/* 🎯 ============= АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТА ============= */
+@media screen and (min-width: 768px) {
+  .modalContent {
+    max-width: 480px;
+  }
+
+  .modalList {
+    padding: 50px;
+  }
+
+  .closeButtonItem {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .modalTitle {
+    font-size: 18px;
+    line-height: 1.33;
+    margin-bottom: 20px;
+  }
+
+  .avatarContainer {
+    width: 86px;
+    height: 86px;
+    margin-bottom: 12px;
+  }
+
+  .avatarIcon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .avatarUrlInput {
+    padding: 12px;
+    width: 226px;
+    height: 42px;
+    font-size: 14px;
+    line-height: 1.29;
+  }
+
+  .fileInputLabel {
+    padding: 12px 16px;
+    width: 146px;
+    height: 42px;
+    font-size: 14px;
+    line-height: 1.29;
+  }
+
+  .formFields {
+    margin-top: 20px;
+    gap: 14px;
+  }
+
+  .input {
+    padding: 16px;
+    width: 380px;
+    height: 52px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .submitButton {
+    margin-top: 37px;
+    padding: 16px 0;
+    width: 380px;
+    height: 52px;
+    font-size: 16px;
+    line-height: 1.25;
   }
 }
