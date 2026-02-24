@@ -1,314 +1,3 @@
-/* src/components/ModalEditUser/ModalEditUser.module.css
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.modalContent {
-  background-color: white;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modalHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 24px 16px;
-  border-bottom: 1px solid #eaeaea;
-}
-
-.modalTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111;
-  margin: 0;
-}
-
-
-.closeButton {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  padding: 0;
-}
-
-.closeButton:hover {
-  background-color: #f0f0f0;
-}
-
-.closeIcon {
-  width: 20px;
-  height: 20px;
-  fill: #666;
-}
-
-
-.apiError {
-  background-color: #fff2f2;
-  border: 1px solid #ffcdd2;
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin: 16px 24px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.errorIcon {
-  width: 20px;
-  height: 20px;
-  fill: #ff4444;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.apiError p {
-  margin: 0;
-  color: #d32f2f;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-
-.form {
-  padding: 24px;
-}
-
-
-.formFields {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.formField {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-
-.label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  display: block;
-}
-
-.label::after {
-  content: '*';
-  color: #ff4444;
-  margin-left: 4px;
-}
-
-
-.input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  font-size: 16px;
-  color: #333;
-  background-color: white;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s;
-  box-sizing: border-box;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #ff6b08;
-  box-shadow: 0 0 0 3px rgba(255, 107, 8, 0.1);
-}
-
-.input:hover:not(:focus) {
-  border-color: #cccccc;
-}
-
-.input:disabled {
-  background-color: #f8f8f8;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-
-.inputError {
-  border-color: #ff4444;
-  background-color: #fffafa;
-}
-
-.inputError:focus {
-  border-color: #ff4444;
-  box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
-}
-
-
-.errorMessage {
-  margin: 0;
-  font-size: 13px;
-  color: #ff4444;
-  padding-left: 4px;
-}
-
-
-.fieldHint {
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-}
-
-
-.formButtons {
-  display: flex;
-  gap: 16px;
-  justify-content: flex-end;
-}
-
-.cancelButton,
-.saveButton {
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: none;
-  min-width: 120px;
-}
-
-.cancelButton {
-  background-color: #f8f8f8;
-  color: #666;
-}
-
-.cancelButton:hover:not(:disabled) {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.saveButton {
-  background-color: #ff6b08;
-  color: white;
-}
-
-.saveButton:hover:not(:disabled) {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-}
-
-.cancelButton:disabled,
-.saveButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-@media (max-width: 767px) {
-  .modalContent {
-    border-radius: 16px;
-  }
-
-  .modalHeader {
-    padding: 20px 20px 12px;
-  }
-
-  .modalTitle {
-    font-size: 20px;
-  }
-
-  .form {
-    padding: 20px;
-  }
-
-  .formFields {
-    gap: 16px;
-  }
-
-  .input {
-    padding: 12px 14px;
-    font-size: 15px;
-  }
-
-  .cancelButton,
-  .saveButton {
-    padding: 12px 24px;
-    font-size: 15px;
-    min-width: 100px;
-  }
-
-  .formButtons {
-    flex-direction: column-reverse;
-  }
-} */
-
 /* src/components/ModalEditUser/ModalEditUser.module.css */
 /* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ */
 /* ✅ ИСПРАВЛЕНО: резиновая верстка для экранов <374px */
@@ -350,19 +39,6 @@
   animation: slideUp 0.3s ease;
 }
 
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-@media (max-width: 374px) {
-  .modalContent {
-    max-width: 100%; /* На всю ширину */
-    width: 100%;
-    border-radius: 20px; /* Чуть меньше скругление */
-  }
-
-  .modalOverlay {
-    padding: 8px; /* Минимальные отступы по бокам */
-  }
-}
-
 @keyframes slideUp {
   from {
     transform: translateY(30px);
@@ -384,14 +60,6 @@
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
-}
-
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-@media (max-width: 374px) {
-  .modalList {
-    padding: 16px 12px 32px 12px; /* Уменьшенные отступы */
-    gap: 12px; /* Меньше расстояние между элементами */
-  }
 }
 
 /* 🎯 КНОПКА ЗАКРЫТИЯ */
@@ -420,21 +88,12 @@
 
 /* 🎯 ЗАГОЛОВОК */
 .modalTitle {
-  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 1;
   color: #2b2b2a;
   text-align: left;
   margin: 0 0 15px 0;
-}
-
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-@media (max-width: 374px) {
-  .modalTitle {
-    font-size: 18px; /* Чуть меньше размер шрифта */
-    margin-bottom: 12px;
-  }
 }
 
 /* 🎯 АВАТАР */
@@ -492,17 +151,6 @@
   color: #d32f2f;
   font-size: 14px;
   line-height: 1.4;
-}
-
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-@media (max-width: 374px) {
-  .apiError {
-    padding: 10px 12px;
-  }
-
-  .apiError p {
-    font-size: 13px;
-  }
 }
 
 /* 🎯 ФОРМА */
@@ -579,24 +227,6 @@
   flex-shrink: 0;
 }
 
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-@media (max-width: 374px) {
-  .avatarUpload {
-    gap: 6px;
-  }
-
-  .fileInputLabel {
-    padding: 12px 6px;
-    min-width: 80px;
-    font-size: 11px;
-  }
-
-  .uploadIcon {
-    width: 16px;
-    height: 16px;
-  }
-}
-
 /* 🎯 ОСНОВНЫЕ ПОЛЯ ФОРМЫ */
 .formFields {
   display: flex;
@@ -620,8 +250,6 @@
   padding: 12px;
   width: 100%; /* На всю ширину родителя */
   height: 42px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
@@ -637,23 +265,9 @@
   border-color: #ff4444;
 }
 
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
-/* @media (max-width: 374px) {
-  .input {
-    font-size: 13px; Чуть меньше шрифт
-    padding: 10px 12px;
-    
-  }
-
-  .formFields {
-    gap: 8px;
-  }
-} */
-
 /* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
 .errorMessage {
   padding-left: 4px;
-  font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 10px;
   line-height: 1.2;
@@ -692,19 +306,50 @@
   cursor: not-allowed;
 }
 
+/* 🎯 ============= АДАПТИВНОСТЬ ============= */
 /* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
 @media (max-width: 374px) {
-  /* .submitButton {
-    margin-top: 16px;
-    height: 40px;
+  .modalContent {
+    max-width: 100%; /* На всю ширину */
+    width: 100%;
+  }
+
+  .modalOverlay {
+    padding: 8px; /* Минимальные отступы по бокам */
+  }
+
+  .modalList {
+    padding: 16px 12px 32px 12px; /* Уменьшенные отступы */
+  }
+
+  .avatarUpload {
+    gap: 6px;
+  }
+
+  .fileInputLabel {
+    padding: 12px 6px;
+    min-width: 80px;
+    font-size: 11px;
+  }
+
+  .uploadIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .apiError {
+    padding: 10px 12px;
+  }
+
+  .apiError p {
     font-size: 13px;
-  } */
+  }
 }
 
-/* 🎯 ============= АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТА ============= */
 @media screen and (min-width: 768px) {
   .modalContent {
     max-width: 480px;
+    position: relative; /* Для позиционирования крестика */
   }
 
   .modalList {

@@ -1,4 +1,4 @@
-/* src/components/MyNotices/MyNotices.module.css */
+/* src/components/MyNotices/MyNotices.module.css
 
 .myNotices {
   width: 100%;
@@ -7,7 +7,7 @@
   padding: 20px 16px;
 }
 
-/* Навигация */
+
 .navigation {
   display: flex;
   gap: 20px;
@@ -16,7 +16,7 @@
   padding-bottom: 8px;
 }
 
-/* Ссылки */
+
 .link {
   padding: 12px 24px;
   font-size: 16px;
@@ -31,7 +31,7 @@
   color: #333;
 }
 
-/* Активная ссылка */
+
 .active {
   color: #ff6b6b;
   font-weight: 600;
@@ -48,12 +48,12 @@
   border-radius: 2px;
 }
 
-/* Контейнер для контента */
+
 .content {
   min-height: 400px;
 }
 
-/* Загрузка */
+
 .loading {
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@
   }
 }
 
-/* Адаптивность */
+
 @media (max-width: 767px) {
   .myNotices {
     padding: 16px 12px;
@@ -95,5 +95,117 @@
   .link {
     padding: 10px 16px;
     font-size: 14px;
+  }
+} */
+
+/* src/components/MyNotices/MyNotices.module.css */
+/* 🎯 СТИЛИ ДЛЯ КОМПОНЕНТА ВКЛАДОК */
+/* ✅ ИСПРАВЛЕНО: по аналогии с примером */
+
+.myNotices {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.boxNav {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 12px;
+  width: 125px;
+  height: 42px;
+  background-color: #fff;
+
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #262626;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  border: 1px solid #f6b83d;
+}
+
+.active {
+  background-color: #f9b020;
+  color: #fff;
+  border: 1px solid #f9b020;
+}
+
+/* 🎯 ПЛАНШЕТ */
+@media screen and (min-width: 768px) {
+  .myNotices {
+    gap: 24px; /* фиксированный gap для планшета */
+  }
+
+  .boxNav {
+    gap: 12px; /* фиксированный gap между вкладками */
+  }
+
+  .link {
+    padding: 14px;
+    width: 143px;
+    height: 48px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+
+/* 🎯 ДЕСКТОП */
+@media screen and (min-width: 1280px) {
+  .myNotices {
+    gap: 28px; /* фиксированный gap для десктопа */
+  }
+
+  .boxNav {
+    gap: 16px; /* фиксированный gap между вкладками */
+  }
+}
+
+/* 🎯 ЗАГРУЗКА */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  color: #888;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #ff6b6b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
