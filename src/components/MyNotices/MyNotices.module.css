@@ -1,125 +1,25 @@
-/* src/components/MyNotices/MyNotices.module.css
-
-.myNotices {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 20px 16px;
-}
-
-
-.navigation {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 32px;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 8px;
-}
-
-
-.link {
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #888;
-  text-decoration: none;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.link:hover {
-  color: #333;
-}
-
-
-.active {
-  color: #ff6b6b;
-  font-weight: 600;
-}
-
-.active::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #ff6b6b;
-  border-radius: 2px;
-}
-
-
-.content {
-  min-height: 400px;
-}
-
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  text-align: center;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #f0f0f0;
-  border-top: 3px solid #ff6b6b;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
-@media (max-width: 767px) {
-  .myNotices {
-    padding: 16px 12px;
-  }
-
-  .navigation {
-    gap: 12px;
-  }
-
-  .link {
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-} */
-
 /* src/components/MyNotices/MyNotices.module.css */
-/* 🎯 СТИЛИ ДЛЯ КОМПОНЕНТА ВКЛАДОК */
-/* ✅ ИСПРАВЛЕНО: по аналогии с примером */
 
+/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР (ul) */
 .myNotices {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
   list-style: none;
   padding: 0;
-  margin: 0;
+  /* margin: 0; */
+  width: 335px;
+  margin: 0 auto;
 }
 
+/* 🎯 КОНТЕЙНЕР ДЛЯ НАВИГАЦИИ (li) */
 .boxNav {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
+/* 🎯 ССЫЛКИ-ВКЛАДКИ */
 .link {
   display: block;
   box-sizing: border-box;
@@ -128,38 +28,41 @@
   width: 125px;
   height: 42px;
   background-color: #fff;
-
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   color: #262626;
   text-align: center;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .link:hover {
   border: 1px solid #f6b83d;
 }
 
-.active {
-  background-color: #f9b020;
+/* 🎯 АКТИВНАЯ ВКЛАДКА */
+.link.active {
+  background-color: #f6b83d;
   color: #fff;
-  border: 1px solid #f9b020;
 }
 
-/* 🎯 ПЛАНШЕТ */
-@media screen and (min-width: 768px) {
+/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ */
+.loading {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media screen and (max-width: 374px) {
   .myNotices {
-    gap: 24px; /* фиксированный gap для планшета */
+    width: 100%;
   }
+}
 
-  .boxNav {
-    gap: 12px; /* фиксированный gap между вкладками */
-  }
-
+@media screen and (min-width: 768px) {
   .link {
     padding: 14px;
     width: 143px;
@@ -167,45 +70,15 @@
     font-size: 16px;
     line-height: 1.25;
   }
+
+  .myNotices {
+    width: 704px;
+  }
 }
 
-/* 🎯 ДЕСКТОП */
 @media screen and (min-width: 1280px) {
   .myNotices {
-    gap: 28px; /* фиксированный gap для десктопа */
-  }
-
-  .boxNav {
-    gap: 16px; /* фиксированный gap между вкладками */
-  }
-}
-
-/* 🎯 ЗАГРУЗКА */
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  font-family: 'Manrope', sans-serif;
-  font-size: 16px;
-  color: #888;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #f0f0f0;
-  border-top: 3px solid #ff6b6b;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+    width: 664px;
+    margin: 0;
   }
 }

@@ -1,168 +1,151 @@
 /* src/components/UserCard/UserBlock/UserBlock.module.css */
 
-/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР КОМПОНЕНТА */
 .userBlock {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
-}
-
-/* 🎯 ЗАГОЛОВОК СЕКЦИИ */
-.blockHeader {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eaeaea;
-}
-
-.blockTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111111;
-  margin: 0;
-}
-
-/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */
-.blockContent {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* 🎯 СЕКЦИЯ С АВАТАРОМ */
-.avatarSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatarContainer {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.avatarDefault {
-  width: 60px;
-  height: 60px;
-  fill: #cccccc;
-}
-
-.hidden {
-  display: none;
-}
-
-.userName {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333333;
-  margin: 0;
-}
-
-/* 🎯 СПИСОК ИНФОРМАЦИИ (UL) */
-.infoList {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+}
+
+/* 🎯 АВАТАР */
+.imgIcon {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-/* 🎯 ЭЛЕМЕНТ СПИСКА (LI) */
-.infoItem {
-  padding: 12px 16px;
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  transition: background-color 0.3s ease;
-}
-
-.infoItem:hover {
-  background-color: #f0f0f0;
-}
-
-/* 🎯 СТРОКА С ИНФОРМАЦИЕЙ */
-.infoRow {
-  display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
 }
 
-.infoIcon {
-  width: 24px;
-  height: 24px;
-  fill: #666666;
-  flex-shrink: 0;
+.imgUser {
+  border-radius: 100px;
+  padding: 10px;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
 }
 
-/* 🎯 ТЕКСТОВОЕ СОДЕРЖИМОЕ */
-.infoContent {
+.boxIcon {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
 }
 
-.infoLabel {
+.iconUser {
+  border-radius: 100px;
+  padding: 28px;
+  width: 94px;
+  height: 94px;
+  background-color: #fff4df;
+  fill: #262626;
+}
+
+/* 🔧 НОВОЕ: скрытый input для выбора файла (как в ModalEditUser) */
+.fileInput {
+  display: none;
+}
+
+/* 🔧 ИСПРАВЛЕНО: кнопка загрузки (теперь это label) */
+.buttonImg {
   font-size: 12px;
-  font-weight: 500;
-  color: #888888;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  line-height: 1.33;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #262626;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: inline-flex; /* 🔧 изменено с inline-block на inline-flex */
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
-.infoValue {
+.buttonImg:hover {
+  color: #f6b83d;
+}
+
+/* 🔧 НОВОЕ: иконка загрузки (как в ModalEditUser) */
+/* .uploadIcon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  margin-left: 4px;
+} */
+
+/* 🎯 ЗАГОЛОВОК */
+.title {
+  font-weight: 700;
   font-size: 16px;
-  font-weight: 500;
-  color: #333333;
-  word-break: break-word;
+  line-height: 1.25;
+  color: #2b2b2a;
+  margin-bottom: 20px;
 }
 
-/* 🎯 АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
-@media (max-width: 767px) {
-  .userBlock {
-    padding: 20px;
-    border-radius: 16px;
+/* 🎯 КОНТЕЙНЕР ДЛЯ ПОЛЕЙ ВВОДА */
+.boxInput {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 🎯 ПОЛЯ ВВОДА */
+.input {
+  box-sizing: border-box;
+  border: 1px solid #f6b83d;
+  border-radius: 30px;
+  padding: 12px;
+  width: 295px;
+  height: 42px;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #262626;
+  background-color: #fff;
+}
+
+/* 🎯 АДАПТИВНОСТЬ - ПЛАНШЕТЫ (768-1279) */
+@media screen and (min-width: 768px) {
+  .imgUser {
+    width: 110px;
+    height: 110px;
   }
 
-  .blockTitle {
+  .title {
     font-size: 18px;
+    line-height: 1.33;
   }
 
-  .avatarContainer {
-    width: 100px;
-    height: 100px;
+  .boxInput {
+    gap: 14px;
+    justify-content: flex-start;
   }
 
-  .avatarDefault {
-    width: 50px;
-    height: 50px;
-  }
-
-  .userName {
+  .input {
+    padding: 16px;
+    width: 305px;
+    height: 52px;
     font-size: 16px;
+    line-height: 1.25;
   }
 
-  .infoItem {
-    padding: 10px 14px;
+  .buttonImg {
+    font-size: 14px;
   }
 
-  .infoValue {
-    font-size: 15px;
+  /* .uploadIcon {
+    width: 18px;
+    height: 18px;
+  } */
+}
+
+/* 🎯 АДАПТИВНОСТЬ - ДЕСКТОП (1280+) */
+@media screen and (min-width: 1280px) {
+  .input {
+    width: 440px;
   }
 }

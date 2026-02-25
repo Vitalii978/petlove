@@ -1,6 +1,7 @@
 // // src/components/UserCard/UserCard.jsx
+// // 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ
+// // 🔧 ИСПРАВЛЕНО: передача onLogout в ModalApproveAction
 
-// // 🎯 ИМПОРТЫ
 // import { useState } from 'react';
 // import EditUserBtn from './EditUserBtn/EditUserBtn';
 // import UserBlock from './UserBlock/UserBlock';
@@ -9,33 +10,23 @@
 // import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
 // import styles from './UserCard.module.css';
 
-// // 🎯 КОМПОНЕНТ USERCARD: Объединяет все компоненты профиля
-// // Props:
-// // - userData: данные пользователя
-// // - onUserUpdate: функция при обновлении данных
-// // - onAddPet: функция при добавлении питомца
-// // - onLogout: функция выхода
 // const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
-//   // 🎯 СОСТОЯНИЯ
 //   const [user, setUser] = useState(userData);
 //   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-//   // 🎯 ОБРАБОТЧИК ОБНОВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ
-//   const handleUserUpdate = (updatedUser) => {
+//   const handleUserUpdate = updatedUser => {
 //     setUser(updatedUser);
 //     if (onUserUpdate) {
 //       onUserUpdate(updatedUser);
 //     }
 //   };
 
-//   // 🎯 ОБРАБОТЧИК ДОБАВЛЕНИЯ ПИТОМЦА
 //   const handleAddPet = () => {
 //     if (onAddPet) {
 //       onAddPet();
 //     }
 //   };
 
-//   // 🎯 ОБРАБОТЧИКИ ВЫХОДА
 //   const handleLogoutClick = () => {
 //     setShowLogoutModal(true);
 //   };
@@ -51,58 +42,39 @@
 //     setShowLogoutModal(false);
 //   };
 
-//   // 🎯 РЕНДЕР КОМПОНЕНТА
 //   return (
-//     <article className={styles.userCard}>
+//     <ul className={styles.userCard}>
+//       {/* 🎯 Модалка подтверждения выхода */}
+//       <ModalApproveAction
+//         isOpen={showLogoutModal}
+//         onClose={handleLogoutCancel}
+//         onConfirm={handleLogoutConfirm}
+//         title="Already leaving?"
+//         confirmText="Yes"
+//         cancelText="Cancel"
+//       />
 
-//       {/* 🎯 ЗАГОЛОВОК КАРТОЧКИ С КНОПКОЙ РЕДАКТИРОВАНИЯ */}
-//       <header className={styles.cardHeader}>
-//         <h2 className={styles.cardTitle}>My Profile</h2>
-//         <EditUserBtn
-//           user={user}
-//           onUpdate={handleUserUpdate}
-//         />
-//       </header>
+//       <li className={styles.userCardItem}>
+//         <EditUserBtn user={user} onUpdate={handleUserUpdate} />
+//         <UserBlock user={user} onUpdate={handleUserUpdate} />
+//       </li>
 
-//       {/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */}
-//       <div className={styles.cardContent}>
+//       <li className={styles.userCardItem}>
+//         <PetsBlock pets={user?.pets || []} onAddPet={handleAddPet} />
+//       </li>
 
-//         {/* 🎯 БЛОК ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ */}
-//         <UserBlock user={user} />
-
-//         {/* 🎯 БЛОК С ПИТОМЦАМИ */}
-//         <PetsBlock
-//           pets={user.pets || []}
-//           onAddPet={handleAddPet}
-//         />
-
-//       </div>
-
-//       {/* 🎯 ФУТЕР С КНОПКОЙ ВЫХОДА */}
-//       <footer className={styles.cardFooter}>
-//         <LogOutBtn onLogout={handleLogoutClick} />
-//       </footer>
-
-//       {/* 🎯 МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА */}
-//       {showLogoutModal && (
-//         <ModalApproveAction
-//           title="Log Out"
-//           message="Are you sure you want to log out?"
-//           confirmText="Yes, Log Out"
-//           cancelText="Cancel"
-//           onConfirm={handleLogoutConfirm}
-//           onCancel={handleLogoutCancel}
-//           onClose={handleLogoutCancel}
-//         />
-//       )}
-//     </article>
+//       <li className={styles.userCardItem}>
+//         <LogOutBtn onLogout={handleLogoutClick} outsideTheHeader={true} />
+//       </li>
+//     </ul>
 //   );
 // };
 
 // export default UserCard;
 
-// 📁 src/components/UserCard/UserCard.jsx
-// 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ - ПОЛНАЯ ВЕРСИЯ
+// src/components/UserCard/UserCard.jsx
+// 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ
+// ✅ РАЗМЕТКА И СТИЛИ КАК В ПРИМЕРЕ, ЛОГИКА НАША
 
 import { useState } from 'react';
 import EditUserBtn from './EditUserBtn/EditUserBtn';
@@ -115,9 +87,6 @@ import styles from './UserCard.module.css';
 const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
   const [user, setUser] = useState(userData);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  console.log('👤 UserCard получил userData:', userData);
-  console.log('🐕 Питомцы в UserCard:', userData?.pets || []);
 
   const handleUserUpdate = updatedUser => {
     setUser(updatedUser);
@@ -148,35 +117,34 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
   };
 
   return (
-    <article className={styles.userCard}>
-      <header className={styles.cardHeader}>
-        <h2 className={styles.cardTitle}>My Profile</h2>
+    // 🎯 РАЗМЕТКА КАК В ПРИМЕРЕ: используем <ul>
+    <ul className={styles.userCard}>
+      {/* 🎯 Модалка подтверждения выхода - как в примере */}
+      <ModalApproveAction
+        isOpen={showLogoutModal}
+        onClose={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+        title="Already leaving?"
+        confirmText="Yes"
+        cancelText="Cancel"
+      />
+
+      {/* 🎯 ПЕРВЫЙ ЭЛЕМЕНТ СПИСКА: EditUserBtn + UserBlock */}
+      <li>
         <EditUserBtn user={user} onUpdate={handleUserUpdate} />
-      </header>
+        <UserBlock user={user} onUpdate={handleUserUpdate} />
+      </li>
 
-      <div className={styles.cardContent}>
-        <UserBlock user={user} />
-
-        {/* 🎯 Передаем pets и onAddPet в PetsBlock */}
+      {/* 🎯 ВТОРОЙ ЭЛЕМЕНТ СПИСКА: PetsBlock */}
+      <li>
         <PetsBlock pets={user?.pets || []} onAddPet={handleAddPet} />
-      </div>
+      </li>
 
-      <footer className={styles.cardFooter}>
-        <LogOutBtn onLogout={handleLogoutClick} />
-      </footer>
-
-      {showLogoutModal && (
-        <ModalApproveAction
-          title="Log Out"
-          message="Are you sure you want to log out?"
-          confirmText="Yes, Log Out"
-          cancelText="Cancel"
-          onConfirm={handleLogoutConfirm}
-          onCancel={handleLogoutCancel}
-          onClose={handleLogoutCancel}
-        />
-      )}
-    </article>
+      {/* 🎯 ТРЕТИЙ ЭЛЕМЕНТ СПИСКА: LogOutBtn */}
+      <li>
+        <LogOutBtn onLogout={handleLogoutClick} outsideTheHeader={true} />
+      </li>
+    </ul>
   );
 };
 

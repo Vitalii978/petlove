@@ -20,14 +20,19 @@
 
 /* Пустой список */
 .noFavorites {
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 335px;
+  margin: 0 auto;
+  margin-top: 80px;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.02em;
   text-align: center;
-  background-color: #fafafa;
-  border-radius: 16px;
-  padding: 40px 24px;
+  color: #262626;
+}
+
+.colorNoFavorites {
+  font-weight: 700;
+  color: #f6b83d;
 }
 
 .message {
@@ -48,6 +53,19 @@
   .noticesList {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+  }
+
+  .noFavorites {
+    max-width: 458px;
+    margin: 0 auto;
+    margin-top: 180px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .colorNoFavorites {
+    font-weight: 700;
+    color: #f6b83d;
   }
 }
 

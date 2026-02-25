@@ -1,248 +1,64 @@
 /* src/components/UserCard/PetsBlock/PetsBlock.module.css */
+/* 🎯 СТИЛИ ДЛЯ БЛОКА ПИТОМЦЕВ */
+/* ✅ ИСПРАВЛЕНО: стили как в примере */
 
-/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР */
 .petsBlock {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
-/* 🎯 ЗАГОЛОВОК БЛОКА */
-.blockHeader {
+.petsHeader {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eaeaea;
+  align-items: center;
+  width: 100%;
 }
 
-.blockTitle {
-  font-size: 20px;
+.title {
   font-weight: 700;
-  color: #111111;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #2b2b2a;
   margin: 0;
 }
 
-/* 🎯 КНОПКА ДОБАВЛЕНИЯ ПИТОМЦА */
-.addPetButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background-color: #ff6b08;
-  color: white;
-  border-radius: 12px;
+.addPetLink {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 10px 16px;
+  width: 103px;
+  height: 38px;
+  background-color: #f6b83d;
   font-size: 14px;
-  font-weight: 600;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  color: #fff;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.addPetButton:hover {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
-}
-
-.addIcon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
-/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ */
-.blockContent {
-  min-height: 200px;
-}
-
-/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ */
-.loadingState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 0;
-  gap: 16px;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 107, 8, 0.3);
-  border-radius: 50%;
-  border-top-color: #ff6b08;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.loadingState p {
-  margin: 0;
-  color: #666;
-  font-size: 16px;
-}
-
-/* 🎯 СОСТОЯНИЕ ОШИБКИ */
-.errorState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  gap: 16px;
   text-align: center;
-  background-color: #fffafa;
-  border-radius: 12px;
-  border: 1px solid #ffcdd2;
 }
 
-.errorIcon {
-  width: 48px;
-  height: 48px;
-  fill: #ff4444;
+.addPetLink:hover {
+  background-color: #f9b020;
 }
 
-.errorState p {
-  margin: 0;
-  color: #d32f2f;
-  font-size: 16px;
-  max-width: 400px;
-}
-
-.retryButton {
-  padding: 10px 24px;
-  background-color: #ff6b08;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.retryButton:hover {
-  background-color: #ff8500;
-}
-
-/* 🎯 ПУСТОЕ СОСТОЯНИЕ */
-.emptyState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  gap: 16px;
-  text-align: center;
-  background-color: #f8f8f8;
-  border-radius: 16px;
-  border: 2px dashed #e0e0e0;
-}
-
-.emptyIcon {
-  width: 64px;
-  height: 64px;
-  fill: #cccccc;
-}
-
-.emptyTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
-  margin: 0;
-}
-
-.emptyText {
-  font-size: 16px;
-  color: #666;
-  margin: 0;
-  max-width: 400px;
-  line-height: 1.5;
-}
-
-.emptyAddButton {
-  margin-top: 8px;
-  padding: 12px 28px;
-  background-color: #ff6b08;
-  color: white;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.emptyAddButton:hover {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
-}
-
-/* 🎯 ИНФОРМАЦИЯ О КОЛИЧЕСТВЕ ПИТОМЦЕВ */
-.petsInfo {
-  margin-bottom: 20px;
-  padding: 12px 16px;
-  background-color: #f0f9ff;
-  border-radius: 12px;
-  border-left: 4px solid #2196f3;
-}
-
-.petsCount {
-  margin: 0;
-  font-size: 16px;
-  color: #1565c0;
-}
-
-.petsCount strong {
-  font-weight: 700;
-  color: #0d47a1;
-}
-
-/* 🎯 АДАПТИВНОСТЬ */
-@media (max-width: 767px) {
-  .petsBlock {
-    padding: 20px;
-    border-radius: 16px;
-  }
-
-  .blockHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .addPetButton {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .blockTitle {
+@media screen and (min-width: 768px) {
+  .title {
     font-size: 18px;
+    line-height: 1.33;
   }
 
-  .emptyState {
-    padding: 40px 16px;
-  }
-
-  .emptyTitle {
-    font-size: 18px;
-  }
-
-  .emptyText {
-    font-size: 15px;
-  }
-
-  .emptyAddButton {
-    width: 100%;
-    text-align: center;
+  .addPetLink {
+    padding: 10px 20px;
+    width: 118px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 1.25;
   }
 }

@@ -1,33 +1,32 @@
 // // 📁 src/components/UserCard/PetsBlock/PetsItem/PetsItem.jsx
-// // 🎯 ТЗ: Компонент містить зображення, ім'я, дату народження, стать, тип та кнопку видалення
+// // 🎯 КАРТОЧКА ПИТОМЦА - ПОЛНАЯ ВЕРСИЯ
 
 // import { useState } from 'react';
 // import sprite from '../../../../assets/icon/icon-sprite.svg';
 // import styles from './PetsItem.module.css';
 
 // const PetsItem = ({ pet, onDelete }) => {
-//   // 🎯 СТАН: анімація видалення
 //   const [isDeleting, setIsDeleting] = useState(false);
 
-//   // 🎯 Деструктуризація пропсів
+//   console.log('🐕 PetsItem рендерит питомца:', pet?.name);
+//   console.log('🗑️ onDelete есть?', !!onDelete);
+
 //   const {
 //     imgURL = '',
-//     name = 'Без імені',
-//     species = 'unknown',
+//     name = 'Unnamed',
+//     species = 'Unknown',
 //     birthday = '',
 //     sex = 'unknown',
 //     title = '',
-//   } = pet;
+//   } = pet || {};
 
-//   // 🎯 ФУНКЦІЯ: форматування дати
-//   const formatBirthday = (dateString) => {
-//     if (!dateString) return 'Не вказано';
-
+//   const formatBirthday = dateString => {
+//     if (!dateString) return 'Not specified';
 //     try {
 //       const date = new Date(dateString);
-//       return date.toLocaleDateString('uk-UA', {
+//       return date.toLocaleDateString('en-US', {
 //         year: 'numeric',
-//         month: 'long',
+//         month: 'short',
 //         day: 'numeric',
 //       });
 //     } catch {
@@ -35,76 +34,70 @@
 //     }
 //   };
 
-//   // 🎯 ФУНКЦІЯ: форматування статі
-//   const formatSex = (sexValue) => {
+//   const formatSex = sexValue => {
 //     switch (sexValue) {
 //       case 'male':
-//         return 'Хлопчик';
+//         return 'Male';
 //       case 'female':
-//         return 'Дівчинка';
+//         return 'Female';
 //       default:
-//         return 'Не вказано';
+//         return 'Unknown';
 //     }
 //   };
 
-//   // 🎯 ФУНКЦІЯ: форматування виду тварини
-//   const formatSpecies = (speciesValue) => {
-//     if (!speciesValue) return 'Не вказано';
-//     return speciesValue.charAt(0).toUpperCase() + speciesValue.slice(1);
-//   };
-
-//   // 🎯 ФУНКЦІЯ: обробка кліку на видалення
+//   // ✅ ОБРАБОТЧИК УДАЛЕНИЯ
 //   const handleDelete = () => {
-//     // Запускаємо анімацію
-//     setIsDeleting(true);
+//     console.log('🗑️ Клик по кнопке удаления для:', name);
 
-//     // Чекаємо 300мс для анімації, потім викликаємо onDelete
-//     setTimeout(() => {
-//       if (onDelete) {
+//     // Проверяем, что onDelete существует и является функцией
+//     if (typeof onDelete === 'function') {
+//       setIsDeleting(true);
+//       setTimeout(() => {
 //         onDelete();
-//       }
-//     }, 300);
+//       }, 300);
+//     } else {
+//       console.error('❌ onDelete не является функцией!');
+//       alert('Delete function not available');
+//     }
 //   };
-
-//   // 🎯 Динамічні класи для анімації
-//   const itemClasses = `${styles.petsItem} ${isDeleting ? styles.deleting : ''}`;
 
 //   return (
-//     <article className={itemClasses}>
-//       {/* 🎯 КОНТЕЙНЕР ЗОБРАЖЕННЯ */}
+//     <article
+//       className={`${styles.petsItem} ${isDeleting ? styles.deleting : ''}`}
+//     >
 //       <div className={styles.petImageContainer}>
 //         <img
-//           src={imgURL || 'https://placehold.co/400x300/cccccc/666666?text=Фото+пітомця'}
-//           alt={`Фото ${name}`}
+//           src={
+//             imgURL ||
+//             'https://placehold.co/400x300/cccccc/666666?text=Pet+Photo'
+//           }
+//           alt={`Photo of ${name}`}
 //           className={styles.petImage}
 //           loading="lazy"
-//           onError={(e) => {
+//           onError={e => {
 //             e.target.src =
-//               'https://placehold.co/400x300/cccccc/666666?text=Немає+фото';
+//               'https://placehold.co/400x300/cccccc/666666?text=No+Image';
 //           }}
 //         />
 
-//         {/* 🎯 БЕЙДЖ З ВИДОМ ТВАРИНИ */}
 //         <div className={styles.speciesBadge}>
 //           <svg className={styles.speciesIcon}>
 //             <use href={`${sprite}#icon-paw`} />
 //           </svg>
-//           <span className={styles.speciesText}>{formatSpecies(species)}</span>
+//           <span className={styles.speciesText}>{species}</span>
 //         </div>
 //       </div>
 
-//       {/* 🎯 КОНТЕНТ КАРТКИ */}
 //       <div className={styles.petContent}>
-//         {/* 🎯 ЗАГОЛОВОК ТА КНОПКА ВИДАЛЕННЯ */}
 //         <header className={styles.petHeader}>
 //           <h4 className={styles.petName}>{name}</h4>
 
-//           {/* 🎯 ТЗ: кнопка видалення з іконкою-смітником */}
+//           {/* ✅ КНОПКА УДАЛЕНИЯ */}
 //           <button
 //             className={styles.deleteButton}
 //             onClick={handleDelete}
 //             type="button"
-//             aria-label={`Видалити ${name}`}
+//             aria-label={`Delete ${name}`}
 //             disabled={isDeleting}
 //           >
 //             <svg className={styles.deleteIcon}>
@@ -113,29 +106,27 @@
 //           </button>
 //         </header>
 
-//         {/* 🎯 ОПИС (якщо є) */}
 //         {title && <p className={styles.petDescription}>{title}</p>}
 
-//         {/* 🎯 ТЗ: Семантичний список інформації про пітомця */}
 //         <ul className={styles.petInfoList}>
-//           {/* 🎯 ДАТА НАРОДЖЕННЯ */}
 //           <li className={styles.petInfoItem}>
 //             <svg className={styles.infoIcon} aria-hidden="true">
 //               <use href={`${sprite}#icon-calendar`} />
 //             </svg>
 //             <div className={styles.infoContent}>
-//               <span className={styles.infoLabel}>День народження</span>
-//               <span className={styles.infoValue}>{formatBirthday(birthday)}</span>
+//               <span className={styles.infoLabel}>Birthday</span>
+//               <span className={styles.infoValue}>
+//                 {formatBirthday(birthday)}
+//               </span>
 //             </div>
 //           </li>
 
-//           {/* 🎯 СТАТЬ */}
 //           <li className={styles.petInfoItem}>
 //             <svg className={styles.infoIcon} aria-hidden="true">
 //               <use href={`${sprite}#icon-gender`} />
 //             </svg>
 //             <div className={styles.infoContent}>
-//               <span className={styles.infoLabel}>Стать</span>
+//               <span className={styles.infoLabel}>Gender</span>
 //               <span className={styles.infoValue}>{formatSex(sex)}</span>
 //             </div>
 //           </li>
@@ -148,7 +139,8 @@
 // export default PetsItem;
 
 // 📁 src/components/UserCard/PetsBlock/PetsItem/PetsItem.jsx
-// 🎯 КАРТОЧКА ПИТОМЦА - ПОЛНАЯ ВЕРСИЯ
+// 🎯 КАРТОЧКА ПИТОМЦА
+// ✅ ИСПРАВЛЕНО: разметка как в примере
 
 import { useState } from 'react';
 import sprite from '../../../../assets/icon/icon-sprite.svg';
@@ -156,9 +148,6 @@ import styles from './PetsItem.module.css';
 
 const PetsItem = ({ pet, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
-
-  console.log('🐕 PetsItem рендерит питомца:', pet?.name);
-  console.log('🗑️ onDelete есть?', !!onDelete);
 
   const {
     imgURL = '',
@@ -173,115 +162,73 @@ const PetsItem = ({ pet, onDelete }) => {
     if (!dateString) return 'Not specified';
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      });
+      return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
     } catch {
       return dateString;
     }
   };
 
-  const formatSex = sexValue => {
-    switch (sexValue) {
-      case 'male':
-        return 'Male';
-      case 'female':
-        return 'Female';
-      default:
-        return 'Unknown';
-    }
-  };
-
-  // ✅ ОБРАБОТЧИК УДАЛЕНИЯ
   const handleDelete = () => {
-    console.log('🗑️ Клик по кнопке удаления для:', name);
-
-    // Проверяем, что onDelete существует и является функцией
     if (typeof onDelete === 'function') {
       setIsDeleting(true);
-      setTimeout(() => {
-        onDelete();
-      }, 300);
-    } else {
-      console.error('❌ onDelete не является функцией!');
-      alert('Delete function not available');
+      setTimeout(() => onDelete(), 300);
     }
   };
 
   return (
-    <article
-      className={`${styles.petsItem} ${isDeleting ? styles.deleting : ''}`}
-    >
-      <div className={styles.petImageContainer}>
+    <ul className={`${styles.petItem} ${isDeleting ? styles.deleting : ''}`}>
+      {/* 🎯 ФОТО */}
+      <li className={styles.imageWrapper}>
         <img
           src={
             imgURL ||
             'https://placehold.co/400x300/cccccc/666666?text=Pet+Photo'
           }
-          alt={`Photo of ${name}`}
+          alt={name}
           className={styles.petImage}
-          loading="lazy"
-          onError={e => {
-            e.target.src =
-              'https://placehold.co/400x300/cccccc/666666?text=No+Image';
-          }}
         />
+      </li>
 
-        <div className={styles.speciesBadge}>
-          <svg className={styles.speciesIcon}>
-            <use href={`${sprite}#icon-paw`} />
-          </svg>
-          <span className={styles.speciesText}>{species}</span>
-        </div>
-      </div>
+      {/* 🎯 ИНФОРМАЦИЯ */}
+      <li className={styles.infoWrapper}>
+        <h3 className={styles.petTitle}>
+          {title.length > 19 ? title.slice(0, 19) + '...' : title}
+        </h3>
 
-      <div className={styles.petContent}>
-        <header className={styles.petHeader}>
-          <h4 className={styles.petName}>{name}</h4>
-
-          {/* ✅ КНОПКА УДАЛЕНИЯ */}
-          <button
-            className={styles.deleteButton}
-            onClick={handleDelete}
-            type="button"
-            aria-label={`Delete ${name}`}
-            disabled={isDeleting}
-          >
-            <svg className={styles.deleteIcon}>
-              <use href={`${sprite}#icon-trash`} />
-            </svg>
-          </button>
-        </header>
-
-        {title && <p className={styles.petDescription}>{title}</p>}
-
-        <ul className={styles.petInfoList}>
-          <li className={styles.petInfoItem}>
-            <svg className={styles.infoIcon} aria-hidden="true">
-              <use href={`${sprite}#icon-calendar`} />
-            </svg>
-            <div className={styles.infoContent}>
-              <span className={styles.infoLabel}>Birthday</span>
-              <span className={styles.infoValue}>
-                {formatBirthday(birthday)}
-              </span>
-            </div>
+        <ul className={styles.petDetails}>
+          <li>
+            <p className={styles.detailLabel}>Name</p>
+            <p className={styles.detailValue}>{name}</p>
           </li>
-
-          <li className={styles.petInfoItem}>
-            <svg className={styles.infoIcon} aria-hidden="true">
-              <use href={`${sprite}#icon-gender`} />
-            </svg>
-            <div className={styles.infoContent}>
-              <span className={styles.infoLabel}>Gender</span>
-              <span className={styles.infoValue}>{formatSex(sex)}</span>
-            </div>
+          <li>
+            <p className={styles.detailLabel}>Birthday</p>
+            <p className={styles.detailValue}>{formatBirthday(birthday)}</p>
+          </li>
+          <li>
+            <p className={styles.detailLabel}>Sex</p>
+            <p className={styles.detailValue}>{sex}</p>
+          </li>
+          <li>
+            <p className={styles.detailLabel}>Species</p>
+            <p className={styles.detailValue}>{species}</p>
           </li>
         </ul>
-      </div>
-    </article>
+      </li>
+
+      {/* 🎯 КНОПКА УДАЛЕНИЯ */}
+      <li>
+        <button
+          className={styles.deleteButton}
+          onClick={handleDelete}
+          type="button"
+          disabled={isDeleting}
+        >
+          <svg className={styles.deleteIcon}>
+            <use href={`${sprite}#icon-basket`} />
+          </svg>
+        </button>
+      </li>
+    </ul>
   );
 };
 

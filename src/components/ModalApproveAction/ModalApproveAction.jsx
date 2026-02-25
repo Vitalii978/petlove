@@ -1,20 +1,25 @@
-// 📁 src/components/ModalApproveAction/ModalApproveAction.jsx
-// 🎯 МОДАЛЬНЕ ВІКНО ПІДТВЕРДЖЕННЯ ДІЇ (ВИХІД, ВИДАЛЕННЯ)
-// 🎯 ТЗ: Закривається по clickу на кнопку Cancel, clickу на кнопку закриття, click по backdrop, press по Escape
+// src/components/ModalApproveAction/ModalApproveAction.jsx
+// 🎯 МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА
+// 🔧 ИСПРАВЛЕНО: без react-modal, с кастомной модалкой
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './ModalApproveAction.module.css';
 import sprite from '../../assets/icon/icon-sprite.svg';
+import authApi from '../../services/authApi';
 
 const ModalApproveAction = ({
   isOpen,
   onClose,
-  onConfirm,
   title = 'Already leaving?',
   confirmText = 'Yes',
   cancelText = 'Cancel',
 }) => {
-  // 🎯 ТЗ: press по Escape закриває модальне вікно
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // 🎯 Закрытие по Escape
   useEffect(() => {
     const handleEscape = event => {
       if (event.key === 'Escape') {
@@ -23,29 +28,60 @@ const ModalApproveAction = ({
     };
 
     if (isOpen) {
-      // Блокуємо скрол сторінки
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscape);
     }
 
     return () => {
-      // Відновлюємо скрол сторінки
       document.body.style.overflow = 'unset';
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isOpen, onClose]);
 
-  // 🎯 ТЗ: click по backdrop закриває модальне вікно
+  // 🎯 РЕАЛЬНЫЙ ВЫХОД ЧЕРЕЗ API
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      setError('');
+
+      console.log('🔄 Выполняем logout...');
+
+      // 🔥 РЕАЛЬНЫЙ ЗАПРОС К API
+      await authApi.logout();
+
+      console.log('✅ Logout успешен');
+
+      // Очищаем localStorage
+      localStorage.removeItem('token');
+
+      // Закрываем модалку
+      onClose();
+
+      // Перенаправляем на главную
+      navigate('/');
+
+      // Перезагружаем страницу для обновления состояния
+      window.location.reload();
+    } catch (error) {
+      console.error('❌ Ошибка при logout:', error);
+
+      setError(error.response?.data?.message || 'Failed to logout');
+
+      // Даже если сервер вернул ошибку, всё равно выходим на клиенте
+      localStorage.removeItem('token');
+      onClose();
+      navigate('/');
+      window.location.reload();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🎯 Закрытие по клику на оверлей
   const handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       onClose();
     }
-  };
-
-  // 🎯 ТЗ: обробник підтвердження
-  const handleConfirm = () => {
-    onConfirm();
-    onClose(); // 🎯 Закриваємо модалку після підтвердження
   };
 
   if (!isOpen) return null;
@@ -59,48 +95,53 @@ const ModalApproveAction = ({
       aria-labelledby="modal-title"
     >
       <div className={styles.modal}>
-        {/* 🎯 ТЗ: кнопка закриття (крестик) */}
+        {/* 🎯 Кнопка закрытия */}
         <button
-          className={styles.closeButton}
           onClick={onClose}
+          className={styles.closeButton}
+          disabled={loading}
           aria-label="Close modal"
-          type="button"
         >
-          <svg className={styles.closeIcon} aria-hidden="true">
+          <svg className={styles.closeIcon} width={24} height={24}>
             <use href={`${sprite}#icon-close`} />
           </svg>
         </button>
 
-        {/* 🎯 РОЗМІТКА ЯК У ПРИКЛАДІ */}
-        <ul className={styles.modalApproveAction}>
-          {/* 🎯 Картинка в кружечку */}
-          <li className={styles.imageWrapper}>
+        {/* 🎯 Контент модалки */}
+        <div className={styles.modalApproveAction}>
+          {/* 🎯 Картинка */}
+          <div className={styles.imageWrapper}>
             <img src="/🐈.png" alt="cat" className={styles.catImage} />
-          </li>
+          </div>
 
           {/* 🎯 Заголовок */}
-          <li>
-            <h2 className={styles.title}>{title}</h2>
-          </li>
+          <h2 className={styles.title} id="modal-title">
+            {title}
+          </h2>
+
+          {/* 🎯 Ошибка (если есть) */}
+          {error && <p className={styles.error}>{error}</p>}
 
           {/* 🎯 Кнопки */}
-          <li className={styles.buttonsWrapper}>
+          <div className={styles.buttonsWrapper}>
             <button
               type="button"
-              onClick={handleConfirm}
+              onClick={handleLogout}
               className={styles.confirmButton}
+              disabled={loading}
             >
-              {confirmText}
+              {loading ? 'Loading...' : confirmText}
             </button>
             <button
               type="button"
               onClick={onClose}
               className={styles.cancelButton}
+              disabled={loading}
             >
               {cancelText}
             </button>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

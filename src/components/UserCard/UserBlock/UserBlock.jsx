@@ -1,145 +1,140 @@
 // src/components/UserCard/UserBlock/UserBlock.jsx
+// 🎯 БЛОК ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ
+// ====================================================
+// ЧТО ДЕЛАЕТ ЭТОТ КОМПОНЕНТ:
+// 1. Отображает аватар пользователя (если есть)
+// 2. Если аватара нет - показывает иконку и кнопку "Upload photo"
+// 3. При нажатии на кнопку можно загрузить фото (как в ModalEditUser)
+// 4. Отображает имя, email и телефон пользователя (только для чтения)
+// ====================================================
 
-// 🎯 ИМПОРТЫ: Что нам нужно для компонента?
+import { useState } from 'react';
 import sprite from '../../../assets/icon/icon-sprite.svg';
+import { uploadPhotoToCloudinary } from '../../../utils/cloudinary';
 import styles from './UserBlock.module.css';
 
-// 🎯 КОМПОНЕНТ UserBlock: Отображает информацию о пользователе
-// Props (входные данные):
-// - user: объект с данными пользователя {name, email, phone, avatar}
-const UserBlock = ({ user }) => {
-  // 🎯 ДЕСТРУКТУРИЗАЦИЯ: Берем нужные поля из объекта user
-  // Значения по умолчанию на случай если данных нет
-  const {
-    name = 'User', // Имя пользователя
-    email = 'No email', // Email
-    phone = 'Not specified', // Телефон
-    avatar = null, // URL аватарки (может быть null)
-  } = user;
+const UserBlock = ({ user, onUpdate }) => {
+  // 🎯 СОСТОЯНИЯ КОМПОНЕНТА:
+  // uploading - флаг загрузки фото (чтобы показать "Uploading..." и заблокировать кнопку)
+  // previewUrl - временный URL для предпросмотра фото (сразу после выбора файла)
+  const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(user.avatar || '');
 
-  // 🎯 ФОРМАТИРОВАНИЕ ТЕЛЕФОНА: Если телефон есть - форматируем
+  // 🎯 ДЕСТРУКТУРИЗАЦИЯ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
+  // Берем из props.user нужные поля, подставляем значения по умолчанию
+  const { name = 'User', email = 'No email', phone = 'Not specified' } = user;
+
+  // 🎯 ФУНКЦИЯ ФОРМАТИРОВАНИЯ ТЕЛЕФОНА
+  // Превращает +380501234567 в +38 (050) 123-45-67
   const formatPhone = phoneNumber => {
-    if (!phoneNumber || phoneNumber === 'Not specified') {
-      return 'Not specified';
-    }
-
-    // Убираем все нецифровые символы
+    if (!phoneNumber || phoneNumber === 'Not specified') return 'Not specified';
     const digits = phoneNumber.replace(/\D/g, '');
-
-    // Форматируем: +38 (XXX) XXX-XX-XX
     if (digits.length === 12 && digits.startsWith('38')) {
       return `+${digits.slice(0, 2)} (${digits.slice(2, 5)}) ${digits.slice(5, 8)}-${digits.slice(8, 10)}-${digits.slice(10, 12)}`;
     }
-
-    // Если не подходит под формат - возвращаем как есть
     return phoneNumber;
   };
 
-  // 🎯 РЕНДЕР КОМПОНЕНТА: Что увидит пользователь
+  // 🎯 ОБРАБОТЧИК ВЫБОРА ФАЙЛА (КОПИЯ ИЗ ModalEditUser)
+  // 1. Пользователь выбирает файл
+  // 2. Создаем локальный URL для предпросмотра
+  // 3. Загружаем на Cloudinary
+  // 4. Обновляем пользователя с новым URL аватара
+  const handleFileChange = async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+
+      // 🔥 ШАГ 1: Создаем локальный URL для мгновенного предпросмотра
+      const localUrl = URL.createObjectURL(file);
+      setPreviewUrl(localUrl);
+
+      // 🔥 ШАГ 2: Загружаем фото на Cloudinary
+      console.log('🔄 Загружаем фото на Cloudinary...');
+      const imageUrl = await uploadPhotoToCloudinary(file);
+      console.log('✅ Фото загружено, URL:', imageUrl);
+
+      // 🔥 ШАГ 3: Обновляем данные пользователя через onUpdate
+      if (onUpdate) {
+        onUpdate({ ...user, avatar: imageUrl });
+      }
+    } catch (error) {
+      console.error('❌ Ошибка загрузки фото:', error);
+      alert('Failed to upload photo. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
-    // 🎯 SECTION: Семантический тег для секции информации
-    <section className={styles.userBlock}>
-      {/* 🎯 HEADER: Заголовок секции */}
-      <header className={styles.blockHeader}>
-        <h3 className={styles.blockTitle}>Personal Information</h3>
-      </header>
-
-      {/* 🎯 CONTENT: Основное содержимое */}
-      <div className={styles.blockContent}>
-        {/* 🎯 АВАТАР ПОЛЬЗОВАТЕЛЯ */}
-        <div className={styles.avatarSection}>
-          <div className={styles.avatarContainer}>
-            {avatar ? (
-              // 🎯 Если есть аватар - показываем изображение
-              <img
-                src={avatar}
-                alt={`${name}'s avatar`}
-                className={styles.avatarImage}
-                onError={e => {
-                  // 🎯 Если изображение не загрузилось - показываем иконку
-                  e.target.style.display = 'none';
-                  e.target.parentNode.querySelector(
-                    `.${styles.avatarDefault}`
-                  ).style.display = 'block';
-                }}
-              />
-            ) : null}
-
-            {/* 🎯 Дефолтная иконка если нет аватарки */}
-            <svg
-              className={`${styles.avatarDefault} ${avatar ? styles.hidden : ''}`}
-              aria-label="Default user avatar"
-            >
+    // 🎯 ИСПОЛЬЗУЕМ <ul> ДЛЯ СЕМАНТИЧЕСКОЙ ВЕРСТКИ (список)
+    <ul className={styles.userBlock}>
+      {/* 🎯 ЭЛЕМЕНТ СПИСКА: БЛОК С АВАТАРОМ И КНОПКОЙ */}
+      <li className={styles.imgIcon}>
+        {/* 🎯 УСЛОВИЕ: Если есть previewUrl (фото загружено) - показываем картинку */}
+        {previewUrl ? (
+          // ✅ ЕСТЬ ФОТО: показываем его
+          <img src={previewUrl} alt={name} className={styles.imgUser} />
+        ) : (
+          // ❌ НЕТ ФОТО: показываем иконку и кнопку загрузки
+          <div className={styles.boxIcon}>
+            {/* Иконка пользователя (заглушка) */}
+            <svg className={styles.iconUser}>
               <use href={`${sprite}#icon-user`} />
             </svg>
+
+            {/* 🎯 СКРЫТЫЙ INPUT ДЛЯ ВЫБОРА ФАЙЛА (как в ModalEditUser) */}
+            <input
+              type="file"
+              id="avatar-upload"
+              accept="image/*"
+              className={styles.fileInput}
+              onChange={handleFileChange}
+              disabled={uploading}
+            />
+
+            {/* 🎯 КНОПКА ЗАГРУЗКИ (на самом деле это label, привязанный к input) */}
+            {/* htmlFor="avatar-upload" связывает label с input по id */}
+            <label htmlFor="avatar-upload" className={styles.buttonImg}>
+              {uploading ? 'Uploading...' : 'Upload photo'}
+            </label>
           </div>
+        )}
+      </li>
 
-          {/* 🎯 ИМЯ ПОЛЬЗОВАТЕЛЯ под аватаркой */}
-          <p className={styles.userName}>{name}</p>
-        </div>
+      {/* 🎯 ЗАГОЛОВОК (НЕ ВНУТРИ LI, КАК В ПРИМЕРЕ) */}
+      <h2 className={styles.title}>My information</h2>
 
-        {/* 🎯 СПИСОК ИНФОРМАЦИИ: Используем UL/LI как требует ТЗ */}
-        <ul className={styles.infoList} aria-label="User information list">
-          {/* 🎯 ЭЛЕМЕНТ СПИСКА 1: Email */}
-          <li className={styles.infoItem}>
-            <div className={styles.infoRow}>
-              {/* 🎯 ИКОНКА для email */}
-              <svg className={styles.infoIcon} aria-hidden="true">
-                <use href={`${sprite}#icon-email`} />
-              </svg>
+      {/* 🎯 ЭЛЕМЕНТ СПИСКА: ПОЛЯ С ДАННЫМИ ПОЛЬЗОВАТЕЛЯ */}
+      <li className={styles.boxInput}>
+        {/* Имя - только для чтения */}
+        <input
+          type="text"
+          defaultValue={name}
+          className={styles.input}
+          readOnly
+        />
 
-              {/* 🎯 ТЕКСТОВАЯ ИНФОРМАЦИЯ */}
-              <div className={styles.infoContent}>
-                <span className={styles.infoLabel}>Email</span>
-                <span className={styles.infoValue}>{email}</span>
-              </div>
-            </div>
-          </li>
+        {/* Email - только для чтения */}
+        <input
+          type="text"
+          defaultValue={email}
+          className={styles.input}
+          readOnly
+        />
 
-          {/* 🎯 ЭЛЕМЕНТ СПИСКА 2: Телефон */}
-          <li className={styles.infoItem}>
-            <div className={styles.infoRow}>
-              {/* 🎯 ИКОНКА для телефона */}
-              <svg className={styles.infoIcon} aria-hidden="true">
-                <use href={`${sprite}#icon-phone`} />
-              </svg>
-
-              {/* 🎯 ТЕКСТОВАЯ ИНФОРМАЦИЯ */}
-              <div className={styles.infoContent}>
-                <span className={styles.infoLabel}>Phone</span>
-                <span className={styles.infoValue}>{formatPhone(phone)}</span>
-              </div>
-            </div>
-          </li>
-
-          {/* 🎯 ЭЛЕМЕНТ СПИСКА 3: Дата регистрации */}
-          <li className={styles.infoItem}>
-            <div className={styles.infoRow}>
-              {/* 🎯 ИКОНКА для календаря */}
-              <svg className={styles.infoIcon} aria-hidden="true">
-                <use href={`${sprite}#icon-calendar`} />
-              </svg>
-
-              {/* 🎯 ТЕКСТОВАЯ ИНФОРМАЦИЯ */}
-              <div className={styles.infoContent}>
-                <span className={styles.infoLabel}>Member since</span>
-                <span className={styles.infoValue}>
-                  {user.createdAt
-                    ? new Date(user.createdAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })
-                    : 'Recently'}
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
+        {/* Телефон - только для чтения (отформатированный) */}
+        <input
+          type="text"
+          defaultValue={formatPhone(phone)}
+          className={styles.input}
+          readOnly
+        />
+      </li>
+    </ul>
   );
 };
 
-// 🎯 ЭКСПОРТ: Делаем компонент доступным для импорта
 export default UserBlock;

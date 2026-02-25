@@ -1,8 +1,7 @@
 /* src/components/ModalEditUser/ModalEditUser.module.css */
-/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ */
-/* ✅ ИСПРАВЛЕНО: резиновая верстка для экранов <374px */
+/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ */
+/* ✅ ИЗМЕНЕНО: инпуты серые по умолчанию, желтые при заполнении */
 
-/* 🎯 ОВЕРЛЕЙ МОДАЛЬНОГО ОКНА (фон) */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -14,7 +13,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 12px; /* Уменьшен padding для маленьких экранов */
+  /* padding: 12px; Уменьшен padding для маленьких экранов */
   animation: fadeIn 0.3s ease;
 }
 
@@ -33,7 +32,7 @@
   border-radius: 30px;
   width: 100%;
   max-width: 335px; /* Фиксированная максимальная ширина */
-  max-height: 90vh;
+  max-height: 100%;
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
@@ -57,7 +56,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  /* gap: 15px; */
   width: 100%;
   box-sizing: border-box;
 }
@@ -72,8 +71,8 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  /* width: 24px;
+  height: 24px; */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -86,27 +85,26 @@
   fill: #2b2b2a;
 }
 
-/* 🎯 ЗАГОЛОВОК */
 .modalTitle {
   font-weight: 700;
   font-size: 20px;
   line-height: 1;
   color: #2b2b2a;
   text-align: left;
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
 }
 
 /* 🎯 АВАТАР */
 .avatarItem {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .avatarContainer {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
+  border-radius: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -163,28 +161,34 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
+/* 🔥 ИЗМЕНЕНО: серый border по умолчанию */
 .avatarUrlInput {
   box-sizing: border-box;
-  border: 1px solid #f6b83d;
+  border: 1px solid rgba(38, 38, 38, 0.15); /* Серый цвет по умолчанию */
   border-radius: 30px;
-  padding: 13px;
+  padding: 13px 12px;
   width: 161px;
   height: 42px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
   letter-spacing: -0.02em;
   color: #262626;
   flex: 1; /* Позволяем полю растягиваться */
+  transition: border-color 0.3s ease; /* Плавный переход */
 }
 
+/* 🔥 ИЗМЕНЕНО: желтый border при фокусе */
 .avatarUrlInput:focus {
   outline: none;
-  border-color: #f6b83d;
+  border: 1px solid #f6b83d; /* Желтый при фокусе */
+}
+
+/* 🔥 НОВОЕ: желтый border когда есть значение */
+.avatarUrlInput:not(:placeholder-shown) {
+  border: 1px solid #f6b83d; /* Желтый когда поле заполнено */
 }
 
 .fileInput {
@@ -200,13 +204,11 @@
   cursor: pointer;
   gap: 4px; /* Уменьшен gap */
   border-radius: 30px;
-  padding: 12px 8px; /* Адаптивные отступы */
+  padding: 13px 12px; /* Адаптивные отступы */
   width: auto; /* Автоматическая ширина */
   min-width: 100px; /* Минимальная ширина */
   height: 42px;
   background-color: #fff4df;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
   letter-spacing: -0.02em;
@@ -232,7 +234,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 10px;
   width: 100%;
 }
 
@@ -243,9 +244,10 @@
   width: 100%;
 }
 
+/* 🔥 ИЗМЕНЕНО: серый border по умолчанию для всех инпутов */
 .input {
   box-sizing: border-box;
-  border: 1px solid #f6b83d;
+  border: 1px solid rgba(38, 38, 38, 0.15); /* Серый цвет по умолчанию */
   border-radius: 30px;
   padding: 12px;
   width: 100%; /* На всю ширину родителя */
@@ -254,15 +256,22 @@
   line-height: 1.29;
   letter-spacing: -0.03em;
   color: #262626;
+  transition: border-color 0.3s ease; /* Плавный переход */
 }
 
+/* 🔥 ИЗМЕНЕНО: желтый border при фокусе */
 .input:focus {
   outline: none;
-  border-color: #f6b83d;
+  border: 1px solid #f6b83d; /* Желтый при фокусе */
+}
+
+/* 🔥 НОВОЕ: желтый border когда есть значение */
+.input:not(:placeholder-shown) {
+  border: 1px solid #f6b83d; /* Желтый когда поле заполнено */
 }
 
 .inputError {
-  border-color: #ff4444;
+  border-color: #ff4444; /* Красный для ошибок (перебивает желтый) */
 }
 
 /* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
@@ -286,7 +295,6 @@
   width: 100%; /* На всю ширину */
   height: 42px;
   background-color: #f6b83d;
-  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
@@ -312,14 +320,6 @@
   .modalContent {
     max-width: 100%; /* На всю ширину */
     width: 100%;
-  }
-
-  .modalOverlay {
-    padding: 8px; /* Минимальные отступы по бокам */
-  }
-
-  .modalList {
-    padding: 16px 12px 32px 12px; /* Уменьшенные отступы */
   }
 
   .avatarUpload {
@@ -371,7 +371,6 @@
   .avatarContainer {
     width: 86px;
     height: 86px;
-    margin-bottom: 12px;
   }
 
   .avatarIcon {
@@ -381,7 +380,7 @@
 
   .avatarUrlInput {
     padding: 12px;
-    width: 226px;
+    width: 194px;
     height: 42px;
     font-size: 14px;
     line-height: 1.29;
@@ -409,7 +408,7 @@
   }
 
   .submitButton {
-    margin-top: 37px;
+    margin-top: 40px;
     padding: 16px 0;
     width: 380px;
     height: 52px;

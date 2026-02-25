@@ -1,118 +1,55 @@
 // src/components/ModalEditUser/ModalEditUser.jsx
-// 🎯 МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ
-// ====================================================
-// ЧТО ДЕЛАЕТ ЭТОТ КОМПОНЕНТ:
-// 1. Открывается поверх страницы (как всплывающее окно)
-// 2. Позволяет пользователю изменить свои данные (имя, email, телефон, аватар)
-// 3. Валидирует введенные данные (проверяет правильность)
-// 4. Отправляет изменения на сервер
-// 5. Закрывается по клику на крестик, на фон (оверлей) или на Escape
-// ====================================================
+// 🎯 МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ
 
-import { useState } from 'react';
-// useState - хук для хранения данных, которые могут меняться:
-// - loading (идет ли загрузка)
-// - apiError (ошибка от сервера)
-// - avatarImg (временное изображение аватара)
-
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-// react-hook-form - библиотека для удобной работы с формами
-// Она сама:
-// - отслеживает значения полей
-// - проверяет ошибки валидации
-// - собирает данные для отправки
-
 import { yupResolver } from '@hookform/resolvers/yup';
-// Связка между react-hook-form и yup
-// Позволяет использовать схемы yup для валидации
-
 import * as yup from 'yup';
-// yup - библиотека для создания схем валидации
-// Описываем правила для каждого поля:
-// - обязательное или нет
-// - минимальная длина
-// - формат (email, URL и т.д.)
-
 import api from '../../services/api';
-// api - наш настроенный axios для запросов к серверу
-// Умеет автоматически подставлять baseURL и токен
-
+import { uploadPhotoToCloudinary } from '../../utils/cloudinary'; // 👈 ИМПОРТИРУЕМ
 import sprite from '../../assets/icon/icon-sprite.svg';
-// sprite - файл со всеми иконками (SVG спрайт)
-// Берем оттуда иконки: крестик, пользователь, облако и т.д.
-
 import styles from './ModalEditUser.module.css';
-// CSS модуль - стили только для этого компонента
-// Классы в стилях не конфликтуют с другими компонентами
 
 // 🎯 СХЕМА ВАЛИДАЦИИ YUP
-// ====================================================
-// Это как "список правил" для каждого поля формы
-// Каждое правило говорит: "Это поле должно соответствовать ..."
-// Если не соответствует - показываем ошибку
-// ====================================================
 const editUserSchema = yup
   .object({
-    // 🟢 ПРАВИЛО 1: Имя (name)
     name: yup
-      .string() // должно быть строкой
-      .required('Name is required') // обязательно для заполнения
-      .min(2, 'Name must be at least 2 characters') // минимум 2 символа
-      .max(50, 'Name must be less than 50 characters'), // максимум 50 символов
+      .string()
+      .required('Name is required')
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be less than 50 characters'),
 
-    // 🟢 ПРАВИЛО 2: Email
     email: yup
       .string()
       .required('Email is required')
-      .email('Please enter a valid email') // проверяет формат email
+      .email('Please enter a valid email')
       .matches(
         /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-        'Invalid email format' // дополнительная проверка регулярным выражением
+        'Invalid email format'
       ),
 
-    // 🟢 ПРАВИЛО 3: Аватар (необязательное поле)
     avatar: yup
       .string()
-      .url('Please enter a valid URL') // должен быть URL
+      .url('Please enter a valid URL')
       .matches(
         /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
-        'URL must point to an image (png, jpg, jpeg, gif, bmp, webp)' // должен вести на картинку
+        'URL must point to an image (png, jpg, jpeg, gif, bmp, webp)'
       )
-      .optional(), // необязательное поле
+      .optional(),
 
-    // 🟢 ПРАВИЛО 4: Телефон (необязательное поле)
     phone: yup
       .string()
-      .matches(/^\+38\d{10}$/, 'Phone must be in format: +38XXXXXXXXXX') // формат +380501234567
+      .matches(/^\+38\d{10}$/, 'Phone must be in format: +38XXXXXXXXXX')
       .optional(),
   })
-  .required(); // вся схема обязательна
+  .required();
 
-// 🎯 ОСНОВНОЙ КОМПОНЕНТ
-// ====================================================
-// props (входные данные):
-// - user: объект с данными пользователя
-// - onSave: функция, которая вызовется после успешного сохранения
-// - onClose: функция для закрытия модалки
-// ====================================================
 const ModalEditUser = ({ user, onSave, onClose }) => {
-  // =============== СОСТОЯНИЯ (state) ===============
-  // 🟢 loading - true когда идет запрос к серверу (показываем "Saving...")
   const [loading, setLoading] = useState(false);
-
-  // 🟢 apiError - текст ошибки от сервера (если есть)
+  const [uploading, setUploading] = useState(false); // 👈 ДЛЯ ЗАГРУЗКИ ФОТО
   const [apiError, setApiError] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(user.avatar || '');
 
-  // 🟢 avatarImg - временный URL загруженного фото (до отправки формы)
-  const [avatarImg, setAvatarImg] = useState('');
-
-  // =============== НАСТРОЙКА REACT-HOOK-FORM ===============
-  // 🟢 register - функция для "регистрации" полей ввода
-  // 🟢 handleSubmit - обертка для отправки формы
-  // 🟢 formState.errors - объект с ошибками валидации
-  // 🟢 reset - сброс формы к начальным значениям
-  // 🟢 setValue - программное изменение значения поля
-  // 🟢 watch - отслеживание изменений поля (для превью)
   const {
     register,
     handleSubmit,
@@ -121,9 +58,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
     setValue,
     watch,
   } = useForm({
-    resolver: yupResolver(editUserSchema), // подключаем валидацию Yup
+    resolver: yupResolver(editUserSchema),
     defaultValues: {
-      // начальные значения (из данных пользователя)
       name: user.name || '',
       email: user.email || '',
       avatar: user.avatar || '',
@@ -131,89 +67,62 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
     },
   });
 
-  // 🟢 avatarValue - текущее значение поля avatar (следим за изменениями)
-  const avatarValue = watch('avatar');
+  const watchAvatar = watch('avatar');
 
-  // =============== ФУНКЦИЯ ЗАГРУЗКИ ФОТО НА CLOUDINARY ===============
-  // Вызывается когда пользователь выбирает файл
-  const handleFileUpload = async e => {
-    // e.target.files[0] - первый выбранный файл
+  useEffect(() => {
+    setPreviewUrl(watchAvatar);
+  }, [watchAvatar]);
+
+  // 🎯 РЕАЛЬНАЯ ЗАГРУЗКА НА CLOUDINARY
+  const handleFileChange = async e => {
     const file = e.target.files[0];
-    if (!file) return; // если нет файла - выходим
+    if (!file) return;
 
     try {
-      setLoading(true); // включаем режим загрузки
+      setUploading(true);
+      setApiError('');
 
-      // FormData - специальный объект для отправки файлов
-      const formData = new FormData();
-      formData.append('file', file); // добавляем сам файл
-      formData.append(
-        'upload_preset',
-        import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-      ); // ключ доступа
+      // Показываем локальное превью сразу
+      const localUrl = URL.createObjectURL(file);
+      setPreviewUrl(localUrl);
 
-      // Отправляем файл на Cloudinary
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+      // 🔥 ЗАГРУЗКА НА CLOUDINARY
+      console.log('🔄 Загружаем фото на Cloudinary...');
+      const imageUrl = await uploadPhotoToCloudinary(file);
+      console.log('✅ Фото загружено, URL:', imageUrl);
 
-      const data = await response.json();
-
-      // Если получили URL - сохраняем его
-      if (data.secure_url) {
-        setValue('avatar', data.secure_url); // в форму
-        setAvatarImg(data.secure_url); // в локальное состояние для превью
-      }
+      // Сохраняем полученный URL в форму
+      setValue('avatar', imageUrl);
     } catch (error) {
       console.error('❌ Ошибка загрузки фото:', error);
-      setApiError('Failed to upload photo');
+      setApiError('Failed to upload photo. Please try again or use URL.');
     } finally {
-      setLoading(false); // выключаем режим загрузки
+      setUploading(false);
     }
   };
 
-  // =============== ОТПРАВКА ФОРМЫ ===============
-  // formData - объект с данными из формы (после валидации)
+  // 🎯 ОТПРАВКА НА БЭКЕНД
   const onSubmit = async formData => {
     try {
       setLoading(true);
       setApiError('');
 
-      console.log('🔄 Отправляем данные для обновления:', formData);
+      console.log('🔄 Отправляем данные на сервер:', formData);
 
-      // 🔥 PATCH запрос на обновление данных пользователя
-      // Эндпоинт /users/current/edit берем из документации бэкенда
       const response = await api.patch('/users/current/edit', formData);
 
       console.log('✅ Пользователь обновлен:', response.data);
 
-      // Если есть функция onSave - вызываем её с новыми данными
       if (onSave) {
         onSave(response.data);
       }
-
-      // Закрываем модалку
-      if (onClose) {
-        onClose();
-      }
+      onClose();
     } catch (error) {
       console.error('❌ Ошибка при обновлении пользователя:', error);
 
-      // =============== ОБРАБОТКА ОШИБОК ===============
-      // Разбираем разные типы ошибок от сервера
       if (error.response) {
-        // Сервер ответил, но с ошибкой (4xx или 5xx)
-        console.log('📊 Статус ошибки:', error.response.status);
-        console.log('📊 Сообщение:', error.response.data);
-
         if (error.response.data?.message) {
           setApiError(error.response.data.message);
-        } else if (error.response.status === 404) {
-          setApiError('API endpoint not found. Please check the URL.');
         } else if (error.response.status === 400) {
           setApiError('Invalid data sent to server');
         } else if (error.response.status === 401) {
@@ -224,10 +133,8 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
           setApiError(`Server error: ${error.response.status}`);
         }
       } else if (error.request) {
-        // Запрос отправлен, но ответа нет (нет интернета)
         setApiError('No connection to server. Check your internet.');
       } else {
-        // Ошибка при настройке запроса
         setApiError('Request setup error');
       }
     } finally {
@@ -235,58 +142,40 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
     }
   };
 
-  // =============== ОТМЕНА (ЗАКРЫТИЕ) ===============
   const handleCancel = () => {
-    reset(); // сбрасываем форму к начальным значениям
+    reset();
     if (onClose) {
-      onClose(); // вызываем функцию закрытия
+      onClose();
     }
   };
 
-  // =============== ЗАКРЫТИЕ ПО КЛИКУ НА ФОН ===============
   const handleBackdropClick = e => {
-    // e.target - элемент на который кликнули
-    // e.currentTarget - элемент на котором висит обработчик
-    // Если кликнули на сам оверлей (фон) - закрываем
     if (e.target === e.currentTarget) {
       handleCancel();
     }
   };
 
-  // =============== ЗАКРЫТИЕ ПО ESCAPE ===============
-  // 🎯 useEffect (но мы используем useState с функцией)
-  // Этот код выполнится один раз при монтировании компонента
-  useState(() => {
+  useEffect(() => {
     const handleEscape = e => {
-      // e.key - какая клавиша нажата
       if (e.key === 'Escape') {
         handleCancel();
       }
     };
 
-    // Добавляем слушатель событий на всю страницу
     window.addEventListener('keydown', handleEscape);
-
-    // Функция очистки (выполнится при размонтировании)
     return () => window.removeEventListener('keydown', handleEscape);
-  });
+  }, []);
 
-  // =============== 🎯 РЕНДЕР КОМПОНЕНТА ===============
-  // То, что увидит пользователь
   return (
-    // 🎯 ОВЕРЛЕЙ (фон модалки) - полупрозрачный слой
     <div
       className={styles.modalOverlay}
-      onClick={handleBackdropClick} // закрытие по клику на фон
-      role="dialog" // для доступности (screen readers)
+      onClick={handleBackdropClick}
+      role="dialog"
       aria-modal="true"
-      aria-labelledby="modal-title" // связь с заголовком
+      aria-labelledby="modal-title"
     >
-      {/* 🎯 КОНТЕНТ МОДАЛКИ (белое окно) */}
       <div className={styles.modalContent}>
-        {/* 🎯 СПИСОК ВСЕГО КОНТЕНТА (ul - семантическая верстка) */}
         <ul className={styles.modalList}>
-          {/* 🟢 ЭЛЕМЕНТ 1: КНОПКА ЗАКРЫТИЯ */}
           <li className={styles.closeButtonItem}>
             <button
               className={styles.closeButton}
@@ -294,102 +183,89 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
               type="button"
               aria-label="Close modal"
             >
-              <svg className={styles.closeIcon} width={24} height={24}>
+              <svg className={styles.closeIcon}>
                 <use href={`${sprite}#icon-close`} />
               </svg>
             </button>
           </li>
 
-          {/* 🟢 ЭЛЕМЕНТ 2: ЗАГОЛОВОК */}
           <li>
             <h2 id="modal-title" className={styles.modalTitle}>
               Edit information
             </h2>
           </li>
 
-          {/* 🟢 ЭЛЕМЕНТ 3: АВАТАР (с превью) */}
           <li className={styles.avatarItem}>
             <div className={styles.avatarContainer}>
-              {/* Если есть аватар (из пропсов или загруженный) - показываем картинку */}
-              {user.avatar || avatarImg || avatarValue ? (
+              {previewUrl ? (
                 <img
-                  src={avatarImg || avatarValue || user.avatar}
-                  alt={user.name}
+                  src={previewUrl}
+                  alt="Avatar"
                   className={styles.avatarImage}
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    e.target.parentNode.querySelector(
+                      `.${styles.avatarIcon}`
+                    ).style.display = 'block';
+                  }}
                 />
-              ) : (
-                // Иначе показываем иконку-заглушку
-                <svg className={styles.avatarIcon}>
-                  <use href={`${sprite}#icon-user`} />
-                </svg>
-              )}
+              ) : null}
+              <svg
+                className={`${styles.avatarIcon} ${previewUrl ? styles.hidden : ''}`}
+              >
+                <use href={`${sprite}#icon-user`} />
+              </svg>
             </div>
           </li>
 
-          {/* 🟢 ЭЛЕМЕНТ 4: ОШИБКА ОТ API (если есть) */}
           {apiError && (
-            <li>
-              <div className={styles.apiError} role="alert">
-                <svg className={styles.errorIcon}>
-                  <use href={`${sprite}#icon-alert`} />
-                </svg>
-                <p>{apiError}</p>
-              </div>
+            <li className={styles.apiError}>
+              <svg className={styles.errorIcon}>
+                <use href={`${sprite}#icon-alert`} />
+              </svg>
+              <p>{apiError}</p>
             </li>
           )}
 
-          {/* 🟢 ЭЛЕМЕНТ 5: ФОРМА */}
           <li>
-            {/* handleSubmit - обертка из react-hook-form */}
-            {/* Она предотвращает отправку если есть ошибки валидации */}
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-              {/* 🟢 БЛОК ЗАГРУЗКИ АВАТАРА (URL + файл) */}
               <div className={styles.avatarUpload}>
-                {/* Поле для ввода URL аватара */}
                 <input
                   type="text"
+                  placeholder="Enter URL"
                   className={styles.avatarUrlInput}
-                  placeholder={user.avatar || 'Enter URL'}
-                  disabled={loading}
-                  {...register('avatar')} // регистрируем поле в react-hook-form
+                  {...register('avatar')}
+                  disabled={loading || uploading}
                 />
-
-                {/* Скрытое поле для загрузки файла */}
                 <input
                   type="file"
                   id="avatar-upload"
-                  accept="image/*,.png,.jpg,.jpeg,.gif,.bmp,.webp"
+                  accept="image/*"
                   className={styles.fileInput}
-                  onChange={handleFileUpload} // обрабатываем выбор файла
-                  disabled={loading}
+                  onChange={handleFileChange}
+                  disabled={loading || uploading}
                 />
-
-                {/* Лейбл для скрытого поля (красивая кнопка) */}
                 <label
                   htmlFor="avatar-upload"
                   className={styles.fileInputLabel}
                 >
-                  Upload photo
+                  {uploading ? 'Uploading...' : 'Upload photo'}
                   <svg className={styles.uploadIcon}>
                     <use href={`${sprite}#icon-upload-cloud`} />
                   </svg>
                 </label>
               </div>
-
-              {/* Ошибка валидации для avatar (если есть) */}
               {errors.avatar && (
                 <p className={styles.errorMessage}>{errors.avatar.message}</p>
               )}
 
-              {/* 🟢 ОСНОВНЫЕ ПОЛЯ ФОРМЫ (имя, email, телефон) */}
               <div className={styles.formFields}>
-                {/* Имя */}
                 <div className={styles.fieldGroup}>
                   <input
                     type="text"
+                    placeholder="Name *"
                     className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
-                    placeholder={user.name || 'Name'}
-                    disabled={loading}
+                    disabled={loading || uploading}
                     {...register('name')}
                   />
                   {errors.name && (
@@ -397,13 +273,12 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                   )}
                 </div>
 
-                {/* Email */}
                 <div className={styles.fieldGroup}>
                   <input
                     type="email"
+                    placeholder="Email *"
                     className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
-                    placeholder={user.email || 'Email'}
-                    disabled={loading}
+                    disabled={loading || uploading}
                     {...register('email')}
                   />
                   {errors.email && (
@@ -413,13 +288,12 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                   )}
                 </div>
 
-                {/* Телефон */}
                 <div className={styles.fieldGroup}>
                   <input
                     type="tel"
+                    placeholder="Phone"
                     className={`${styles.input} ${errors.phone ? styles.inputError : ''}`}
-                    placeholder={user.phone || 'Phone'}
-                    disabled={loading}
+                    disabled={loading || uploading}
                     {...register('phone')}
                   />
                   {errors.phone && (
@@ -430,13 +304,12 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
                 </div>
               </div>
 
-              {/* 🟢 КНОПКА ОТПРАВКИ */}
               <button
                 type="submit"
                 className={styles.submitButton}
-                disabled={loading} // блокируем во время загрузки
+                disabled={loading || uploading}
               >
-                {loading ? 'Saving...' : 'Save'}
+                {loading ? 'Saving...' : 'Go to profile'}
               </button>
             </form>
           </li>
@@ -447,36 +320,3 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
 };
 
 export default ModalEditUser;
-
-// 📋 КЛЮЧЕВЫЕ МОМЕНТЫ ДЛЯ ПОНИМАНИЯ:
-// 1. Три уровня валидации:
-// Yup - проверяет данные перед отправкой
-
-// React Hook Form - управляет состоянием полей и ошибками
-
-// Сервер - проверяет данные еще раз (на случай если обошли клиент)
-
-// 2. Жизненный цикл модалки:
-// Открытие → показываем форму
-
-// Заполнение → валидация на лету
-
-// Сабмит → отправка на сервер
-
-// Успех → закрываем, обновляем профиль
-
-// Ошибка → показываем сообщение
-
-// 3. Два способа загрузки аватара:
-// URL - просто ссылка на картинку
-
-// Файл - загружается на Cloudinary, получаем URL
-
-// 4. Закрытие модалки:
-// ❌ Крестик
-
-// 🖱️ Клик на фон
-
-// ⌨️ Клавиша Escape
-
-// Понимание этих концепций - основа работы с формами в React!

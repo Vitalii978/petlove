@@ -1,60 +1,52 @@
 /* src/components/UserCard/PetsBlock/PetsList/PetsList.module.css */
+/* 🎯 СТИЛИ ДЛЯ СПИСКА ПИТОМЦЕВ */
 
-/* 🎯 ОСНОВНОЙ СПИСОК ПИТОМЦЕВ */
 .petsList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
 }
 
-/* 🎯 ЭЛЕМЕНТ СПИСКА (LI) */
-.petsListItem {
-  margin: 0;
-  padding: 0;
-  transition: transform 0.3s ease;
+.petCard {
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid rgba(38, 38, 38, 0.1);
+  border-radius: 20px;
+  width: 295px;
+  height: 132px;
 }
 
-.petsListItem:hover {
-  transform: translateY(-4px);
-}
-
-/* 🎯 ПУСТОЙ СПИСОК */
-.emptyList {
-  padding: 40px 20px;
-  text-align: center;
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  border: 2px dashed #e0e0e0;
-}
-
-.emptyText {
-  margin: 0;
-  font-size: 16px;
-  color: #888;
-  font-style: italic;
-}
-
-/* 🎯 АДАПТИВНОСТЬ */
-@media (max-width: 767px) {
-  .petsList {
-    grid-template-columns: 1fr;
-    gap: 16px;
+@media screen and (max-width: 374px) {
+  .petCard {
+    width: 100%;
+    padding: 12px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1279px) {
+@media screen and (min-width: 768px) {
+  .petCard {
+    padding: 22px 15px;
+    width: 305px;
+    height: 149px;
+  }
+
   .petsList {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    flex-direction: row;
+    gap: 14px;
   }
 }
 
-@media (min-width: 1280px) {
+@media screen and (min-width: 1280px) {
+  .petCard {
+    padding: 20px;
+    width: 440px;
+    height: 130px;
+  }
+
   .petsList {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    flex-direction: column;
   }
 }
