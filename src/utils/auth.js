@@ -51,6 +51,7 @@ export async function getCurrentUserFull() {
 
     // 🟢 ВАЖНО! Используем другой эндпоинт!
     const response = await api.get('/users/current/full');
+    // const response = await api.get('/users/current-full-wrong-url');  //Тестовій неправильній адресс дл проверки стиле й и разметки ошибок
 
     console.log('✅ Получены данные с питомцами:', response.data);
     console.log('🐕 Количество питомцев:', response.data.pets?.length || 0);

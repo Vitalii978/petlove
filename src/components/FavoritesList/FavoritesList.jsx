@@ -222,10 +222,11 @@ const FavoritesList = () => {
 
   // =============== 🟢 ОСНОВНОЙ РЕНДЕР ===============
   return (
-    <>
+    <div className="favorites-page">
+      {' '}
+      {/* ← вот этот класс */}
       {/* Модальное окно для неавторизованных */}
       <ModalAttention isOpen={isModalAttention} onClose={closeModalAttention} />
-
       {/* Модальное окно с деталями объявления */}
       {selectedNotice && (
         <ModalNotice
@@ -237,7 +238,6 @@ const FavoritesList = () => {
           isFavorite={true}
         />
       )}
-
       {/* 🎯 СПИСОК ИЗБРАННЫХ ОБЪЯВЛЕНИЙ */}
       <ul className={styles.noticesList}>
         {localFavorites.map(notice => {
@@ -266,7 +266,7 @@ const FavoritesList = () => {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };
 

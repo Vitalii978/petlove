@@ -1,7 +1,7 @@
 /* src/components/Notices/NoticesList/NoticesList.module.css */
-/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ - ИСПРАВЛЕНО: правильные отступы */
+/* 🎯 СПИСОК ОБЪЯВЛЕНИЙ */
+/* ✅ ИСПРАВЛЕНО: фиксированная высота карточек */
 
-/* =============== БАЗОВЫЕ СТИЛИ (МОБИЛЬНЫЕ) =============== */
 .noticesList {
   list-style: none;
   padding: 0;
@@ -12,13 +12,30 @@
   max-width: 375px;
 }
 
-/* 🎯 ПУСТОЕ СОСТОЯНИЕ */
+.oneCard {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 454px; /* фиксированная высота для мобильных */
+  width: 335px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.oneCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
 .emptyContainer {
   grid-column: 1 / -1;
   text-align: center;
   padding: 30px 20px;
   background: #f6b83d;
-
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -44,25 +61,42 @@
   margin: 0 auto;
 }
 
-/* =============== ПЛАНШЕТ (768px) =============== */
-@media screen and (min-width: 768px) {
-  @media screen and (min-width: 768px) {
-    .noticesList {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); /* ✅ 2 колонки */
-      gap: 20px; /* ✅ Горизонтальный и вертикальный gap 20px */
-      max-width: 768px;
-      margin: 0 auto 60px;
-    }
+@media screen and (max-width: 374px) {
+  .oneCard {
+    width: 100%;
+    padding: 14px;
+    height: auto; /* на очень маленьких экранах высота автоматическая */
+    min-height: 480px;
   }
 }
 
-/* =============== ДЕСКТОП (1280px) =============== */
+@media screen and (min-width: 768px) {
+  .noticesList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 768px;
+    margin: 0 auto 60px;
+    height: 100%;
+  }
+
+  .oneCard {
+    height: 472px; /* одинаковая высота для всех карточек */
+    width: 100%;
+    margin: 0;
+    padding: 24px;
+  }
+}
+
 @media (min-width: 1280px) {
   .noticesList {
-    grid-template-columns: repeat(3, 1fr); /* ✅ 3 колонки */
-    column-gap: 32px; /* ✅ Горизонтальный отступ 32px */
-    row-gap: 40px; /* ✅ Вертикальный отступ 40px */
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px;
+    row-gap: 40px;
     max-width: 1280px;
+  }
+
+  .oneCard {
+    max-width: 363px;
   }
 }

@@ -39,24 +39,26 @@ const NoticesList = ({
         const isFavorite = isNoticeFavorite(notice._id);
 
         return (
-          <NoticesItem
-            key={notice._id}
-            id={notice._id}
-            imgURL={notice.imgURL}
-            title={notice.title}
-            name={notice.name}
-            birthday={notice.birthday}
-            gender={notice.sex}
-            species={notice.species}
-            category={notice.category}
-            comment={notice.comment}
-            price={notice.price}
-            popularity={notice.popularity}
-            onOpenModal={() => onLearnMore?.(notice)}
-            onToggleFavorite={() => onToggleFavorite?.(notice._id)}
-            isFavorite={isFavorite}
-            boxFavorite={true}
-          />
+          <li key={notice._id} className={styles.oneCard}>
+            <NoticesItem
+              key={notice._id}
+              id={notice._id}
+              imgURL={notice.imgURL}
+              title={notice.title}
+              name={notice.name}
+              birthday={notice.birthday}
+              gender={notice.sex}
+              species={notice.species}
+              category={notice.category}
+              comment={notice.comment}
+              price={notice.price}
+              popularity={notice.popularity}
+              onOpenModal={() => onLearnMore?.(notice)}
+              onToggleFavorite={() => onToggleFavorite?.(notice._id)}
+              isFavorite={isFavorite}
+              boxFavorite={true}
+            />
+          </li>
         );
       })}
     </ul>

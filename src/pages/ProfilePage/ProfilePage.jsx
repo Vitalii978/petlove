@@ -1,10 +1,9 @@
-// // src/pages/ProfilePage/ProfilePage.jsx
-// // 🎯 ВИПРАВЛЕНО: прибрали зайвий Outlet
+// // 📁 src/pages/ProfilePage/ProfilePage.jsx
+// // 🎯 СТРАНИЦА ПРОФИЛЯ - ПОЛНАЯ ВЕРСИЯ
 
 // import { useState, useEffect, useCallback } from 'react';
 // import { useNavigate } from 'react-router-dom';
-// // ✅ МЕНЯЕМ ИМПОРТ - добавляем getCurrentUserFull!
-// import { getCurrentUserFull, logout } from '../../utils/auth';  // ← ИЗМЕНИЛОСЬ!
+// import { getCurrentUserFull, logout } from '../../utils/auth';
 // import Title from '../../components/Title/Title';
 // import UserCard from '../../components/UserCard/UserCard';
 // import MyNotices from '../../components/MyNotices/MyNotices';
@@ -22,23 +21,18 @@
 //       setLoading(true);
 //       setError('');
 
-//       console.log('🔄 Загружаем ПОЛНЫЕ данные профиля с питомцами...');
+//       console.log('🔄 Загружаем ПОЛНЫЕ данные профиля...');
 
-//       // ✅ МЕНЯЕМ ВЫЗОВ - используем getCurrentUserFull вместо getCurrentUser!
-//       const result = await getCurrentUserFull();  // ← ИЗМЕНИЛОСЬ!
+//       const result = await getCurrentUserFull();
 
 //       if (result.success) {
 //         console.log('✅ Данные пользователя загружены:', {
 //           имя: result.user.name,
-//           email: result.user.email,
-//           питомцев: result.user.pets?.length || 0  // ← ТЕПЕРЬ ЗДЕСЬ БУДУТ ПИТОМЦЫ!
+//           питомцев: result.user.pets?.length || 0,
 //         });
 
-//         // 🟢 Проверяем, есть ли питомцы
 //         if (result.user.pets && result.user.pets.length > 0) {
 //           console.log('🐕 СПИСОК ПИТОМЦЕВ:', result.user.pets);
-//         } else {
-//           console.log('🐕 У пользователя пока нет питомцев');
 //         }
 
 //         setUser(result.user);
@@ -47,8 +41,8 @@
 //         setUser(null);
 //       }
 //     } catch (error) {
-//       console.error('❌ Ошибка при загрузке профиля:', error);
-//       setError('Something went wrong. Please try again.');
+//       console.error('❌ Ошибка:', error);
+//       setError('Something went wrong');
 //       setUser(null);
 //     } finally {
 //       setLoading(false);
@@ -59,9 +53,8 @@
 //     loadUserData();
 //   }, [loadUserData]);
 
-//   const handleUserUpdate = (updatedUser) => {
+//   const handleUserUpdate = updatedUser => {
 //     setUser(updatedUser);
-//     console.log('✅ Профиль обновлен:', updatedUser.name);
 //   };
 
 //   const handleAddPet = () => {
@@ -71,11 +64,10 @@
 //   const handleLogout = async () => {
 //     try {
 //       await logout();
-//       console.log('✅ Пользователь вышел из системы');
 //       navigate('/');
 //       window.location.reload();
 //     } catch (error) {
-//       console.error('❌ Ошибка при выходе:', error);
+//       console.error('❌ Ошибка:', error);
 //     }
 //   };
 
@@ -83,7 +75,7 @@
 //     loadUserData();
 //   };
 
-//   const handleTabChange = (tab) => {
+//   const handleTabChange = tab => {
 //     setActiveTab(tab);
 //   };
 
@@ -147,13 +139,11 @@
 //   return (
 //     <section className={styles.page}>
 //       <div className={styles.container}>
-
 //         <Title text="My Profile" />
 
 //         <div className={styles.profileContent}>
-
 //           <UserCard
-//             userData={user}  // ← В user УЖЕ ЕСТЬ pets!
+//             userData={user}
 //             onUserUpdate={handleUserUpdate}
 //             onAddPet={handleAddPet}
 //             onLogout={handleLogout}
@@ -164,7 +154,6 @@
 //             onTabChange={handleTabChange}
 //             userId={user._id}
 //           />
-
 //         </div>
 //       </div>
 //     </section>
@@ -175,6 +164,7 @@
 
 // 📁 src/pages/ProfilePage/ProfilePage.jsx
 // 🎯 СТРАНИЦА ПРОФИЛЯ - ПОЛНАЯ ВЕРСИЯ
+// ✅ ИСПРАВЛЕНО: используем ТОЛЬКО наши классы
 
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -254,6 +244,7 @@ const ProfilePage = () => {
     setActiveTab(tab);
   };
 
+  // 🎯 СОСТОЯНИЕ ЗАГРУЗКИ (используем наши классы)
   if (loading) {
     return (
       <section className={styles.page}>
@@ -267,6 +258,7 @@ const ProfilePage = () => {
     );
   }
 
+  // 🎯 СОСТОЯНИЕ ОШИБКИ (используем наши классы)
   if (error) {
     return (
       <section className={styles.page}>
@@ -288,6 +280,7 @@ const ProfilePage = () => {
     );
   }
 
+  // 🎯 СОСТОЯНИЕ НЕТ ПОЛЬЗОВАТЕЛЯ (используем наши классы)
   if (!user) {
     return (
       <section className={styles.page}>
@@ -311,6 +304,7 @@ const ProfilePage = () => {
     );
   }
 
+  // 🎯 ОСНОВНОЙ РЕНДЕР (используем наши классы из примера)
   return (
     <section className={styles.page}>
       <div className={styles.container}>

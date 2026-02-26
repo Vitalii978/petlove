@@ -1,34 +1,8 @@
 /* src/components/Notices/NoticeItem/NoticeItem.module.css */
-/* 🎯 КАРТОЧКА ОБЪЯВЛЕНИЯ */
-/* ✅ ОБНОВЛЕНО: стили для нового списка */
-
-/* =============== БАЗОВЫЕ СТИЛИ (МОБИЛЬНЫЕ) =============== */
-.noticeItem {
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-width: 335px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.noticeItem:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
 
 /* 🎯 КОНТЕЙНЕР ИЗОБРАЖЕНИЯ */
-.imageContainer {
-  /* Можно добавить стили если нужно */
-}
 
-.image {
+/* .image {
   border-radius: 16px;
   width: 287px;
   height: 178px;
@@ -40,7 +14,6 @@
   transform: scale(1.05);
 }
 
-/* 🎯 КОНТЕНТ КАРТОЧКИ */
 .content {
   margin-top: 24px;
   flex-grow: 1;
@@ -48,7 +21,6 @@
   flex-direction: column;
 }
 
-/* 🎯 СТРОКА ЗАГОЛОВКА И РЕЙТИНГА */
 .titleRow {
   display: flex;
   justify-content: space-between;
@@ -85,7 +57,6 @@
   color: #2b2b2a;
 }
 
-/* =============== 🔥 НОВЫЙ СПИСОК ИНФОРМАЦИИ =============== */
 .infoList {
   list-style: none;
   padding: 0;
@@ -116,9 +87,12 @@
   letter-spacing: -0.02em;
   color: #262626;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* 🎯 ОПИСАНИЕ */
 .description {
   font-weight: 500;
   font-size: 14px;
@@ -126,9 +100,12 @@
   letter-spacing: -0.02em;
   color: #2b2b2a;
   margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* 🎯 ЦЕНА */
 .pricePlain {
   margin-bottom: 12px;
 }
@@ -141,10 +118,9 @@
   color: #2b2b2a;
 }
 
-/* 🎯 СТРОКА КНОПОК */
 .buttonsRow {
   display: flex;
-  /* align-items: center; */
+
   gap: 10px;
   margin-top: auto;
 }
@@ -154,7 +130,7 @@
   flex-grow: 1;
   border: none;
   border-radius: 30px;
-  padding: 14px 80px;
+  padding: 14px 0;
   width: 231px;
   height: 46px;
   background-color: #f6b83d;
@@ -199,7 +175,6 @@
   transition: all 0.3s ease;
 }
 
-/* 🎯 АНИМАЦИЯ */
 @keyframes heartBeat {
   0% {
     transform: scale(1);
@@ -222,16 +197,13 @@
   animation: heartBeat 0.4s ease-in-out;
 }
 
-/* =============== ПЛАНШЕТ (768px) =============== */
-@media (min-width: 768px) {
-  .noticeItem {
-    height: 100%;
-    max-width: 342px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 32px;
+@media screen and (max-width: 374px) {
+  .infoList {
+    gap: 8px;
   }
+}
 
+@media (min-width: 768px) {
   .image {
     width: 294px;
     height: 178px;
@@ -242,10 +214,9 @@
   }
 
   .infoList {
-    gap: 16px;
+    gap: 14px;
   }
 
-  /* 🎯 ОПИСАНИЕ */
   .description {
     margin-bottom: 24px;
   }
@@ -270,23 +241,348 @@
   }
 }
 
-/* =============== ДЕСКТОП (1280px) =============== */
 @media (min-width: 1280px) {
-  .noticeItem {
-    max-width: 363px;
-    padding: 24px;
-  }
-
   .image {
     width: 315px;
   }
 
   .infoList {
-    gap: 20px;
+    gap: 14px;
   }
 
   .learnMoreButton {
     padding: 14px 88px;
     width: 257px;
+  }
+} */
+
+/* src/components/Notices/NoticeItem/NoticeItem.module.css */
+/* 🎯 КАРТОЧКА ОБЪЯВЛЕНИЯ */
+/* ✅ ИСПРАВЛЕНО: фиксированная высота карточки и кнопка всегда внизу */
+
+/* =============== БАЗОВЫЕ СТИЛИ (МОБИЛЬНЫЕ) =============== */
+
+/* 🎯 КОНТЕЙНЕР ИЗОБРАЖЕНИЯ */
+.imageContainer {
+  width: 100%;
+  height: 178px; /* фиксированная высота для изображения */
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.noticeItem:hover .image {
+  transform: scale(1.05);
+}
+
+/* 🎯 КОНТЕЙНЕР КОНТЕНТА */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* height: calc(100% - 178px); оставшаяся высота после изображения */
+  height: 204px;
+  margin-top: 24px;
+}
+
+/* ВЕРХНЯЯ СТРОКА: Заголовок и рейтинг */
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #2b2b2a;
+  margin: 0;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.starIcon {
+  width: 16px;
+  height: 16px;
+  fill: #ffc531;
+}
+
+.ratingValue {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #2b2b2a;
+}
+
+/* 🔥 ИСПРАВЛЕНО: СПИСОК ИНФОРМАЦИИ С ФИКСИРОВАННОЙ ВЫСОТОЙ */
+
+.infoList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  display: grid;
+  grid-template-columns: repeat(5, auto); /* 5 колонок, ширина по контенту */
+  gap: 12px;
+  height: 30px;
+  width: 100%;
+  justify-content: flex-start; /* прижимаем колонки к левому краю */
+}
+
+.infoList li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: auto; /* ширина по контенту */
+  min-width: 0; /* разрешаем сжиматься если нужно */
+  white-space: nowrap; /* текст в одну строку */
+}
+
+.fieldLabel {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: rgba(38, 38, 38, 0.5);
+  margin: 0;
+  white-space: nowrap; /* лейбл всегда в одну строку */
+}
+
+.fieldValue {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  color: #262626;
+  margin: 0;
+  white-space: nowrap; /* значение в одну строку */
+  overflow: hidden;
+  text-overflow: ellipsis; /* троеточие если не влезает */
+  max-width: 100%;
+}
+
+/* 🔥 ИСПРАВЛЕНО: ОПИСАНИЕ С ФИКСИРОВАННОЙ ВЫСОТОЙ */
+.description {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #2b2b2a;
+  margin: 0 0 16px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* максимум 3 строки */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 40px; /* 14px * 1.3 * 3 ≈ 54px */
+}
+
+/* ЦЕНА */
+.pricePlain {
+  margin-bottom: 12px;
+  height: 20px; /* фиксированная высота для цены */
+}
+
+.priceText,
+.noPriceText {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #2b2b2a;
+  margin: 0;
+}
+
+/* 🔥 ИСПРАВЛЕНО: КНОПКИ ВСЕГДА ВНИЗУ */
+.buttonsRow {
+  display: flex;
+  gap: 10px;
+  margin-top: auto; /* прижимаем к низу */
+  height: 46px; /* фиксированная высота для кнопок */
+}
+
+.learnMoreButton {
+  box-sizing: border-box;
+  flex: 1; /* занимает все доступное место */
+  border: none;
+  border-radius: 30px;
+  padding: 0; /* убираем паддинги, центрируем через flex */
+  background-color: #f6b83d;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.learnMoreButton:hover {
+  background-color: #f9b020;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 8, 0.3);
+}
+
+.heartCircle {
+  box-sizing: border-box;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  width: 46px;
+  height: 46px;
+  background-color: #fff4df;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.heartCircle:hover {
+  background-color: #fbe7c1;
+  transform: scale(1.1);
+}
+
+.heartCircle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.heartIcon {
+  width: 18px;
+  height: 18px;
+  fill: #ff6b08;
+  stroke: #ff6b08;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heartBeat .heartIcon {
+  animation: heartBeat 0.4s ease-in-out;
+}
+
+/* =============== АДАПТИВНОСТЬ =============== */
+
+@media screen and (max-width: 374px) {
+  .infoList {
+    gap: 8px;
+  }
+
+  .infoList li {
+    min-width: auto;
+  }
+
+  .fieldLabel {
+    white-space: normal; /* лейбл всегда в одну строку */
+  }
+
+  .fieldValue {
+    white-space: normal; /* значение в одну строку */
+  }
+}
+
+@media (min-width: 768px) {
+  .imageContainer {
+    height: 178px;
+  }
+
+  .content {
+    height: 222px; /* 472px (высота карточки) - 178px (изобр) - 48px (отступы) */
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .infoList {
+    gap: 14px;
+    height: 30px;
+  }
+
+  .fieldLabel {
+    font-size: 10px;
+  }
+
+  .fieldValue {
+    font-size: 12px;
+  }
+
+  .description {
+    height: 36px;
+    margin-bottom: 24px;
+  }
+
+  .pricePlain {
+    height: 24px;
+  }
+
+  .priceText,
+  .noPriceText {
+    font-size: 18px;
+  }
+
+  .buttonsRow {
+    height: 48px;
+  }
+
+  .learnMoreButton {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .heartCircle {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .imageContainer {
+    height: 178px;
+  }
+
+  .infoList {
+    gap: 14px;
+  }
+
+  .learnMoreButton {
+    font-size: 16px;
   }
 }
