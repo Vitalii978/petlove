@@ -72,21 +72,98 @@
 
 // export default UserCard;
 
+// // src/components/UserCard/UserCard.jsx
+// // 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ
+// // ✅ РАЗМЕТКА И СТИЛИ КАК В ПРИМЕРЕ, ЛОГИКА НАША
+
+// import { useState } from 'react';
+// import EditUserBtn from './EditUserBtn/EditUserBtn';
+// import UserBlock from './UserBlock/UserBlock';
+// import PetsBlock from './PetsBlock/PetsBlock';
+// import LogOutBtn from '../LogOutBtn/LogOutBtn';
+// import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
+// import styles from './UserCard.module.css';
+
+// const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
+//   const [user, setUser] = useState(userData);
+//   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+//   const handleUserUpdate = updatedUser => {
+//     setUser(updatedUser);
+//     if (onUserUpdate) {
+//       onUserUpdate(updatedUser);
+//     }
+//   };
+
+//   const handleAddPet = () => {
+//     if (onAddPet) {
+//       onAddPet();
+//     }
+//   };
+
+//   const handleLogoutClick = () => {
+//     setShowLogoutModal(true);
+//   };
+
+//   const handleLogoutConfirm = () => {
+//     if (onLogout) {
+//       onLogout();
+//     }
+//     setShowLogoutModal(false);
+//   };
+
+//   const handleLogoutCancel = () => {
+//     setShowLogoutModal(false);
+//   };
+
+//   return (
+//     // 🎯 РАЗМЕТКА КАК В ПРИМЕРЕ: используем <ul>
+//     <ul className={styles.userCard}>
+//       {/* 🎯 Модалка подтверждения выхода - как в примере */}
+//       <ModalApproveAction
+//         isOpen={showLogoutModal}
+//         onClose={handleLogoutCancel}
+//         onConfirm={handleLogoutConfirm}
+//         title="Already leaving?"
+//         confirmText="Yes"
+//         cancelText="Cancel"
+//       />
+
+//       {/* 🎯 ПЕРВЫЙ ЭЛЕМЕНТ СПИСКА: EditUserBtn + UserBlock */}
+//       <li>
+//         <EditUserBtn user={user} onUpdate={handleUserUpdate} />
+//         <UserBlock user={user} onUpdate={handleUserUpdate} />
+//       </li>
+
+//       {/* 🎯 ВТОРОЙ ЭЛЕМЕНТ СПИСКА: PetsBlock */}
+//       <li>
+//         <PetsBlock pets={user?.pets || []} onAddPet={handleAddPet} />
+//       </li>
+
+//       {/* 🎯 ТРЕТИЙ ЭЛЕМЕНТ СПИСКА: LogOutBtn */}
+//       <li>
+//         <LogOutBtn onLogout={handleLogoutClick} outsideTheHeader={true} />
+//       </li>
+//     </ul>
+//   );
+// };
+
+// export default UserCard;
+
 // src/components/UserCard/UserCard.jsx
-// 🎯 КАРТОЧКА ПОЛЬЗОВАТЕЛЯ
-// ✅ РАЗМЕТКА И СТИЛИ КАК В ПРИМЕРЕ, ЛОГИКА НАША
+// ✅ ИСПРАВЛЕНО: убрана дублирующая модалка
 
 import { useState } from 'react';
 import EditUserBtn from './EditUserBtn/EditUserBtn';
 import UserBlock from './UserBlock/UserBlock';
 import PetsBlock from './PetsBlock/PetsBlock';
 import LogOutBtn from '../LogOutBtn/LogOutBtn';
-import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
+// 🚫 Убираем импорт ModalApproveAction
 import styles from './UserCard.module.css';
 
 const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
   const [user, setUser] = useState(userData);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  // 🚫 Убираем showLogoutModal
 
   const handleUserUpdate = updatedUser => {
     setUser(updatedUser);
@@ -101,48 +178,25 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
     }
   };
 
-  const handleLogoutClick = () => {
-    setShowLogoutModal(true);
-  };
-
-  const handleLogoutConfirm = () => {
-    if (onLogout) {
-      onLogout();
-    }
-    setShowLogoutModal(false);
-  };
-
-  const handleLogoutCancel = () => {
-    setShowLogoutModal(false);
-  };
+  // 🚫 Убираем handleLogoutClick, handleLogoutConfirm, handleLogoutCancel
+  // Вся логика теперь в LogOutBtn
 
   return (
-    // 🎯 РАЗМЕТКА КАК В ПРИМЕРЕ: используем <ul>
     <ul className={styles.userCard}>
-      {/* 🎯 Модалка подтверждения выхода - как в примере */}
-      <ModalApproveAction
-        isOpen={showLogoutModal}
-        onClose={handleLogoutCancel}
-        onConfirm={handleLogoutConfirm}
-        title="Already leaving?"
-        confirmText="Yes"
-        cancelText="Cancel"
-      />
+      {/* 🚫 Убираем ModalApproveAction отсюда! */}
 
-      {/* 🎯 ПЕРВЫЙ ЭЛЕМЕНТ СПИСКА: EditUserBtn + UserBlock */}
       <li>
         <EditUserBtn user={user} onUpdate={handleUserUpdate} />
         <UserBlock user={user} onUpdate={handleUserUpdate} />
       </li>
 
-      {/* 🎯 ВТОРОЙ ЭЛЕМЕНТ СПИСКА: PetsBlock */}
       <li>
         <PetsBlock pets={user?.pets || []} onAddPet={handleAddPet} />
       </li>
 
-      {/* 🎯 ТРЕТИЙ ЭЛЕМЕНТ СПИСКА: LogOutBtn */}
       <li>
-        <LogOutBtn onLogout={handleLogoutClick} outsideTheHeader={true} />
+        {/* ✅ LogOutBtn сам вызывает модалку */}
+        <LogOutBtn onLogout={onLogout} outsideTheHeader={true} />
       </li>
     </ul>
   );

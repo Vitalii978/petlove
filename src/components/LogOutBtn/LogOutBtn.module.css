@@ -2,7 +2,7 @@
 /* 🎯 СТИЛИ ДЛЯ КНОПКИ ВЫХОДА */
 /* ✅ ИСПРАВЛЕНО: стили как в примере */
 
-.logoutButton {
+/* .logoutButton {
   display: none;
 }
 
@@ -33,5 +33,99 @@
     font-size: 16px;
     line-height: 1.25;
     letter-spacing: -0.03em;
+  }
+} */
+
+/* src/components/LogOutBtn/LogOutBtn.module.css */
+/* 🎯 СТИЛИ ДЛЯ КНОПКИ ВЫХОДА */
+/* ✅ ИСПРАВЛЕНО: стили как в примере */
+
+/* Базовые стили кнопки (скрыта по умолчанию) */
+.logoutButton {
+  display: none;
+}
+
+/* Стили для кнопки вне хедера (в бургер-меню и т.д.) */
+.outsideTheHeader {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 12px 28px;
+  background-color: #fff4df;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #f6b83d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.outsideTheHeader:hover {
+  background-color: #fbe7c1;
+}
+
+/* 🎯 Стили для кнопки в UserNav (в хедере) */
+.logoutButton:not(.outsideTheHeader) {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 12px 28px;
+  background-color: #fff4df;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #f6b83d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 136px;
+  height: 50px;
+  text-align: center;
+}
+
+.logoutButton:not(.outsideTheHeader):hover {
+  background-color: #fbe7c1;
+}
+
+/* 🎯 ТЕКСТ КНОПКИ */
+.logoutText {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #f6b83d;
+}
+
+/* 🎯 АДАПТИВНОСТЬ */
+@media screen and (min-width: 768px) {
+  .logoutButton:not(.outsideTheHeader) {
+    padding: 15px 35px;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    width: 136px;
+    height: 50px;
+  }
+
+  .outsideTheHeader {
+    padding: 15px 35px;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+
+  .logoutText {
+    font-size: 16px;
+    line-height: 1.25;
   }
 }

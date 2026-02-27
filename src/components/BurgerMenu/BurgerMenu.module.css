@@ -1,3 +1,324 @@
+/* src/components/BurgerMenu/BurgerMenu.module.css */
+/* .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+.menuContainer {
+  width: 100%;
+  max-width: 375px; 
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.menu {
+  position: absolute;
+  top: 0;
+  right: 20px; 
+  bottom: 0;
+  width: 100%;
+  max-width: 218px;
+  animation: slideIn 0.3s ease;
+  overflow-y: auto;
+  padding-top: 236px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+.menuWhite {
+  background-color: #ffffff;
+}
+
+.menuYellow {
+  background-color: #f6b83d;
+}
+
+
+.closeButton {
+  position: absolute;
+  top: 28px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeIcon {
+  width: 32px;
+  height: 32px;
+  color: #000;
+  stroke: currentColor;
+}
+
+.menuWhite .closeIcon {
+  color: #262626;
+}
+
+.menuYellow .closeIcon {
+  color: #ffffff;
+}
+
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+}
+
+
+.burgerNav {
+  width: 100%;
+}
+
+.burgerNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0px 49px;
+}
+
+.burgerNavItem {
+  width: 100%;
+}
+
+
+.burgerNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+
+.menuWhite .burgerNavLink {
+  color: #000000;
+  border: 1px solid rgba(38, 38, 38, 0.15);
+}
+
+.menuWhite .burgerNavLink:hover,
+.menuWhite .burgerNavLink.active {
+  border: 1px solid #f6b83d;
+}
+
+
+.menuYellow .burgerNavLink {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menuYellow .burgerNavLink:hover,
+.menuYellow .burgerNavLink.active {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+
+.burgerAuth {
+  width: 100%;
+
+  margin-top: auto;
+  padding-bottom: 40px;
+}
+
+.burgerAuthList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.burgerAuthItem {
+  width: 100%;
+}
+
+
+.burgerAuthLink,
+.burgerRegisterLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  border-radius: 30px;
+  padding: 15px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+
+.burgerAuthLink {
+  line-height: 1.25;
+}
+
+
+.menuWhite .burgerAuthLink {
+  color: #fff;
+  background-color: #f6b83d;
+  border: none;
+}
+
+.menuWhite .burgerAuthLink:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+.menuYellow .burgerAuthLink {
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.menuYellow .burgerAuthLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.burgerRegisterLink {
+  background-color: #fff4df;
+  color: #f6b83d;
+}
+
+.burgerRegisterLink:hover {
+  background-color: #fbe7c1;
+}
+
+
+.burgerLogout {
+  width: 100%;
+  padding: 0 41px 40px 41px;
+  margin-top: auto;
+}
+
+.burgerLogout .logoutBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+
+.burgerUserContent,
+.burgerUserBar {
+  display: none;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .menuContainer {
+    max-width: 768px; 
+    padding: 0 32px;
+  }
+
+  .menu {
+    max-width: 374px;
+
+    padding-top: 369px; 
+  }
+
+  .burgerNavList {
+    padding: 0px 127px;
+  }
+
+  .menuContent {
+    gap: 395px;
+  }
+
+  .burgerAuthList {
+    flex-direction: row;
+    gap: 8px;
+    padding: 0px 49px;
+  }
+
+  .burgerAuthLink {
+    padding: 15px 35px;
+  }
+
+  .burgerRegisterLink {
+    padding: 15px 20px;
+  }
+
+  .burgerLogout {
+    width: 100%;
+    padding: 0 119px 40px 119px;
+    margin-top: auto;
+    padding-bottom: 40px;
+  }
+}
+
+
+@media screen and (min-width: 1280px) {
+  .overlay,
+  .menuContainer,
+  .menu {
+    display: none;
+  }
+} */
+
+/* src/components/BurgerMenu/BurgerMenu.module.css */
+/* 🎯 СТИЛИ ДЛЯ БУРГЕР-МЕНЮ */
+/* ✅ ИСПРАВЛЕНО: добавлены правильные стили для LogOutBtn */
+
 /* Overlay */
 .overlay {
   position: fixed;
@@ -252,10 +573,27 @@
   margin-top: auto;
 }
 
-.burgerLogout .logoutBtn {
+/* Стили для кнопки LogOutBtn внутри бургер-меню */
+/* .burgerLogout button {
   width: 100%;
   justify-content: center;
+  background-color: #fff4df;
+  color: #f6b83d;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.burgerLogout button:hover {
+  background-color: #fbe7c1;
+} */
 
 /* 🎯 Убираем старые стили для UserBar */
 .burgerUserContent,
@@ -303,6 +641,12 @@
     padding: 0 119px 40px 119px;
     margin-top: auto;
     padding-bottom: 40px;
+  }
+
+  .burgerLogout button {
+    padding: 15px 35px;
+    font-size: 16px;
+    line-height: 1.25;
   }
 }
 

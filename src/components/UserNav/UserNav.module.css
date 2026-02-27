@@ -1,4 +1,66 @@
 /* 🎯 СУЩЕСТВУЮЩИЕ СТИЛИ (оставляем как есть) */
+/* .userNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userBarWrapper,
+.logoutWrapper {
+  display: flex;
+  align-items: center;
+}
+
+
+.userNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+
+@media screen and (max-width: 767px) {
+  .userNav {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+
+  .userNavList {
+    flex-direction: column; 
+    width: 100%;
+    gap: 8px;
+  }
+
+  .userBarWrapper,
+  .logoutWrapper {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .userNav {
+    flex-direction: row; 
+    gap: 8px;
+  }
+
+ 
+  .userNavList {
+    flex-direction: row; 
+  }
+} */
+
+/* src/components/UserNav/UserNav.module.css */
+/* 🎯 СТИЛИ ДЛЯ КОМПОНЕНТА НАВИГАЦИИ ПОЛЬЗОВАТЕЛЯ */
+/* ✅ ИСПРАВЛЕНО: добавлены стили из примера */
+
+/* 🎯 СУЩЕСТВУЮЩИЕ СТИЛИ (оставляем как есть) */
 .userNav {
   display: flex;
   align-items: center;

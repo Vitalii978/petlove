@@ -459,7 +459,7 @@ export const NoticesPage = () => {
 
       <section className={styles.pageNotices}>
         <div className={styles.container}>
-          <Title children="Find pet" />
+          <Title children="Find your favorite pet" />
 
           {/* Компонент с фильтрами */}
           <NoticesFilters
