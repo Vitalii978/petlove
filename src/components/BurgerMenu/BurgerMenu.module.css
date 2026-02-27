@@ -569,31 +569,9 @@
 /* 🎯 LogOutBtn в бургер-меню */
 .burgerLogout {
   width: 100%;
-  padding: 0 41px 40px 41px;
+  padding: 40px 20px 40px 20px;
   margin-top: auto;
 }
-
-/* Стили для кнопки LogOutBtn внутри бургер-меню */
-/* .burgerLogout button {
-  width: 100%;
-  justify-content: center;
-  background-color: #fff4df;
-  color: #f6b83d;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 30px;
-  padding: 12px 28px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1.29;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.burgerLogout button:hover {
-  background-color: #fbe7c1;
-} */
 
 /* 🎯 Убираем старые стили для UserBar */
 .burgerUserContent,
@@ -638,13 +616,12 @@
 
   .burgerLogout {
     width: 100%;
-    padding: 0 119px 40px 119px;
+    padding: 40px 98px 40px 98px;
     margin-top: auto;
-    padding-bottom: 40px;
   }
 
   .burgerLogout button {
-    padding: 15px 35px;
+    /* padding: 15px; */
     font-size: 16px;
     line-height: 1.25;
   }

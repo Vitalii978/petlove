@@ -63,8 +63,8 @@
 /* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
   .avatarWrapper {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
   }
 
   .userName {

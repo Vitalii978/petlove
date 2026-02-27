@@ -1,88 +1,170 @@
-/* src/components/LogOutBtn/LogOutBtn.module.css */
+/* src/components/LogOutBtn/LogOutBtn.module.css
 /* 🎯 СТИЛИ ДЛЯ КНОПКИ ВЫХОДА */
-/* ✅ ИСПРАВЛЕНО: стили как в примере */
+/* ✅ ИСПРАВЛЕНО: единые стили для всех кнопок */
 
+/* Базовые стили кнопки (скрыта по умолчанию) */
 /* .logoutButton {
   display: none;
-}
+} */
 
-.outsideTheHeader {
+/* 🎯 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КНОПОК LOGOUT */
+/* .outsideTheHeader,
+.logoutOnHome,
+.logoutOnOther {
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 30px;
-  padding: 12px 28px;
-  background-color: #fff4df;
+  padding: 12px 0;
+  background-color: #f6b83d;
   box-sizing: border-box;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #f6b83d;
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-}
+  width: 114px;
+  text-align: center;
+} */
 
-.outsideTheHeader:hover {
-  background-color: #fbe7c1;
-}
+/* 🎯 Стили для кнопки в UserNav (в хедере) */
+/* .logoutButton:not(.outsideTheHeader) {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 12px 0;
+  background-color: #f6b83d; 
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 136px;
+  height: 50px;
+  text-align: center;
+} */
 
-@media screen and (min-width: 768px) {
-  .logoutButton {
-    padding: 15px 35px;
+/* 🎯 Эффект при наведении для всех кнопок */
+/* .outsideTheHeader:hover,
+.logoutOnHome:hover,
+.logoutOnOther:hover,
+.logoutButton:not(.outsideTheHeader):hover {
+  background-color: #fff4df;
+  color: #f6b83d;
+  border-color: #fff4df;
+} */
+
+/* 🎯 ТЕКСТ КНОПКИ */
+/* .logoutText {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff; 
+} */
+
+/* 🎯 Цвет текста при наведении */
+/* .outsideTheHeader:hover .logoutText,
+.logoutOnHome:hover .logoutText,
+.logoutOnOther:hover .logoutText,
+.logoutButton:not(.outsideTheHeader):hover .logoutText {
+  color: #f6b83d;
+} */
+
+/* 🎯 АДАПТИВНОСТЬ */
+/* @media screen and (min-width: 768px) {
+  .logoutButton:not(.outsideTheHeader) {
+    padding: 15px 0;
     font-size: 16px;
     line-height: 1.25;
-    letter-spacing: -0.03em;
+    width: 136px;
+    height: 50px;
   }
-} */
+
+  .outsideTheHeader,
+  .logoutOnHome,
+  .logoutOnOther {
+    padding: 15px 0;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .logoutText {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}  */
 
 /* src/components/LogOutBtn/LogOutBtn.module.css */
 /* 🎯 СТИЛИ ДЛЯ КНОПКИ ВЫХОДА */
-/* ✅ ИСПРАВЛЕНО: стили как в примере */
+/* ✅ ИСПРАВЛЕНО: разные ширины для разных мест */
 
 /* Базовые стили кнопки (скрыта по умолчанию) */
 .logoutButton {
   display: none;
 }
 
-/* Стили для кнопки вне хедера (в бургер-меню и т.д.) */
+/* 🎯 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КНОПОК LOGOUT */
 .outsideTheHeader {
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 30px;
-  padding: 12px 28px;
-  background-color: #fff4df;
+  padding: 12px;
+  background-color: #f6b83d;
   box-sizing: border-box;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #f6b83d;
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
   text-align: center;
 }
 
-.outsideTheHeader:hover {
-  background-color: #fbe7c1;
+/* 🎯 РАЗНАЯ ШИРИНА ДЛЯ РАЗНЫХ МЕСТ */
+
+/* В бургер-меню - 178px */
+.outsideTheHeader.burgerMenuLogout {
+  width: 178px;
+  height: 42px;
 }
 
-/* 🎯 Стили для кнопки в UserNav (в хедере) */
+/* В UserCard - 114px */
+.outsideTheHeader.userCardLogout {
+  width: 114px;
+  height: 42px;
+}
+
+/* В UserNav (хедер) - 136px (по умолчанию) */
+.outsideTheHeader:not(.burgerMenuLogout):not(.userCardLogout) {
+  width: 136px;
+  height: 50px;
+}
+
+/* 🎯 Стили для кнопки в UserNav (без outsideTheHeader) */
 .logoutButton:not(.outsideTheHeader) {
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 30px;
-  padding: 12px 28px;
-  background-color: #fff4df;
+  padding: 12px;
+  background-color: #f6b83d;
   box-sizing: border-box;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #f6b83d;
+  color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 136px;
@@ -90,8 +172,17 @@
   text-align: center;
 }
 
+/* 🎯 Эффект при наведении для всех кнопок */
+.outsideTheHeader:hover,
 .logoutButton:not(.outsideTheHeader):hover {
-  background-color: #fbe7c1;
+  background-color: #fff4df;
+  color: #f6b83d;
+  border-color: #fff4df;
+}
+
+.outsideTheHeader:hover .logoutText,
+.logoutButton:not(.outsideTheHeader):hover .logoutText {
+  color: #f6b83d;
 }
 
 /* 🎯 ТЕКСТ КНОПКИ */
@@ -103,29 +194,39 @@
   letter-spacing: -0.03em;
   text-transform: uppercase;
   text-align: center;
-  color: #f6b83d;
+  color: #fff;
 }
 
 /* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
   .logoutButton:not(.outsideTheHeader) {
-    padding: 15px 35px;
+    padding: 15px;
     font-size: 16px;
     line-height: 1.25;
-    letter-spacing: -0.03em;
     width: 136px;
     height: 50px;
   }
 
   .outsideTheHeader {
-    padding: 15px 35px;
+    padding: 15px;
     font-size: 16px;
     line-height: 1.25;
-    letter-spacing: -0.03em;
   }
 
   .logoutText {
     font-size: 16px;
     line-height: 1.25;
+  }
+
+  /* В бургер-меню - 178px */
+  .outsideTheHeader.burgerMenuLogout {
+    width: 178px;
+    height: 50px;
+  }
+
+  /* В UserCard - 114px */
+  .outsideTheHeader.userCardLogout {
+    width: 136px;
+    height: 50px;
   }
 }

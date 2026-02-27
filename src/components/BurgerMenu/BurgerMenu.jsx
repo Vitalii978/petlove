@@ -238,6 +238,8 @@ const BurgerMenu = ({ isOpen, onClose, isLoggedIn, isHomePage, onLogout }) => {
                       onClose();
                     }}
                     outsideTheHeader={true}
+                    isHomePage={isHomePage} // ✅ Добавляем isHomePage
+                    location="burger" // 👈 ДЛЯ ШИРИНЫ 178px
                   />
                 </div>
               </>

@@ -417,7 +417,7 @@ const Header = () => {
                   `${styles.navLink} ${isHomePage ? styles.navLinkHome : styles.navLinkOther} ${isActive ? styles.active : ''}`
                 }
               >
-                Find your favorite pet
+                Find pet
               </NavLink>
             </li>
             <li className={styles.navItem}>

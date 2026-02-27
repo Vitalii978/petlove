@@ -196,7 +196,12 @@ const UserCard = ({ userData, onUserUpdate, onAddPet, onLogout }) => {
 
       <li>
         {/* ✅ LogOutBtn сам вызывает модалку */}
-        <LogOutBtn onLogout={onLogout} outsideTheHeader={true} />
+        <LogOutBtn
+          onLogout={onLogout}
+          outsideTheHeader={true}
+          isHomePage={false} // На странице профиля isHomePage = false
+          location="userCard" // 👈 ДЛЯ ШИРИНЫ 114px
+        />
       </li>
     </ul>
   );
