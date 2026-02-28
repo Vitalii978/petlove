@@ -59,7 +59,7 @@
 }
 
 .detailLabel {
-  font-size: 10px;
+  font-size: 8px;
   line-height: 1.4;
   letter-spacing: -0.02em;
   color: rgba(38, 38, 38, 0.5);
@@ -68,7 +68,7 @@
 }
 
 .detailValue {
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1.17;
   letter-spacing: -0.02em;
   color: #262626;
@@ -115,6 +115,14 @@
 
   .petTitle {
     margin-bottom: 12px;
+  }
+
+  .detailLabel {
+    font-size: 10px;
+  }
+
+  .detailValue {
+    font-size: 12px;
   }
 
   .deleteButton {
