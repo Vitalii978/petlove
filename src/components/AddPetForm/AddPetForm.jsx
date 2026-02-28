@@ -1,5 +1,6 @@
 // 📁 src/components/AddPetForm/AddPetForm.jsx
 // 🎯 ФОРМА ДОБАВЛЕНИЯ ПИТОМЦА - ПОДРОБНЕЙШЕЕ ОБЪЯСНЕНИЕ
+// ✅ ИСПРАВЛЕНО: разметка, стили, цвета, иконки, отступы как в примере
 // ====================================================
 // Что происходит в этом файле:
 // 1. Пользователь заполняет поля (фото, имя, дата, тип, пол)
@@ -18,7 +19,7 @@ import { useState, useEffect } from 'react';
 // useEffect - это "будильник", который срабатывает при загрузке страницы
 // Например: загрузить список типов животных с сервера
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 // useNavigate - это "пульт управления" для перехода на другие страницы
 // Когда нажмут "Submit" - перейдем в профиль
 // Когда нажмут "Back" - тоже перейдем в профиль
@@ -66,6 +67,8 @@ import { uploadPhotoToCloudinary } from '../../utils/cloudinary';
 import styles from './AddPetForm.module.css';
 // Стили только для этой формы (чтобы не мешались с другими)
 // Используем CSS модули - классы изолированы от других компонентов
+
+import { useNavigate, NavLink } from 'react-router-dom'; // ✅ ДОБАВЛЕН NavLink
 
 // 🎯 СХЕМА ВАЛИДАЦИИ YUP - ПРАВИЛА ЗАПОЛНЕНИЯ
 // ====================================================
@@ -309,11 +312,11 @@ const AddPetForm = () => {
 
   // 🎯 ВОЗВРАЩАЕМ JSX - ТО, ЧТО УВИДИТ ПОЛЬЗОВАТЕЛЬ
   // ====================================================
-  // Здесь мы рисуем саму форму с полями
+  // Здесь мы рисуем саму форму с полями - разметка из примера
   // ====================================================
   return (
     <>
-      {/* 🟢 ЗАГОЛОВОК СТРАНИЦЫ */}
+      {/* 🟢 ЗАГОЛОВОК СТРАНИЦЫ - КАК В ПРИМЕРЕ */}
       <h1 className={styles.title}>
         Add my pet /<span className={styles.spanTitle}> Personal details</span>
       </h1>
@@ -341,316 +344,237 @@ const AddPetForm = () => {
               </div>
             )}
 
-            {/* 🟢 ГЛАВНЫЙ СПИСОК ПОЛЕЙ ФОРМЫ */}
-            {/* Используем <ul> для семантики (список полей) */}
-            <ul className={styles.fieldsList}>
-              {/* 🟢 ПОЛЕ 1: ВЫБОР ПОЛА - САМОЕ ХИТРОЕ */}
+            {/* 🟢 ГЛАВНЫЙ СПИСОК ПОЛЕЙ ФОРМЫ - КАК В ПРИМЕРЕ */}
+            <ul>
+              {/* 🟢 ПОЛЕ 1: ВЫБОР ПОЛА - КАК В ПРИМЕРЕ */}
               {/* ====================================== */}
-              <li className={styles.fieldItem}>
-                <h3 className={styles.genderTitle}>Gender</h3>
+              <li className={clsx(styles.boxRadio, styles.position)}>
+                {/* FEMALE */}
+                <Field
+                  name="sex"
+                  type="radio"
+                  value="female"
+                  id="female"
+                  className={styles.inputRadioGender}
+                />
+                {values.sex === 'female' && (
+                  <svg className={styles.iconGenderFemaleOk}>
+                    <use href={`${sprite}#icon-check-mark-green`} />
+                  </svg>
+                )}
+                <label
+                  htmlFor="female"
+                  className={clsx(styles.labelRadioGender, styles.fameli)}
+                >
+                  <svg className={styles.iconRadioGender}>
+                    <use href={`${sprite}#icon-femali-white`} />
+                  </svg>
+                </label>
 
-                {/* Список вариантов пола - тоже список */}
-                <ul className={styles.genderList}>
-                  {/* 🎀 FEMALE - ДЕВОЧКА */}
-                  <li className={styles.genderItem}>
-                    {/* label связывает текст с полем ввода */}
-                    <label className={styles.genderLabel}>
-                      {/* Field - компонент Formik для полей ввода */}
-                      {/* type="radio" - это радиокнопка (можно выбрать только одну) */}
-                      {/* name="sex" - это поле называется "sex" (совпадает с initialValues) */}
-                      {/* value="female" - значение, если выбрано */}
-                      {/* className={styles.hiddenRadio} - прячем стандартную радио-кнопку */}
-                      <Field
-                        type="radio"
-                        name="sex"
-                        value="female"
-                        className={styles.hiddenRadio}
-                      />
+                {/* MALE */}
+                <Field
+                  name="sex"
+                  type="radio"
+                  value="male"
+                  id="male"
+                  className={styles.inputRadioGender}
+                />
+                {values.sex === 'male' && (
+                  <svg className={styles.iconGenderMaleOk}>
+                    <use href={`${sprite}#icon-check-mark-green`} />
+                  </svg>
+                )}
+                <label
+                  htmlFor="male"
+                  className={clsx(styles.labelRadioGender, styles.male)}
+                >
+                  <svg className={styles.iconRadioGender}>
+                    <use href={`${sprite}#icon-male-blue`} />
+                  </svg>
+                </label>
 
-                      {/* 🟢 КРАСИВАЯ КНОПКА ВМЕСТО СТАНДАРТНОЙ */}
-                      {/* Это визуальная кнопка, которая выглядит красиво */}
-                      {/* clsx - добавляем класс activeFemale только если выбран female */}
-                      <div
-                        className={clsx(
-                          styles.genderButton,
-                          values.sex === 'female' && styles.activeFemale
-                        )}
-                      >
-                        {/* Иконка женского пола из спрайта */}
-                        <svg className={styles.genderIcon}>
-                          <use href={`${sprite}#icon-femali-white`} />
-                        </svg>
+                {/* MULTIPLE */}
+                <Field
+                  name="sex"
+                  type="radio"
+                  value="multiple"
+                  id="multiple"
+                  className={styles.inputRadioGender}
+                />
+                {values.sex === 'multiple' && (
+                  <svg className={styles.iconGenderMultipleOk}>
+                    <use href={`${sprite}#icon-check-mark-green`} />
+                  </svg>
+                )}
+                <label
+                  htmlFor="multiple"
+                  className={clsx(styles.labelRadioGender, styles.multiple)}
+                >
+                  <svg className={styles.iconRadioGender}>
+                    <use href={`${sprite}#icon-femali-male-yellow`} />
+                  </svg>
+                </label>
 
-                        {/* Если выбран female - показываем зеленую галочку */}
-                        {values.sex === 'female' && (
-                          <svg className={styles.checkIcon}>
-                            <use href={`${sprite}#icon-check-mark-green`} />
-                          </svg>
-                        )}
-                      </div>
-                    </label>
-                  </li>
-
-                  {/* 👨 MALE - МАЛЬЧИК (аналогично FEMALE) */}
-                  <li className={styles.genderItem}>
-                    <label className={styles.genderLabel}>
-                      <Field
-                        type="radio"
-                        name="sex"
-                        value="male"
-                        className={styles.hiddenRadio}
-                      />
-                      <div
-                        className={clsx(
-                          styles.genderButton,
-                          values.sex === 'male' && styles.activeMale
-                        )}
-                      >
-                        {/* Иконка мужского пола */}
-                        <svg className={styles.genderIcon}>
-                          <use href={`${sprite}#icon-male-blue`} />
-                        </svg>
-                        {values.sex === 'male' && (
-                          <svg className={styles.checkIcon}>
-                            <use href={`${sprite}#icon-check-mark-green`} />
-                          </svg>
-                        )}
-                      </div>
-                    </label>
-                  </li>
-
-                  {/* 👥 MULTIPLE - НЕСКОЛЬКО (для групп) */}
-                  <li className={styles.genderItem}>
-                    <label className={styles.genderLabel}>
-                      <Field
-                        type="radio"
-                        name="sex"
-                        value="multiple"
-                        className={styles.hiddenRadio}
-                      />
-                      <div
-                        className={clsx(
-                          styles.genderButton,
-                          values.sex === 'multiple' && styles.activeMultiple
-                        )}
-                      >
-                        {/* Иконка "несколько" (и женский и мужской) */}
-                        <svg className={styles.genderIcon}>
-                          <use href={`${sprite}#icon-femali-male-yellow`} />
-                        </svg>
-                        {values.sex === 'multiple' && (
-                          <svg className={styles.checkIcon}>
-                            <use href={`${sprite}#icon-check-mark-green`} />
-                          </svg>
-                        )}
-                      </div>
-                    </label>
-                  </li>
-                </ul>
-
-                {/* ПОКАЗЫВАЕМ ОШИБКУ ВАЛИДАЦИИ ДЛЯ ПОЛА */}
-                {/* ErrorMessage сам берет ошибку из Formik и показывает */}
-                {/* Появится только если поле не прошло валидацию */}
+                {/* Ошибка валидации для пола */}
                 <ErrorMessage
                   name="sex"
-                  component="div"
-                  className={styles.error}
+                  component="span"
+                  className={clsx(styles.errorMessage, styles.sexError)}
                 />
               </li>
 
-              {/* 🟢 ПОЛЕ 2: ФОТО ПИТОМЦА - ДВА СПОСОБА ЗАГРУЗКИ */}
-              {/* ====================================== */}
-              <li className={styles.fieldItem}>
-                <div className={styles.photoSection}>
-                  {/* 🟢 ПРЕВЬЮ ФОТО ИЛИ ИКОНКА */}
-                  <div className={styles.photoPreview}>
-                    {values.imgURL ? (
-                      // ✅ ЕСТЬ ФОТО - показываем его
-                      <img
-                        src={values.imgURL}
-                        alt="Pet preview"
-                        className={styles.previewImage}
-                        onError={e => {
-                          // ❌ Если фото не загрузилось (ошибка 404)
-                          // Прячем сломанное изображение
-                          e.target.style.display = 'none';
-                          // Показываем иконку-заглушку
-                          e.target.parentNode.querySelector(
-                            `.${styles.placeholderIcon}`
-                          ).style.display = 'block';
-                        }}
-                      />
-                    ) : (
-                      // ❌ НЕТ ФОТО - показываем иконку лапки
-                      <svg className={styles.placeholderIcon}>
-                        <use href={`${sprite}#icon-icons8_cat-footprint`} />
-                      </svg>
-                    )}
-                  </div>
+              {/* 🟢 ПОЛЕ 2: ПРЕВЬЮ ФОТО - КАК В ПРИМЕРЕ */}
+              <li className={styles.iconAndImg}>
+                {values.imgURL ? (
+                  <img
+                    src={values.imgURL ? values.imgURL : null}
+                    alt="foto"
+                    className={styles.imgPet}
+                  />
+                ) : (
+                  <svg className={styles.iconImg}>
+                    <use href={`${sprite}#icon-icons8_cat-footprint`} />
+                  </svg>
+                )}
+              </li>
 
-                  {/* 🟢 ПОЛЕ ДЛЯ URL И КНОПКА ЗАГРУЗКИ */}
-                  <div className={styles.urlInputWrapper}>
-                    {/* 🟢 СПОСОБ 1: ВВЕСТИ URL ВРУЧНУЮ */}
-                    <Field
-                      name="imgURL"
-                      type="text"
-                      placeholder="Enter URL"
-                      className={clsx(
-                        styles.urlInput,
-                        values.imgURL && styles.filled // Если заполнено - синяя рамка
-                      )}
-                    />
-
-                    {/* 🟢 СПОСОБ 2: ЗАГРУЗИТЬ ФАЙЛ С КОМПЬЮТЕРА */}
-                    {/* Прячем стандартный input type="file" (он некрасивый) */}
-                    <input
-                      type="file"
-                      id="photoUpload"
-                      accept="image/*" // Только картинки
-                      className={styles.hiddenFileInput}
-                      onChange={async e => {
-                        // Когда пользователь выбрал файл
-                        const file = e.target.files[0]; // Берем первый файл
-                        if (file) {
-                          // Вызываем нашу функцию загрузки
-                          handleFileUpload(file, setFieldValue);
-                        }
-                      }}
-                    />
-
-                    {/* 🟢 КНОПКА ЗАГРУЗКИ (привязана к скрытому input) */}
-                    {/* htmlFor="photoUpload" - связывает с input по id */}
-                    <label
-                      htmlFor="photoUpload"
-                      className={styles.uploadButton}
-                    >
-                      <svg className={styles.uploadIcon}>
-                        <use href={`${sprite}#icon-upload-cloud`} />
-                      </svg>
-                      {/* Меняем текст, если идет загрузка */}
-                      {isUploading ? 'Uploading...' : 'Upload photo'}
-                    </label>
-                  </div>
-                </div>
-
-                {/* ОШИБКА ВАЛИДАЦИИ ДЛЯ ФОТО */}
+              {/* 🟢 ПОЛЕ 3: URL ФОТО И ЗАГРУЗКА - КАК В ПРИМЕРЕ */}
+              <li className={clsx(styles.boxImgUrl, styles.position)}>
+                <Field
+                  type="text"
+                  name="imgURL"
+                  value={values.imgURL}
+                  className={clsx(
+                    styles.inputValuesImgUrl,
+                    values.imgURL.trim() !== '' && styles.inputGeneralBorder
+                  )}
+                  required
+                  placeholder="Enter URL"
+                />
+                <input
+                  className={styles.inputSavesImgNone}
+                  id="imgURL"
+                  type="file"
+                  accept="image/*"
+                  onChange={async e => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      handleFileUpload(file, setFieldValue);
+                    }
+                  }}
+                />
+                <label htmlFor="imgURL" className={styles.inputSavesImg}>
+                  Upload photo
+                  <svg className={styles.iconInputSavesImg}>
+                    <use href={`${sprite}#icon-upload-cloud`} />
+                  </svg>
+                </label>
                 <ErrorMessage
                   name="imgURL"
-                  component="div"
-                  className={styles.error}
+                  component="span"
+                  className={clsx(styles.errorMessage, styles.imgError)}
                 />
               </li>
 
-              {/* 🟢 ПОЛЕ 3: TITLE (ЗАГОЛОВОК) */}
-              <li className={styles.fieldItem}>
+              {/* 🟢 ПОЛЕ 4: TITLE, NAME, ДАТА, ТИП - КАК В ПРИМЕРЕ */}
+              <li className={clsx(styles.boxGeneral, styles.position)}>
+                {/* Title */}
                 <Field
                   name="title"
                   type="text"
-                  placeholder="Title" // Подсказка внутри поля
+                  required
+                  placeholder="Title"
                   className={clsx(
-                    styles.input,
-                    values.title && styles.filled // Если заполнено - синяя рамка
+                    styles.inputGeneral,
+                    values.title.trim() !== '' && styles.inputGeneralBorder
                   )}
                 />
                 <ErrorMessage
                   name="title"
-                  component="div"
-                  className={styles.error}
+                  component="span"
+                  className={clsx(styles.errorMessage, styles.titlError)}
                 />
-              </li>
 
-              {/* 🟢 ПОЛЕ 4: NAME (КЛИЧКА) */}
-              <li className={styles.fieldItem}>
+                {/* Pet's Name */}
                 <Field
                   name="name"
                   type="text"
-                  placeholder="Pet's Name"
-                  className={clsx(styles.input, values.name && styles.filled)}
+                  required
+                  placeholder="Pet’s Name"
+                  className={clsx(
+                    styles.inputGeneral,
+                    values.name.trim() !== '' && styles.inputGeneralBorder
+                  )}
                 />
                 <ErrorMessage
                   name="name"
-                  component="div"
-                  className={styles.error}
+                  component="span"
+                  className={clsx(styles.errorMessage, styles.name)}
                 />
-              </li>
 
-              {/* 🟢 ПОЛЕ 5: ДАТА РОЖДЕНИЯ И ТИП ЖИВОТНОГО */}
-              <li className={styles.fieldItem}>
-                <div className={styles.rowInputs}>
-                  {/* 📅 ДАТА РОЖДЕНИЯ */}
-                  <div className={styles.inputWrapper}>
+                {/* Дата и Тип в одной строке */}
+                <ul className={styles.boxDateGender}>
+                  <li className={styles.position}>
                     <Field
                       name="birthday"
-                      type="date" // Специальный тип для даты
+                      type="date"
+                      required
                       className={clsx(
-                        styles.input,
-                        styles.dateInput, // Специальные стили для поля даты
-                        values.birthday && styles.filled
+                        styles.dateGender,
+                        values.birthday !== '' && styles.inputGeneralBorder
                       )}
                     />
                     <ErrorMessage
                       name="birthday"
-                      component="div"
-                      className={styles.error}
+                      component="span"
+                      className={clsx(styles.errorMessage, styles.species)}
                     />
-                  </div>
-
-                  {/* 🐕 ТИП ЖИВОТНОГО (выпадающий список) */}
-                  <div className={styles.inputWrapper}>
+                  </li>
+                  <li className={styles.position}>
                     <Field
-                      as="select" // as="select" превращает Field в <select>
                       name="species"
+                      id="species"
+                      as="select"
+                      required
                       className={clsx(
-                        styles.input, // ОСНОВНОЙ КЛАСС ДЛЯ ВСЕХ ПОЛЕЙ
-                        styles.selectInput, // СПЕЦИАЛЬНЫЙ ДЛЯ SELECT (убирает стрелку)
-                        values.species && styles.filled // ЗАПОЛНЕНО - синяя рамка
+                        styles.dateGender,
+                        values.species !== '' && styles.inputGeneralBorder
                       )}
                     >
-                      {/* Пустой вариант (ничего не выбрано) */}
-                      <option value="">Type of pet</option>
-
-                      {/* Все типы из массива species (с сервера) */}
-                      {species.map((specie, index) => (
-                        <option key={index} value={specie}>
-                          {specie}
-                        </option>
-                      ))}
+                      <option>Type of pet</option>
+                      {species.map((specie, index) => {
+                        return (
+                          <option value={specie} key={index}>
+                            {specie}
+                          </option>
+                        );
+                      })}
                     </Field>
-
-                    {/* Красивая стрелочка для select (вместо стандартной) */}
-                    <svg className={styles.selectArrow}>
-                      <use href={`${sprite}#icon-arrow-down`} />
-                    </svg>
-
-                    {/* Ошибка валидации для типа */}
+                    <label htmlFor="species">
+                      <svg className={styles.iconInputSpecies}>
+                        <use href={`${sprite}#icon-arrow-left`} />
+                      </svg>
+                    </label>
                     <ErrorMessage
                       name="species"
-                      component="div"
-                      className={styles.error}
+                      component="span"
+                      className={clsx(styles.errorMessage, styles.species)}
                     />
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </li>
             </ul>
 
-            {/* 🟢 КНОПКИ ВНИЗУ ФОРМЫ */}
-            <div className={styles.buttonRow}>
-              {/* 🔙 КНОПКА "НАЗАД" - просто переходит в профиль без сохранения */}
-              <button
-                type="button" // Важно! Не submit, а просто button
-                className={styles.backButton}
-                onClick={() => navigate('/profile')} // Идем в профиль без сохранения
-              >
+            {/* 🟢 КНОПКИ ВНИЗУ ФОРМЫ - КАК В ПРИМЕРЕ */}
+            <div className={styles.boxButton}>
+              <NavLink to="/profile" className={styles.linkBack}>
                 Back
-              </button>
-
-              {/* ✅ КНОПКА "ОТПРАВИТЬ" */}
+              </NavLink>
               <button
-                type="submit" // type="submit" - отправляет форму
-                className={styles.submitButton}
-                disabled={isSubmitting || isUploading} // Блокируем, если идет загрузка/отправка
+                type="submit"
+                className={styles.buttonSubmit}
+                disabled={isSubmitting || isUploading}
               >
-                {/* Меняем текст, если идет отправка */}
                 {isSubmitting ? 'Adding...' : 'Submit'}
               </button>
             </div>

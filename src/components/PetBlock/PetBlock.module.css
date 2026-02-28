@@ -1,35 +1,44 @@
+/* 📁 src/components/PetBlock/PetBlock.module.css */
+/* 🎯 СТИЛИ ДЛЯ БЛОКА С КАРТИНКОЙ */
+/* ✅ ИСПРАВЛЕНО: стили как в примере */
+
+/* 🎯 ОСНОВНЫЕ СТИЛИ (мобильные) */
 .petBlock {
   position: relative;
   border-radius: 30px;
   height: 280px;
   background-color: #f6b83d;
-  background-image: url(/fonDogMob_1x.png); /* 🟢 УБРАЛ ../../../public/ */
+  background-image: url(/fonDogMob_1x.png);
   background-size: 313px 243px;
   background-repeat: no-repeat;
   background-position: 20px 35px;
 }
 
+/* 🎯 Для страницы AddPetPage - меньшая высота */
 .addPet {
   height: 213px;
 }
 
+/* 🎯 Позиционирование картинки для AddPetPage */
 .addPets {
   position: absolute;
   left: 25px;
   top: 0px;
 }
 
+/* 🎯 ДЛЯ RETINA ЭКРАНОВ (2x) */
 @media screen and (min-resolution: 192dpi) {
   .petBlock {
-    background-image: url(/fonDogMob_2x.png); /* 🟢 УБРАЛ ../../../public/ */
+    background-image: url(/fonDogMob_2x.png);
   }
 }
 
+/* ============= ПЛАНШЕТНАЯ ВЕРСИЯ (768px - 1279px) ============= */
 @media screen and (min-width: 768px) {
   .petBlock {
     border-radius: 60px;
     height: 302px;
-    background-image: url(/fonDogTab_1x.png); /* 🟢 УБРАЛ ../../../public/ */
+    background-image: url(/fonDogTab_1x.png);
     background-size: 531px 249px;
     background-position: 120px 55px;
   }
@@ -38,32 +47,33 @@
     height: 248px;
   }
 
+  /* 🎯 RETINA ДЛЯ ПЛАНШЕТА */
   @media screen and (min-resolution: 192dpi) {
     .petBlock {
-      background-image: url(/fonDogTab_2x.png); /* 🟢 УБРАЛ ../../../public/ */
+      background-image: url(/fonDogTab_2x.png);
     }
   }
 
   .imgPetBlock {
     display: block;
     margin-left: 250px;
-    /* width: 512px;
-    height: 248px; */
   }
 }
 
+/* ============= ДЕСКТОПНАЯ ВЕРСИЯ (1280px +) ============= */
 @media screen and (min-width: 1280px) {
   .petBlock {
     width: 592px;
     height: 654px;
-    background-image: url(/fonDogPc_1x.png); /* 🟢 УБРАЛ ../../../public/ */
+    background-image: url(/fonDogPc_1x.png);
     background-size: 531px 601px;
     background-position: 30px 51px;
   }
 
+  /* 🎯 RETINA ДЛЯ ДЕСКТОПА */
   @media screen and (min-resolution: 192dpi) {
     .petBlock {
-      background-image: url(/fonDogPc_2x.png); /* 🟢 УБРАЛ ../../../public/ */
+      background-image: url(/fonDogPc_2x.png);
     }
   }
 
@@ -73,11 +83,13 @@
     height: 660px;
   }
 
+  /* 🎯 Для картинки кота */
   .cat {
     position: absolute;
     top: 22px;
   }
 
+  /* 🎯 Для страницы AddPetPage */
   .addPets {
     position: absolute;
     left: -5px;
