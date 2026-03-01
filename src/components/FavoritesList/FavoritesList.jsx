@@ -11,6 +11,8 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import useUser from '../../hooks/useUser';
 // useUser - дает нам favorites и refreshUser
 
+import toast from 'react-hot-toast'; // 👈 ДОДАНО
+
 import noticesApi from '../../services/noticesApi';
 // noticesApi - для отправки запросов на сервер
 
@@ -124,6 +126,12 @@ const FavoritesList = () => {
 
         if (response.success) {
           console.log('✅ Успешно удалено с сервера');
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+          toast.success(`✅ Removed from favorites`, {
+            duration: 3000,
+          });
+
           await refreshUser();
           closeModalOneFriend();
         } else {
@@ -174,6 +182,12 @@ const FavoritesList = () => {
 
         if (response.success) {
           console.log('✅ Успешно удалено с сервера');
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+          toast.success(`✅ Removed from favorites`, {
+            duration: 3000,
+          });
+
           await refreshUser();
         } else {
           // Ошибка - возвращаем карточку

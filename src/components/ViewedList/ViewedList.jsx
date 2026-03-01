@@ -8,6 +8,8 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 // useEffect    - для синхронизации с useUser
 // useRef       - для сравнения предыдущих значений
 
+import toast from 'react-hot-toast'; // 👈 ДОДАНО
+
 import useUser from '../../hooks/useUser';
 // useUser - дает нам viewed, favorites, refreshUser
 
@@ -181,6 +183,12 @@ const ViewedList = () => {
 
         if (response.success) {
           console.log('✅ Успешно добавлено на сервер');
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ДОДАВАННЯ
+          toast.success(`✅ Added to favorites`, {
+            duration: 3000,
+          });
+
           await refreshUser();
           closeModalOneFriend();
         } else {
@@ -246,6 +254,12 @@ const ViewedList = () => {
 
         if (response.success) {
           console.log('✅ Успешно добавлено на сервер');
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ДОДАВАННЯ
+          toast.success(`✅ Added to favorites`, {
+            duration: 3000,
+          });
+
           await refreshUser();
         } else {
           console.log('❌ Ошибка сервера, откатываем');
@@ -294,6 +308,11 @@ const ViewedList = () => {
         );
 
         const response = await noticesApi.removeFromFavorites(id);
+
+        // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+        toast.success(`✅ Removed from favorites`, {
+          duration: 3000,
+        });
 
         if (response.success) {
           console.log('✅ Успешно удалено с сервера');
@@ -347,6 +366,12 @@ const ViewedList = () => {
 
         if (response.success) {
           console.log('✅ Успешно удалено с сервера');
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+          toast.success(`✅ Removed from favorites`, {
+            duration: 3000,
+          });
+
           await refreshUser();
 
           if (selectedNotice) {

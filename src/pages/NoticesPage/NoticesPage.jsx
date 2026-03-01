@@ -20,6 +20,7 @@ import ModalAttention from '../../components/ModalAttention/ModalAttention';
 import noticesApi from '../../services/noticesApi';
 import useUser from '../../hooks/useUser';
 import styles from './NoticesPage.module.css';
+import toast from 'react-hot-toast';
 
 export const NoticesPage = () => {
   // =============== СОСТОЯНИЯ (STATE) ===============
@@ -287,15 +288,22 @@ export const NoticesPage = () => {
     setSelectedNotice(null);
   };
 
-  // Добавление в избранное
+  // 🟢 Добавление в избранное из модалки
   const handleAddToFavorites = async id => {
     const result = await noticesApi.addToFavorites(id);
     if (result.success) {
+      // Мгновенно обновляем локальный кэш
       setFavoriteIds(prev => {
         const newSet = new Set(prev);
         newSet.add(id);
         return newSet;
       });
+
+      // 🟢 ПОВІДОМЛЕННЯ ПРО ДОДАВАННЯ
+      toast.success('✅ Added to favorites', {
+        duration: 3000,
+      });
+
       await refreshUser();
       if (selectedNotice) {
         setSelectedNotice({ ...selectedNotice, isFavorite: true });
@@ -313,6 +321,12 @@ export const NoticesPage = () => {
         newSet.delete(id);
         return newSet;
       });
+
+      // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+      toast.success('✅ Removed from favorites', {
+        duration: 3000,
+      });
+
       await refreshUser();
       if (selectedNotice) {
         setSelectedNotice({ ...selectedNotice, isFavorite: false });
@@ -342,6 +356,12 @@ export const NoticesPage = () => {
             newSet.delete(noticeId);
             return newSet;
           });
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ВИДАЛЕННЯ
+          toast.success('✅ Removed from favorites', {
+            duration: 3000,
+          });
+
           await refreshUser();
         }
       } else {
@@ -352,6 +372,12 @@ export const NoticesPage = () => {
             newSet.add(noticeId);
             return newSet;
           });
+
+          // 🟢 ПОВІДОМЛЕННЯ ПРО ДОДАВАННЯ
+          toast.success('✅ Added to favorites', {
+            duration: 3000,
+          });
+
           await refreshUser();
         }
       }
