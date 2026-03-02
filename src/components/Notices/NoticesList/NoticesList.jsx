@@ -1,6 +1,3 @@
-// src/components/Notices/NoticesList/NoticesList.jsx
-// 🎯 ИСПРАВЛЕНО: убрали неиспользуемый index
-
 import NoticesItem from '../NoticeItem/NoticeItem';
 import styles from './NoticesList.module.css';
 
@@ -8,7 +5,7 @@ const NoticesList = ({
   notices = [],
   onLearnMore,
   onToggleFavorite,
-  favorites = [], // 👈 теперь это массив ID
+  favorites = [],
 }) => {
   if (!notices || notices.length === 0) {
     return (
@@ -22,7 +19,6 @@ const NoticesList = ({
     );
   }
 
-  // 🎯 Функция проверки, находится ли объявление в избранном
   const isNoticeFavorite = noticeId => {
     if (!noticeId) return false;
     return favorites.includes(noticeId);
@@ -32,7 +28,6 @@ const NoticesList = ({
     <ul className={styles.noticesList}>
       {notices.map(notice => {
         if (!notice || !notice._id) {
-          console.warn('⚠️ NoticesList: notice без _id', notice);
           return null;
         }
 

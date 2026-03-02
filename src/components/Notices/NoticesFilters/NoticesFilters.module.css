@@ -1,6 +1,3 @@
-/* src/components/Notices/NoticesFilters/NoticesFilters.module.css */
-
-/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР */
 .filtersContainer {
   width: 100%;
   margin: 40px 0 40px 0;
@@ -21,7 +18,6 @@
   background-color: #fff;
 }
 
-/* 🎯 ГЛАВНЫЙ СПИСОК ФИЛЬТРОВ */
 .filtersList {
   list-style: none;
   padding: 0;
@@ -33,7 +29,6 @@
   width: 100%;
 }
 
-/* 🎯 ЭЛЕМЕНТ ФИЛЬТРА (одиночный) */
 .filterItem {
   width: 100%;
 }
@@ -50,7 +45,6 @@
   width: 100%;
 }
 
-/* 🎯 РЯД ДЛЯ CATEGORY И GENDER (в одну строку) */
 .categoryGenderRow {
   display: flex;
   gap: 8px;
@@ -60,7 +54,6 @@
   margin: 0;
 }
 
-/* 🎯 ОБЕРТКА ДЛЯ СЕЛЕКТА И ЕГО ЛЕЙБЛА (как в примере) */
 .selectWrapper {
   position: relative;
   width: 100%;
@@ -76,7 +69,6 @@
   width: 100%;
 }
 
-/* 🎯 ЛЕЙБЛ СО СТРЕЛКОЙ */
 .selectLabel {
   position: absolute;
   right: 12px;
@@ -84,21 +76,19 @@
   transform: translateY(-50%);
   cursor: pointer;
   z-index: 1;
-  pointer-events: none; /* 👈 Клик проходит сквозь лейбл к селекту */
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 🎯 ИКОНКА СТРЕЛКИ (для всех селектов, кроме location) */
 .iconLabel {
   width: 12px;
   height: 12px;
   fill: #262626;
-  transform: rotate(90deg); /* Поворачиваем как в примере */
+  transform: rotate(90deg);
 }
 
-/* 🎯 ИКОНКА ПОИСКА (для location) */
 .iconSearch {
   width: 18px;
   height: 18px;
@@ -106,7 +96,6 @@
   fill: none;
 }
 
-/* 🎯 ВЫПАДАЮЩИЙ СПИСОК */
 .filterSelect {
   width: 100%;
   height: 42px;
@@ -118,13 +107,9 @@
   color: #262626;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  /* 🎯 Убираем стандартную стрелку браузера */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
-  /* 🎯 Добавляем отступ для нашей кастомной стрелки */
   padding-right: 40px;
 }
 
@@ -141,13 +126,9 @@
   color: #262626;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  /* 🎯 Убираем стандартную стрелку браузера */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
-  /* 🎯 Добавляем отступ для нашей кастомной стрелки */
   padding-right: 40px;
 }
 
@@ -164,13 +145,9 @@
   color: #262626;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  /* 🎯 Убираем стандартную стрелку браузера */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
-  /* 🎯 Добавляем отступ для нашей кастомной стрелки */
   padding-right: 40px;
 }
 
@@ -180,7 +157,6 @@
   outline: 1px solid #f6b83d;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК СОРТИРОВКИ И RESET */
 .sortingResetContainer {
   max-width: 295px;
   width: 100%;
@@ -194,7 +170,6 @@
   gap: 10px;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ ВСЕХ 4 КНОПОК СОРТИРОВКИ */
 .sortingButtonsWrapper {
   display: flex;
   max-width: 208px;
@@ -203,7 +178,6 @@
   flex: 1;
 }
 
-/* 🎯 РЯД КНОПОК СОРТИРОВКИ */
 .sortingRow {
   display: flex;
   flex-wrap: wrap;
@@ -211,7 +185,6 @@
   width: 100%;
 }
 
-/* 🎯 КНОПКИ СОРТИРОВКИ */
 .sortButton {
   padding: 12px;
   background-color: #fff;
@@ -234,7 +207,6 @@
   color: white;
 }
 
-/* 🎯 ИКОНКА X ДЛЯ АКТИВНЫХ КНОПОК */
 .iconX {
   width: 18px;
   height: 18px;
@@ -242,7 +214,6 @@
   stroke: currentColor;
 }
 
-/* 🎯 КНОПКА RESET */
 .resetButton {
   padding: 12px 18px;
   background-color: #f6b83d;
@@ -260,8 +231,6 @@
   background-color: #f9b020;
 }
 
-/* 🎯 ============= АДАПТИВНОСТЬ ============= */
-
 @media (min-width: 768px) {
   .filtersContainer {
     max-width: 704px;
@@ -274,12 +243,10 @@
     height: 48px;
   }
 
-  /* 🎯 ГЛАВНЫЙ СПИСОК ФИЛЬТРОВ */
   .filtersList {
     gap: 16px;
   }
 
-  /* 🎯 ЭЛЕМЕНТ ФИЛЬТРА (одиночный) */
   .filterItem {
     max-width: 265px;
   }
@@ -312,12 +279,10 @@
     font-size: 16px;
   }
 
-  /* 🎯 РЯД ДЛЯ CATEGORY И GENDER (в одну строку) */
   .categoryGenderRow {
     gap: 16px;
   }
 
-  /* 🎯 ЛЕЙБЛ СО СТРЕЛКОЙ */
   .selectLabel {
     right: 15px;
   }
@@ -330,14 +295,12 @@
     width: 227px;
   }
 
-  /* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК СОРТИРОВКИ И RESET */
   .sortingResetContainer {
     min-width: 640px;
     gap: 8px;
     justify-content: space-between;
   }
 
-  /* 🎯 КОНТЕЙНЕР ДЛЯ ВСЕХ 4 КНОПОК СОРТИРОВКИ */
   .sortingButtonsWrapper {
     max-width: 480px;
     width: 100%;
@@ -345,7 +308,6 @@
     gap: 8px;
   }
 
-  /* 🎯 РЯД КНОПОК СОРТИРОВКИ */
   .sortingRow {
     display: flex;
     gap: 8px;
@@ -353,14 +315,12 @@
     width: 100%;
   }
 
-  /* 🎯 КНОПКИ СОРТИРОВКИ */
   .sortButton {
     padding: 14px;
     height: 48px;
     font-size: 16px;
   }
 
-  /* 🎯 КНОПКА RESET */
   .resetButton {
     padding: 12px 20px;
     height: 48px;
@@ -409,7 +369,6 @@
     max-width: 184px;
   }
 
-  /* 🎯 РЯД ДЛЯ CATEGORY И GENDER (в одну строку) */
   .categoryGenderRow {
     min-width: 384px;
     width: auto;
@@ -433,7 +392,6 @@
     width: 227px;
   }
 
-  /* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК СОРТИРОВКИ И RESET */
   .sortingResetContainer {
     min-width: 1109px;
     gap: 8px;

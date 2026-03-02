@@ -1,62 +1,36 @@
-/* Стили для навигационного блока */
 .nav {
-  /* Навигация занимает доступное пространство */
   display: flex;
 }
 
-/* Стили для списка навигации */
 .navList {
-  /* Убираем стандартные отступы и маркеры списка */
   list-style: none;
   margin: 0;
   padding: 0;
-
-  /* Располагаем элементы в строку */
   display: flex;
-  gap: 20px; /* Расстояние между пунктами меню */
+  gap: 20px;
 }
 
-/* Стили для каждого пункта меню */
-.navItem {
-  /* Убираем стандартные стили li */
-}
-
-/* Стили для ссылок в меню */
 .navLink {
-  /* Убираем подчеркивание */
   text-decoration: none;
-
-  /* Цвет текста - черный как на скриншоте */
   color: #000000;
-
-  /* Шрифт */
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   font-weight: 500;
-
-  /* Внутренние отступы для удобства клика */
   padding: 8px 0;
-
-  /* Плавный переход для hover-эффекта */
   transition: color 0.3s ease;
-
-  /* Позиционирование для подчеркивания */
   position: relative;
   display: inline-block;
 }
 
-/* Эффект при наведении на ссылку */
 .navLink:hover {
-  color: #ff6b6b; /* Цвет при наведении */
+  color: #ff6b6b;
 }
 
-/* Стили для активной ссылки (текущей страницы) */
 .navLink.active {
-  color: #ff6b6b; /* Цвет активной ссылки */
+  color: #ff6b6b;
   font-weight: bold;
 }
 
-/* Подчеркивание для активной ссылки */
 .navLink.active::after {
   content: '';
   position: absolute;
@@ -67,24 +41,22 @@
   background-color: #ff6b6b;
 }
 
-/* Медиа-запрос для планшетов */
 @media screen and (min-width: 768px) {
   .navList {
-    gap: 30px; /* Увеличиваем расстояние на планшетах */
+    gap: 30px;
   }
 
   .navLink {
-    font-size: 18px; /* Увеличиваем шрифт */
+    font-size: 18px;
   }
 }
 
-/* Медиа-запрос для десктопов */
 @media screen and (min-width: 1280px) {
   .navList {
-    gap: 40px; /* Еще больше расстояния на десктопе */
+    gap: 40px;
   }
 
   .navLink {
-    font-size: 20px; /* Большой шрифт на десктопе */
+    font-size: 20px;
   }
 }

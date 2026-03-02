@@ -1,7 +1,3 @@
-/* src/components/LoginForm/LoginForm.module.css */
-/* 🎯 СТИЛИ ДЛЯ ФОРМЫ ВХОДА - ИСПРАВЛЕНО: ошибки красного цвета */
-/* ==================================================== */
-
 .boxLogin {
   display: flex;
   flex-direction: column;
@@ -9,7 +5,7 @@
   margin-top: 12px;
   list-style: none;
   padding: 0;
-  width: 100%; /* На всю ширину родителя */
+  width: 100%;
 }
 
 .paragraphGreeting {
@@ -17,7 +13,7 @@
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #262626;
-  max-width: 295px; /* Ограничиваем ширину для читаемости */
+  max-width: 295px;
   margin: 0 auto;
 }
 
@@ -38,13 +34,12 @@
   width: 100%;
 }
 
-/* 🔥 ИСПРАВЛЕНО: убираем фиксированную ширину, ставим проценты */
 .input {
   box-sizing: border-box;
   border: 1px solid rgba(38, 38, 38, 0.15);
   border-radius: 30px;
   padding: 12px 38px 12px 12px;
-  width: 100%; /* Было 295px, стало 100% */
+  width: 100%;
   height: 42px;
   font-size: 14px;
   line-height: 1.29;
@@ -59,17 +54,14 @@
   }
 }
 
-/* 🔥 ИСПРАВЛЕНО: ошибки теперь красного цвета */
 .errorEmail {
   position: absolute;
   left: 18px;
   top: 45px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
-  font-weight: 500;
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  color: #ef2447; /* Красный цвет */
+  color: #ef2447;
   white-space: nowrap;
 }
 
@@ -77,16 +69,13 @@
   position: absolute;
   left: 18px;
   top: 45px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
-  font-weight: 500;
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  color: #ef2447; /* Красный цвет */
+  color: #ef2447;
   white-space: nowrap;
 }
 
-/* 🟢 Стили для иконки глаза */
 .labelPassword {
   display: block;
   position: absolute;
@@ -95,11 +84,10 @@
   top: 12px;
   right: 12px;
   left: auto;
-  z-index: 2; /* Чтобы иконка была поверх поля */
+  z-index: 2;
   cursor: pointer;
 }
 
-/* 🔥 ИСПРАВЛЕНО: кнопка на всю ширину */
 .buttonSubmit {
   border-radius: 30px;
   padding: 12px 20px;
@@ -108,7 +96,6 @@
   background-color: #f6b83d;
   border: none;
   margin-top: 40px;
-  font-family: 'Manrope', sans-serif; /* Добавлен шрифт */
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
@@ -128,16 +115,14 @@
   }
 }
 
-/* 🟢 Границы для валидации */
 .errBorderRed {
-  border: 1px solid #ef2447; /* Красная граница при ошибке */
+  border: 1px solid #ef2447;
 }
 
 .errBorderGreen {
-  border: 1px solid #08aa83; /* Зеленая граница при успехе */
+  border: 1px solid #08aa83;
 }
 
-/* 🔥 ИСПРАВЛЕНО: иконки позиционируем через right */
 .iconEmail {
   position: absolute;
   top: 15px;
@@ -145,20 +130,19 @@
   left: auto;
   width: 12px;
   height: 12px;
-  pointer-events: none; /* Иконка не блокирует клики */
+  pointer-events: none;
 }
 
 .iconPassword {
   position: absolute;
   top: 16px;
-  right: 45px; /* Отступ от иконки глаза */
+  right: 45px;
   left: auto;
   width: 16px;
   height: 16px;
-  pointer-events: none; /* Иконка не блокирует клики */
+  pointer-events: none;
 }
 
-/* ============= АДАПТИВНОСТЬ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
 @media screen and (max-width: 374px) {
   .paragraphGreeting {
     font-size: 13px;
@@ -215,7 +199,6 @@
   }
 }
 
-/* ============= ПЛАНШЕТЫ ============= */
 @media screen and (min-width: 768px) {
   .boxLogin {
     margin-top: 16px;
@@ -295,42 +278,11 @@
   }
 }
 
-/* ============= ДЕСКТОП ============= */
 @media screen and (min-width: 1280px) {
   .buttonSubmit {
     margin-top: 34px;
   }
 }
-
-/* ============= ЖЕЛТЫЙ ХОВЕР И ФОКУС ДЛЯ ПУСТЫХ ПОЛЕЙ ============= */
-/* 🎯 ЦЕЛЬ: 
-   - Когда поле пустое и пользователь наводит мышку (hover) - появляется желтая рамка
-   - Когда поле пустое и пользователь ставит курсор (focus) - тоже желтая рамка
-   - Но если поле уже заполнено или есть ошибка - желтый НЕ появляется
-*/
-
-/* 
-   🟢 СЕЛЕКТОР: .form .boxInput .input:not(.errBorderRed):not(.errBorderGreen):placeholder-shown:hover
-   
-   РАЗБИРАЕМ ПО ЧАСТЯМ (как учитель на уроке):
-   
-   1. ".form .boxInput .input" - ищем поле ввода, которое находится внутри boxInput, который внутри form
-      - Это повышает специфичность (чтобы наши стили были сильнее других)
-   
-   2. ":not(.errBorderRed)" - НЕ имеет класса errBorderRed (то есть НЕ поле с ошибкой)
-   3. ":not(.errBorderGreen)" - НЕ имеет класса errBorderGreen (то есть НЕ поле с успехом)
-      - Эти два :not() исключают поля, которые уже имеют цвета ошибки/успеха
-   
-   4. ":placeholder-shown" - поле пустое (показывает плейсхолдер)
-      - Это МАГИЧЕСКИЙ псевдокласс! Он применяется только когда поле пустое
-      - Если пользователь что-то ввел - плейсхолдер скрыт и этот класс не работает
-   
-   5. ":hover" - при наведении мышки
-      - Объединяем все условия: пустое поле И на него навели мышку
-   
-   ВТОРОЙ СЕЛЕКТОР такой же, но с ":focus" вместо ":hover"
-   - Срабатывает когда поле в фокусе (пользователь кликнул или перешел по Tab)
-*/
 
 .form
   .boxInput
@@ -338,37 +290,21 @@
 .form
   .boxInput
   .input:not(.errBorderRed):not(.errBorderGreen):placeholder-shown:focus {
-  border-color: #f6b83d; /* 🟡 Меняем цвет рамки на желтый (как в дизайне) */
-  transition: border-color 0.3s ease; /* ✨ Плавное появление за 0.3 секунды */
+  border-color: #f6b83d;
+  transition: border-color 0.3s ease;
 }
 
-/* ============= УБИРАЕМ ЧЕРНУЮ ОБВОДКУ ============= */
-/* 🎯 ЦЕЛЬ: Убрать стандартную браузерную черную обводку при фокусе
-     - Браузеры (Chrome, Firefox) добавляют свою обводку для доступности
-     - Мы хотим убрать её, чтобы был только наш желтый цвет
-*/
-
-/* Этот селектор применяется ко всем полям при фокусе (независимо от состояния) */
 .form .boxInput .input:focus {
-  outline: none; /* 🚫 Убирает стандартную обводку (outline) */
-  box-shadow: none; /* 🚫 Убирает возможные тени, которые могут быть у браузера */
+  outline: none;
+  box-shadow: none;
 }
 
-/* ============= СОХРАНЯЕМ ЦВЕТА ДЛЯ ПОЛЕЙ С ОШИБКОЙ/УСПЕХОМ ============= */
-/* 🎯 ЦЕЛЬ: 
-     - Если поле с ошибкой - оно должно быть красным (даже при наведении и фокусе)
-     - Если поле успешно заполнено - оно должно быть зеленым (даже при наведении и фокусе)
-     - Желтый цвет для этих полей НЕ применяется
-*/
-
-/* Поле с ошибкой (класс errBorderRed) при фокусе и наведении */
 .form .boxInput .input.errBorderRed:focus,
 .form .boxInput .input.errBorderRed:hover {
-  border-color: #ef2447; /* 🔴 Красный цвет для ошибки */
+  border-color: #ef2447;
 }
 
-/* Поле с успехом (класс errBorderGreen) при фокусе и наведении */
 .form .boxInput .input.errBorderGreen:focus,
 .form .boxInput .input.errBorderGreen:hover {
-  border-color: #08aa83; /* 🟢 Зеленый цвет для успеха */
+  border-color: #08aa83;
 }

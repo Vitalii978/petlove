@@ -1,25 +1,18 @@
-/* src/components/MyNotices/MyNotices.module.css */
-
-/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР (ul) */
 .myNotices {
   display: flex;
   flex-direction: column;
   gap: 20px;
   list-style: none;
   padding: 0;
-  /* margin: 0; */
   width: 335px;
   margin: 0 auto;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ НАВИГАЦИИ (li) */
 .boxNav {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-
-/* 🎯 ССЫЛКИ-ВКЛАДКИ */
 .link {
   display: block;
   box-sizing: border-box;
@@ -41,13 +34,11 @@
   border: 1px solid #f6b83d;
 }
 
-/* 🎯 АКТИВНАЯ ВКЛАДКА */
 .link.active {
   background-color: #f6b83d;
   color: #fff;
 }
 
-/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ */
 .loading {
   text-align: center;
   padding: 40px 0;
@@ -55,7 +46,6 @@
   font-size: 14px;
 }
 
-/* 🎯 АДАПТИВНОСТЬ */
 @media screen and (max-width: 374px) {
   .myNotices {
     width: 100%;

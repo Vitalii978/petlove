@@ -1,47 +1,30 @@
-// export default NoticesFilters;
-
-// src/components/Notices/NoticesFilters/NoticesFilters.jsx
-// 🎯 КОМПОНЕНТ ФИЛЬТРОВ ДЛЯ СТРАНИЦЫ ОБЪЯВЛЕНИЙ
-// ====================================================
-// Что делает этот компонент:
-// 1. Отображает все фильтры (поиск, категории, пол, тип, локацию)
-// 2. Отображает 4 кнопки сортировки (Popular, Unpopular, Cheap, Expensive)
-// 3. Отображает кнопку Reset
-// 4. Передает изменения наверх в NoticesPage через onFilterChange
-// ====================================================
-
-import { useState, useId } from 'react'; // 👈 Добавляем useId
+import { useState, useId } from 'react';
 import SearchField from '../../SearchField/SearchField';
 import styles from './NoticesFilters.module.css';
 import sprite from '../../../assets/icon/icon-sprite.svg';
 
 const NoticesFilters = ({
-  onFilterChange, // функция для передачи изменений наверх
-  onSearch, // функция для передачи поискового запроса
-  onReset, // функция для сброса всех фильтров
-  filtersData = {}, // данные для выпадающих списков (категории, пол, типы, города)
+  onFilterChange,
+  onSearch,
+  onReset,
+  filtersData = {},
 }) => {
-  // 🎯 Генерируем уникальные ID для каждого селекта (как в примере)
   const categoryId = useId();
   const genderId = useId();
   const speciesId = useId();
   const locationId = useId();
 
-  // 🎯 Локальное состояние для отслеживания выбранных фильтров
   const [category, setCategory] = useState('');
   const [sex, setSex] = useState('');
   const [species, setSpecies] = useState('');
   const [locationIdValue, setLocationIdValue] = useState('');
-  const [popularity, setPopularity] = useState(''); // 'popular' или 'unpopular'
-  const [price, setPrice] = useState(''); // 'cheap' или 'expensive'
+  const [popularity, setPopularity] = useState('');
+  const [price, setPrice] = useState('');
 
-  // Данные для фильтров (приходят с сервера через пропсы)
   const categoryOptions = filtersData.categories || [];
   const sexOptions = filtersData.sex || [];
   const speciesOptions = filtersData.species || [];
   const locationOptions = filtersData.cities || [];
-
-  // =============== ОБРАБОТЧИКИ ДЛЯ ВЫПАДАЮЩИХ СПИСКОВ ===============
 
   const handleCategoryChange = e => {
     const value = e.target.value;
@@ -66,8 +49,6 @@ const NoticesFilters = ({
     setLocationIdValue(value);
     if (onFilterChange) onFilterChange('locationId', value);
   };
-
-  // =============== ОБРАБОТЧИКИ ДЛЯ КНОПОК СОРТИРОВКИ ===============
 
   const handlePopularChange = () => {
     if (popularity === 'popular') {
@@ -125,16 +106,12 @@ const NoticesFilters = ({
 
   return (
     <div className={styles.filtersContainer}>
-      {/* 🎯 ОСНОВНОЙ МАССИВ ФИЛЬТРОВ */}
       <ul className={styles.filtersList}>
-        {/* 🔍 Поиск */}
         <li className={styles.filterItem}>
           <SearchField onSearch={onSearch} className={styles.narrowSearch} />
         </li>
 
-        {/* 🎯 МАССИВ 1: Category и By gender в одну строку */}
         <li className={styles.categoryGenderRow}>
-          {/* Category с кастомной стрелкой как в примере */}
           <div className={styles.selectWrapper}>
             <label htmlFor={categoryId} className={styles.selectLabel}>
               <svg className={styles.iconLabel}>
@@ -160,7 +137,6 @@ const NoticesFilters = ({
             </select>
           </div>
 
-          {/* By gender с кастомной стрелкой как в примере */}
           <div className={styles.selectWrapper}>
             <label htmlFor={genderId} className={styles.selectLabel}>
               <svg className={styles.iconLabel}>
@@ -186,7 +162,6 @@ const NoticesFilters = ({
           </div>
         </li>
 
-        {/* Type с кастомной стрелкой как в примере */}
         <li className={styles.filterItemBytype}>
           <div className={styles.selectWrapperBytype}>
             <label htmlFor={speciesId} className={styles.selectLabel}>
@@ -210,7 +185,6 @@ const NoticesFilters = ({
           </div>
         </li>
 
-        {/* Location с иконкой поиска (как в Search) */}
         <li className={styles.filterItemLocation}>
           <div className={styles.selectWrapperLocation}>
             <label htmlFor={locationId} className={styles.selectLabel}>
@@ -239,7 +213,6 @@ const NoticesFilters = ({
           </div>
         </li>
 
-        {/* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК СОРТИРОВКИ И RESET */}
         <li className={styles.sortingResetContainer}>
           <div className={styles.sortingButtonsWrapper}>
             <div className={styles.sortingRow}>

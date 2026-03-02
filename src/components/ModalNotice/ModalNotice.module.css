@@ -1,7 +1,3 @@
-/* src/components/ModalNotice/ModalNotice.module.css */
-/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА */
-/* ✅ Цвета заданы в CSS как просили: color: #f6b83d; background: #fff4df; */
-
 .overlay {
   position: fixed;
   top: 0;
@@ -21,7 +17,6 @@
   padding: 40px 28px;
   border-radius: 30px;
   width: 335px;
-  /* height: 476px; */
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -60,43 +55,29 @@
   fill: none;
   stroke: currentColor;
 }
-
-/* 🟢 КОНТЕЙНЕР ДЛЯ ФОТО (для позиционирования плашки) */
 .imageWrapper {
   position: relative;
   display: inline-block;
   margin-bottom: 20px;
 }
 
-/* 🟢 ПЛАШКА КАТЕГОРИИ (НЕ КНОПКА!) */
 .categoryBadge {
   position: absolute;
-  top: 0px; /* Часть плашки выходит за пределы фото */
-  left: 0px; /* Часть плашки выходит за пределы фото */
-
-  /* 🎯 ЦВЕТА ИЗ ЗАДАНИЯ */
-  color: #f6b83d; /* Оранжевый текст */
-  background-color: #fff4df; /* Светло-оранжевый фон */
-
-  /* Стили овальной рамки */
+  top: 0px;
+  left: 0px;
+  color: #f6b83d;
+  background-color: #fff4df;
   padding: 8px 14px;
   border-radius: 30px;
   font-size: 12px;
   line-height: 1.3;
   letter-spacing: 0.5px;
-
-  /* Тень для объема */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  /* Чтобы текст не переносился */
   white-space: nowrap;
-
-  /* Плавность при наведении (хотя это не кнопка) */
   transition: transform 0.2s ease;
   z-index: 10;
 }
 
-/* Легкий эффект при наведении на всю модалку */
 .modal:hover .categoryBadge {
   transform: scale(1.02);
 }
@@ -240,7 +221,6 @@
   transform: translateY(-2px);
 }
 
-/* 🟢 АДАПТИВНОСТЬ - ПЛАНШЕТ */
 @media screen and (min-width: 768px) {
   .modal {
     width: 473px;

@@ -1,9 +1,3 @@
-/* src/components/Friends/FriendsItem/FriendsItem.module.css */
-/* 🎯 СТИЛИ ДЛЯ КАРТОЧКИ ДРУГА */
-/* ✅ ИСПРАВЛЕНО: адрес теперь ограничен шириной карточки */
-
-/* =============== ОСНОВНАЯ КАРТОЧКА =============== */
-
 .friendItem {
   box-sizing: border-box;
   border-radius: 15px;
@@ -14,7 +8,7 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  overflow: hidden; /* 🚫 НИЧЕГО НЕ ВЫХОДИТ ЗА КАРТОЧКУ */
+  overflow: hidden;
 }
 
 .friendItem:hover {
@@ -28,13 +22,11 @@
   gap: 14px;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* 🚫 КОНТЕЙНЕР НЕ ВЫПУСКАЕТ ДЕТЕЙ */
+  overflow: hidden;
 }
 
-/* =============== ЛЕВАЯ ЧАСТЬ - ЛОГОТИП =============== */
-
 .leftSection {
-  flex-shrink: 0; /* Логотип фиксированной ширины */
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -52,16 +44,12 @@
   pointer-events: none;
 }
 
-/* =============== ПРАВАЯ ЧАСТЬ - ИНФОРМАЦИЯ =============== */
-
 .rightSection {
-  flex: 1; /* Занимает оставшееся место */
+  flex: 1;
   position: relative;
-  min-width: 0; /* 🔥 ВАЖНО: разрешает контейнеру сжиматься меньше контента */
-  overflow: hidden; /* 🚫 НИЧЕГО НЕ ВЫХОДИТ */
+  min-width: 0;
+  overflow: hidden;
 }
-
-/* =============== ВРЕМЯ РАБОТЫ =============== */
 
 .workHours {
   border-radius: 30px;
@@ -77,7 +65,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0; /* Блок времени не сжимается */
+  flex-shrink: 0;
 }
 
 .workHoursText {
@@ -86,10 +74,8 @@
   line-height: 1.33;
   letter-spacing: -0.02em;
   color: #f6b83d;
-  white-space: nowrap; /* Текст времени в одну строку */
+  white-space: nowrap;
 }
-
-/* =============== НАЗВАНИЕ ФИРМЫ =============== */
 
 .titleFirma {
   font-weight: 700;
@@ -98,21 +84,19 @@
   letter-spacing: -0.04em;
   color: #262626;
   margin-bottom: 14px;
-  white-space: nowrap; /* Название в одну строку */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Троеточие для названия */
+  text-overflow: ellipsis;
   max-width: 100%;
-  padding-right: 5px; /* Немного отступа справа */
+  padding-right: 5px;
 }
-
-/* =============== КОНТАКТНАЯ ИНФОРМАЦИЯ =============== */
 
 .contactInfo {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  overflow: hidden; /* 🚫 КОНТЕЙНЕР НЕ ВЫПУСКАЕТ ДЕТЕЙ */
+  overflow: hidden;
 }
 
 .contactRow {
@@ -120,7 +104,7 @@
   flex-direction: row;
   gap: 2px;
   width: 100%;
-  overflow: hidden; /* 🚫 КАЖДАЯ СТРОКА НЕ ВЫПУСКАЕТ ДЕТЕЙ */
+  overflow: hidden;
 }
 
 .contactLabel {
@@ -129,7 +113,7 @@
   min-width: 57px;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  flex-shrink: 0; /* Лейбл фиксированной ширины */
+  flex-shrink: 0;
 }
 
 .contactValue {
@@ -140,30 +124,28 @@
   color: #262626;
   text-decoration: none;
   transition: color 0.3s ease;
-  flex: 1; /* Значение занимает оставшееся место */
-  min-width: 0; /* 🔥 ВАЖНО: разрешает сжиматься */
-  overflow: hidden; /* 🚫 НЕ ВЫПУСКАЕТ КОНТЕНТ */
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .contactValue:hover {
   color: #f6b83d;
 }
 
-/* =============== 🔥 ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ АДРЕСА =============== */
-
 .addressLink {
   display: block;
-  width: 100%; /* На всю ширину родителя */
-  overflow: hidden; /* Скрываем выходящее */
+  width: 100%;
+  overflow: hidden;
   text-decoration: none;
 }
 
 .addressText {
   display: block;
-  white-space: nowrap; /* Запрещаем перенос */
-  overflow: hidden; /* Скрываем выходящее */
-  text-overflow: ellipsis; /* Троеточие в конце */
-  width: 100%; /* На всю ширину родителя */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
   color: #262626;
   transition: color 0.3s ease;
 }
@@ -172,25 +154,19 @@
   color: #f6b83d;
 }
 
-/* =============== СТИЛИ ДЛЯ EMAIL =============== */
-
 .emailLink {
   display: block;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis; /* Троеточие для длинного email */
+  text-overflow: ellipsis;
 }
-
-/* =============== СТИЛИ ДЛЯ PHONE =============== */
 
 .contactValue:last-child {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* =============== АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ =============== */
 
 @media (min-width: 768px) {
   .friendItem {
@@ -225,8 +201,6 @@
     margin-bottom: 20px;
   }
 }
-
-/* =============== АДАПТИВНОСТЬ ДЛЯ ДЕСКТОПОВ =============== */
 
 @media (min-width: 1280px) {
   .friendItem {

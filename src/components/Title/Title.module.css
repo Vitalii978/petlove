@@ -1,17 +1,13 @@
-/* 🎯 Базовые стили для заголовка */
 .title {
-  /* Шрифт - по дизайну Figma (предположительно Manrope) */
-  font-weight: 700; /* Жирный шрифт */
-  font-size: 28px; /* Размер для мобильных */
-  line-height: 1; /* Межстрочный интервал */
-  letter-spacing: -0.03em; /* Буквы чуть ближе */
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
   color: #262626;
   margin: 0;
 }
 
-/* 🎯 Медиа-запрос для планшетов (768px и больше) */
 @media screen and (min-width: 768px) {
   .title {
-    font-size: 54px; /* Больше шрифт на планшетах */
+    font-size: 54px;
   }
 }

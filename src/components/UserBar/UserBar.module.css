@@ -1,24 +1,18 @@
-/* 🎯 ОСНОВНЫЕ СТИЛИ UserBar */
 .userBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
-  /* padding: 10px 15px;
-  border-radius: 30px; */
-  /* background-color: rgba(255, 255, 255, 0.1); */
   transition: all 0.3s ease;
   gap: 8px;
 }
 
-/* 🎯 ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ */
 .userInfo {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* 🎯 АВАТАРКА */
 .avatarWrapper {
   width: 40px;
   height: 40px;
@@ -39,10 +33,8 @@
 .avatarDefault {
   width: 24px;
   height: 24px;
-  /* fill: white; */
 }
 
-/* 🎯 ИМЯ ПОЛЬЗОВАТЕЛЯ */
 .userName {
   font-weight: 700;
   font-size: 20px;
@@ -50,17 +42,14 @@
   letter-spacing: -0.03em;
 }
 
-/* ✅ ИМЯ НА ГЛАВНОЙ СТРАНИЦЕ - БЕЛЫЙ */
 .userNameWhite {
-  color: #ffffff; /* Белый цвет */
+  color: #ffffff;
 }
 
-/* ✅ ИМЯ НА ДРУГИХ СТРАНИЦАХ - ЧЕРНЫЙ */
 .userNameBlack {
-  color: #262626; /* Черный цвет как в вашем коде */
+  color: #262626;
 }
 
-/* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
   .avatarWrapper {
     width: 50px;

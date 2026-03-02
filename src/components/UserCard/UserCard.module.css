@@ -1,38 +1,3 @@
-/* src/components/UserCard/UserCard.module.css */
-
-/* .userCard {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  box-sizing: border-box;
-  padding: 18px 20px 40px 20px;
-  border-radius: 30px;
-  background-color: #fff;
-  list-style: none;
-  margin: 0;
-}
-
-
-.userCardItem {
-  list-style: none;
-  width: 100%;
-}
-
-@media screen and (min-width: 768px) {
-  .userCard {
-    padding: 40px;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .userCard {
-    width: 520px;
-  }
-} */
-
-/* src/components/UserCard/UserCard.module.css */
-
-/* 🎯 ОСНОВНАЯ КАРТОЧКА ПОЛЬЗОВАТЕЛЯ (ul) */
 .userCard {
   max-width: 335px;
   width: 100%;
@@ -48,7 +13,6 @@
   margin: 0 auto;
 }
 
-/* 🎯 АДАПТИВНОСТЬ */
 @media screen and (min-width: 768px) {
   .userCard {
     padding: 40px;

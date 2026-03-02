@@ -1,21 +1,8 @@
-// Импортируем React
 import React from 'react';
-// Импортируем стили из CSS модуля
 import styles from './Title.module.css';
 
-// 🎯 Создаем компонент Title
-// Он принимает пропсы (параметры):
-// 1. children - текст заголовка (обязательный)
-// 2. className - дополнительные CSS классы (необязательный)
 const Title = ({ children, className = '' }) => {
-  return (
-    // 🎯 h1 - семантический HTML тег для главного заголовка страницы
-    // className объединяет: базовый класс + переданные дополнительные классы
-    <h1 className={`${styles.title} ${className}`}>
-      {children} {/* 🎯 Здесь будет текст заголовка */}
-    </h1>
-  );
+  return <h1 className={`${styles.title} ${className}`}>{children}</h1>;
 };
 
-// 🎯 Экспортируем компонент для использования в других файлах
 export default Title;

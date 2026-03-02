@@ -1,7 +1,3 @@
-// src/components/ModalApproveAction/ModalApproveAction.jsx
-// 🎯 МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА
-// 🔧 ИСПРАВЛЕНО: без react-modal, с кастомной модалкой
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ModalApproveAction.module.css';
@@ -19,7 +15,6 @@ const ModalApproveAction = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // 🎯 Закрытие по Escape
   useEffect(() => {
     const handleEscape = event => {
       if (event.key === 'Escape') {
@@ -38,36 +33,21 @@ const ModalApproveAction = ({
     };
   }, [isOpen, onClose]);
 
-  // 🎯 РЕАЛЬНЫЙ ВЫХОД ЧЕРЕЗ API
   const handleLogout = async () => {
     try {
       setLoading(true);
       setError('');
 
-      console.log('🔄 Выполняем logout...');
-
-      // 🔥 РЕАЛЬНЫЙ ЗАПРОС К API
       await authApi.logout();
 
-      console.log('✅ Logout успешен');
-
-      // Очищаем localStorage
       localStorage.removeItem('token');
 
-      // Закрываем модалку
       onClose();
-
-      // Перенаправляем на главную
       navigate('/');
-
-      // Перезагружаем страницу для обновления состояния
       window.location.reload();
     } catch (error) {
-      console.error('❌ Ошибка при logout:', error);
-
       setError(error.response?.data?.message || 'Failed to logout');
 
-      // Даже если сервер вернул ошибку, всё равно выходим на клиенте
       localStorage.removeItem('token');
       onClose();
       navigate('/');
@@ -77,7 +57,6 @@ const ModalApproveAction = ({
     }
   };
 
-  // 🎯 Закрытие по клику на оверлей
   const handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -95,7 +74,6 @@ const ModalApproveAction = ({
       aria-labelledby="modal-title"
     >
       <div className={styles.modal}>
-        {/* 🎯 Кнопка закрытия */}
         <button
           onClick={onClose}
           className={styles.closeButton}
@@ -107,22 +85,17 @@ const ModalApproveAction = ({
           </svg>
         </button>
 
-        {/* 🎯 Контент модалки */}
         <div className={styles.modalApproveAction}>
-          {/* 🎯 Картинка */}
           <div className={styles.imageWrapper}>
             <img src="/🐈.png" alt="cat" className={styles.catImage} />
           </div>
 
-          {/* 🎯 Заголовок */}
           <h2 className={styles.title} id="modal-title">
             {title}
           </h2>
 
-          {/* 🎯 Ошибка (если есть) */}
           {error && <p className={styles.error}>{error}</p>}
 
-          {/* 🎯 Кнопки */}
           <div className={styles.buttonsWrapper}>
             <button
               type="button"

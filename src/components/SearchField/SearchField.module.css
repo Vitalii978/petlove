@@ -1,136 +1,103 @@
-/* 🎯 Форма поиска */
 .searchForm {
-  width: 100%; /* Занимает всю доступную ширину */
-  max-width: 335px; /* Максимальная ширина для мобильных */
-  /* margin: 0 auto; Центрируем */
+  width: 100%;
+  max-width: 335px;
 }
 
-/* 🎯 Контейнер для поля и иконок */
 .searchContainer {
-  position: relative; /* 🎯 Для позиционирования иконок внутри */
+  position: relative;
   display: flex;
   align-items: center;
 }
 
-/* 🎯 Текстовое поле ввода */
 .searchInput {
   width: 100%;
   height: 42px;
-  padding: 0 14px 0 14px; /* 🎯 Отступы: слева для текста, справа для иконок */
-
-  /* Шрифт */
+  padding: 0 14px 0 14px;
   font-size: 14px;
   line-height: 1.29;
   color: #262626;
-
-  /* Стили поля */
   background-color: #f9f9f9;
-  border: 1px solid rgba(38, 38, 38, 0.15); /* Серая рамка */
-  border-radius: 30px; /* 🎯 Скругленные углы как в дизайне */
-  outline: none; /* Убираем стандартное выделение */
-
-  /* Плавный переход для фокуса */
+  border: 1px solid rgba(38, 38, 38, 0.15);
+  border-radius: 30px;
+  outline: none;
   transition: border-color 0.3s ease;
 }
 
-/* 🎯 Стили при фокусе на поле */
 .searchInput:focus {
-  border-color: #f6b83d; /* 🎯 Желтая рамка при фокусе */
+  border-color: #f6b83d;
 }
 
-/* 🎯 Текст-подсказка (placeholder) */
 .searchInput::placeholder {
-  color: rgba(38, 38, 38, 0.5); /* Полупрозрачный серый */
+  color: rgba(38, 38, 38, 0.5);
 }
 
-/* 🎯 СПИСОК иконок (ul) */
 .iconsList {
-  /* 🎯 Убираем стандартные стили списка */
   list-style: none;
   margin: 0;
   padding: 0;
-
-  /* 🎯 Позиционирование */
-  position: absolute; /* Абсолютное позиционирование внутри контейнера */
-  right: 12px; /* Отступ справа */
-  top: 50%; /* По центру по вертикали */
-  transform: translateY(-50%); /* Точное центрирование */
-
-  /* 🎯 Расположение элементов */
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 10px; /* 🎯 Расстояние между элементами списка */
+  gap: 10px;
 }
 
-/* 🎯 Элемент списка (li) */
 .iconItem {
-  /* Каждый li содержит одну иконку */
   display: flex;
   align-items: center;
 }
 
-/* 🎯 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КНОПОК-ИКОНОК */
 .clearButton,
 .searchButton {
-  background: none; /* Прозрачный фон */
-  border: none; /* Без рамки */
-  cursor: pointer; /* Курсор-указатель */
+  background: none;
+  border: none;
+  cursor: pointer;
   padding: 0;
-
-  /* Размеры */
   width: 18px;
   height: 18px;
-
-  /* Центрирование содержимого */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 🎯 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ ИКОНОК */
 .clearIcon,
 .searchIcon {
   width: 100%;
   height: 100%;
-  transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
+  transition: opacity 0.3s ease;
 }
 
-/* 🎯 Иконка крестика (очистки) */
 .clearIcon {
-  color: rgba(38, 38, 38, 0.5); /* Серый цвет */
+  color: rgba(38, 38, 38, 0.5);
 }
 
-/* 🎯 Hover эффект для кнопки очистки */
 .clearButton:hover .clearIcon {
-  opacity: 0.7; /* Чуть прозрачнее при наведении */
+  opacity: 0.7;
 }
 
-/* 🎯 Иконка лупы (поиска) */
 .searchIcon {
-  color: #262626; /* Черный цвет */
+  color: #262626;
 }
 
-/* 🎯 Hover эффект для кнопки поиска */
 .searchButton:hover .searchIcon {
   opacity: 0.7;
 }
 
-/* 🎯 АКТИВНОЕ СОСТОЯНИЕ (при нажатии) */
 .clearButton:active,
 .searchButton:active {
-  transform: scale(0.95); /* Легкое "нажатие" */
+  transform: scale(0.95);
 }
 
-/* 🎯 Медиа-запрос для планшетов (768px и больше) */
 @media screen and (min-width: 768px) {
   .searchForm {
-    max-width: 230px; /* Шире на планшетах */
+    max-width: 230px;
   }
 
   .searchInput {
-    height: 56px; /* Выше поле */
-    font-size: 16px; /* Больше текст */
-    /* padding: 0 60px 0 30px; Больше отступы */
+    height: 56px;
+    font-size: 16px;
     height: 48px;
   }
 
@@ -139,7 +106,6 @@
   }
 }
 
-/* 🎯 Медиа-запрос для десктопов (1280px и больше) */
 @media screen and (min-width: 1280px) {
   .searchInput {
     height: 48px;

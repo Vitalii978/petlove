@@ -1,7 +1,3 @@
-// src/components/ModalNotice/ModalNotice.jsx
-// 🎯 МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ОБЪЯВЛЕНИЯ
-// ✅ ИСПРАВЛЕНО: кнопка Contact всегда видна, без блокировки
-
 import React, { useEffect } from 'react';
 import sprite from '../../assets/icon/icon-sprite.svg';
 import styles from './ModalNotice.module.css';
@@ -14,7 +10,6 @@ const ModalNotice = ({
   onRemove,
   isFavorite = false,
 }) => {
-  // 🎯 Закрытие по Escape
   useEffect(() => {
     const handleEscape = e => {
       if (e.key === 'Escape') onClose();
@@ -33,7 +28,6 @@ const ModalNotice = ({
 
   if (!isOpen || !notice) return null;
 
-  // 🎯 Форматирование даты
   const formatDate = dateString => {
     if (!dateString) return 'No birthday';
     try {
@@ -43,23 +37,19 @@ const ModalNotice = ({
     }
   };
 
-  // 🎯 Закрытие по клику на оверлей
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  // 🔥 ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ КОНТАКТНЫХ ДАННЫХ
   const getContactInfo = () => {
-    // Вариант 1: user - объект с полями
     if (typeof notice.user === 'object' && notice.user !== null) {
       return {
         email: notice.user.email,
         phone: notice.user.phone,
       };
     }
-    // Вариант 2: user - строка (только ID)
     return {
       email: null,
       phone: null,
@@ -68,7 +58,6 @@ const ModalNotice = ({
 
   const contact = getContactInfo();
 
-  // 🔥 Определяем ссылку
   const contactHref = contact.email
     ? `mailto:${contact.email}`
     : contact.phone
@@ -78,16 +67,13 @@ const ModalNotice = ({
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <div className={styles.modal}>
-        {/* 🎯 КНОПКА ЗАКРЫТИЯ */}
         <button onClick={onClose} className={styles.buttonClose}>
           <svg className={styles.icon} width={24} height={24}>
             <use href={`${sprite}#icon-close`} />
           </svg>
         </button>
 
-        {/* 🎯 КОНТЕЙНЕР ДЛЯ ФОТО С ПЛАШКОЙ */}
         <div className={styles.imageWrapper}>
-          {/* 🟢 ПЛАШКА КАТЕГОРИИ */}
           <div className={styles.categoryBadge}>
             {notice.category === 'sell' && 'Sell'}
             {notice.category === 'free' && 'Free'}
@@ -97,7 +83,6 @@ const ModalNotice = ({
               notice.category}
           </div>
 
-          {/* 🟢 ФОТО */}
           <img
             src={
               notice.imgURL ||
@@ -112,10 +97,8 @@ const ModalNotice = ({
           />
         </div>
 
-        {/* 🎯 ЗАГОЛОВОК */}
         <h3 className={styles.title}>{notice.title || 'No title'}</h3>
 
-        {/* 🎯 РЕЙТИНГ */}
         <div className={styles.boxPopularity}>
           <svg className={styles.icon} width={16} height={16}>
             <use href={`${sprite}#icon-star`} />
@@ -123,7 +106,6 @@ const ModalNotice = ({
           <p className={styles.popularity}>{notice.popularity || 0}</p>
         </div>
 
-        {/* 🎯 ХАРАКТЕРИСТИКИ */}
         <ul className={styles.boxCharacteristics}>
           <li className={styles.oneCharacteristics}>
             <p className={styles.description}>Name</p>
@@ -148,17 +130,14 @@ const ModalNotice = ({
           </li>
         </ul>
 
-        {/* 🎯 КОММЕНТАРИЙ */}
         <p className={styles.comment}>{notice.comment || 'No comments'}</p>
 
-        {/* 🎯 ЦЕНА */}
         {notice.category === 'sell' && notice.price ? (
           <p className={styles.price}>${notice.price}</p>
         ) : (
           <p className={styles.price}>No price</p>
         )}
 
-        {/* 🎯 КНОПКИ */}
         <div className={styles.boxButton}>
           {isFavorite ? (
             <button
@@ -184,7 +163,6 @@ const ModalNotice = ({
             </button>
           )}
 
-          {/* 🔥 КНОПКА CONTACT - всегда видна, без блокировки */}
           <a className={styles.linkBtn} href={contactHref}>
             Contact
           </a>

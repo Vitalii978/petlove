@@ -1,355 +1,126 @@
-// 📁 src/components/AddPetForm/AddPetForm.jsx
-// 🎯 ФОРМА ДОБАВЛЕНИЯ ПИТОМЦА - ПОДРОБНЕЙШЕЕ ОБЪЯСНЕНИЕ
-// ✅ ИСПРАВЛЕНО: разметка, стили, цвета, иконки, отступы как в примере
-// ====================================================
-// Что происходит в этом файле:
-// 1. Пользователь заполняет поля (фото, имя, дата, тип, пол)
-// 2. Мы проверяем правильность заполнения (валидация)
-// 3. Отправляем данные на сервер
-// 4. Если всё хорошо - показываем питомца в профиле
-// ====================================================
-
-// 🎯 ИМПОРТЫ - БЕРЕМ ВСЕ НЕОБХОДИМЫЕ ИНСТРУМЕНТЫ
-// ====================================================
-
 import { useState, useEffect } from 'react';
-// useState - это "коробка" для хранения данных, которые могут меняться
-// Например: идет ли загрузка? есть ли ошибка? какие типы животных?
-//
-// useEffect - это "будильник", который срабатывает при загрузке страницы
-// Например: загрузить список типов животных с сервера
-
-// import { useNavigate } from 'react-router-dom';
-// useNavigate - это "пульт управления" для перехода на другие страницы
-// Когда нажмут "Submit" - перейдем в профиль
-// Когда нажмут "Back" - тоже перейдем в профиль
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-// Formik - это "умный помощник" для работы с формами
-// Он сам:
-// - собирает данные из полей (values)
-// - проверяет ошибки (validation)
-// - показывает, что не так (ErrorMessage)
-// - отправляет данные (onSubmit)
-//
-// Form - это как <form>, но с дополнительными возможностями
-// Field - это как <input>, <select>, <textarea>, но связанный с Formik
-// ErrorMessage - автоматически показывает ошибку под полем
-
 import * as Yup from 'yup';
-// Yup - это "проверяльщик" полей
-// Он знает правила:
-// - имя должно быть от 2 до 30 букв
-// - дата должна быть в формате ГГГГ-ММ-ДД
-// - фото должно быть ссылкой на картинку
-
 import clsx from 'clsx';
-// clsx - это "склейщик" CSS классов
-// Он помогает добавить класс только когда нужно
-// Например: поле заполнено → добавить класс styles.filled
-//          есть ошибка → добавить класс styles.inputError
-
 import api from '../../services/api';
-// api - это наша "связь с сервером"
-// Через него мы отправляем данные питомца
-// Это настроенный axios с базовым URL и токеном
-
 import sprite from '../../assets/icon/icon-sprite.svg';
-// sprite - это файл со ВСЕМИ иконками
-// Мы берем оттуда иконки для кнопок пола, загрузки фото и т.д.
-// Используем <use href={`${sprite}#icon-name`} />
-
 import { uploadPhotoToCloudinary } from '../../utils/cloudinary';
-// Это функция для загрузки фото в облако Cloudinary
-// Если пользователь выберет файл с компьютера - мы загрузим его сюда
-// Функция возвращает URL загруженного фото
-
 import styles from './AddPetForm.module.css';
-// Стили только для этой формы (чтобы не мешались с другими)
-// Используем CSS модули - классы изолированы от других компонентов
-
-import { useNavigate, NavLink } from 'react-router-dom'; // ✅ ДОБАВЛЕН NavLink
+import { useNavigate, NavLink } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
-// 🎯 СХЕМА ВАЛИДАЦИИ YUP - ПРАВИЛА ЗАПОЛНЕНИЯ
-// ====================================================
-// Yup.object() - создаем объект с правилами
-// shape() - описываем форму этого объекта
-// Каждое поле - свои правила проверки
-// ====================================================
 const AddPetSchema = Yup.object().shape({
-  // 🟢 ПОЛЕ 1: ФОТО ПИТОМЦА (imgURL)
   imgURL: Yup.string()
-    // .matches() - проверяем по шаблону (регулярное выражение)
     .matches(
-      // Шаблон: начинается с http:// или https://
-      // Потом любой адрес, потом точка, потом расширение файла
       /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
       'Must be a valid image URL (png, jpg, jpeg, gif, bmp, webp)'
     )
-    .required('Photo is required'), // Обязательное поле
-
-  // 🟢 ПОЛЕ 2: ЗАГОЛОВОК (title)
+    .required('Photo is required'),
   title: Yup.string()
-    .min(3, 'Title must be at least 3 characters') // Минимум 3 буквы
-    .max(50, 'Title must be less than 50 characters') // Максимум 50
-    .required('Title is required'), // Обязательное
-
-  // 🟢 ПОЛЕ 3: КЛИЧКА (name)
+    .min(3, 'Title must be at least 3 characters')
+    .max(50, 'Title must be less than 50 characters')
+    .required('Title is required'),
   name: Yup.string()
-    .min(2, 'Name must be at least 2 characters') // Минимум 2 буквы
-    .max(30, 'Name must be less than 30 characters') // Максимум 30
-    .required('Pet name is required'), // Обязательное
-
-  // 🟢 ПОЛЕ 4: ДАТА РОЖДЕНИЯ (birthday)
+    .min(2, 'Name must be at least 2 characters')
+    .max(30, 'Name must be less than 30 characters')
+    .required('Pet name is required'),
   birthday: Yup.string()
-    .matches(
-      /^\d{4}-\d{2}-\d{2}$/, // Шаблон: 2023-12-31 (год-месяц-день)
-      'Date must be in format YYYY-MM-DD'
-    )
+    .matches(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in format YYYY-MM-DD')
     .required('Birthday is required'),
-
-  // 🟢 ПОЛЕ 5: ВИД ЖИВОТНОГО (species)
-  species: Yup.string().required('Pet type is required'), // Обязательное поле
-
-  // 🟢 ПОЛЕ 6: ПОЛ (sex)
+  species: Yup.string().required('Pet type is required'),
   sex: Yup.string()
-    .oneOf(['female', 'male', 'multiple'], 'Please select gender') // Три варианта
+    .oneOf(['female', 'male', 'multiple'], 'Please select gender')
     .required('Gender is required'),
 });
 
-// 🎯 ГЛАВНЫЙ КОМПОНЕНТ - ФОРМА ДОБАВЛЕНИЯ ПИТОМЦА
-// ====================================================
-// Это сердце всего файла - то, что увидит пользователь
-// ====================================================
 const AddPetForm = () => {
-  // 🎯 СОСТОЯНИЯ (state) - ПЕРЕМЕННЫЕ, КОТОРЫЕ МОГУТ МЕНЯТЬСЯ
-  // ====================================================
-
   const navigate = useNavigate();
-  // navigate - функция для перехода на другие страницы
-  // Пример: navigate('/profile') - перейти в профиль
-  //         navigate('/login') - перейти на логин
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // isSubmitting - флаг "идет отправка"
-  // true - значит уже отправили, ждем ответ от сервера
-  // false - можно отправлять новую форму
-  // Когда true - кнопка Submit блокируется и меняет текст на "Adding..."
-
   const [isUploading, setIsUploading] = useState(false);
-  // isUploading - флаг "идет загрузка фото"
-  // true - фото грузится на Cloudinary
-  // false - можно грузить новое фото
-  // Когда true - кнопка Upload блокируется и меняет текст на "Uploading..."
-
   const [error, setError] = useState('');
-  // error - текст ошибки, если что-то пошло не так
-  // Пустая строка - ошибки нет
-  // Если есть текст - показываем красное сообщение вверху формы
-
   const [species, setSpecies] = useState([]);
-  // species - массив типов животных с сервера
-  // Например: ['Dog', 'Cat', 'Monkey', 'Bird', 'Rabbit']
-  // Сначала пустой [], потом загружаем с сервера
 
-  // 🎯 ЗАГРУЗКА ТИПОВ ЖИВОТНЫХ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-  // ====================================================
-  // useEffect срабатывает один раз при монтировании компонента
-  // Загружаем список доступных типов животных с сервера
-  // ====================================================
   useEffect(() => {
-    // Объявляем асинхронную функцию внутри useEffect
     const loadSpecies = async () => {
       try {
-        console.log('🔄 Загружаем типы животных...');
-
-        // 🟢 GET запрос на /notices/species
-        // Получаем список всех доступных типов животных
         const response = await api.get('/notices/species');
-
-        console.log('✅ Типы загружены:', response.data);
-        // response.data = ['Dog', 'Cat', 'Monkey', 'Bird']
-
-        // 🟢 Сохраняем в состояние species
         setSpecies(response.data);
-      } catch (error) {
-        console.error('❌ Ошибка загрузки типов:', error);
-
-        // Если сервер не ответил - используем запасной список
+      } catch {
         setSpecies(['Dog', 'Cat', 'Monkey', 'Bird']);
       }
     };
-
-    // Вызываем функцию
     loadSpecies();
-  }, []); // Пустой массив зависимостей = выполнить один раз при загрузке
+  }, []);
 
-  // 🎯 НАЧАЛЬНЫЕ ЗНАЧЕНИЯ ФОРМЫ
-  // ====================================================
-  // Все поля пустые - пользователь будет их заполнять
-  // Это объект с ключами, которые соответствуют name полей
-  // ====================================================
   const initialValues = {
-    imgURL: '', // Ссылка на фото (потом сюда попадет URL с Cloudinary)
-    title: '', // Заголовок объявления
-    name: '', // Кличка питомца
-    birthday: '', // Дата рождения (в формате ГГГГ-ММ-ДД)
-    species: '', // Вид животного (выбрать из списка)
-    sex: '', // Пол (female/male/multiple)
+    imgURL: '',
+    title: '',
+    name: '',
+    birthday: '',
+    species: '',
+    sex: '',
   };
 
-  // 🎯 ФУНКЦИЯ ЗАГРУЗКИ ФОТО НА CLOUDINARY
-  // ====================================================
-  // Вызывается, когда пользователь выбирает файл на компьютере
-  // file - выбранный файл
-  // setFieldValue - функция от Formik для изменения поля
-  // ====================================================
   const handleFileUpload = async (file, setFieldValue) => {
     try {
-      // 🟢 ШАГ 1: Включаем режим загрузки
       setIsUploading(true);
-      setError(''); // Очищаем предыдущие ошибки
-
-      console.log('📤 Загружаем фото на Cloudinary...');
-
-      // 🟢 ШАГ 2: Загружаем фото и получаем URL
-      // uploadPhotoToCloudinary - функция из utils/cloudinary.js
-      // Она отправляет файл на Cloudinary и возвращает постоянную ссылку
+      setError('');
       const imageUrl = await uploadPhotoToCloudinary(file);
-
-      console.log('✅ Фото загружено, URL:', imageUrl);
-
-      // 🟢 ШАГ 3: Сохраняем URL в поле imgURL формы
-      // setFieldValue('imgURL', imageUrl) - это как написать в поле значение
-      // Formik сразу увидит новое значение и обновит values.imgURL
       setFieldValue('imgURL', imageUrl);
-    } catch (uploadError) {
-      console.error('❌ Ошибка загрузки фото:', uploadError);
+    } catch {
       setError('Failed to upload photo. Please try again or use URL.');
     } finally {
-      // 🟢 ШАГ 4: В любом случае выключаем режим загрузки
       setIsUploading(false);
     }
   };
 
-  // 🎯 ОБРАБОТЧИК ОТПРАВКИ ФОРМЫ - САМОЕ ВАЖНОЕ
-  // ====================================================
-  // Эта функция вызывается, когда пользователь нажимает Submit
-  // values - все данные, которые ввел пользователь (объект)
-  // resetForm - функция, которая очистит форму после успешной отправки
-  // ====================================================
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      // 🟢 ШАГ 1: Включаем режим отправки
-      setIsSubmitting(true); // Кнопка заблокируется, текст "Adding..."
-      setError(''); // Очищаем старую ошибку
-
-      console.log('📤 Отправляем данные питомца:', values);
-      // Смотрим, что получили от пользователя:
-      // {
-      //   imgURL: "https://.../dog.jpg",
-      //   title: "Golden Retriever Puppies",
-      //   name: "Daisy",
-      //   birthday: "2022-10-01",
-      //   species: "Dog",
-      //   sex: "female"
-      // }
-
-      // 🟢 ШАГ 2: ОТПРАВЛЯЕМ НА СЕРВЕР
-      // POST запрос по адресу /users/current/pets
-      // В body кладем values (данные из формы)
-      // api сам добавит токен авторизации в заголовки
-      const response = await api.post('/users/current/pets/add', values);
-
-      // 🟢 ШАГ 3: Сервер ответил - всё хорошо!
-      console.log('✅ Сервер ответил:', response.data);
-      console.log('✅ Питомец добавлен с ID:', response.data._id);
-
-      // 🟢 ПОКАЗУЄМО СПОВІЩЕННЯ ПРО УСПІШНЕ ДОДАВАННЯ
-      toast.success(`✅ Pet added successfully`, {
-        duration: 3000,
-      });
-
-      // 🟢 ШАГ 4: ОЧИЩАЕМ ФОРМУ
-      resetForm(); // Все поля станут пустыми
-
-      // 🟢 ШАГ 5: ИДЕМ В ПРОФИЛЬ
-      navigate('/profile'); // Там уже будет новый питомец!
+      setIsSubmitting(true);
+      setError('');
+      await api.post('/users/current/pets/add', values);
+      toast.success(`✅ Pet added successfully`, { duration: 3000 });
+      resetForm();
+      navigate('/profile');
     } catch (submitError) {
-      // 🔴 ШАГ 3 (если ошибка): Что-то пошло не так
-      console.error('❌ Ошибка при добавлении питомца:', submitError);
-
-      // 🟡 РАЗБИРАЕМСЯ, КАКАЯ ИМЕННО ОШИБКА
       if (submitError.response) {
-        // Сервер ответил, но с ошибкой (например, 400, 401, 500)
-        // submitError.response.status - код ошибки (401, 400, 500)
-        // submitError.response.data.message - сообщение от сервера
-
         if (submitError.response.status === 401) {
-          // 401 - не авторизован (нет прав или токен протух)
           setError('Please log in to add a pet');
-          navigate('/login'); // Отправляем на логин
+          navigate('/login');
         } else if (submitError.response.status === 400) {
-          // 400 - плохие данные (что-то не так заполнили)
           setError(submitError.response.data?.message || 'Invalid data');
         } else {
-          // Другая ошибка сервера (500 и т.д.)
           setError(submitError.response.data?.message || 'Failed to add pet');
         }
       } else if (submitError.request) {
-        // Нет интернета - сервер не ответил
         setError('No response from server. Check your internet connection.');
       } else {
-        // Какая-то другая ошибка (например, ошибка в коде)
         setError('Error: ' + submitError.message);
       }
     } finally {
-      // 🟢 ШАГ 6 (в любом случае): Выключаем режим отправки
-      setIsSubmitting(false); // Кнопка разблокируется
+      setIsSubmitting(false);
     }
   };
 
-  // 🎯 ВОЗВРАЩАЕМ JSX - ТО, ЧТО УВИДИТ ПОЛЬЗОВАТЕЛЬ
-  // ====================================================
-  // Здесь мы рисуем саму форму с полями - разметка из примера
-  // ====================================================
   return (
     <>
-      {/* 🟢 ЗАГОЛОВОК СТРАНИЦЫ - КАК В ПРИМЕРЕ */}
       <h1 className={styles.title}>
         Add my pet /<span className={styles.spanTitle}> Personal details</span>
       </h1>
-
-      {/* 🟢 FORMik - УМНАЯ ОБЕРТКА ДЛЯ ФОРМЫ */}
-      {/* Formik сам управляет всей формой: */}
-      {/* - initialValues - начальные значения полей */}
-      {/* - validationSchema - правила проверки из Yup */}
-      {/* - onSubmit - функция, которая выполнится при отправке */}
       <Formik
         initialValues={initialValues}
         validationSchema={AddPetSchema}
         onSubmit={handleSubmit}
       >
-        {/* 🟢 render props - Formik дает нам полезные функции */}
-        {/* values - текущие значения всех полей (объект) */}
-        {/* setFieldValue - функция изменить значение конкретного поля */}
         {({ values, setFieldValue }) => (
           <Form className={styles.form}>
-            {/* 🟢 ПОКАЗЫВАЕМ ОБЩУЮ ОШИБКУ, ЕСЛИ ЕСТЬ */}
-            {/* error из useState, не из Formik */}
             {error && (
               <div className={styles.errorMessage} role="alert">
                 {error}
               </div>
             )}
-
-            {/* 🟢 ГЛАВНЫЙ СПИСОК ПОЛЕЙ ФОРМЫ - КАК В ПРИМЕРЕ */}
             <ul>
-              {/* 🟢 ПОЛЕ 1: ВЫБОР ПОЛА - КАК В ПРИМЕРЕ */}
-              {/* ====================================== */}
               <li className={clsx(styles.boxRadio, styles.position)}>
-                {/* FEMALE */}
                 <Field
                   name="sex"
                   type="radio"
@@ -371,7 +142,6 @@ const AddPetForm = () => {
                   </svg>
                 </label>
 
-                {/* MALE */}
                 <Field
                   name="sex"
                   type="radio"
@@ -393,7 +163,6 @@ const AddPetForm = () => {
                   </svg>
                 </label>
 
-                {/* MULTIPLE */}
                 <Field
                   name="sex"
                   type="radio"
@@ -414,8 +183,6 @@ const AddPetForm = () => {
                     <use href={`${sprite}#icon-femali-male-yellow`} />
                   </svg>
                 </label>
-
-                {/* Ошибка валидации для пола */}
                 <ErrorMessage
                   name="sex"
                   component="span"
@@ -423,11 +190,10 @@ const AddPetForm = () => {
                 />
               </li>
 
-              {/* 🟢 ПОЛЕ 2: ПРЕВЬЮ ФОТО - КАК В ПРИМЕРЕ */}
               <li className={styles.iconAndImg}>
                 {values.imgURL ? (
                   <img
-                    src={values.imgURL ? values.imgURL : null}
+                    src={values.imgURL}
                     alt="foto"
                     className={styles.imgPet}
                   />
@@ -438,7 +204,6 @@ const AddPetForm = () => {
                 )}
               </li>
 
-              {/* 🟢 ПОЛЕ 3: URL ФОТО И ЗАГРУЗКА - КАК В ПРИМЕРЕ */}
               <li className={clsx(styles.boxImgUrl, styles.position)}>
                 <Field
                   type="text"
@@ -458,9 +223,7 @@ const AddPetForm = () => {
                   accept="image/*"
                   onChange={async e => {
                     const file = e.target.files[0];
-                    if (file) {
-                      handleFileUpload(file, setFieldValue);
-                    }
+                    if (file) handleFileUpload(file, setFieldValue);
                   }}
                 />
                 <label htmlFor="imgURL" className={styles.inputSavesImg}>
@@ -476,9 +239,7 @@ const AddPetForm = () => {
                 />
               </li>
 
-              {/* 🟢 ПОЛЕ 4: TITLE, NAME, ДАТА, ТИП - КАК В ПРИМЕРЕ */}
               <li className={clsx(styles.boxGeneral, styles.position)}>
-                {/* Title */}
                 <Field
                   name="title"
                   type="text"
@@ -495,7 +256,6 @@ const AddPetForm = () => {
                   className={clsx(styles.errorMessage, styles.titlError)}
                 />
 
-                {/* Pet's Name */}
                 <Field
                   name="name"
                   type="text"
@@ -512,7 +272,6 @@ const AddPetForm = () => {
                   className={clsx(styles.errorMessage, styles.name)}
                 />
 
-                {/* Дата и Тип в одной строке */}
                 <ul className={styles.boxDateGender}>
                   <li className={styles.position}>
                     <Field
@@ -542,13 +301,11 @@ const AddPetForm = () => {
                       )}
                     >
                       <option>Type of pet</option>
-                      {species.map((specie, index) => {
-                        return (
-                          <option value={specie} key={index}>
-                            {specie}
-                          </option>
-                        );
-                      })}
+                      {species.map((specie, index) => (
+                        <option value={specie} key={index}>
+                          {specie}
+                        </option>
+                      ))}
                     </Field>
                     <label htmlFor="species">
                       <svg className={styles.iconInputSpecies}>
@@ -565,7 +322,6 @@ const AddPetForm = () => {
               </li>
             </ul>
 
-            {/* 🟢 КНОПКИ ВНИЗУ ФОРМЫ - КАК В ПРИМЕРЕ */}
             <div className={styles.boxButton}>
               <NavLink to="/profile" className={styles.linkBack}>
                 Back

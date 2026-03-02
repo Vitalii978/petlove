@@ -1,43 +1,29 @@
-/* 📌 ОСНОВНОЙ КОНТЕЙНЕР ПАГИНАЦИИ */
 .pagination {
-  /* Flexbox для горизонтального расположения */
   display: flex;
-  flex-direction: row; /* Элементы в строку */
-  justify-content: center; /* Центрируем по горизонтали */
-  gap: 11px; /* Расстояние между блоками: стрелки | номера | стрелки */
-}
-
-/* 📌 КОНТЕЙНЕР ДЛЯ СТРЕЛОК (<< < и > >>) */
-.arrows {
-  display: flex; /* Стрелки в строку */
   flex-direction: row;
-  gap: 6px; /* Расстояние между двумя стрелками */
+  justify-content: center;
+  gap: 11px;
 }
 
-/* 📌 КНОПКА С ОДНОЙ СТРЕЛКОЙ (< или >) */
+.arrows {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
 .buttonOne {
-  /* Размеры и форма */
   width: 40px;
   height: 40px;
-  border-radius: 100%; /* КРУГЛАЯ кнопка */
-
-  /* Граница */
-  border: 1px solid rgba(38, 38, 38, 0.2); /* Серый цвет с прозрачностью 20% */
-
-  /* Выравнивание содержимого */
+  border-radius: 100%;
+  border: 1px solid rgba(38, 38, 38, 0.2);
   display: flex;
   flex-direction: row;
-  align-items: center; /* Центр по вертикали */
-  justify-content: center; /* Центр по горизонтали */
-
-  /* Фон */
-  background-color: inherit; /* Прозрачный - наследует фон родителя */
-
-  /* Курсор */
-  cursor: pointer; /* Рука при наведении */
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
+  cursor: pointer;
 }
 
-/* 📌 КНОПКА С ДВУМЯ СТРЕЛКАМИ (<< или >>) */
 .buttonTwo {
   width: 40px;
   height: 40px;
@@ -50,102 +36,77 @@
   cursor: pointer;
 }
 
-/* 📌 ИКОНКА СТРЕЛКИ */
 .icon {
-  width: 15px; /* Ширина иконки */
-  height: 15px; /* Высота иконки */
-  /* fill будет наследовать цвет от родителя */
+  width: 15px;
+  height: 15px;
 }
 
-/* 📌 ВТОРАЯ ИКОНКА В КНОПКЕ С ДВУМЯ СТРЕЛКАМИ */
 .iconOne {
   width: 15px;
   height: 15px;
-  position: relative; /* Позволяет смещать элемент */
-  left: 5px; /* Смещаем на 5px вправо относительно нормальной позиции */
+  position: relative;
+  left: 5px;
 }
 
-/* 📌 ОТКЛЮЧЕННЫЕ КНОПКИ (disabled) */
 :disabled {
-  cursor: default; /* Обычный курсор вместо руки */
-  border-color: rgba(38, 38, 38, 0.05); /* Очень светлая рамка */
+  cursor: default;
+  border-color: rgba(38, 38, 38, 0.05);
 }
 
-/* 📌 СЕРАЯ ИКОНКА ДЛЯ ОТКЛЮЧЕННЫХ КНОПОК */
 .iconDisabl {
-  fill: rgba(38, 38, 38, 0.5); /* Серый цвет с прозрачностью 50% */
+  fill: rgba(38, 38, 38, 0.5);
 }
 
-/* 📌 ПОВОРОТ ДЛЯ ЛЕВЫХ СТРЕЛОК */
 .rotate {
-  rotate: 180deg; /* Поворачиваем на 180 градусов */
-  /* Иконка стрелки влево → поворот → стрелка вправо */
+  rotate: 180deg;
 }
 
-/* 📌 КОНТЕЙНЕР ДЛЯ НОМЕРОВ СТРАНИЦ */
 .buttonNumBox {
   display: flex;
   flex-direction: row;
-  gap: 10px; /* Расстояние между кнопками с номерами */
+  gap: 10px;
 }
 
-/* 📌 КНОПКА С НОМЕРОМ СТРАНИЦЫ */
 .buttonNumber {
-  /* Размеры и форма */
   width: 40px;
   height: 40px;
   border-radius: 100%;
-
-  /* Граница */
   border: 1px solid rgba(38, 38, 38, 0.2);
-
-  /* Фон */
   background-color: inherit;
-
-  /* Текст */
-  font-family: 'Manrope', sans-serif; /* Шрифт как в дизайне */
-  font-weight: 700; /* Жирный */
-  font-size: 14px; /* Размер текста */
-  line-height: 1.29; /* Межстрочный интервал */
-  color: #262626; /* Темно-серый цвет */
-
-  /* Курсор */
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.29;
+  color: #262626;
   cursor: pointer;
 }
 
-/* 📌 АКТИВНАЯ СТРАНИЦА */
 .currentPage {
-  background-color: #f6b83d; /* ЖЕЛТЫЙ фон для активной страницы */
+  background-color: #f6b83d;
 }
 
-/* 📌 АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ (768px и больше) */
 @media screen and (min-width: 768px) {
   .pagination {
-    gap: 24px; /* Больше расстояние между блоками */
+    gap: 24px;
   }
 
-  /* 📌 УВЕЛИЧИВАЕМ КНОПКИ */
   .buttonTwo,
   .buttonOne {
     width: 44px;
     height: 44px;
   }
 
-  /* 📌 УВЕЛИЧИВАЕМ КНОПКИ С НОМЕРАМИ */
   .buttonNumber {
     width: 44px;
     height: 44px;
-    font-size: 18px; /* Больше текст */
+    font-size: 18px;
   }
 
-  /* 📌 УВЕЛИЧИВАЕМ ИКОНКИ */
   .icon,
   .iconOne {
     width: 19px;
     height: 19px;
   }
 
-  /* 📌 БОЛЬШЕ РАССТОЯНИЕ МЕЖДУ СТРЕЛКАМИ */
   .arrows {
     gap: 8px;
   }

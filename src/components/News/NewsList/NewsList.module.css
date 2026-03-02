@@ -1,72 +1,37 @@
 .newsList {
-  /* Убираем стандартные маркеры списка (точки) */
   list-style: none;
-
-  /* Сбрасываем стандартные отступы */
   margin: 0;
   padding: 0;
-
-  /* 🎯 СОЗДАЕМ ГРИД-СЕТКУ */
-  /* display: grid - современный способ верстки сеток */
   display: grid;
-
-  /* 🎯 НАСТРОЙКИ СЕТКИ ДЛЯ РАЗНЫХ УСТРОЙСТВ */
-
-  /* Мобильные (по умолчанию): 1 колонка */
   grid-template-columns: 1fr;
-  /* 1fr - одна фракция (занимает все доступное пространство) */
-
-  /* Расстояние между элементами сетки */
   gap: 24px;
-
-  /* Отступы сверху для отделения от других элементов */
-  /* margin-top: 24px; */
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ ПУСТОГО СОСТОЯНИЯ */
 .emptyContainer {
-  /* Центрируем содержимое */
   text-align: center;
-
-  /* Отступы для визуального пространства */
   padding: 60px 20px;
-
-  /* Фон и оформление */
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-  /* Отступ сверху */
   margin-top: 30px;
 }
 
 .emptyContainer p {
-  /* Основной текст */
-
   font-size: 18px;
   font-weight: 500;
   color: #333333;
   margin: 0 0 10px 0;
 }
 
-/* 🎯 ДОПОЛНИТЕЛЬНЫЙ ТЕКСТ В ПУСТОМ СОСТОЯНИИ */
 .subtext {
-  font-family: 'Manrope', sans-serif;
   font-size: 14px;
   color: #666666;
   margin: 0;
 }
 
-/* ============= АДАПТИВНЫЕ СТИЛИ ============= */
-
-/* 🎯 ДЛЯ ПЛАНШЕТОВ (от 768px) */
 @media screen and (min-width: 768px) {
   .newsList {
-    /* Планшет: 2 колонки */
     grid-template-columns: repeat(2, 1fr);
-    /* repeat(2, 1fr) - повторяем 2 раза по 1fr */
-
-    /* Увеличиваем расстояние между элементами */
     column-gap: 24px;
     row-gap: 30px;
   }
@@ -80,13 +45,9 @@
   }
 }
 
-/* 🎯 ДЛЯ ДЕСКТОПОВ (от 1280px) */
 @media screen and (min-width: 1280px) {
   .newsList {
-    /* Десктоп: 3 колонки */
     grid-template-columns: repeat(3, 1fr);
-
-    /* Увеличиваем расстояние между элементами */
     column-gap: 35px;
     row-gap: 40px;
   }

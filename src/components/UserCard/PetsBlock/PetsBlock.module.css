@@ -1,7 +1,3 @@
-/* src/components/UserCard/PetsBlock/PetsBlock.module.css */
-/* 🎯 СТИЛИ ДЛЯ БЛОКА ПИТОМЦЕВ */
-/* ✅ ИСПРАВЛЕНО: стили как в примере */
-
 .petsBlock {
   display: flex;
   flex-direction: column;

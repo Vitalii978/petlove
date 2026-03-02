@@ -1,6 +1,3 @@
-/* src/components/UserCard/PetsBlock/PetsList/PetsList.module.css */
-/* 🎯 СТИЛИ ДЛЯ СПИСКА ПИТОМЦЕВ */
-
 .petsList {
   display: flex;
   flex-direction: column;

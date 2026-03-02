@@ -1,5 +1,3 @@
-// 📁 src/components/UserCard/PetsBlock/PetsList/PetsList.jsx
-
 import PetsItem from '../PetsItem/PetsItem';
 import styles from './PetsList.module.css';
 

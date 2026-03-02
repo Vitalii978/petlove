@@ -1,212 +1,58 @@
-// // Импортируем React и хук useState для управления состоянием
-// import React, { useState } from 'react';
-// // Импортируем стили из CSS модуля
-// import styles from './SearchField.module.css';
-// // Импортируем SVG спрайт для иконок
-// import sprite from '../../assets/icon/icon-sprite.svg';
-
-// // 🎯 Создаем компонент SearchField
-// // Он принимает пропсы (параметры):
-// // 1. onSearch - функция которая вызывается при поиске (обязательная)
-// // 2. placeholder - текст-подсказка в поле (необязательный, по умолчанию "Search...")
-// // 3. className - дополнительные CSS классы (необязательный)
-// const SearchField = ({ onSearch, placeholder = 'Search', className = '' }) => {
-//   // 🎯 СОСТОЯНИЕ для хранения значения поля поиска
-//   // searchQuery - текущий текст в поле
-//   // setSearchQuery - функция для изменения текста
-//   const [searchQuery, setSearchQuery] = useState('');
-
-//   // 🎯 Функция обработки изменения значения в input
-//   const handleChange = event => {
-//     // event.target.value содержит текущий текст в поле
-//     setSearchQuery(event.target.value);
-//   };
-
-//   // 🎯 Функция очистки поля поиска
-//   const handleClear = () => {
-//     setSearchQuery(''); // Устанавливаем пустую строку
-//     // 🎯 Можно также вызвать onSearch с пустой строкой чтобы сбросить результаты
-//     if (onSearch) {
-//       onSearch('');
-//     }
-//   };
-
-//   // 🎯 Функция обработки отправки формы (submit)
-//   const handleSubmit = event => {
-//     event.preventDefault(); // 🎯 Предотвращаем перезагрузку страницы
-
-//     // Если есть функция onSearch - вызываем её с текущим запросом
-//     if (onSearch) {
-//       onSearch(searchQuery);
-//     }
-//   };
-
-//   // 🎯 Функция обработки клика на иконку лупы
-//   const handleSearchClick = () => {
-//     // Та же логика что и при submit
-//     if (onSearch) {
-//       onSearch(searchQuery);
-//     }
-//   };
-
-//   return (
-//     // 🎯 form - обертка для отправки по Enter
-//     <form
-//       className={`${styles.searchForm} ${className}`}
-//       onSubmit={handleSubmit}
-//     >
-//       {/* 🎯 Контейнер для поля поиска */}
-//       <div className={styles.searchContainer}>
-//         {/* 🎯 Текстовое поле для ввода поискового запроса */}
-//         <input
-//           type="text"
-//           className={styles.searchInput}
-//           placeholder={placeholder} // 🎯 Текст-подсказка
-//           value={searchQuery} // 🎯 Связываем значение с состоянием
-//           onChange={handleChange} // 🎯 Обработчик изменения
-//           aria-label="Search input" // 🎯 Для доступности
-//         />
-
-//         {/* 🎯 СПИСОК иконок (лупа и крестик) - семантическая верстка */}
-//         {/* ul - unordered list (неупорядоченный список) */}
-//         {/* Каждая иконка - элемент списка li */}
-//         <ul className={styles.iconsList}>
-//           {/* 🎯 Элемент списка: Кнопка очистки (крестик) */}
-//           {/* Показывается только если есть текст */}
-//           {searchQuery && (
-//             <li className={styles.iconItem}>
-//               <button
-//                 type="button" // 🎯 type="button" чтобы не отправлять форму
-//                 className={styles.clearButton}
-//                 onClick={handleClear} // 🎯 Очищаем поле при клике
-//                 aria-label="Clear search" // 🎯 Для доступности
-//               >
-//                 {/* 🎯 Иконка крестика из SVG спрайта */}
-//                 <svg className={styles.clearIcon}>
-//                   <use href={`${sprite}#icon-close`} />
-//                 </svg>
-//               </button>
-//             </li>
-//           )}
-
-//           {/* 🎯 Элемент списка: Кнопка поиска (лупа) */}
-//           <li className={styles.iconItem}>
-//             <button
-//               type="submit" // 🎯 type="submit" для отправки формы по клику
-//               className={styles.searchButton}
-//               onClick={handleSearchClick} // 🎯 Альтернативный обработчик
-//               aria-label="Search" // 🎯 Для доступности
-//             >
-//               {/* 🎯 Иконка лупы из SVG спрайта */}
-//               <svg className={styles.searchIcon}>
-//                 <use href={`${sprite}#icon-search`} />
-//               </svg>
-//             </button>
-//           </li>
-//         </ul>
-//       </div>
-//     </form>
-//   );
-// };
-
-// // 🎯 Экспортируем компонент для использования в других файлах
-// export default SearchField;
-
-// src/components/SearchField/SearchField.jsx
-// 🎯 ПЕРЕИСПОЛЬЗУЕМЫЙ КОМПОНЕНТ ПОИСКА
-// ====================================================
-// Что делает этот компонент:
-// 1. Отображает поле поиска с иконкой лупы
-// 2. Показывает иконку крестика когда есть текст (для очистки)
-// 3. Вызывает onSearch при сабмите или клике на лупу
-// 4. Поддерживает разные размеры через className
-// ====================================================
-
-// Импортируем React и хук useState для управления состоянием
 import React, { useState } from 'react';
-// Импортируем стили из CSS модуля
 import styles from './SearchField.module.css';
-// Импортируем SVG спрайт для иконок
 import sprite from '../../assets/icon/icon-sprite.svg';
 
-// 🎯 Создаем компонент SearchField
-// Он принимает пропсы (параметры):
-// 1. onSearch - функция которая вызывается при поиске (обязательная)
-// 2. placeholder - текст-подсказка в поле (необязательный, по умолчанию "Search")
-// 3. className - дополнительные CSS классы (необязательный)
 const SearchField = ({ onSearch, placeholder = 'Search', className = '' }) => {
-  // 🎯 СОСТОЯНИЕ для хранения значения поля поиска
-  // searchQuery - текущий текст в поле
-  // setSearchQuery - функция для изменения текста
   const [searchQuery, setSearchQuery] = useState('');
 
-  // 🎯 Функция обработки изменения значения в input
   const handleChange = event => {
-    // event.target.value содержит текущий текст в поле
     setSearchQuery(event.target.value);
   };
 
-  // 🎯 Функция очистки поля поиска
   const handleClear = () => {
-    setSearchQuery(''); // Устанавливаем пустую строку
-    // 🎯 Можно также вызвать onSearch с пустой строкой чтобы сбросить результаты
+    setSearchQuery('');
     if (onSearch) {
       onSearch('');
     }
   };
 
-  // 🎯 Функция обработки отправки формы (submit)
   const handleSubmit = event => {
-    event.preventDefault(); // 🎯 Предотвращаем перезагрузку страницы
-
-    // Если есть функция onSearch - вызываем её с текущим запросом
+    event.preventDefault();
     if (onSearch) {
       onSearch(searchQuery);
     }
   };
 
-  // 🎯 Функция обработки клика на иконку лупы
   const handleSearchClick = () => {
-    // Та же логика что и при submit
     if (onSearch) {
       onSearch(searchQuery);
     }
   };
 
   return (
-    // 🎯 form - обертка для отправки по Enter
-    // 🔥 КЛЮЧЕВОЙ МОМЕНТ: добавляем переданный className к базовому
     <form
       className={`${styles.searchForm} ${className}`}
       onSubmit={handleSubmit}
     >
-      {/* 🎯 Контейнер для поля поиска */}
       <div className={styles.searchContainer}>
-        {/* 🎯 Текстовое поле для ввода поискового запроса */}
         <input
           type="text"
           className={styles.searchInput}
-          placeholder={placeholder} // 🎯 Текст-подсказка
-          value={searchQuery} // 🎯 Связываем значение с состоянием
-          onChange={handleChange} // 🎯 Обработчик изменения
-          aria-label="Search input" // 🎯 Для доступности
+          placeholder={placeholder}
+          value={searchQuery}
+          onChange={handleChange}
+          aria-label="Search input"
         />
 
-        {/* 🎯 СПИСОК иконок (лупа и крестик) - семантическая верстка */}
-        {/* ul - unordered list (неупорядоченный список) */}
-        {/* Каждая иконка - элемент списка li */}
         <ul className={styles.iconsList}>
-          {/* 🎯 Элемент списка: Кнопка очистки (крестик) */}
-          {/* Показывается только если есть текст */}
           {searchQuery && (
             <li className={styles.iconItem}>
               <button
-                type="button" // 🎯 type="button" чтобы не отправлять форму
+                type="button"
                 className={styles.clearButton}
-                onClick={handleClear} // 🎯 Очищаем поле при клике
-                aria-label="Clear search" // 🎯 Для доступности
+                onClick={handleClear}
+                aria-label="Clear search"
               >
-                {/* 🎯 Иконка крестика из SVG спрайта */}
                 <svg className={styles.clearIcon}>
                   <use href={`${sprite}#icon-close`} />
                 </svg>
@@ -214,15 +60,13 @@ const SearchField = ({ onSearch, placeholder = 'Search', className = '' }) => {
             </li>
           )}
 
-          {/* 🎯 Элемент списка: Кнопка поиска (лупа) */}
           <li className={styles.iconItem}>
             <button
-              type="submit" // 🎯 type="submit" для отправки формы по клику
+              type="submit"
               className={styles.searchButton}
-              onClick={handleSearchClick} // 🎯 Альтернативный обработчик
-              aria-label="Search" // 🎯 Для доступности
+              onClick={handleSearchClick}
+              aria-label="Search"
             >
-              {/* 🎯 Иконка лупы из SVG спрайта */}
               <svg className={styles.searchIcon}>
                 <use href={`${sprite}#icon-search`} />
               </svg>
@@ -234,5 +78,4 @@ const SearchField = ({ onSearch, placeholder = 'Search', className = '' }) => {
   );
 };
 
-// 🎯 Экспортируем компонент для использования в других файлах
 export default SearchField;

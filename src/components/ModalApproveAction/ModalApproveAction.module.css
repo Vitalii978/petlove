@@ -1,6 +1,3 @@
-/* src/components/ModalApproveAction/ModalApproveAction.module.css */
-/* 🎯 СТИЛІ ДЛЯ МОДАЛКИ ПІДТВЕРДЖЕННЯ */
-
 .overlay {
   position: fixed;
   top: 0;
@@ -46,7 +43,6 @@
   }
 }
 
-/* 🎯 КНОПКА ЗАКРИТТЯ */
 .closeButton {
   position: absolute;
   top: 20px;
@@ -54,8 +50,6 @@
   background: none;
   border: none;
   cursor: pointer;
-  /* width: 24px;
-  height: 24px; */
   padding: 0;
   z-index: 10;
   display: flex;
@@ -74,7 +68,6 @@
   fill: none;
 }
 
-/* 🎯 ОСНОВНИЙ КОНТЕЙНЕР МОДАЛКИ */
 .modalApproveAction {
   list-style: none;
   margin: 0;
@@ -88,7 +81,6 @@
   height: 270px;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ КАРТИНКИ */
 .imageWrapper {
   width: 80px;
   height: 80px;
@@ -101,14 +93,12 @@
   margin-bottom: 20px;
 }
 
-/* 🎯 КАРТИНКА */
 .catImage {
   width: 44px;
   height: 44px;
   object-fit: contain;
 }
 
-/* 🎯 ЗАГОЛОВОК */
 .title {
   font-weight: 700;
   font-size: 20px;
@@ -118,17 +108,14 @@
   text-align: center;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ КНОПОК */
 .buttonsWrapper {
   display: flex;
   gap: 8px;
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  /* margin-top: 10px; */
 }
 
-/* 🎯 КНОПКИ */
 .confirmButton,
 .cancelButton {
   padding: 12px 30px;
@@ -160,19 +147,16 @@
   border: 1px solid #f6b83d;
 }
 
-/* 🎯 АДАПТИВНІСТЬ */
 @media (min-width: 768px) {
   .modal {
     max-width: 448px;
   }
 
-  /* 🎯 ОСНОВНИЙ КОНТЕЙНЕР МОДАЛКИ */
   .modalApproveAction {
     padding: 80px;
     height: 364px;
   }
 
-  /* 🎯 ЗАГОЛОВОК */
   .title {
     font-size: 24px;
     line-height: 1.17;

@@ -1,16 +1,12 @@
-// src/components/ModalEditUser/ModalEditUser.jsx
-// 🎯 МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ
-
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import api from '../../services/api';
-import { uploadPhotoToCloudinary } from '../../utils/cloudinary'; // 👈 ИМПОРТИРУЕМ
+import { uploadPhotoToCloudinary } from '../../utils/cloudinary';
 import sprite from '../../assets/icon/icon-sprite.svg';
 import styles from './ModalEditUser.module.css';
 
-// 🎯 СХЕМА ВАЛИДАЦИИ YUP
 const editUserSchema = yup
   .object({
     name: yup
@@ -46,7 +42,7 @@ const editUserSchema = yup
 
 const ModalEditUser = ({ user, onSave, onClose }) => {
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false); // 👈 ДЛЯ ЗАГРУЗКИ ФОТО
+  const [uploading, setUploading] = useState(false);
   const [apiError, setApiError] = useState('');
   const [previewUrl, setPreviewUrl] = useState(user.avatar || '');
 
@@ -73,7 +69,6 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
     setPreviewUrl(watchAvatar);
   }, [watchAvatar]);
 
-  // 🎯 РЕАЛЬНАЯ ЗАГРУЗКА НА CLOUDINARY
   const handleFileChange = async e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -82,44 +77,31 @@ const ModalEditUser = ({ user, onSave, onClose }) => {
       setUploading(true);
       setApiError('');
 
-      // Показываем локальное превью сразу
       const localUrl = URL.createObjectURL(file);
       setPreviewUrl(localUrl);
 
-      // 🔥 ЗАГРУЗКА НА CLOUDINARY
-      console.log('🔄 Загружаем фото на Cloudinary...');
       const imageUrl = await uploadPhotoToCloudinary(file);
-      console.log('✅ Фото загружено, URL:', imageUrl);
 
-      // Сохраняем полученный URL в форму
       setValue('avatar', imageUrl);
-    } catch (error) {
-      console.error('❌ Ошибка загрузки фото:', error);
+    } catch {
       setApiError('Failed to upload photo. Please try again or use URL.');
     } finally {
       setUploading(false);
     }
   };
 
-  // 🎯 ОТПРАВКА НА БЭКЕНД
   const onSubmit = async formData => {
     try {
       setLoading(true);
       setApiError('');
 
-      console.log('🔄 Отправляем данные на сервер:', formData);
-
       const response = await api.patch('/users/current/edit', formData);
-
-      console.log('✅ Пользователь обновлен:', response.data);
 
       if (onSave) {
         onSave(response.data);
       }
       onClose();
     } catch (error) {
-      console.error('❌ Ошибка при обновлении пользователя:', error);
-
       if (error.response) {
         if (error.response.data?.message) {
           setApiError(error.response.data.message);

@@ -1,27 +1,11 @@
-// 🎯 Импортируем React (обязательно для JSX)
 import React from 'react';
-// 🎯 Импортируем компонент NewsItem для отображения одной новости
 import NewsItem from '../NewsItem/NewsItem';
-// 🎯 Импортируем стили из CSS модуля
 import styles from './NewsList.module.css';
 
-// 🎯 СОЗДАЕМ КОМПОНЕНТ NewsList (список новостей)
-// Компонент принимает пропсы (props) - данные которые передаются из родителя
 const NewsList = ({ news = [] }) => {
-  // 🎯 ДЕБАГ: Логируем что приходит в компонент
-  // Это поможет понять если данные не передаются или пустые
-  console.log('📋 NewsList - получены данные:', {
-    количество_новостей: news.length,
-    тип_данных: Array.isArray(news) ? 'массив' : typeof news,
-    первая_новость: news[0] || 'нет данных',
-  });
-
-  // 🎯 СЛУЧАЙ 1: ПУСТОЙ МАССИВ НОВОСТЕЙ
-  // Если news не существует, или это не массив, или массив пустой
   if (!news || !Array.isArray(news) || news.length === 0) {
     return (
       <div className={styles.emptyContainer}>
-        {/* 🎯 Сообщение для пользователя */}
         <p>No news found</p>
         <p className={styles.subtext}>
           Please try changing your search query or come back later.
@@ -30,41 +14,19 @@ const NewsList = ({ news = [] }) => {
     );
   }
 
-  // 🎯 СЛУЧАЙ 2: ЕСТЬ НОВОСТИ - ОТОБРАЖАЕМ ИХ
   return (
-    // 🎯 ul - неупорядоченный список (unordered list)
-    // className={styles.newsList} - применяем стили из CSS модуля
     <ul className={styles.newsList}>
-      {/* 🎯 ПРЕОБРАЗОВАНИЕ МАССИВА В JSX */}
-      {/* Используем метод map() для преобразования каждого элемента массива */}
       {news.map((item, index) => {
-        // 🎯 ДЕБАГ КАЖДОЙ НОВОСТИ
-        // Проверяем структуру каждой новости
-        console.log('📰 Обрабатываю новость:', {
-          id: item._id || item.id || 'нет id',
-          заголовок: item.title || 'нет заголовка',
-          текст: item.text ? 'есть' : 'нет',
-          изображение: item.imgUrl ? 'есть' : 'нет',
-          ссылка: item.url ? 'есть' : 'нет',
-        });
-
-        // 🎯 ВАЖНО: React требует стабильные ключи для списков
-        // Нельзя использовать Math.random() в key во время рендера
-        // Используем _id из API, или id, или индекс как последний вариант
         const itemKey = item._id || item.id || `news-item-${index}`;
 
         return (
-          // 🎯 КЛЮЧЕВОЙ МОМЕНТ: key={...}
-          // React использует key для идентификации элементов в списке
-          // Без key React не сможет правильно обновлять список
-          // key должен быть уникальным и стабильным между рендерами
           <NewsItem
-            key={itemKey} // 🎯 Уникальный и стабильный ключ
-            title={item.title || 'Без названия'} // 🎯 Заголовок новости
-            description={item.text || 'Нет описания'} // 🎯 Текст новости (API использует "text")
-            date={item.date || 'Дата не указана'} // 🎯 Дата публикации
-            imageUrl={item.imgUrl || ''} // 🎯 URL изображения (API использует "imgUrl")
-            readMoreUrl={item.url || '#'} // 🎯 Ссылка на полную статью (API использует "url")
+            key={itemKey}
+            title={item.title || 'Без названия'}
+            description={item.text || 'Нет описания'}
+            date={item.date || 'Дата не указана'}
+            imageUrl={item.imgUrl || ''}
+            readMoreUrl={item.url || '#'}
           />
         );
       })}
@@ -72,6 +34,4 @@ const NewsList = ({ news = [] }) => {
   );
 };
 
-// 🎯 ЭКСПОРТИРУЕМ КОМПОНЕНТ
-// export default - делает компонент доступным для импорта в других файлах
 export default NewsList;

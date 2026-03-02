@@ -1,66 +1,3 @@
-/* 🎯 СУЩЕСТВУЮЩИЕ СТИЛИ (оставляем как есть) */
-/* .userNav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.userBarWrapper,
-.logoutWrapper {
-  display: flex;
-  align-items: center;
-}
-
-
-.userNavList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  
-  display: flex;
-  align-items: center;
-  gap: 8px; 
-}
-
-
-@media screen and (max-width: 767px) {
-  .userNav {
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-  }
-
-
-  .userNavList {
-    flex-direction: column; 
-    width: 100%;
-    gap: 8px;
-  }
-
-  .userBarWrapper,
-  .logoutWrapper {
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .userNav {
-    flex-direction: row; 
-    gap: 8px;
-  }
-
- 
-  .userNavList {
-    flex-direction: row; 
-  }
-} */
-
-/* src/components/UserNav/UserNav.module.css */
-/* 🎯 СТИЛИ ДЛЯ КОМПОНЕНТА НАВИГАЦИИ ПОЛЬЗОВАТЕЛЯ */
-/* ✅ ИСПРАВЛЕНО: добавлены стили из примера */
-
-/* 🎯 СУЩЕСТВУЮЩИЕ СТИЛИ (оставляем как есть) */
 .userNav {
   display: flex;
   align-items: center;
@@ -73,25 +10,15 @@
   align-items: center;
 }
 
-/* 🎯 НОВЫЕ СТИЛИ для ul/li структуры */
 .userNavList {
-  /* Убираем стандартные отступы и маркеры списка */
   list-style: none;
   margin: 0;
   padding: 0;
-
-  /* Располагаем элементы в строку (как было в .userNav) */
   display: flex;
   align-items: center;
-  gap: 8px; /* Такой же gap как в .userNav */
+  gap: 8px;
 }
 
-.userNavItem {
-  /* Убираем стандартные стили <li> */
-  /* Ничего не добавляем - стили уже в .logoutWrapper и .userBarWrapper */
-}
-
-/* 🎯 АДАПТИВНОСТЬ (ваши существующие медиа-запросы) */
 @media screen and (max-width: 767px) {
   .userNav {
     flex-direction: column;
@@ -99,9 +26,8 @@
     width: 100%;
   }
 
-  /* 🎯 Добавляем для списка на мобильных */
   .userNavList {
-    flex-direction: column; /* В колонку на мобильных */
+    flex-direction: column;
     width: 100%;
     gap: 8px;
   }
@@ -114,12 +40,11 @@
 
 @media screen and (min-width: 768px) {
   .userNav {
-    flex-direction: row; /* В строку на планшетах и больше */
+    flex-direction: row;
     gap: 8px;
   }
 
-  /* 🎯 Добавляем для списка на планшетах */
   .userNavList {
-    flex-direction: row; /* В строку на планшетах и больше */
+    flex-direction: row;
   }
 }

@@ -1,6 +1,3 @@
-// src/components/DisplayPassword/DisplayPassword.jsx
-// 🎯 КОМПОНЕНТ ДЛЯ ОТОБРАЖЕНИЯ/СКРЫТИЯ ПАРОЛЯ
-
 import s from './DisplayPassword.module.css';
 import sprite from '../../assets/icon/icon-sprite.svg';
 

@@ -1,147 +1,63 @@
-// 🎯 Импортируем React (обязательно для JSX)
 import React from 'react';
-// 🎯 Импортируем стили из CSS модуля
 import styles from './NewsItem.module.css';
 
-// 🎯 СОЗДАЕМ КОМПОНЕНТ NewsItem (одна карточка новости)
 const NewsItem = ({
-  title = 'Без названия', // 🎯 Значение по умолчанию для заголовка
-  description = 'Нет описания', // 🎯 Значение по умолчанию для описания
-  date = 'Дата не указана', // 🎯 Значение по умолчанию для даты
-  imageUrl = '', // 🎯 Пустая строка по умолчанию для URL изображения
-  readMoreUrl = '#', // 🎯 # по умолчанию для ссылки
+  title = 'Без названия',
+  description = 'Нет описания',
+  date = 'Дата не указана',
+  imageUrl = '',
+  readMoreUrl = '#',
 }) => {
-  // 🎯 ДЕБАГ: Логируем что приходит в компонент
-  // Это помогает отлаживать если данные не передаются правильно
-  console.log('🎯 NewsItem получил пропсы:', {
-    заголовок: title,
-    описание_длина: description.length,
-    есть_изображение: !!imageUrl,
-    url_изображения: imageUrl || 'нет',
-    дата: date,
-    ссылка: readMoreUrl,
-  });
-
-  // 🎯 ИСПРАВЛЕННАЯ ФУНКЦИЯ ДЛЯ ФОРМАТИРОВАНИЯ ДАТЫ
-  // Преобразует строку даты в формат ДД/ММ/ГГГГ (например: 15/03/2023)
   const formatDate = dateString => {
     try {
-      // 🎯 ШАГ 1: Проверяем, есть ли дата вообще
       if (!dateString) return 'Дата не указана';
-
-      // 🎯 ШАГ 2: Создаем объект Date из строки
       const dateObj = new Date(dateString);
-
-      // 🎯 ШАГ 3: Проверяем что дата валидна (не Invalid Date)
-      if (isNaN(dateObj.getTime())) {
-        console.warn('⚠️ Невалидная дата:', dateString);
-        return dateString; // Возвращаем как есть если не можем распарсить
-      }
-
-      // 🎯 ШАГ 4: Получаем день, месяц и год
+      if (isNaN(dateObj.getTime())) return dateString;
       const day = dateObj.getDate().toString().padStart(2, '0');
-      // getDate() - день месяца (1-31)
-      // toString() - превращаем в строку
-      // padStart(2, '0') - добавляем ноль в начало если нужно (1 → "01")
-
       const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-      // getMonth() - месяц (0-11), поэтому +1
-
       const year = dateObj.getFullYear();
-      // getFullYear() - год (4 цифры)
-
-      // 🎯 ШАГ 5: Собираем в формате ДД/ММ/ГГГГ
       return `${day}/${month}/${year}`;
-    } catch (error) {
-      // 🎯 Если произошла ошибка при форматировании
-      console.error('❌ Ошибка форматирования даты:', error);
-      return dateString; // Возвращаем оригинальную строку
+    } catch {
+      return dateString;
     }
   };
 
-  // 🎯 РЕНДЕР КОМПОНЕНТА - то, что видит пользователь
   return (
-    // 🎯 li - элемент списка (ListItem)
-    // Каждая новость - это элемент списка NewsList
-    // className={styles.newsItem} - применяем стиль из CSS модуля
     <li className={styles.newsItem}>
-      {/* 🎯 КОНТЕЙНЕР ДЛЯ ИЗОБРАЖЕНИЯ */}
-      {/* Отдельный div для изображения позволяет лучше контролировать стили */}
       <div className={styles.imageContainer}>
-        {/* 🎯 ИЗОБРАЖЕНИЕ НОВОСТИ */}
         <img
           className={styles.newsImage}
-          // 🎯 src - URL изображения
-          // Если imageUrl пустой, используем fallback изображение
           src={
             imageUrl ||
             'https://placehold.co/400x300/ff6b08/white?text=PetLove+News'
           }
-          // 🎯 alt - альтернативный текст для доступности
           alt={title}
-          // 🎯 loading="lazy" - ленивая загрузка изображения
-          // Изображение загрузится только когда появится в области видимости
           loading="lazy"
-          // 🎯 ОБРАБОТКА ОШИБОК ЗАГРУЗКИ ИЗОБРАЖЕНИЯ
-          // Если изображение не загрузилось (ошибка 404, CORS и т.д.)
           onError={e => {
-            console.log('🖼️ Изображение не загрузилось, URL:', imageUrl);
-            // 🎯 Заменяем сломанное изображение на fallback
             e.target.src =
               'https://placehold.co/400x300/cccccc/666666?text=Изображение+не+доступно';
-            // 🎯 Важно: убираем обработчик ошибок чтобы избежать бесконечного цикла
-            // Если fallback изображение тоже не загрузится
             e.target.onerror = null;
-          }}
-          // 🎯 ОБРАБОТКА УСПЕШНОЙ ЗАГРУЗКИ
-          onLoad={() => {
-            console.log('✅ Изображение успешно загружено');
           }}
         />
       </div>
 
-      {/* 🎯 КОНТЕЙНЕР ДЛЯ ТЕКСТОВОГО КОНТЕНТА */}
       <div className={styles.newsContent}>
-        {/* 🎯 ЗАГОЛОВОК НОВОСТИ */}
-        {/* h3 - заголовок третьего уровня (семантически правильно) */}
-        <h3 className={styles.newsTitle}>
-          {title} {/* 🎯 Вставляем значение из пропса title */}
-        </h3>
-
-        {/* 🎯 ОПИСАНИЕ НОВОСТИ */}
-        {/* p - параграф для текста */}
-        <p className={styles.newsDescription}>
-          {description} {/* 🎯 Вставляем значение из пропса description */}
-        </p>
+        <h3 className={styles.newsTitle}>{title}</h3>
+        <p className={styles.newsDescription}>{description}</p>
         <div className={styles.newsDateBlock}>
-          {/* 🎯 ДАТА ПУБЛИКАЦИИ */}
-          <p className={styles.newsDate}>
-            {/* 🎯 Форматируем дату перед отображением */}
-            {formatDate(date)}
-          </p>
-
-          {/* 🎯 ССЫЛКА "READ MORE" */}
-          {/* a - тег для гиперссылки */}
+          <p className={styles.newsDate}>{formatDate(date)}</p>
           <a
             className={styles.newsLink}
-            href={readMoreUrl} // 🎯 URL из пропсов
-            target="_blank" // 🎯 ТРЕБОВАНИЕ ТЗ: открывать в новой вкладке
-            rel="noopener noreferrer" // 🎯 БЕЗОПАСНОСТЬ: защита от уязвимостей
-            // 🎯 ОБРАБОТЧИК КЛИКА
+            href={readMoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={e => {
-              // 🎯 ПРОВЕРКА: Если ссылка пустая или #, отменяем переход
               if (readMoreUrl === '#' || !readMoreUrl) {
-                e.preventDefault(); // 🎯 Отменяем стандартное поведение ссылки
-                console.warn('⚠️ Пустая ссылка для новости:', title);
-              } else {
-                console.log(
-                  '🔗 Пользователь переходит по ссылке:',
-                  readMoreUrl
-                );
+                e.preventDefault();
               }
             }}
           >
-            Read more {/* 🎯 Текст ссылки */}
+            Read more
           </a>
         </div>
       </div>
@@ -149,6 +65,4 @@ const NewsItem = ({
   );
 };
 
-// 🎯 ЭКСПОРТИРУЕМ КОМПОНЕНТ
-// export default - делает компонент доступным для импорта в других файлах
 export default NewsItem;

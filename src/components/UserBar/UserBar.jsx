@@ -1,8 +1,6 @@
-// src/components/UserBar/UserBar.jsx
-
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { getCurrentUser } from '../../utils/auth'; // ✅ Импортируем получение данных пользователя
+import { getCurrentUser } from '../../utils/auth';
 import styles from './UserBar.module.css';
 import sprite from '../../assets/icon/icon-sprite.svg';
 
@@ -14,7 +12,6 @@ const UserBar = ({ isMobile = false, isHomePage = false }) => {
   });
   const [loading, setLoading] = useState(true);
 
-  // 🎯 Загружаем данные пользователя при монтировании
   useEffect(() => {
     const loadUser = async () => {
       try {

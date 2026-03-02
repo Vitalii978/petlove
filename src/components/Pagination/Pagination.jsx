@@ -8,49 +8,35 @@ export default function Pagination({
   setToPage,
   toPage,
 }) {
-  console.log('🔍 Pagination:', {
-    toPage,
-    totalPages,
-    hasSetToPage: typeof setToPage === 'function',
-  });
-
-  // Если нет данных - не рендерим
   if (!numberOfPages || numberOfPages.length <= 1) {
     return null;
   }
 
-  // 🎯 ИСПРАВЛЕННЫЕ ОБРАБОТЧИКИ - передаем ЧИСЛА, не функции!
   const goToFirstPage = () => {
-    console.log('⬅️⬅️ Первая страница');
-    setToPage(1); // ✅ Число
+    setToPage(1);
   };
 
   const goToPrev = () => {
-    console.log('⬅️ Предыдущая страница');
-    const prevPage = Math.max(toPage - 1, 1); // ✅ Вычисляем число
-    setToPage(prevPage); // ✅ Передаем число
+    const prevPage = Math.max(toPage - 1, 1);
+    setToPage(prevPage);
   };
 
   const goToNext = () => {
-    console.log('➡️ Следующая страница');
-    const nextPage = Math.min(toPage + 1, totalPages); // ✅ Вычисляем число
-    setToPage(nextPage); // ✅ Передаем число
+    const nextPage = Math.min(toPage + 1, totalPages);
+    setToPage(nextPage);
   };
 
   const goToLastPage = () => {
-    console.log('➡️➡️ Последняя страница');
-    setToPage(totalPages); // ✅ Число
+    setToPage(totalPages);
   };
 
   const goToPage = e => {
     const pageNum = Number(e.target.textContent);
     if (!isNaN(pageNum)) {
-      console.log('🔢 Переход на страницу:', pageNum);
-      setToPage(pageNum); // ✅ Число
+      setToPage(pageNum);
     }
   };
 
-  // Создаем кнопки страниц
   const button = numberOfPages.map((number, index) => {
     return (
       <button

@@ -1,8 +1,3 @@
-/* 📁 src/components/PetBlock/PetBlock.module.css */
-/* 🎯 СТИЛИ ДЛЯ БЛОКА С КАРТИНКОЙ */
-/* ✅ ИСПРАВЛЕНО: стили как в примере */
-
-/* 🎯 ОСНОВНЫЕ СТИЛИ (мобильные) */
 .petBlock {
   position: relative;
   border-radius: 30px;
@@ -14,26 +9,22 @@
   background-position: 20px 35px;
 }
 
-/* 🎯 Для страницы AddPetPage - меньшая высота */
 .addPet {
   height: 213px;
 }
 
-/* 🎯 Позиционирование картинки для AddPetPage */
 .addPets {
   position: absolute;
   left: 25px;
   top: 0px;
 }
 
-/* 🎯 ДЛЯ RETINA ЭКРАНОВ (2x) */
 @media screen and (min-resolution: 192dpi) {
   .petBlock {
     background-image: url(/fonDogMob_2x.png);
   }
 }
 
-/* ============= ПЛАНШЕТНАЯ ВЕРСИЯ (768px - 1279px) ============= */
 @media screen and (min-width: 768px) {
   .petBlock {
     border-radius: 60px;
@@ -47,7 +38,6 @@
     height: 248px;
   }
 
-  /* 🎯 RETINA ДЛЯ ПЛАНШЕТА */
   @media screen and (min-resolution: 192dpi) {
     .petBlock {
       background-image: url(/fonDogTab_2x.png);
@@ -60,7 +50,6 @@
   }
 }
 
-/* ============= ДЕСКТОПНАЯ ВЕРСИЯ (1280px +) ============= */
 @media screen and (min-width: 1280px) {
   .petBlock {
     width: 592px;
@@ -70,7 +59,6 @@
     background-position: 30px 51px;
   }
 
-  /* 🎯 RETINA ДЛЯ ДЕСКТОПА */
   @media screen and (min-resolution: 192dpi) {
     .petBlock {
       background-image: url(/fonDogPc_2x.png);
@@ -83,13 +71,11 @@
     height: 660px;
   }
 
-  /* 🎯 Для картинки кота */
   .cat {
     position: absolute;
     top: 22px;
   }
 
-  /* 🎯 Для страницы AddPetPage */
   .addPets {
     position: absolute;
     left: -5px;

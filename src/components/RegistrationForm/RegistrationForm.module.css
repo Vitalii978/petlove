@@ -1,70 +1,51 @@
-/* src/components/RegistrationForm/RegistrationForm.module.css */
-/* 🎯 СТИЛИ ДЛЯ ФОРМЫ РЕГИСТРАЦИИ - ИЗ ПРИМЕРА */
-/* ==================================================== */
-
-/* 🎯 ОСНОВНОЙ КОНТЕЙНЕР ФОРМЫ */
 .boxRegistration {
   display: flex;
-  flex-direction: column; /* Вертикальное расположение */
-  margin-top: 12px; /* Отступ сверху */
-  list-style: none; /* Убираем маркеры списка */
-  padding: 0; /* Убираем стандартные отступы */
-  width: 100%; /* На всю ширину */
+  flex-direction: column;
+  margin-top: 12px;
+  list-style: none;
+  padding: 0;
+  width: 100%;
 }
 
-/* 🎯 ПРИВЕТСТВЕННЫЙ ТЕКСТ */
 .paragraphGreeting {
-  font-family: 'Manrope', sans-serif;
-  text-align: left; /* Выравнивание по левому краю */
-  font-weight: 500;
+  text-align: left;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: #262626;
-  max-width: 280px; /* Ограничение ширины */
-  /* margin: 0 auto;  */
+  max-width: 280px;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ FORMik */
 .formikBox {
   margin-top: 20px;
   width: 100%;
 }
 
-/* 🎯 САМА ФОРМА */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Расстояние между полями */
+  gap: 10px;
   width: 100%;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ КАЖДОГО ПОЛЯ */
 .boxInput {
-  position: relative; /* Для позиционирования иконок */
+  position: relative;
   width: 100%;
 }
 
-/* 🎯 ПОЛЯ ВВОДА */
 .input {
   box-sizing: border-box;
   border: 1px solid rgba(38, 38, 38, 0.15);
   border-radius: 30px;
-  padding: 12px 38px 12px 12px; /* Отступ справа для иконок */
+  padding: 12px 38px 12px 12px;
   width: 100%;
   height: 42px;
-
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   color: rgba(38, 38, 38, 0.8);
 
-  /* Стили для placeholder */
   &::placeholder {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 500;
     font-size: 14px;
     line-height: 1.29;
     letter-spacing: -0.03em;
@@ -72,28 +53,11 @@
   }
 }
 
-/* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
 .errorName,
 .errorEmail {
   position: absolute;
   left: 18px;
-  top: 45px; /* Под полем ввода */
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: #ef2447; /* Красный цвет */
-  white-space: nowrap; /* Запрещаем перенос текста */
-}
-
-.errorPassword,
-.errorPasswordSecond {
-  position: absolute;
-  left: 18px;
-  top: 70px; /* Для полей пароля (ниже) */
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
+  top: 45px;
   font-size: 10px;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -101,62 +65,68 @@
   white-space: nowrap;
 }
 
-/* 🎯 ЛЕЙБЛ ДЛЯ ИКОНКИ ГЛАЗА (показать/скрыть пароль) */
+.errorPassword,
+.errorPasswordSecond {
+  position: absolute;
+  left: 18px;
+  top: 70px;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #ef2447;
+  white-space: nowrap;
+}
+
 .labelPassword {
   display: block;
   position: absolute;
   width: 26px;
   height: 26px;
   top: 12px;
-  right: 12px; /* Справа от поля */
+  right: 12px;
   left: auto;
-  z-index: 2; /* Поверх поля */
+  z-index: 2;
 }
 
-/* 🎯 КНОПКА ОТПРАВКИ */
 .buttonSubmit {
   border-radius: 30px;
   padding: 12px 20px;
   width: 100%;
   height: 42px;
-  background-color: #f6b83d; /* Оранжевый как в дизайне */
+  background-color: #f6b83d;
   border: none;
   margin-top: 14px;
-
-  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
-  text-transform: uppercase; /* Заглавные буквы */
+  text-transform: uppercase;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #f9b020; /* Светлее при наведении */
+    background-color: #f9b020;
   }
 
   &:disabled {
-    background-color: #ccc; /* Серый при блокировке */
+    background-color: #ccc;
     cursor: not-allowed;
   }
 }
 
-/* 🎯 КЛАССЫ ДЛЯ ПОДСВЕТКИ ГРАНИЦ */
 .errBorderRed {
-  border: 1px solid #ef2447; /* Красная граница */
+  border: 1px solid #ef2447;
 }
 
 .errBorderGreen {
-  border: 1px solid #08aa83; /* Зеленая граница */
+  border: 1px solid #08aa83;
 }
 
-/* 🎯 ИКОНКИ ВАЛИДАЦИИ (крестик/галочка) */
 .iconEmail {
   position: absolute;
   top: 15px;
-  right: 12px; /* Справа от поля */
+  right: 12px;
   left: auto;
   width: 12px;
   height: 12px;
@@ -165,13 +135,12 @@
 .iconPassword {
   position: absolute;
   top: 16px;
-  right: 45px; /* Слева от иконки глаза */
+  right: 45px;
   left: auto;
   width: 12px;
   height: 12px;
 }
 
-/* ============= ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ============= */
 @media screen and (max-width: 374px) {
   .boxRegistration {
     padding: 0 5px;
@@ -213,7 +182,6 @@
   }
 }
 
-/* ============= ПЛАНШЕТЫ ============= */
 @media screen and (min-width: 768px) {
   .boxRegistration {
     margin-top: 16px;
@@ -222,7 +190,7 @@
 
   .form {
     gap: 16px;
-    width: 424px; /* Фиксированная ширина как в дизайне */
+    width: 424px;
   }
 
   .paragraphGreeting {

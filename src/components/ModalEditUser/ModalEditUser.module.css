@@ -1,7 +1,3 @@
-/* src/components/ModalEditUser/ModalEditUser.module.css */
-/* 🎯 СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ */
-/* ✅ ИЗМЕНЕНО: инпуты серые по умолчанию, желтые при заполнении */
-
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -13,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  /* padding: 12px; Уменьшен padding для маленьких экранов */
   animation: fadeIn 0.3s ease;
 }
 
@@ -26,12 +21,11 @@
   }
 }
 
-/* 🎯 КОНТЕНТ МОДАЛЬНОГО ОКНА */
 .modalContent {
   background-color: white;
   border-radius: 30px;
   width: 100%;
-  max-width: 335px; /* Фиксированная максимальная ширина */
+  max-width: 335px;
   max-height: 100%;
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -49,19 +43,16 @@
   }
 }
 
-/* 🎯 СПИСОК ВСЕГО КОНТЕНТА (как в примере) */
 .modalList {
   list-style: none;
   padding: 20px 20px 40px 20px;
   margin: 0;
   display: flex;
   flex-direction: column;
-  /* gap: 15px; */
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 🎯 КНОПКА ЗАКРЫТИЯ */
 .closeButtonItem {
   display: flex;
   justify-content: flex-end;
@@ -71,8 +62,6 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  /* width: 24px;
-  height: 24px; */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -94,7 +83,6 @@
   margin: 0 0 20px 0;
 }
 
-/* 🎯 АВАТАР */
 .avatarItem {
   display: flex;
   justify-content: center;
@@ -125,7 +113,6 @@
   stroke: #2b2b2a;
 }
 
-/* 🎯 ОШИБКА ОТ API */
 .apiError {
   background-color: #fff2f2;
   border: 1px solid #ffcdd2;
@@ -151,12 +138,10 @@
   line-height: 1.4;
 }
 
-/* 🎯 ФОРМА */
 .form {
   width: 100%;
 }
 
-/* 🎯 БЛОК ЗАГРУЗКИ АВАТАРА */
 .avatarUpload {
   display: flex;
   flex-direction: row;
@@ -164,10 +149,9 @@
   margin-bottom: 10px;
 }
 
-/* 🔥 ИЗМЕНЕНО: серый border по умолчанию */
 .avatarUrlInput {
   box-sizing: border-box;
-  border: 1px solid rgba(38, 38, 38, 0.15); /* Серый цвет по умолчанию */
+  border: 1px solid rgba(38, 38, 38, 0.15);
   border-radius: 30px;
   padding: 13px 12px;
   width: 161px;
@@ -176,19 +160,17 @@
   line-height: 1.33;
   letter-spacing: -0.02em;
   color: #262626;
-  flex: 1; /* Позволяем полю растягиваться */
-  transition: border-color 0.3s ease; /* Плавный переход */
+  flex: 1;
+  transition: border-color 0.3s ease;
 }
 
-/* 🔥 ИЗМЕНЕНО: желтый border при фокусе */
 .avatarUrlInput:focus {
   outline: none;
-  border: 1px solid #f6b83d; /* Желтый при фокусе */
+  border: 1px solid #f6b83d;
 }
 
-/* 🔥 НОВОЕ: желтый border когда есть значение */
 .avatarUrlInput:not(:placeholder-shown) {
-  border: 1px solid #f6b83d; /* Желтый когда поле заполнено */
+  border: 1px solid #f6b83d;
 }
 
 .fileInput {
@@ -202,11 +184,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  gap: 4px; /* Уменьшен gap */
+  gap: 4px;
   border-radius: 30px;
-  padding: 13px 12px; /* Адаптивные отступы */
-  width: auto; /* Автоматическая ширина */
-  min-width: 100px; /* Минимальная ширина */
+  padding: 13px 12px;
+  width: auto;
+  min-width: 100px;
   height: 42px;
   background-color: #fff4df;
   font-size: 12px;
@@ -214,7 +196,7 @@
   letter-spacing: -0.02em;
   color: #262626;
   transition: background-color 0.3s;
-  white-space: nowrap; /* Текст в одну строку */
+  white-space: nowrap;
 }
 
 .fileInputLabel:hover {
@@ -229,7 +211,6 @@
   flex-shrink: 0;
 }
 
-/* 🎯 ОСНОВНЫЕ ПОЛЯ ФОРМЫ */
 .formFields {
   display: flex;
   flex-direction: column;
@@ -244,37 +225,33 @@
   width: 100%;
 }
 
-/* 🔥 ИЗМЕНЕНО: серый border по умолчанию для всех инпутов */
 .input {
   box-sizing: border-box;
-  border: 1px solid rgba(38, 38, 38, 0.15); /* Серый цвет по умолчанию */
+  border: 1px solid rgba(38, 38, 38, 0.15);
   border-radius: 30px;
   padding: 12px;
-  width: 100%; /* На всю ширину родителя */
+  width: 100%;
   height: 42px;
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: -0.03em;
   color: #262626;
-  transition: border-color 0.3s ease; /* Плавный переход */
+  transition: border-color 0.3s ease;
 }
 
-/* 🔥 ИЗМЕНЕНО: желтый border при фокусе */
 .input:focus {
   outline: none;
-  border: 1px solid #f6b83d; /* Желтый при фокусе */
+  border: 1px solid #f6b83d;
 }
 
-/* 🔥 НОВОЕ: желтый border когда есть значение */
 .input:not(:placeholder-shown) {
-  border: 1px solid #f6b83d; /* Желтый когда поле заполнено */
+  border: 1px solid #f6b83d;
 }
 
 .inputError {
-  border-color: #ff4444; /* Красный для ошибок (перебивает желтый) */
+  border-color: #ff4444;
 }
 
-/* 🎯 СООБЩЕНИЯ ОБ ОШИБКАХ */
 .errorMessage {
   padding-left: 4px;
   font-weight: 500;
@@ -285,14 +262,13 @@
   margin: 0;
 }
 
-/* 🎯 КНОПКА SUBMIT */
 .submitButton {
   box-sizing: border-box;
   border: none;
   margin-top: 21px;
   border-radius: 30px;
-  padding: 12px 0; /* Горизонтальный padding 0 */
-  width: 100%; /* На всю ширину */
+  padding: 12px 0;
+  width: 100%;
   height: 42px;
   background-color: #f6b83d;
   font-weight: 700;
@@ -314,11 +290,9 @@
   cursor: not-allowed;
 }
 
-/* 🎯 ============= АДАПТИВНОСТЬ ============= */
-/* 🔥 РЕЗИНОВАЯ ВЕРСТКА ДЛЯ ЭКРАНОВ МЕНЬШЕ 374px */
 @media (max-width: 374px) {
   .modalContent {
-    max-width: 100%; /* На всю ширину */
+    max-width: 100%;
     width: 100%;
   }
 
@@ -349,7 +323,7 @@
 @media screen and (min-width: 768px) {
   .modalContent {
     max-width: 480px;
-    position: relative; /* Для позиционирования крестика */
+    position: relative;
   }
 
   .modalList {
