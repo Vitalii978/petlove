@@ -1,82 +1,42 @@
-// Импортируем библиотеку axios для HTTP запросов
 import axios from 'axios';
 
-// Берем базовый URL API из переменной окружения
-// import.meta.env дает доступ к переменным из .env файла
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Проверяем, что переменная загрузилась
-// Если нет - выводим предупреждение в консоль
 if (!BASE_URL) {
   console.warn('⚠️ VITE_API_BASE_URL не задан в .env файле');
   console.warn('Используется URL по умолчанию');
 }
 
-// Создаем экземпляр axios с базовыми настройками
-// axios.create() создает копию axios с нашими настройками
 const api = axios.create({
-  baseURL: BASE_URL || 'https://petlove.b.goit.study/api', // Базовый адрес
-  timeout: 10000, // Таймаут 10 секунд
+  baseURL: BASE_URL || 'https://petlove.b.goit.study/api',
+  timeout: 10000,
   headers: {
-    'Content-Type': 'application/json', // Тип данных - JSON
+    'Content-Type': 'application/json',
   },
 });
 
-// Добавляем перехватчик (interceptor) для запросов
-// Этот код выполняется перед КАЖДЫМ запросом
 api.interceptors.request.use(
   config => {
-    // config - объект настройки текущего запроса
-
-    // Берем токен из localStorage
-    // Токен появляется после успешной авторизации пользователя
     const token = localStorage.getItem('token');
 
-    // Если токен существует, добавляем его в заголовки
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Для отладки: выводим информацию о запросе
-    console.log(
-      `📤 Отправка запроса: ${config.method?.toUpperCase()} ${config.url}`
-    );
-
-    // Возвращаем измененный объект конфигурации
     return config;
   },
   error => {
-    // Обработка ошибки при настройке запроса
-    console.error('❌ Ошибка при настройке запроса:', error);
     return Promise.reject(error);
   }
 );
 
-// Добавляем перехватчик для ответов
 api.interceptors.response.use(
   response => {
-    // Успешный ответ от сервера
-    console.log(`✅ Ответ получен: ${response.status} ${response.config.url}`);
     return response;
   },
   error => {
-    // Ошибка при получении ответа
-    if (error.response) {
-      // Сервер ответил с кодом ошибки (4xx, 5xx)
-      console.error(
-        `❌ Ошибка сервера: ${error.response.status}`,
-        error.response.data
-      );
-    } else if (error.request) {
-      // Запрос был отправлен, но ответ не получен
-      console.error('❌ Нет ответа от сервера');
-    } else {
-      // Ошибка при настройке запроса
-      console.error('❌ Ошибка настройки запроса:', error.message);
-    }
     return Promise.reject(error);
   }
 );
 
-// Экспортируем созданный экземпляр для использования во всем проекте
 export default api;

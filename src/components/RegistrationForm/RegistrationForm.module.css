@@ -260,3 +260,14 @@
     height: 16px;
   }
 }
+
+.input:not(.errBorderRed):not(.errBorderGreen):placeholder-shown:hover,
+.input:not(.errBorderRed):not(.errBorderGreen):placeholder-shown:focus {
+  border-color: #f6b83d;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: none;
+}

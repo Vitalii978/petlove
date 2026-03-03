@@ -59,26 +59,11 @@
   }
 }
 
-@media screen and (max-width: 374px) {
-  /* .sectionHome {
-    padding: 0 20px;
-    max-width: 375px;
-  } */
-
-  /* .titleBox {
-  padding: 50px 20px;
-  } */
-}
-
 @media screen and (min-width: 768px) {
   .sectionHome {
     max-width: 768px;
     padding: 0 32px;
   }
-
-  /* .listHome {
-    gap: 0px;
-  } */
 
   .titleBox {
     padding: 96px 32px 44px 32px;
@@ -120,7 +105,6 @@
   }
 
   .titleBox {
-    /* background-color: #f6b83d; */
     padding: 96px 64px 32px 64px;
     display: flex;
     flex-direction: row;

@@ -1,6 +1,3 @@
-// src/pages/NotFoundPage/NotFoundPage.jsx
-// 🎯 СТРАНИЦА 404 - ОТОБРАЖАЕТСЯ КОГДА ПОЛЬЗОВАТЕЛЬ ПЕРЕШЕЛ ПО НЕСУЩЕСТВУЮЩЕМУ АДРЕСУ
-
 import { NavLink } from 'react-router-dom';
 import styles from './NotFoundPage.module.css';
 
@@ -8,7 +5,6 @@ const NotFoundPage = () => {
   return (
     <section className={styles.notFoundPage}>
       <ul className={styles.boxNotFound}>
-        {/* 🎯 ЗАГОЛОВОК С 404 И КОТИКОМ */}
         <li className={styles.titleBox}>
           <span className={styles.number}>4</span>
           <span className={styles.imgBox}>
@@ -27,12 +23,10 @@ const NotFoundPage = () => {
           <span className={styles.number}>4</span>
         </li>
 
-        {/* 🎯 ТЕКСТ ОШИБКИ */}
         <li>
           <p className={styles.paragraph}>Ooops! This page not found :(</p>
         </li>
 
-        {/* 🎯 ССЫЛКА НА ГЛАВНУЮ */}
         <li className={styles.containerLink}>
           <NavLink to="/home" className={styles.linkHome}>
             To home page

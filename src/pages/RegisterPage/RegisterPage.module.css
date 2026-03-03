@@ -1,120 +1,101 @@
-/* src/pages/RegisterPage/RegisterPage.module.css */
-/* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ РЕГИСТРАЦИИ - ВЗЯТЫ ИЗ ПРИМЕРА */
-/* ==================================================== */
-
-/* 🎯 ОСНОВНАЯ СЕКЦИЯ СТРАНИЦЫ */
 .registrationSection {
-  box-sizing: border-box; /* Паддинги не увеличивают ширину */
-  max-width: 375px; /* Ограничение ширины для мобильных */
-  padding: 20px; /* Отступы по бокам */
-  margin: 0 auto; /* Центрирование по горизонтали */
+  box-sizing: border-box;
+  max-width: 375px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
-/* 🎯 СПИСОК С ДВУМЯ ЭЛЕМЕНТАМИ (КАРТИНКА И ФОРМА) */
 .registration {
-  display: flex; /* Флекс-контейнер */
-  flex-direction: column; /* Вертикальное расположение на мобильных */
-  gap: 10px; /* Расстояние между элементами */
-  width: 100%; /* На всю ширину */
-  padding: 0; /* Убираем стандартные отступы ul */
-  margin: 0; /* Убираем стандартные отступы ul */
-  list-style: none; /* Убираем маркеры списка */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-/* 🎯 ЛЕВЫЙ ЭЛЕМЕНТ - КАРТИНКА */
 .petBlock {
-  width: 100%; /* На всю ширину */
-  margin: 0 auto; /* Центрирование */
+  width: 100%;
+  margin: 0 auto;
 }
 
-/* 🎯 ПРАВЫЙ ЭЛЕМЕНТ - ФОРМА */
 .boxRegistration {
-  background-color: #fff; /* Белый фон */
-  box-sizing: border-box; /* Паддинги не увеличивают ширину */
-  border-radius: 30px; /* Скругленные углы */
-  padding: 27px 20px; /* Внутренние отступы */
-  width: 335px; /* Фиксированная ширина как в Figma */
-  height: 422px; /* Фиксированная высота как в Figma */
-  margin: 0 auto; /* Центрирование */
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 30px;
+  padding: 27px 20px;
+  width: 335px;
+  height: 422px;
+  margin: 0 auto;
 }
 
-/* 🎯 СООБЩЕНИЕ ОБ ОШИБКЕ */
 .error {
-  background-color: #ffebee; /* Светло-красный фон */
-  color: #c62828; /* Темно-красный текст */
-  padding: 12px 16px; /* Внутренние отступы */
-  border-radius: 8px; /* Скругленные углы */
-  margin: 16px 0 0; /* Отступ сверху */
-  font-size: 14px; /* Размер шрифта */
-  text-align: center; /* Текст по центру */
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 16px 0 0;
+  font-size: 14px;
+  text-align: center;
 }
 
 .error p {
-  margin: 0; /* Убираем отступы у параграфа */
+  margin: 0;
 }
 
-/* 🎯 ССЫЛКА НА ВХОД */
 .loginLink {
-  margin-top: 12px; /* Отступ сверху */
-  text-align: center; /* Текст по центру */
+  margin-top: 12px;
+  text-align: center;
 }
 
 .loginText {
-  font-family: 'Manrope', sans-serif; /* Шрифт как в дизайне */
-  font-weight: 500; /* Полужирный */
-  font-size: 12px; /* Размер шрифта */
-  line-height: 1.17; /* Межстрочный интервал */
-  letter-spacing: -0.03em; /* Межбуквенный интервал */
-  color: rgba(38, 38, 38, 0.5); /* Серый цвет с прозрачностью */
-  margin: 0; /* Убираем отступы */
-}
-
-.link {
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
   font-size: 12px;
   line-height: 1.17;
   letter-spacing: -0.03em;
-  color: #f6b83d; /* Оранжевый цвет как в дизайне */
-  text-decoration: none; /* Убираем подчеркивание */
-  transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
-  margin-left: 4px; /* Небольшой отступ слева */
+  color: rgba(38, 38, 38, 0.5);
+  margin: 0;
+}
+
+.link {
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.03em;
+  color: #f6b83d;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-left: 4px;
 }
 
 .link:hover {
-  color: #f9b020; /* Более светлый оранжевый при наведении */
-  text-decoration: underline; /* Подчеркивание при наведении */
+  color: #f9b020;
+  text-decoration: underline;
 }
 
-/* ============= АДАПТИВНОСТЬ ============= */
-/* 🎯 Все стили организованы по принципу Mobile First */
-/* Сначала стили для мобильных, потом для планшетов, потом для десктопа */
-
-/* 🎯 ПЛАНШЕТЫ (768px - 1279px) */
 @media screen and (min-width: 768px) {
   .registrationSection {
-    max-width: 768px; /* Увеличиваем максимальную ширину */
-    padding: 32px; /* Увеличиваем отступы по бокам */
+    max-width: 768px;
+    padding: 32px;
     margin: 0 auto;
   }
 
   .registration {
-    gap: 16px; /* Увеличиваем расстояние между элементами */
+    gap: 16px;
   }
 
   .boxRegistration {
-    border-radius: 60px; /* Больше скругление */
-    padding: 30px 140px; /* Больше отступы */
-    width: 704px; /* Больше ширина */
-    height: 560px; /* Больше высота */
+    border-radius: 60px;
+    padding: 30px 140px;
+    width: 704px;
+    height: 560px;
   }
 
   .loginLink {
-    margin-top: 16px; /* Увеличиваем отступ */
+    margin-top: 16px;
   }
 
   .loginText {
-    font-size: 14px; /* Увеличиваем шрифт */
+    font-size: 14px;
     line-height: 1.43;
   }
 
@@ -124,35 +105,33 @@
   }
 }
 
-/* 🎯 ДЕСКТОП (1280px и больше) */
 @media screen and (min-width: 1280px) {
   .registrationSection {
-    max-width: 1280px; /* Максимальная ширина для десктопа */
-    padding: 16px 32px 32px 32px; /* Отступы */
+    max-width: 1280px;
+    padding: 16px 32px 32px 32px;
     margin: 0 auto;
   }
 
   .registration {
-    flex-direction: row; /* Меняем на горизонтальное расположение */
-    gap: 32px; /* Увеличиваем расстояние */
-    align-items: center; /* Выравниваем по центру */
+    flex-direction: row;
+    gap: 32px;
+    align-items: center;
   }
 
   .petBlock {
-    flex: 1; /* Занимает 1 часть пространства */
-    max-width: 592px; /* Максимальная ширина как в дизайне */
+    flex: 1;
+    max-width: 592px;
   }
 
   .boxRegistration {
-    flex: 1; /* Занимает 1 часть пространства */
-    padding: 77px 84px; /* Отступы как в дизайне */
-    width: 592px; /* Ширина как в дизайне */
-    height: 654px; /* Высота как в дизайне */
-    margin: 0; /* Убираем центрирование */
+    flex: 1;
+    padding: 77px 84px;
+    width: 592px;
+    height: 654px;
+    margin: 0;
   }
 }
 
-/* 🎯 ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ (320px - 374px) */
 @media screen and (max-width: 374px) {
   .boxRegistration {
     padding: 20px;

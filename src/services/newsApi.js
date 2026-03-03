@@ -1,87 +1,41 @@
-// src/services/newsApi.js
-
-// 🎯 ШАГ 1: ИМПОРТ БАЗОВОГО API
-// api.js - наш созданный ранее файл с базовым URL и настройками axios
 import api from './api';
 
-// 🎯 ШАГ 2: СОЗДАЕМ ОБЪЕКТ newsApi
-// Этот объект содержит ВСЕ функции для работы с новостями
 const newsApi = {
-  // 🎯 ШАГ 3: ФУНКЦИЯ getNews - ГЛАВНАЯ ФУНКЦИЯ
-  // Назначение: Получить новости с сервера с пагинацией и поиском
-  // Параметры с значениями по умолчанию:
-  //   page = 1     - номер страницы (если не указан - первая)
-  //   limit = 6    - новостей на странице (по ТЗ 6)
-  //   keyword = '' - поисковый запрос (пустой если не ищем)
   getNews: async ({ page = 1, limit = 6, keyword = '' } = {}) => {
-    // 🎯 ФУНКЦИЯ ВЫПОЛНЯЕТСЯ КОГДА КТО-ТО ВЫЗЫВАЕТ newsApi.getNews()
-
     try {
-      // 🎯 ШАГ 4: ПОДГОТОВКА ПАРАМЕТРОВ ЗАПРОСА
-      // Создаем объект params - параметры которые пойдут в URL как ?page=1&limit=6...
       const params = {
-        page, // Номер страницы: page: 1
-        limit, // Лимит: limit: 6
+        page,
+        limit,
       };
 
-      // 🎯 ШАГ 5: ДОБАВЛЯЕМ ПОИСК ЕСЛИ ОН ЕСТЬ
-      // Проверяем: если keyword не пустая строка (trim убирает пробелы)
       if (keyword.trim()) {
-        // 🎯 ВАЖНО: параметр называется keyword, НЕ query!
-        params.keyword = keyword.trim(); // Добавляем keyword: "dog"
+        params.keyword = keyword.trim();
       }
-      // Объяснение: API документация говорит что параметр называется "keyword"
-      // Раньше мы использовали "query" и поиск не работал
 
-      // 🎯 ШАГ 6: ДЕЛАЕМ ЗАПРОС К API
-      // api.get() - метод GET библиотеки axios
-      // '/news' - endpoint для новостей
-      // { params } - передаем наши параметры
       const response = await api.get('/news', { params });
-      // await - ждем пока сервер ответит
-      // response - объект ответа от сервера
 
-      // 🎯 ШАГ 7: ВОЗВРАЩАЕМ УСПЕШНЫЙ РЕЗУЛЬТАТ
-      // Всегда возвращаем объект с одинаковой структурой - удобно для обработки
       return {
-        success: true, // 🎯 ФЛАГ УСПЕХА
-        data: response.data.results || [], // 🎯 ДАННЫЕ (массив новостей)
+        success: true,
+        data: response.data.results || [],
         pagination: {
-          // 🎯 ИНФОРМАЦИЯ О ПАГИНАЦИИ
           currentPage: response.data.page || page,
           totalPages: response.data.totalPages || 1,
-          // 🎯 ВАЖНО: API не возвращает total (общее количество)
-          // Вычисляем приблизительно: totalPages × limit
           totalItems: (response.data.totalPages || 1) * limit,
         },
       };
     } catch (error) {
-      // 🎯 ШАГ 8: ОБРАБОТКА ОШИБОК
-      // Этот блок выполняется если в try произошла ошибка
-      // (нет сети, сервер недоступен, ошибка 404 и т.д.)
-      console.error('API Error:', error);
-
-      // 🎯 ШАГ 9: ВОЗВРАЩАЕМ ОШИБКУ В ТОЙ ЖЕ СТРУКТУРЕ
-      // Даже при ошибке возвращаем объект с success: false
-      // Это удобно - всегда работаем с одним форматом
       return {
-        success: false, // 🎯 ФЛАГ ОШИБКИ
-        error: error.message, // 🎯 ТЕКСТ ОШИБКИ
-        data: [], // 🎯 ПУСТОЙ МАССИВ ДАННЫХ
+        success: false,
+        error: error.message,
+        data: [],
         pagination: {
-          // 🎯 ПАГИНАЦИЯ ПО УМОЛЧАНИЮ
           currentPage: page,
           totalPages: 1,
           totalItems: 0,
         },
       };
     }
-    // 🎯 КОНЕЦ ФУНКЦИИ getNews
   },
-  // 🎯 Здесь можно добавлять другие функции:
-  // getNewsById, createNews, updateNews и т.д.
 };
 
-// 🎯 ШАГ 10: ЭКСПОРТИРУЕМ ОБЪЕКТ
-// Делаем newsApi доступным для импорта в других файлах
 export default newsApi;

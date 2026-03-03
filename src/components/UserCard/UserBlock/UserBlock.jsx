@@ -33,8 +33,8 @@ const UserBlock = ({ user, onUpdate }) => {
       if (onUpdate) {
         onUpdate({ ...user, avatar: imageUrl });
       }
-    } catch (error) {
-      console.error('❌ Ошибка загрузки фото:', error);
+    } catch {
+      // console.error('❌ Ошибка загрузки фото:', error);
     } finally {
       setUploading(false);
     }

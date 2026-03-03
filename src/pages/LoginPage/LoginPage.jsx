@@ -1,173 +1,76 @@
-// src/pages/LoginPage/LoginPage.jsx
-// 🎯 СТРАНИЦА ВХОДА - АДАПТИРОВАНА ПОД ДИЗАЙН ИЗ FIGMA
-// ====================================================
-// Что делает эта страница:
-// 1. Отображает форму входа с email и паролем (компонент LoginForm)
-// 2. Получает данные из формы через setUserDataLogin
-// 3. При получении данных отправляет запрос на сервер через auth.js
-// 4. При успехе - перенаправляет на профиль /profile/favorites
-// 5. При ошибке - показывает сообщение пользователю
-// ====================================================
-
-// 🎯 ИМПОРТЫ REACT ХУКОВ
-// useState - для хранения данных формы и ошибок
-// useEffect - для отправки данных при их появлении
 import { useState, useEffect } from 'react';
-
-// 🎯 ИМПОРТЫ ДЛЯ НАВИГАЦИИ
-// Link - для ссылки на регистрацию
-// useNavigate - для перенаправления после успешного входа
 import { Link, useNavigate } from 'react-router-dom';
-
-// 🎯 ИМПОРТЫ НАШИХ УТИЛИТ И КОМПОНЕНТОВ
-// login - функция для отправки запроса на сервер
 import { login } from '../../utils/auth';
-// LoginForm - компонент формы (валидация, иконки, поля)
 import LoginForm from '../../components/LoginForm/LoginForm.jsx';
-// PetBlock - компонент с картинкой собаки (адаптивная)
 import PetBlock from '../../components/PetBlock/PetBlock';
-// Title - универсальный компонент заголовка
 import Title from '../../components/Title/Title';
-
-// 🎯 ИМПОРТЫ СТИЛЕЙ
-// Используем CSS модули для изоляции стилей
 import styles from './LoginPage.module.css';
 
-// 🎯 КОМПОНЕНТ СТРАНИЦЫ ВХОДА
-// Экспортируем по умолчанию для использования в маршрутизации
 const LoginPage = () => {
-  // =============== 🟢 СОЗДАНИЕ СОСТОЯНИЙ ===============
-
-  // 🟢 navigate - хук для перенаправления на другие страницы
-  // Используется после успешного входа: navigate('/profile/favorites')
   const navigate = useNavigate();
-
-  // 🟢 userDataLogin - состояние для хранения данных из формы
-  // Приходит из LoginForm через setUserDataLogin
-  // Структура: { email: 'user@mail.com', password: '1234567' }
   const [userDataLogin, setUserDataLogin] = useState({});
-
-  // 🟢 error - состояние для хранения текста ошибки
-  // Если ошибка есть - показываем красное сообщение
-  // Если ошибки нет - пустая строка (ничего не показываем)
   const [error, setError] = useState('');
 
-  // =============== 🟢 ЭФФЕКТ ДЛЯ ОТПРАВКИ ФОРМЫ ===============
-  // 🟢 useEffect срабатывает КАЖДЫЙ РАЗ, когда меняется userDataLogin
-  // То есть когда пользователь отправляет форму (setUserDataLogin в LoginForm)
   useEffect(() => {
-    // 🟢 ШАГ 1: Проверяем, есть ли данные
-    // Если email или password пустые - ничего не делаем
-    // Это защита от первого рендера, когда данные еще не пришли
     if (!userDataLogin.email || !userDataLogin.password) return;
 
-    // 🟢 ШАГ 2: Создаем асинхронную функцию для отправки запроса
-    // Нельзя сделать сам useEffect асинхронным, поэтому создаем внутреннюю функцию
     const handleLogin = async () => {
-      console.log('🔄 Начинаем вход...', userDataLogin);
-
-      // 🟢 ШАГ 3: Очищаем предыдущую ошибку (если была)
       setError('');
 
       try {
-        // 🟢 ШАГ 4: Отправляем запрос на сервер
-        // login - функция из utils/auth.js
-        // Отправляет POST запрос на /users/signin
         const result = await login({
-          email: userDataLogin.email.trim(), // Убираем лишние пробелы
+          email: userDataLogin.email.trim(),
           password: userDataLogin.password,
         });
 
-        // 🟢 ШАГ 5: Обрабатываем ответ от сервера
         if (result.success) {
-          // ✅ Успех! Сервер вернул токен
-          console.log('✅ Вход успешен! Переходим в профиль...');
-          // Перенаправляем пользователя на страницу профиля (вкладка избранное)
           navigate('/profile/favorites');
         } else {
-          // ❌ Ошибка от сервера (неправильный email/пароль)
           setError(result.error || 'Login failed');
         }
-      } catch (err) {
-        // ❌ Критическая ошибка (нет интернета, сервер упал)
-        console.error('❌ Неожиданная ошибка при входе:', err);
+      } catch {
         setError('Something went wrong. Please try again.');
       }
     };
 
-    // 🟢 ШАГ 6: Вызываем функцию
     handleLogin();
-
-    // 🟢 ЗАВИСИМОСТИ useEffect:
-    // - userDataLogin: эффект срабатывает когда появляются новые данные из формы
-    // - navigate: стабильная функция из react-router (никогда не меняется)
   }, [userDataLogin, navigate]);
 
-  // =============== 🟢 РЕНДЕР СТРАНИЦЫ ===============
-  // Возвращаем JSX разметку - то, что увидит пользователь
-
   return (
-    // 🟢 Основная секция страницы
-    // Используем семантический тег <section>
     <section className={styles.loginSection}>
-      {/* 🟢 СПИСОК ИЗ ДВУХ ЭЛЕМЕНТОВ (КАК В FIGMA) */}
-      {/* Используем <ul> для семантики - это список */}
       <ul className={styles.login}>
-        {/* 🟢 ЛЕВЫЙ ЭЛЕМЕНТ - КАРТИНКА */}
-        {/* <li> потому что это элемент списка */}
         <li className={styles.petBlock}>
-          {/* 🟢 PetBlock - готовый компонент с картинкой */}
-          {/* Внутри него - <picture> для адаптивных изображений */}
           <PetBlock>
-            {/* 🟢 Картинки для мобильных телефонов (до 767px) */}
-            {/* srcSet: 1x для обычных экранов, 2x для retina */}
             <source
               srcSet="/dogLoginMob_1x.png 1x, /dogLoginMob_2x.png 2x"
               media="(max-width: 767px)"
             />
-
-            {/* 🟢 Картинки для планшетов (768px - 1279px) */}
             <source
               srcSet="/dogLoginTab_1x.png 1x, /dogLoginTab_2x.png 2x"
               media="(min-width: 768px) and (max-width: 1279.5px)"
             />
-
-            {/* 🟢 Картинки для компьютеров (от 1280px) */}
             <source
               srcSet="/dogLoginPc_1x.png 1x, /dogLoginPc_2x.png 2x"
               media="(min-width: 1280px)"
             />
-
-            {/* 🟢 Фолбэк картинка (если ничего не подошло) */}
             <img src="/dogLoginMob_1x.png" alt="dog" />
           </PetBlock>
         </li>
 
-        {/* 🟢 ПРАВЫЙ ЭЛЕМЕНТ - ФОРМА ВХОДА */}
         <li className={styles.boxLogin}>
-          {/* 🟢 ЗАГОЛОВОК СТРАНИЦЫ */}
-          {/* Компонент Title - универсальный, можно передавать текст */}
           <Title>Log in</Title>
 
-          {/* 🟢 СООБЩЕНИЕ ОБ ОШИБКЕ (условный рендеринг) */}
-          {/* Показываем только если error не пустая строка */}
           {error && (
             <div className={styles.error} role="alert">
               <p>{error}</p>
             </div>
           )}
 
-          {/* 🟢 КОМПОНЕНТ ФОРМЫ ВХОДА */}
-          {/* Передаем setUserDataLogin - функция для получения данных из формы */}
-          {/* Когда пользователь нажмет Submit, LoginForm вызовет эту функцию */}
           <LoginForm setUserDataLogin={setUserDataLogin} />
 
-          {/* 🟢 ССЫЛКА НА РЕГИСТРАЦИЮ */}
-          {/* Для пользователей, у которых еще нет аккаунта */}
           <div className={styles.registerLink}>
             <p className={styles.registerText}>
               Don't have an account?{' '}
-              {/* Link из react-router - переход без перезагрузки страницы */}
               <Link to="/register" className={styles.link}>
                 Register
               </Link>
@@ -179,5 +82,4 @@ const LoginPage = () => {
   );
 };
 
-// 🟢 Экспортируем компонент для использования в App.jsx
 export default LoginPage;

@@ -1,6 +1,3 @@
-/* src/pages/NotFoundPage/NotFoundPage.module.css */
-/* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ 404 */
-
 .notFoundPage {
   box-sizing: border-box;
   max-width: 375px;
@@ -9,7 +6,6 @@
   width: 100%;
 }
 
-/* 🎯 ОСНОВНОЙ БЛОК */
 .boxNotFound {
   background-color: #f6b83d;
   border-radius: 30px;
@@ -24,7 +20,6 @@
   margin: 0;
 }
 
-/* 🎯 СТРОКА С ЦИФРАМИ 404 И КОТИКОМ */
 .titleBox {
   display: flex;
   flex-direction: row;
@@ -33,7 +28,6 @@
   justify-content: center;
 }
 
-/* 🎯 ЦИФРЫ 4 */
 .number {
   font-family: 'Manrope', sans-serif;
   font-weight: 800;
@@ -42,7 +36,6 @@
   color: #fff;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ КОТИКА */
 .imgBox {
   display: flex;
   justify-content: center;
@@ -50,7 +43,6 @@
   border-radius: 100%;
 }
 
-/* 🎯 ИЗОБРАЖЕНИЕ КОТИКА */
 .img {
   width: 109px;
   height: 109px;
@@ -62,7 +54,6 @@
   object-fit: contain;
 }
 
-/* 🎯 ТЕКСТ ОШИБКИ */
 .paragraph {
   font-weight: 700;
   font-size: 16px;
@@ -73,7 +64,6 @@
   margin: 0;
 }
 
-/* 🎯 ССЫЛКА НА ГЛАВНУЮ */
 .linkHome {
   box-sizing: border-box;
   border-radius: 30px;
@@ -86,7 +76,6 @@
   letter-spacing: -0.03em;
   color: #f6b83d;
   text-decoration: none;
-  /* display: inline-block; */
   transition: all 0.3s ease;
   width: 150px;
   height: 42px;
@@ -99,12 +88,9 @@
   background-color: #fbe7c1;
 }
 
-/* 🎯 КОНТЕЙНЕР ДЛЯ ССЫЛКИ */
 .containerLink {
   margin-top: 12px;
 }
-
-/* ============= АДАПТИВНОСТЬ ============= */
 
 @media screen and (min-width: 768px) {
   .notFoundPage {
@@ -143,7 +129,6 @@
   }
 }
 
-/* 🎯 ДЕСКТОП (1280px и больше) */
 @media screen and (min-width: 1280px) {
   .notFoundPage {
     min-width: 1280px;

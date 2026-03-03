@@ -21,8 +21,8 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
     try {
       const response = await api.get('/users/current/full');
       setPets(response.data.pets || []);
-    } catch (error) {
-      console.error('❌ Ошибка загрузки:', error);
+    } catch {
+      // console.error('❌ Ошибка загрузки:', error);
     } finally {
       // setLoading(false);
     }
@@ -37,8 +37,8 @@ const PetsBlock = ({ pets: initialPets = [], onAddPet }) => {
       toast.success('✅ Pet deleted successfully', {
         duration: 3000,
       });
-    } catch (error) {
-      console.error('❌ Ошибка при удалении питомца:', error);
+    } catch {
+      // console.error('❌ Ошибка при удалении питомца:', error);
     }
   };
 

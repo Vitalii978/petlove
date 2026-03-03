@@ -1,13 +1,10 @@
-// src/utils/auth.js
-import api from '../services/api'; // ✅ Импортируем наш axios instance
+import api from '../services/api';
 
-// 1. Проверка авторизации
 export function isAuthenticated() {
   const token = localStorage.getItem('token');
   return !!token;
 }
 
-// 2. Получить данные пользователя (базовые - БЕЗ питомцев)
 export async function getCurrentUser() {
   try {
     const token = localStorage.getItem('token');
@@ -23,8 +20,6 @@ export async function getCurrentUser() {
       user: response.data,
     };
   } catch (error) {
-    console.error('❌ Ошибка при получении пользователя:', error);
-
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
     }
@@ -36,7 +31,6 @@ export async function getCurrentUser() {
   }
 }
 
-// ✅ НОВАЯ ФУНКЦИЯ: Получить ПОЛНЫЕ данные пользователя (С ПИТОМЦАМИ!)
 export async function getCurrentUserFull() {
   try {
     const token = localStorage.getItem('token');
@@ -45,24 +39,13 @@ export async function getCurrentUserFull() {
       return { success: false, error: 'Not authenticated' };
     }
 
-    console.log(
-      '🔄 Загружаем ПОЛНЫЕ данные пользователя с /users/current/full'
-    );
-
-    // 🟢 ВАЖНО! Используем другой эндпоинт!
     const response = await api.get('/users/current/full');
-    // const response = await api.get('/users/current-full-wrong-url');  //Тестовій неправильній адресс дл проверки стиле й и разметки ошибок
-
-    console.log('✅ Получены данные с питомцами:', response.data);
-    console.log('🐕 Количество питомцев:', response.data.pets?.length || 0);
 
     return {
       success: true,
       user: response.data,
     };
   } catch (error) {
-    console.error('❌ Ошибка при получении ПОЛНЫХ данных:', error);
-
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
     }
@@ -74,16 +57,12 @@ export async function getCurrentUserFull() {
   }
 }
 
-// 3. Регистрация
 export async function register(userData) {
   try {
-    console.log('🔄 Регистрируем пользователя через api...');
-
     const response = await api.post('/users/signup', userData);
 
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
-      console.log('✅ Токен сохранен');
     }
 
     return {
@@ -91,8 +70,6 @@ export async function register(userData) {
       user: response.data,
     };
   } catch (error) {
-    console.error('❌ Ошибка при регистрации:', error);
-
     let errorMessage = 'Registration failed';
 
     if (error.response) {
@@ -114,16 +91,12 @@ export async function register(userData) {
   }
 }
 
-// 4. Вход
 export async function login(credentials) {
   try {
-    console.log('🔄 Входим в систему...');
-
     const response = await api.post('/users/signin', credentials);
 
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
-      console.log('✅ Токен сохранен');
     }
 
     return {
@@ -131,8 +104,6 @@ export async function login(credentials) {
       user: response.data,
     };
   } catch (error) {
-    console.error('❌ Ошибка при входе:', error);
-
     let errorMessage = 'Login failed';
 
     if (error.response) {
@@ -154,23 +125,16 @@ export async function login(credentials) {
   }
 }
 
-// 5. Выход
 export async function logout() {
   try {
-    console.log('🔄 Выходим из системы...');
-
-    const response = await api.post('/users/signout');
-
-    console.log('✅ Выход успешен:', response.data);
+    await api.post('/users/signout');
   } catch (error) {
-    console.error('❌ Ошибка при выходе:', error);
+    console.warn('Logout API error (ignored):', error);
   } finally {
     localStorage.removeItem('token');
-    console.log('🗑️ Токен удален из localStorage');
   }
 }
 
-// 6. Получить токен (помощник)
 export function getToken() {
   return localStorage.getItem('token');
 }

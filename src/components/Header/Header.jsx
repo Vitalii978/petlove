@@ -21,7 +21,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    console.log('✅ Токен видалено, користувач вийшов');
+    // console.log('✅ Токен видалено, користувач вийшов');
 
     window.location.href = '/';
   };

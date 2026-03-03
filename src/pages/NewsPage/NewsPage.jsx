@@ -1,162 +1,74 @@
-// src/pages/NewsPage/NewsPage.jsx
+import { useState, useEffect } from 'react';
+import Title from '../../components/Title/Title';
+import SearchField from '../../components/SearchField/SearchField';
+import NewsList from '../../components/News/NewsList/NewsList';
+import Pagination from '../../components/Pagination/Pagination';
+import newsApi from '../../services/newsApi';
+import styles from './NewsPage.module.css';
 
-// 🎯 ШАГ 1: ИМПОРТЫ
-import { useState, useEffect } from 'react'; // 🎯 React хуки
-import Title from '../../components/Title/Title'; // 🎯 Компонент заголовка
-import SearchField from '../../components/SearchField/SearchField'; // 🎯 Поиск
-import NewsList from '../../components/News/NewsList/NewsList'; // 🎯 Список новостей
-import Pagination from '../../components/Pagination/Pagination'; // 🎯 Пагинация
-import newsApi from '../../services/newsApi'; // 🎯 Наш API сервис
-import styles from './NewsPage.module.css'; // 🎯 Стили
-
-// 🎯 ШАГ 2: СОЗДАЕМ КОМПОНЕНТ NewsPage
-// Это функциональный компонент (современный подход в React)
 export const NewsPage = () => {
-  // 🎯 ШАГ 3: СОСТОЯНИЯ КОМПОНЕНТА (useState)
-  // useState - хук для создания состояния
-
-  // 🎯 news - массив новостей для текущей страницы
-  // Начальное значение: пустой массив []
   const [news, setNews] = useState([]);
-
-  // 🎯 loading - флаг загрузки (true/false)
-  // Показывает спиннер когда данные грузятся
   const [loading, setLoading] = useState(false);
-
-  // 🎯 searchKeyword - поисковый запрос пользователя
-  // Начальное значение: пустая строка '' (нет поиска)
   const [searchKeyword, setSearchKeyword] = useState('');
-
-  // 🎯 currentPage - текущая страница пагинации
-  // Начинаем с первой страницы
   const [currentPage, setCurrentPage] = useState(1);
-
-  // 🎯 totalPages - общее количество страниц
-  // Начинаем с 1 (будет обновлено после загрузки данных)
   const [totalPages, setTotalPages] = useState(1);
 
-  // 🎯 ШАГ 4: useEffect ДЛЯ ЗАГРУЗКИ ДАННЫХ
-  // useEffect - хук для выполнения побочных эффектов (запросы к API)
-  // Выполняется при:
-  // 1. Первом рендере компонента
-  // 2. Изменении currentPage
-  // 3. Изменении searchKeyword
-
   useEffect(() => {
-    // 🎯 СОЗДАЕМ ФУНКЦИЮ loadNews ВНУТРИ useEffect
-    // Почему внутри? Чтобы избежать ошибки ESLint с зависимостями
     const loadNews = async () => {
-      // 🎯 НАЧИНАЕМ ЗАГРУЗКУ
-      setLoading(true); // Показываем спиннер
+      setLoading(true);
 
       try {
-        // 🎯 ВЫЗЫВАЕМ НАШ API СЕРВИС
-        // Передаем параметры:
-        // - page: текущая страница
-        // - limit: 6 новостей на странице (по ТЗ)
-        // - keyword: поисковый запрос (может быть пустым)
         const result = await newsApi.getNews({
           page: currentPage,
           limit: 6,
-          keyword: searchKeyword, // 🎯 КЛЮЧЕВОЙ МОМЕНТ: keyword, не query!
+          keyword: searchKeyword,
         });
 
-        // 🎯 ПРОВЕРЯЕМ РЕЗУЛЬТАТ
         if (result.success) {
-          // 🎯 УСПЕХ: обновляем состояния
-          setNews(result.data); // Сохраняем новости
-          setTotalPages(result.pagination.totalPages); // Сохраняем количество страниц
+          setNews(result.data);
+          setTotalPages(result.pagination.totalPages);
         } else {
-          // 🎯 ОШИБКА API: логируем и очищаем данные
-          console.error('Ошибка API:', result.error);
-          setNews([]); // Очищаем новости
-          setTotalPages(1); // Сбрасываем пагинацию
+          setNews([]);
+          setTotalPages(1);
         }
-      } catch (error) {
-        // 🎯 НЕОЖИДАННАЯ ОШИБКА (сеть, сервер и т.д.)
-        console.error('Неожиданная ошибка:', error);
+      } catch {
         setNews([]);
         setTotalPages(1);
       } finally {
-        // 🎯 ВСЕГДА ЗАВЕРШАЕМ ЗАГРУЗКУ
-        // finally выполняется и при успехе, и при ошибке
-        setLoading(false); // Скрываем спиннер
+        setLoading(false);
       }
     };
 
-    // 🎯 ВЫЗЫВАЕМ ФУНКЦИЮ ЗАГРУЗКИ
     loadNews();
   }, [currentPage, searchKeyword]);
-  // 🎯 МАССИВ ЗАВИСИМОСТЕЙ:
-  // useEffect выполнится заново при изменении этих значений
-  // currentPage - при смене страницы
-  // searchKeyword - при новом поиске
 
-  // 🎯 ШАГ 5: ОБРАБОТЧИК ПОИСКА
-  // Вызывается когда пользователь вводит текст в SearchField
   const handleSearch = keyword => {
-    setSearchKeyword(keyword); // Сохраняем поисковый запрос
-    setCurrentPage(1); // 🎯 ВАЖНО: сбрасываем на первую страницу при новом поиске
+    setSearchKeyword(keyword);
+    setCurrentPage(1);
   };
 
-  // 🎯 ШАГ 6: ОБРАБОТЧИК ПАГИНАЦИИ
-  // Вызывается когда пользователь кликает на номер страницы
   const handlePageChange = page => {
-    setCurrentPage(page); // Устанавливаем новую страницу
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Прокрутка к верху страницы
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 🎯 ШАГ 7: ГЕНЕРАЦИЯ КНОПОК ПАГИНАЦИИ
-  // Создаем массив [1, 2, 3, ..., totalPages] для Pagination компонента
-  const paginationButtons = Array.from(
-    { length: totalPages }, // Создаем массив длиной totalPages
-    (_, i) => i + 1 // Заполняем числами от 1 до totalPages
-  );
+  const paginationButtons = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  // 🎯 ШАГ 8: РЕНДЕР КОМПОНЕНТА
-  // JSX - то что видит пользователь
   return (
-    // 🎯 section - семантический HTML тег для секции
-    // className={styles.sectionNews} - применяем CSS стили
     <section className={styles.sectionNews}>
-      {/* 🎯 УСЛОВНЫЙ РЕНДЕРИНГ: ЗАГРУЗКА */}
-      {/* Если loading = true, показываем спиннер */}
       {loading ? (
-        <div className={styles.loader}>
-          Загрузка... {/* Можно добавить красивый спиннер */}
-        </div>
+        <div className={styles.loader}>Загрузка...</div>
       ) : (
-        // 🎯 ЕСЛИ НЕ ГРУЗИТСЯ - ПОКАЗЫВАЕМ КОНТЕНТ
-        // ul - неупорядоченный список (для семантики)
         <ul className={styles.newsContainer}>
-          {/* 🎯 ПЕРВЫЙ ЭЛЕМЕНТ: ЗАГОЛОВОК И ПОИСК */}
           <li className={styles.titleAndSearch}>
-            {/* Компонент заголовка с текстом "News" */}
             <Title children="News" />
-
-            {/* Компонент поиска с обработчиком handleSearch */}
             <SearchField onSearch={handleSearch} />
           </li>
 
-          {/* 🎯 ИНФОРМАЦИЯ О ПОИСКЕ (только если есть поиск) */}
-          {/* Условный рендеринг: && - если searchKeyword не пустой */}
-          {/* {searchKeyword && (
-            <li className={styles.searchInfo}>
-              <p>
-                Поиск: "{searchKeyword}" • Страница {currentPage} из{' '}
-                {totalPages}
-              </p>
-            </li>
-          )} */}
-
-          {/* 🎯 СПИСОК НОВОСТЕЙ */}
           <li className={styles.noticesList}>
-            {/* Передаем массив news в компонент NewsList */}
             <NewsList news={news} />
           </li>
 
-          {/* 🎯 ПАГИНАЦИЯ (только если больше 1 страницы) */}
-          {/* По ТЗ: пагинация показывается только если totalPages > 1 */}
           <li className={styles.pagination}>
             {totalPages > 1 && (
               <Pagination
@@ -171,9 +83,6 @@ export const NewsPage = () => {
       )}
     </section>
   );
-  // 🎯 КОНЕЦ РЕНДЕРА КОМПОНЕНТА
 };
 
-// 🎯 ШАГ 9: ЭКСПОРТ КОМПОНЕНТА
-// Делаем NewsPage доступным для импорта в App.jsx
 export default NewsPage;

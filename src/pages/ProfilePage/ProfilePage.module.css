@@ -1,230 +1,17 @@
-/* src/pages/ProfilePage/ProfilePage.module.css */
-
-/* 
-.page {
-  padding-top: 40px;
-  padding-bottom: 80px;
-  background-color: #f8f8f8;
-  min-height: calc(100vh - 80px);
-}
-
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-
-.profileContent {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-
-.loadingState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 20px;
-  text-align: center;
-  gap: 20px;
-}
-
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 107, 8, 0.3);
-  border-radius: 50%;
-  border-top-color: #ff6b08;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.loadingText {
-  font-size: 18px;
-  color: #666;
-  margin: 0;
-  font-weight: 500;
-}
-
-
-.errorState {
-  background-color: white;
-  border-radius: 20px;
-  padding: 60px 40px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-
-.errorTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111;
-  margin: 0 0 16px 0;
-}
-
-.errorText {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 32px 0;
-  line-height: 1.5;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.retryButton {
-  padding: 14px 32px;
-  background-color: #ff6b08;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.retryButton:hover {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
-}
-
-
-.emptyState {
-  background-color: white;
-  border-radius: 20px;
-  padding: 80px 40px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-
-.emptyTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111;
-  margin: 0 0 16px 0;
-}
-
-.emptyText {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 32px 0;
-  line-height: 1.5;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.loginButton {
-  padding: 14px 32px;
-  background-color: #ff6b08;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.loginButton:hover {
-  background-color: #ff8500;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
-}
-
-
-@media (max-width: 767px) {
-  .page {
-    padding-top: 20px;
-    padding-bottom: 40px;
-  }
-
-  .container {
-    padding: 0 15px;
-  }
-
-  .profileContent {
-    gap: 24px;
-  }
-
-  .loadingState {
-    padding: 60px 15px;
-  }
-
-  .errorState {
-    padding: 40px 20px;
-    border-radius: 16px;
-  }
-
-  .errorTitle {
-    font-size: 20px;
-  }
-
-  .emptyState {
-    padding: 40px 20px;
-    border-radius: 16px;
-  }
-
-  .emptyTitle {
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1279px) {
-  .page {
-    padding-top: 30px;
-    padding-bottom: 60px;
-  }
-
-  .container {
-    padding: 0 30px;
-  }
-
-  .profileContent {
-    gap: 28px;
-  }
-} */
-/* src/pages/ProfilePage/ProfilePage.module.css */
-/* 🎯 СТИЛИ ДЛЯ СТРАНИЦЫ ПРОФИЛЯ */
-/* ✅ ИСПРАВЛЕНО: наши классы + стили из примера */
-
-/* 🎯 ОСНОВНАЯ СТРАНИЦА (наши классы) */
 .page {
   box-sizing: border-box;
   max-width: 375px;
   padding: 40px 20px 80px 20px;
   margin: 0 auto;
   background-color: #f8f8f8;
-  /* min-height: calc(100vh - 80px); */
 }
 
-/* 🎯 КОНТЕЙНЕР (наши классы) */
-/* .container {
-  max-width: 1280px;
-  margin: 0 auto;
-} */
-
-/* 🎯 ОСНОВНОЕ СОДЕРЖИМОЕ (наши классы) */
 .profileContent {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-/* 🎯 СОСТОЯНИЕ ЗАГРУЗКИ (наши классы) */
 .loadingState {
   display: flex;
   flex-direction: column;
@@ -257,7 +44,6 @@
   font-weight: 500;
 }
 
-/* 🎯 СОСТОЯНИЕ ОШИБКИ (наши классы) */
 .errorState {
   background-color: #fbe7c1;
   border-radius: 20px;
@@ -301,7 +87,6 @@
   box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
 }
 
-/* 🎯 ПУСТОЕ СОСТОЯНИЕ (наши классы) */
 .emptyState {
   background-color: white;
   border-radius: 20px;
@@ -328,78 +113,23 @@
   margin-right: auto;
 }
 
-/* .loginButton {
-  padding: 14px 32px;
-  background-color: #ff6b08;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-} */
-
 .loginButton:hover {
   background-color: #ff8500;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 107, 8, 0.3);
 }
 
-/* 🎯 АДАПТИВНОСТЬ - МОБИЛЬНЫЕ */
-/* @media (max-width: 767px) {
-  .page {
-    padding: 20px 15px 40px 15px;
-  }
-
-  .container {
-    padding: 0 15px;
-  }
-
-  .profileContent {
-    gap: 24px;
-  }
-
-  .loadingState {
-    padding: 60px 15px;
-  }
-
-  .errorState {
-    padding: 40px 20px;
-    border-radius: 16px;
-  }
-
-  .errorTitle {
-    font-size: 20px;
-  }
-
-  .emptyState {
-    padding: 40px 20px;
-    border-radius: 16px;
-  }
-
-  .emptyTitle {
-    font-size: 20px;
-  }
-} */
-
-/* 🎯 АДАПТИВНОСТЬ - ПЛАНШЕТ */
 @media (min-width: 768px) {
   .page {
     max-width: 768px;
     padding: 30px 32px 60px 32px;
   }
 
-  /* .container {
-    padding: 0 30px;
-  } */
-
   .profileContent {
     gap: 28px;
   }
 }
 
-/* 🎯 АДАПТИВНОСТЬ - ДЕСКТОП (1280px и больше) */
 @media (min-width: 1280px) {
   .page {
     max-width: 1280px;
